@@ -1,0 +1,17 @@
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.nav
+*.snm
+*.synctex.gz
+
+# PDF files (optional)
+*.pdf
+
+# macOS
+.DS_Store
+
+# Mathematica
+*.mx
