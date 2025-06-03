@@ -1,0 +1,142 @@
+\documentclass[12pt]{article}
+\usepackage{fontspec}
+\setmonofont{IBM Plex Mono}
+\usepackage[table]{xcolor}
+\usepackage[prefix=]{xcolor-solarized}
+\usepackage{tikz}
+\usepackage[margin=2cm, top=1.5cm, bottom=1.5cm]{geometry}
+ \usepackage[pdfborder={0 0 0}, citecolor=violet, urlcolor=blue,
+  linkcolor=orange, colorlinks=true, bookmarksopen=true]{hyperref}
+\newcommand\hs[1]{\hspace{#1 cm}}
+\usetikzlibrary{external,matrix, automata,trees,positioning,shadows,arrows,shapes.geometric,shapes.multipart,trees,calc, fit, decorations.pathmorphing,decorations.pathreplacing}
+\usepackage{setspace}
+\setstretch{1.2}
+\newcommand{\vv}{ \vspace{4mm} \\}
+\begin{document}
+\pagecolor{base03}
+\color{base1}
+\phantom{123}\\ 
+{\Large Syllabus}\vv
+\textcolor{magenta}{Course} ECON 510 Section 001. Advanced Microeconomic Theory. 3 Credits.\vv
+\textcolor{magenta}{Course Description} \begin{quote} We study decision-making in dynamic environments under uncertainty. Topics include optimization techniques, recursive and hyperbolic preferences, intertemporal consumption, general equilibrium in complete and incomplete markets, search theory, overlapping generations, and dynamic games. Emphasis is placed on model building, presentations, and discussions in support of the individual research project. \end{quote}
+\textcolor{magenta}{Requisites} Prerequisite, ECON 410 with a grade of C or better.\vv
+\textcolor{magenta}{Grading status} Letter grade.\vv
+\begin{minipage}[r]{10cm}
+\textcolor{magenta}{Instructor} \\
+ S\'ergio O. Parreiras \\
+Gardner Hall, 200B\\
+sergiop@unc.edu,
+\end{minipage}
+\begin{minipage}[r]{6cm}
+\textcolor{magenta}{Class Schedule} \\
+TR 9:30 am - 10:45 am\\
+Gardner Hall, Rm 106\\ \\
+\textcolor{magenta}{Office Hours (OH)} \\
+over ZOOM on Mon/Wed:\\ 9am-10am
+by Canvas appt. 
+\end{minipage}  \vspace{3mm}\\
+\textcolor{magenta}{Communication}\\
+The Canvas website is our primary main of communication. Assignments, readings,  grades, podcast links and other resources will be posted on Canvas. Canvas messages are responded within 48 business hours (Monday through Friday). Outlook messages are not recommended. To book an office hours (OH) slot meeting use Canvas$>$Calendar$>$Find Appointment.  You must sign with SSO login option at unc.zoom.us for OH meetings. If your schedule conflicts with regular OH,
+ please send a Canvas message to schedule meetings \textcolor{yellow}{outside of regular OH}.\vv
+\textcolor{magenta}{Prerequisites} ECON 410 with a grade of C or better.  \vv
+\textcolor{magenta}{Required textbook}\\ There is no required textbook. The Lecture Notes as well as books and articles that the with free access thru the University Libraries will be posted/linked in the corresponding Canvas module. \vv
+\textcolor{magenta}{Required software/apps}\\ \textcolor{yellow}{Mathematica}: order it free at \href{https://software.unc.edu}{https://software.unc.edu}.\\ No prior knowledge of Mathematica is necessary for one to succeed in this course but as Mathematica  is used on an regular basis make sure to install it on your laptop as soon as possible.\\
+\textcolor{yellow}{Zoom}: used in Tuesday's classes to discuss homework.\\
+\textcolor{yellow}{Overleaf}: open a free individual account at \href{https://www.overleaf.com/}{Overleaf.com}. You will use Overleaf to typeset amd share research assignments using \LaTeX markup. \newpage
+\noindent\textcolor{magenta}{Learning Objectives}\\
+The course main goal is to provide tools to enable you to: construct models of micro-economic behavior in dynamic environments; identify their (built-in) limitations and; think critically about how to apply them to real-life. We will also write a research essay/proposal/project aimed at the learning outcomes described by  the \href{https://curricula.unc.edu/curriculum-proposals/cim/ideas-in-action-slos-recurring-capacities/}{IDEAS in action (Research)} curricula.\vv
+\textcolor{magenta}{Evaluation}
+Course grade weights: midterms (40\%), problem sets and quizzes (20\%), final exam (20\%),  \underline{active} participation (5\%), research assignments  (15\%).\vv
+\textcolor{magenta}{Exam dates} Midterm 1: 9/30;  Midterm 2: 11/6;  Final exam: \textcolor{yellow}{Friday, 12/12, 8:00AM - 11:00AM} (time differs from class time!). \vv
+\textcolor{magenta}{Class environment}
+During this course, we may employ additional material from podcasts, video, or literature to discuss economics related issues. Sometimes, you may find the political or religious views; or the profanity contained in these materials offensive or
+objectionable and, you may feel uncomfortable. I will not endorse or advocate any particular political views but as part of your university  education, I wholeheartedly believe that is important for us to engage in critical
+ thinking while respecting different opinions. Our classroom is an inclusive environment and your participation is critical for the success of this course. 
+ You are expected to attend class, read the assigned readings and, be prepared to discuss and present your work in the classroom.\newpage \newpage
+ \newgeometry{top=5mm, bottom=5mm, left=5mm, right=5mm}
+% Weekday-aligned Fall 2025 calendar
+\tikzset{ms1/.style={row #1 column 1/.append style={execute at begin node=Week \space \the\numexpr#1-1}}}
+% Uncomment the line below if you want to use more than a single page
+%\tikzset{ms2/.style={row #1 column 1/.append style={execute at begin node=Week \space \the\numexpr#1+7}}}
+\begin{tikzpicture}[scale=0.75, every node/.style={scale=0.75}]
+    \matrix(m)[
+    matrix of nodes,
+    column sep=-\pgflinewidth,
+    row sep=-\pgflinewidth,
+    execute at empty cell={\node{\phantom{$\cdot$}};},
+    nodes={draw=base2, align=left, anchor=north west,
+    text depth=0.8cm,
+    text height=0.8cm,
+    minimum width=8cm, inner sep = 5 pt,
+    text width=7cm},
+    column 1/.style={nodes={text width=6cm}},
+    ms1/.list={2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18}]{
+        {\textcolor{orange}{\fontsize{16}{15}\selectfont{Tentative Coverage}}\\ \textcolor{base1}{\fontsize{8}{9}\selectfont{Abbreviations: Problem set (PS); Quiz (Q)}}}&Tuesday &Thursday  \\
+    : Mathematica and Game Theory  & 8/19: Syllabus, Mathematica tutorial and Q0 & 8/21: Mathematica tutorial, Static Games and Q1\\
+    : Game Theory and Optimization  & 8/26: Static games Microeconomic Theory methodology & 8/28: Optimization (equality constraints) and Q2\\
+    : Dynamic Games and Uncertainty & 9/2: Optimization and Dynamic games, PS01 due & Uncertainty (ECON410 review) and Q3\\
+    : Time Preferences and Information Structures & 9/9: Exponential and hyperbolic preferences, PS02 due & 9/11: Filtrations and Recursive Preferences and Q4\\
+    : Optimization & 9/16: Optimization (inequality constraints), PS03 due & 9/18: Optimization (inequality constraints) and Q5\\
+    : Duality & 9/23: The Value Function, PS04 due & 9/25: Comparative Statics, Envelope theorem and Q6 \\
+    : Intertemporal Choice & |[text=yellow]| 9/30: Midterm 1 & 10/2: Time consistency\\
+    : General Equilibrium & 10/7: No Class — Well-Being Day & 10/9: Complete Markets, PS05 due\\
+    : General Equilibrium & 10/14: Financial Markets and Q7 & 10/16: \textbf{No Class — Fall Break} \\
+    : Incomplete Markets & 10/21: Financial Markets, PS06 due & 10/23: Arbitrage and Q8 \\
+    : OLG models & 10/28: Overlapping generations, PS07 due & 10/30: Overlapping generations and Q9 \\
+    : Search Theory & 11/4: Search Theory, PS08 due & |[text=yellow]|11/6: Midterm 2 \\
+    : Repeated Games & 11/11: Repeated Games, PS09 due & 11/13: Repeated games and Q10 \\
+    : Markov Games & 11/18: Markov games, PS10 due & 11/20: Markov games \\
+    : Research Project & 11/25: Research Project, PS11 due & 11/27: No Class - Thanksgiving \\
+    :  & 12/2: Research Project, final paper due & |[text=yellow]|\textcolor{red}{Friday} 12/12: 8:00AM, Final Exam\\};
+    
+\end{tikzpicture}
+\newpage
+\restoregeometry
+{\large {\textcolor{orange}{Policies and procedures}}}
+\begin{description}
+\item[Syllabus Changes]
+I reserve the right to make changes to the syllabus including project due dates and test dates. These changes will be kept to the necessary minimum and announced as early as possible.
+\item [Communication]  Please, use Canvas to send me messages instead of regular email.
+ All assignments should be submitted on Canvas. 
+\item [Honor Code] All students are expected to follow the guidelines of the UNC honor code. In particular, students are expected to refrain from ``lying, cheating, or stealing'' in the academic context. If you are unsure about which actions violate the honor code, please see me or consult \href{https://catalog.unc.edu/policies-procedures/honor-code/}{https://catalog.unc.edu/policies-procedures/honor-code/}.
+\item [Exams and grades]  \phantom{12}\\
+If you are eligible to take exams with Accessibility Resources and Service. Please schedule your exam using their hub, \href{https://ars.unc.edu/}{https://ars.unc.edu/}, and please notify me as soon as possible.\\
+ Any final-exam rescheduling request, for those with more than three final exams within a 24 hours period, must be received no later than our first midterm.\\
+Exam grades are converted into scores (``curved'') accordingly to the formula: original grade plus 100 minus the maximum between the top class grade and 50. Assignments or problem sets are not ``curved''. The final course grade is computed accordingly to the following scheme:
+\end{description}\vspace{5mm}
+\begin{center}
+\begin{tabular}{|l|l|}\hline
+letter grade & minimum score \\  \hline
+A & 95 \\  \hline
+A-&  90 \\ \hline
+B+ & 87 \\ \hline
+B & 83 \\ \hline
+B- & 80 \\ \hline
+\end{tabular}\hspace{1cm}
+\begin{tabular}{|l|l|}\hline
+letter grade & minimum score \\  \hline
+C+ & 77 \\ \hline
+C & 73 \\ \hline
+C- & 70 \\ \hline
+D+ & 67 \\ \hline
+D & 63 \\ \hline
+\end{tabular}
+\end{center}\phantom{text}
+\newline
+\begin{description}
+\item[Attendance Policy]
+Attendance will be recorded by the UNC check-in app,  click \href{https://unccheckin.unc.edu}{here}, to install the app. No right or privilege exists that permits a student to be absent from any class meetings, except for these University Approved Absences (UAA): 1) Authorized University activities; 2)
+Disability/religious observance/pregnancy, as required by law and approved by Accessibility Resources and Service and/or the Equal Opportunity and Compliance Office. 3)
+Significant health condition and/or personal/family emergency as approved by the Office of the Dean of Students, Gender Violence Service Coordinators, and/or the Equal Opportunity and Compliance Office. Eight non-UAA without any consultation with the instructor may result in a grade F in the course.
+Ten total non-UAA in a semester may result in a grade F regardless of the reasons you missed class. In all instances, either UAA or non-UAA you MUST notify the instructor prior to missing class. If a student misses a class, it is the student's responsibility to find out what was covered in the class and
+whether changes have been made on the schedule, and if there was any assignment given.
+ \end{description}
+ \begin{description}
+\item[Counseling and Psychological Services]
+UNC-Chapel Hill is strongly committed to addressing the mental health needs of a diverse student body. The Heels Care Network website is a place to access the many mental resources at Carolina. CAPS is the primary mental health provider for students, offering timely access to consultation and connection to clinically appropriate services. Go to their website https://caps.unc.edu/ or visit their facilities on the third floor of the Campus Health building for an initial evaluation to learn more. Students can also call CAPS24/7 at 919-966-3658 for immediate assistance. 
+\item[Title IX Resources] Any student who is impacted by discrimination, harassment, interpersonal (relationship) violence, sexual violence, sexual exploitation, or stalking is encouraged to seek resources on campus or in the community. Reports can be made online to the EOC at https://eoc.unc.edu/report-an-incident/. Please contact the University’s Title IX Coordinator (Elizabeth Hall, titleixcoordinator@unc.edu), Report and Response Coordinators in the Equal Opportunity and Compliance Office (reportandresponse@unc.edu), Counseling and Psychological Services (confidential), or the Gender Violence Services Coordinators (gvsc@unc.edu; confidential) to discuss your specific needs. Additional resources are available at safe.unc.edu. 
+\item[Policy on Non-Discrimination] The University is committed to providing an inclusive and welcoming environment for all members of our community and to ensuring that educational and employment decisions are based on individuals’ abilities and qualifications. Consistent with this principle and applicable laws, the University’s Policy Statement on Non-Discrimination offers access to its educational programs and activities as well as employment terms and conditions without respect to race, color, gender, national origin, age, religion, genetic information, disability, veteran’s status, sexual orientation, gender identity or gender expression. Such a policy ensures that only relevant factors are considered and that equitable and consistent standards of conduct and performance are applied. If you are experiencing harassment or discrimination, you can seek assistance and file a report through the Report and Response Coordinators (see contact info at safe.unc.edu) or the Equal Opportunity and Compliance Office, or online to the EOC at https://eoc.unc.edu/report-an-incident/.
+\item[Grade Appeal Process ] If you feel you have been awarded an incorrect grade, please discuss it with me. If we cannot resolve the issue, you may talk to our departmental director of undergraduate studies or appeal the grade through a formal university process based on arithmetic/clerical error, arbitrariness, discrimination, harassment, or personal malice. To learn more, go to the Academic Advising Program website.
+\end{description}
+\end{document}
+

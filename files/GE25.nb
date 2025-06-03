@@ -1,0 +1,1115 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     40747,       1107]
+NotebookOptionsPosition[     33036,        972]
+NotebookOutlinePosition[     33432,        988]
+CellTagsIndexPosition[     33389,        985]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{"Exit", "[", "]"}]], "Input",
+ CellChangeTimes->{{3.951206665381999*^9, 3.9512066669532127`*^9}},
+ CellLabel->"In[38]:=",ExpressionUUID->"be2c8140-1fb7-4e54-90d5-adaf71fe92c1"],
+
+Cell[CellGroupData[{
+
+Cell["General Equilibrium", "Title",
+ CellChangeTimes->{{3.949674324390412*^9, 
+  3.9496743298900785`*^9}},ExpressionUUID->"547c9969-0e29-46c8-8c73-\
+0f65886220bc"],
+
+Cell["\<\
+There are only two states: today and tomorrow. And there are two contingent \
+goods: c0, a contract the delivers one unit of consumption today; c1, a \
+contract that delivers one unit of consumption tomorrow. The contract prices \
+are p0 and p1 respectively.
+\
+\>", "Text",
+ CellChangeTimes->{{3.9496743779509315`*^9, 3.9496744461321993`*^9}, {
+  3.951206429004142*^9, 
+  3.951206539459854*^9}},ExpressionUUID->"62576bae-b290-4119-b7e3-\
+be6729d89b2c"],
+
+Cell["\<\
+There are two agents Anna (a) and Boris (b). The have similar utility for \
+consumption but possibly distinct discount factors.\
+\>", "Text",
+ CellChangeTimes->{{3.951206556881775*^9, 
+  3.951206581817902*^9}},ExpressionUUID->"368d088d-59fa-4c0d-a2ba-\
+e0f47aa0589c"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"u", "[", "c_", "]"}], ":=", 
+  RowBox[{"Log", "[", "c", "]"}]}]], "Input",
+ CellChangeTimes->{{3.9496743377787576`*^9, 3.9496743573955717`*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"901056da-2479-4076-a775-0a40a38513a3"],
+
+Cell["\<\
+An agent\[CloseCurlyQuote]s endowment is the initial amounts of the \
+contingent goods that the agent has. In this example, Anna has 10 units of c0 \
+and 1 unit of c1 while Boris has 1 unit of c0 and 20 units of c1.\
+\>", "Text",
+ CellChangeTimes->{{3.9512064159053802`*^9, 3.951206423357049*^9}, {
+  3.951206591608409*^9, 
+  3.951206657541703*^9}},ExpressionUUID->"eb25ac0f-43a7-4c35-ae12-\
+531429bef65d"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"ea", "=", 
+  RowBox[{"{", 
+   RowBox[{"10", ",", "1"}], "}"}]}], "\[IndentingNewLine]", 
+ RowBox[{"eb", "=", 
+  RowBox[{"{", 
+   RowBox[{"1", ",", "20"}], "}"}]}]}], "Input",
+ CellChangeTimes->{{3.9496743612128*^9, 3.9496743721361504`*^9}, {
+   3.9496749847157345`*^9, 3.9496749970341797`*^9}, 3.9496756309954596`*^9, 
+   3.949675814289338*^9, {3.95120640129569*^9, 3.951206409571423*^9}, {
+   3.951206773647299*^9, 3.951206786124485*^9}},
+ CellLabel->"In[2]:=",ExpressionUUID->"db684e95-2e72-49e6-b95b-7573917903ec"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"10", ",", "1"}], "}"}]], "Output",
+ CellChangeTimes->{3.9496749982527533`*^9, 3.9496756319429317`*^9, 
+  3.9496758152423716`*^9, 3.951206786889336*^9, 3.9512074641049967`*^9},
+ CellLabel->"Out[2]=",ExpressionUUID->"35dc3391-deea-46d9-aca2-54a2098c4bfd"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1", ",", "20"}], "}"}]], "Output",
+ CellChangeTimes->{3.9496749982527533`*^9, 3.9496756319429317`*^9, 
+  3.9496758152423716`*^9, 3.951206786889336*^9, 3.951207464112692*^9},
+ CellLabel->"Out[3]=",ExpressionUUID->"906690f1-7f9f-4125-bcf2-d58b17af6691"]
+}, Open  ]],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Ua", "[", 
+   RowBox[{"c0_", ",", "c1_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"u", "[", "c0", "]"}], "+", 
+   RowBox[{"\[Delta]a", "*", 
+    RowBox[{"u", "[", "c1", "]"}]}]}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Ub", "[", 
+   RowBox[{"c0_", ",", "c1_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"u", "[", "c0", "]"}], "+", 
+   RowBox[{"\[Delta]b", "*", 
+    RowBox[{"u", "[", "c1", "]"}]}]}]}]}], "Input",
+ CellChangeTimes->{{3.9496744496883707`*^9, 3.9496745178141036`*^9}},
+ CellLabel->"In[5]:=",ExpressionUUID->"b2ebb01e-9efb-4aac-8661-903424be17bb"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"budget", "=", 
+  RowBox[{
+   RowBox[{"c0", "+", 
+    RowBox[{"p1", "*", "c1"}]}], "==", "income"}]}]], "Input",
+ CellChangeTimes->{{3.949674571680937*^9, 3.9496746039727373`*^9}, {
+  3.9512066810879183`*^9, 3.951206684106498*^9}, {3.951206799371543*^9, 
+  3.951206800304682*^9}},
+ CellLabel->"In[7]:=",ExpressionUUID->"b9c790ce-3b2c-47d2-9d39-321e366c61c0"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"c0", "+", 
+   RowBox[{"c1", " ", "p1"}]}], "\[Equal]", "income"}]], "Output",
+ CellChangeTimes->{3.951206732920681*^9, 3.951206808686553*^9, 
+  3.9512074805181513`*^9},
+ CellLabel->"Out[7]=",ExpressionUUID->"eb8edfd5-5848-4f8b-a3ab-93511ba6a5ce"]
+}, Open  ]],
+
+Cell["\<\
+Here, p1 is the relative price of future consumption in terms of present \
+consumption. That is, we are normalizing the price of present consumption c0 \
+to be one, p0=1.\
+\>", "Text",
+ CellChangeTimes->{{3.949674612660698*^9, 3.9496746319369307`*^9}, {
+  3.951206687122299*^9, 
+  3.9512067124948606`*^9}},ExpressionUUID->"afe8edf8-a195-49be-8cad-\
+f129072bf8f3"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Lagrangian", "=", 
+  RowBox[{
+   RowBox[{"Ua", "[", 
+    RowBox[{"c0", ",", "c1"}], "]"}], "-", 
+   RowBox[{"\[Lambda]", "*", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"budget", "[", 
+       RowBox[{"[", "1", "]"}], "]"}], "-", 
+      RowBox[{"budget", "[", 
+       RowBox[{"[", "2", "]"}], "]"}]}], ")"}], " "}]}]}]], "Input",
+ CellChangeTimes->{{3.9496745424087343`*^9, 3.949674563082341*^9}, {
+  3.9496746361828995`*^9, 3.9496746571371264`*^9}, {3.9512068171157618`*^9, 
+  3.9512068478410673`*^9}},
+ CellLabel->"In[8]:=",ExpressionUUID->"eddc3d00-1f80-4811-bcab-bf081ba21ef4"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"-", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"c0", "-", "income", "+", 
+       RowBox[{"c1", " ", "p1"}]}], ")"}], " ", "\[Lambda]"}], ")"}]}], "+", 
+  RowBox[{"Log", "[", "c0", "]"}], "+", 
+  RowBox[{"\[Delta]a", " ", 
+   RowBox[{"Log", "[", "c1", "]"}]}]}]], "Output",
+ CellChangeTimes->{
+  3.9496746590280333`*^9, {3.9512068273376017`*^9, 3.951206848382752*^9}, {
+   3.951207470234915*^9, 3.951207495131513*^9}},
+ CellLabel->"Out[8]=",ExpressionUUID->"42fd5717-0931-454c-a6cf-d2e955d10f59"]
+}, Open  ]],
+
+Cell["\<\
+Always check the output of your Lagrangian to make sure there were no typos \
+when you defined the utility functions and the budget equation.\
+\>", "Text",
+ CellChangeTimes->{{3.951206836880506*^9, 
+  3.951206886226894*^9}},ExpressionUUID->"4c50a731-9e25-4bcc-a6a5-\
+a4fea034acb6"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"IndividualDemandsandLambda", "=", 
+  RowBox[{"Solve", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"D", "[", 
+      RowBox[{"Lagrangian", ",", 
+       RowBox[{"{", 
+        RowBox[{"{", 
+         RowBox[{"c0", ",", "c1", ",", "\[Lambda]"}], "}"}], "}"}]}], "]"}], 
+     "\[Equal]", "0"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"c0", ",", "c1", ",", "\[Lambda]"}], "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.9496746699018507`*^9, 3.9496748445527024`*^9}, {
+  3.9512068885313396`*^9, 3.951206907264482*^9}, {3.9512075082829103`*^9, 
+  3.951207510389686*^9}},
+ CellLabel->"In[10]:=",ExpressionUUID->"0060f852-6f0e-47c5-9810-f55f21131540"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"c0", "\[Rule]", 
+     FractionBox["income", 
+      RowBox[{"1", "+", "\[Delta]a"}]]}], ",", 
+    RowBox[{"c1", "\[Rule]", 
+     FractionBox[
+      RowBox[{"income", " ", "\[Delta]a"}], 
+      RowBox[{"p1", " ", 
+       RowBox[{"(", 
+        RowBox[{"1", "+", "\[Delta]a"}], ")"}]}]]}], ",", 
+    RowBox[{"\[Lambda]", "\[Rule]", 
+     FractionBox[
+      RowBox[{"1", "+", "\[Delta]a"}], "income"]}]}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{{3.9496746822733135`*^9, 3.9496747057928405`*^9}, {
+  3.9496747407877145`*^9, 3.949674747539356*^9}, {3.9496747931883636`*^9, 
+  3.9496748452401257`*^9}, {3.951206896794221*^9, 3.951206908199831*^9}, {
+  3.951207502673574*^9, 3.9512075109388857`*^9}},
+ CellLabel->"Out[10]=",ExpressionUUID->"a6b5f857-6423-46dd-9581-aa286121694c"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Annademands", "=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"IndividualDemandsandLambda", "[", 
+     RowBox[{"[", "1", "]"}], "]"}], "[", 
+    RowBox[{"[", 
+     RowBox[{"1", ";;", "2"}], "]"}], "]"}], "/.", 
+   RowBox[{"{", 
+    RowBox[{"income", "->", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"1", ",", "p1"}], "}"}], ".", "ea"}]}], "}"}], " ", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "income", " ", "is", " ", "the", " ", "value", " ", "of", " ", "the", " ",
+      "endowment"}], " ", "*)"}]}]}]], "Input",
+ CellChangeTimes->{{3.9496748470910535`*^9, 3.9496749453268414`*^9}, {
+   3.9496750035758853`*^9, 3.949675025065469*^9}, {3.951206917916638*^9, 
+   3.9512069597002163`*^9}, {3.951207002444666*^9, 3.951207007132242*^9}, 
+   3.951207171914747*^9},
+ CellLabel->"In[11]:=",ExpressionUUID->"f09d639d-20e8-49bb-847b-269d0d77bbe8"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"c0", "\[Rule]", 
+    FractionBox[
+     RowBox[{"10", "+", "p1"}], 
+     RowBox[{"1", "+", "\[Delta]a"}]]}], ",", 
+   RowBox[{"c1", "\[Rule]", 
+    FractionBox[
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"10", "+", "p1"}], ")"}], " ", "\[Delta]a"}], 
+     RowBox[{"p1", " ", 
+      RowBox[{"(", 
+       RowBox[{"1", "+", "\[Delta]a"}], ")"}]}]]}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.949674912824735*^9, 3.949674945842247*^9}, {
+   3.9496750154865093`*^9, 3.949675025730033*^9}, 3.9496756400472965`*^9, 
+   3.949675820499113*^9, {3.951206948778961*^9, 3.951206962700966*^9}, 
+   3.9512071739450397`*^9, 3.951207516659381*^9},
+ CellLabel->"Out[11]=",ExpressionUUID->"cf7bb49f-bb38-4b39-970b-b49c62ae4fa0"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Borisdemands", "=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"IndividualDemandsandLambda", "[", 
+     RowBox[{"[", "1", "]"}], "]"}], "[", 
+    RowBox[{"[", 
+     RowBox[{"1", ";;", "2"}], "]"}], "]"}], "/.", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"income", "->", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"1", ",", "p1"}], "}"}], ".", "eb"}]}], ",", 
+     RowBox[{"\[Delta]a", "\[Rule]", "\[Delta]b"}]}], "}"}]}]}]], "Input",
+ CellChangeTimes->{{3.9496749519538155`*^9, 3.9496749701630964`*^9}, {
+   3.9496750465941086`*^9, 3.949675067283804*^9}, {3.951206980199686*^9, 
+   3.9512069946812572`*^9}, {3.951207178523018*^9, 3.9512071790189857`*^9}, 
+   3.951207556177706*^9},
+ CellLabel->"In[12]:=",ExpressionUUID->"a09d2d6b-eefc-4733-9f3d-2d446a5b38c1"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"c0", "\[Rule]", 
+    FractionBox[
+     RowBox[{"1", "+", 
+      RowBox[{"20", " ", "p1"}]}], 
+     RowBox[{"1", "+", "\[Delta]b"}]]}], ",", 
+   RowBox[{"c1", "\[Rule]", 
+    FractionBox[
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"1", "+", 
+        RowBox[{"20", " ", "p1"}]}], ")"}], " ", "\[Delta]b"}], 
+     RowBox[{"p1", " ", 
+      RowBox[{"(", 
+       RowBox[{"1", "+", "\[Delta]b"}], ")"}]}]]}]}], "}"}]], "Output",
+ CellChangeTimes->{3.949675068699247*^9, 3.9496756429252152`*^9, 
+  3.951207010070985*^9, 3.951207179627858*^9, 3.951207557058766*^9},
+ CellLabel->"Out[12]=",ExpressionUUID->"e4f99e67-a2c2-4291-8739-517f6118ed32"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Totalc0Demand", "=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Annademands", "[", 
+     RowBox[{"[", "1", "]"}], "]"}], "[", 
+    RowBox[{"[", "2", "]"}], "]"}], "+", 
+   RowBox[{
+    RowBox[{"Borisdemands", "[", 
+     RowBox[{"[", "1", "]"}], "]"}], "[", 
+    RowBox[{"[", "2", "]"}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.949675121482456*^9, 3.9496751427456775`*^9}, {
+  3.9496751849962997`*^9, 3.949675211399959*^9}},
+ CellLabel->"In[13]:=",ExpressionUUID->"0185b9c1-2d43-4e9a-83f5-11a99bc34ecc"],
+
+Cell[BoxData[
+ RowBox[{
+  FractionBox[
+   RowBox[{"10", "+", "p1"}], 
+   RowBox[{"1", "+", "\[Delta]a"}]], "+", 
+  FractionBox[
+   RowBox[{"1", "+", 
+    RowBox[{"20", " ", "p1"}]}], 
+   RowBox[{"1", "+", "\[Delta]b"}]]}]], "Output",
+ CellChangeTimes->{{3.949675126496663*^9, 3.9496751319505825`*^9}, {
+   3.9496752003470764`*^9, 3.9496752119935727`*^9}, 3.9496756487127705`*^9, 
+   3.949675830805247*^9, 3.951207014497781*^9, 3.951207182158825*^9, 
+   3.9512073459175386`*^9, 3.951207561308195*^9},
+ CellLabel->"Out[13]=",ExpressionUUID->"b54e3393-b499-45da-86e2-3d84a7cf65ec"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Totalc0Supply", "=", 
+  RowBox[{
+   RowBox[{"ea", "[", 
+    RowBox[{"[", "1", "]"}], "]"}], "+", 
+   RowBox[{"eb", "[", 
+    RowBox[{"[", "1", "]"}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.9496752171006737`*^9, 3.9496752437912335`*^9}},
+ CellLabel->"In[14]:=",ExpressionUUID->"160eb297-825a-4ac2-9b0a-bbfb7378fdff"],
+
+Cell[BoxData["11"], "Output",
+ CellChangeTimes->{3.9496752444316397`*^9, 3.9496761246626835`*^9, 
+  3.9512070172741547`*^9, 3.951207348019229*^9, 3.9512075645202303`*^9},
+ CellLabel->"Out[14]=",ExpressionUUID->"12ffc8ed-a2fe-479b-9bfc-545933515d62"]
+}, Open  ]],
+
+Cell["\<\
+To find the equilibrium we equate supply and demand for k-1 markets where k \
+is the number of markets and solve for the prices that clear the markets. In \
+this example, there are two markets k=2, so we need to solve for only one \
+price.\
+\>", "Text",
+ CellChangeTimes->{{3.951207053615901*^9, 
+  3.9512071192940817`*^9}},ExpressionUUID->"98c7f9d9-9384-42f4-b0d9-\
+e2dcaebe3f74"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"equilibriumprice", "=", 
+  RowBox[{
+   RowBox[{"Simplify", "[", 
+    RowBox[{"Solve", "[", 
+     RowBox[{
+      RowBox[{"Totalc0Demand", "\[Equal]", "Totalc0Supply"}], ",", "p1"}], 
+     "]"}], "]"}], "[", 
+   RowBox[{"[", "1", "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.949675253707632*^9, 3.9496753483310833`*^9}, {
+   3.9496754346169*^9, 3.9496754780937557`*^9}, 3.949675549738982*^9, {
+   3.951207128161252*^9, 3.951207142300578*^9}, {3.951207197319384*^9, 
+   3.951207197636046*^9}, {3.951207599975424*^9, 3.951207609794462*^9}},
+ CellLabel->"In[19]:=",ExpressionUUID->"7cdbec67-5741-4921-bc28-e45e1b543bfd"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"p1", "\[Rule]", 
+   FractionBox[
+    RowBox[{
+     RowBox[{"10", " ", "\[Delta]a"}], "+", "\[Delta]b", "+", 
+     RowBox[{"11", " ", "\[Delta]a", " ", "\[Delta]b"}]}], 
+    RowBox[{"21", "+", 
+     RowBox[{"20", " ", "\[Delta]a"}], "+", "\[Delta]b"}]]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.951207142759431*^9, {3.951207194689329*^9, 3.9512071982431583`*^9}, 
+   3.951207351170589*^9, 3.951207567755536*^9, 3.9512076103743896`*^9},
+ CellLabel->"Out[19]=",ExpressionUUID->"d1682344-2746-4be4-a12c-e447ca2c887e"]
+}, Open  ]],
+
+Cell["\<\
+Notice that you would get the same result if you used the market for the \
+contingent good c1.\
+\>", "Text",
+ CellChangeTimes->{{3.951207213222355*^9, 
+  3.951207232119547*^9}},ExpressionUUID->"669fbfcf-130c-41af-bdfc-\
+94e035067c02"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Totalc1Demand", "=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Annademands", "[", 
+     RowBox[{"[", "2", "]"}], "]"}], "[", 
+    RowBox[{"[", "2", "]"}], "]"}], "+", 
+   RowBox[{
+    RowBox[{"Borisdemands", "[", 
+     RowBox[{"[", "2", "]"}], "]"}], "[", 
+    RowBox[{"[", "2", "]"}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.949675121482456*^9, 3.9496751427456775`*^9}, {
+  3.9496751849962997`*^9, 3.949675211399959*^9}, {3.951207253805613*^9, 
+  3.9512072609565973`*^9}},
+ CellLabel->"In[16]:=",ExpressionUUID->"1ebcff2b-7490-4036-a1ac-360b335efb22"],
+
+Cell[BoxData[
+ RowBox[{
+  FractionBox[
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"10", "+", "p1"}], ")"}], " ", "\[Delta]a"}], 
+   RowBox[{"p1", " ", 
+    RowBox[{"(", 
+     RowBox[{"1", "+", "\[Delta]a"}], ")"}]}]], "+", 
+  FractionBox[
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"1", "+", 
+      RowBox[{"20", " ", "p1"}]}], ")"}], " ", "\[Delta]b"}], 
+   RowBox[{"p1", " ", 
+    RowBox[{"(", 
+     RowBox[{"1", "+", "\[Delta]b"}], ")"}]}]]}]], "Output",
+ CellChangeTimes->{{3.949675126496663*^9, 3.9496751319505825`*^9}, {
+   3.9496752003470764`*^9, 3.9496752119935727`*^9}, 3.9496756487127705`*^9, 
+   3.949675830805247*^9, 3.951207014497781*^9, 3.951207182158825*^9, 
+   3.95120726165442*^9, 3.951207571005209*^9},
+ CellLabel->"Out[16]=",ExpressionUUID->"276ae033-9c52-4677-ad52-a039fc4d38bc"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Totalc1Supply", "=", 
+  RowBox[{
+   RowBox[{"ea", "[", 
+    RowBox[{"[", "2", "]"}], "]"}], "+", 
+   RowBox[{"eb", "[", 
+    RowBox[{"[", "2", "]"}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.9496752171006737`*^9, 3.9496752437912335`*^9}, {
+  3.95120727060248*^9, 3.951207282856258*^9}},
+ CellLabel->"In[17]:=",ExpressionUUID->"d61f2258-4122-4ac2-847a-62c9e0aae016"],
+
+Cell[BoxData["21"], "Output",
+ CellChangeTimes->{
+  3.9496752444316397`*^9, 3.9496761246626835`*^9, 3.9512070172741547`*^9, {
+   3.951207273865432*^9, 3.951207286454719*^9}, 3.95120757423505*^9},
+ CellLabel->"Out[17]=",ExpressionUUID->"8be549db-1c21-4b20-a18b-d1c92a35f880"]
+}, Open  ]],
+
+Cell["\<\
+To find the equilibrium we equate supply and demand for k-1 markets where k \
+is the number of markets and solve for the prices that clear the markets. In \
+this example, there are two markets k=2, so we need to solve for only one \
+price.\
+\>", "Text",
+ CellChangeTimes->{{3.951207053615901*^9, 
+  3.9512071192940817`*^9}},ExpressionUUID->"cb9e5d58-c2d4-4953-ad5d-\
+6c2bacfa405a"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"othercomputationeqprice", "=", 
+  RowBox[{
+   RowBox[{"Simplify", "[", 
+    RowBox[{"Solve", "[", 
+     RowBox[{
+      RowBox[{"Totalc1Demand", "\[Equal]", "Totalc1Supply"}], ",", "p1"}], 
+     "]"}], "]"}], "[", 
+   RowBox[{"[", "1", "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.949675253707632*^9, 3.9496753483310833`*^9}, {
+   3.9496754346169*^9, 3.9496754780937557`*^9}, 3.949675549738982*^9, {
+   3.951207128161252*^9, 3.951207142300578*^9}, {3.951207197319384*^9, 
+   3.951207197636046*^9}, {3.951207291272472*^9, 3.951207299099819*^9}, {
+   3.951207625764182*^9, 3.951207663563088*^9}},
+ CellLabel->"In[21]:=",ExpressionUUID->"75094e17-8e55-4cb1-9a4c-961d65b522da"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"p1", "\[Rule]", 
+   FractionBox[
+    RowBox[{
+     RowBox[{"10", " ", "\[Delta]a"}], "+", "\[Delta]b", "+", 
+     RowBox[{"11", " ", "\[Delta]a", " ", "\[Delta]b"}]}], 
+    RowBox[{"21", "+", 
+     RowBox[{"20", " ", "\[Delta]a"}], "+", "\[Delta]b"}]]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.951207142759431*^9, {3.951207194689329*^9, 3.9512071982431583`*^9}, 
+   3.951207299690939*^9, 3.951207576860886*^9, 3.951207664375367*^9},
+ CellLabel->"Out[21]=",ExpressionUUID->"b5116e86-b355-4451-995c-e6c3dbe76cb9"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Simplify", "[", 
+  RowBox[{"othercomputationeqprice", "-", "equilibriumprice"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{
+  3.9512073807451153`*^9, {3.951207616716153*^9, 3.9512076326733837`*^9}, {
+   3.9512076707887383`*^9, 
+   3.951207702775961*^9}},ExpressionUUID->"e5881769-9747-4227-a870-\
+3cc47e7b08da"],
+
+Cell[BoxData[
+ RowBox[{"{", "0", "}"}]], "Output",
+ CellChangeTimes->{3.9512076376516314`*^9, 3.951207680929626*^9},
+ CellLabel->"Out[22]=",ExpressionUUID->"2fac2193-b01f-4bca-ae70-9335d9049f56"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Financial Markets", "Title",
+ CellChangeTimes->{{3.95120773996257*^9, 
+  3.951207743492536*^9}},ExpressionUUID->"6ff21f3a-c4d0-46ab-bb92-\
+c8a23e9054f3"],
+
+Cell["\<\
+Now assume that there are no contingent goods but there are spot markets for \
+the good and a financial asset traded at t=0 that has returns r at t=1. We \
+use z0 to denote the dollar amount invested by an agent in the financial \
+asset. The budget constraints are:\
+\>", "Text",
+ CellChangeTimes->{{3.9512077461054296`*^9, 
+  3.9512078685402813`*^9}},ExpressionUUID->"5d3fff19-d659-4b7f-91ac-\
+d857050f9a16"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"budgets", "=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"c0", "+", "z"}], "==", " ", "e0"}], ",", 
+    RowBox[{"c1", "==", 
+     RowBox[{"e1", "+", 
+      RowBox[{"r", "*", "z"}]}]}]}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.951207826846024*^9, 3.9512079142070932`*^9}},
+ CellLabel->"In[23]:=",ExpressionUUID->"02521c17-30f9-4a2a-9c06-a934289a4a55"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"c0", "+", "z"}], "\[Equal]", "e0"}], ",", 
+   RowBox[{"c1", "\[Equal]", 
+    RowBox[{"e1", "+", 
+     RowBox[{"r", " ", "z"}]}]}]}], "}"}]], "Output",
+ CellChangeTimes->{3.951207926249916*^9},
+ CellLabel->"Out[23]=",ExpressionUUID->"36b0898b-13c2-4bb7-b8e5-7f776cf9be81"]
+}, Open  ]],
+
+Cell["\<\
+Of course, the discounted expected utility is the same since only the markets \
+changed. The preferences remain the same. The agent has to choose (c0,c1,z) \
+to maximize his/her utility. But when we have only one consumption good per \
+state (per budget), we can use the budget equations to find the consumption \
+as a function of the financial assets holdings z.\
+\>", "Text",
+ CellChangeTimes->{{3.9512079373587217`*^9, 3.9512079644723577`*^9}, {
+  3.951208086203802*^9, 
+  3.951208156429501*^9}},ExpressionUUID->"69f1becd-80a4-4451-805f-\
+cb962c05b873"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.951208161751211*^9, 
+  3.951208167140876*^9}},ExpressionUUID->"0148ebeb-88c9-4c07-9b79-\
+03bf695b6e14"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"basket", "=", 
+  RowBox[{"{", 
+   RowBox[{"c0", ",", "c1"}], "}"}]}], "\[IndentingNewLine]", 
+ RowBox[{"basketasfunctionoffinancialassetposition", "=", 
+  RowBox[{
+   RowBox[{"Solve", "[", 
+    RowBox[{"budgets", ",", "basket"}], "]"}], "[", 
+   RowBox[{"[", "1", "]"}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.951207990869543*^9, 3.9512080037916403`*^9}, {
+  3.951208170577075*^9, 3.951208271615*^9}},
+ CellLabel->"In[55]:=",ExpressionUUID->"0a85f02d-74f3-4e24-a461-9d3c3ff6661c"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"c0", ",", "c1"}], "}"}]], "Output",
+ CellChangeTimes->{3.95120870193005*^9},
+ CellLabel->"Out[55]=",ExpressionUUID->"ddd8e423-f308-4e4a-9664-b30d89ad7503"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"c0", "\[Rule]", 
+    RowBox[{"e0", "-", "z"}]}], ",", 
+   RowBox[{"c1", "\[Rule]", 
+    RowBox[{"e1", "+", 
+     RowBox[{"r", " ", "z"}]}]}]}], "}"}]], "Output",
+ CellChangeTimes->{3.951208701938143*^9},
+ CellLabel->"Out[56]=",ExpressionUUID->"b8d92327-37cd-4084-a580-161acf5b9e50"]
+}, Open  ]],
+
+Cell["\<\
+Notice that the utility now can be expressed as a function of the z_s (in \
+this case there is only one z since we have only one financial asset)\
+\>", "Text",
+ CellChangeTimes->{{3.951208292240592*^9, 
+  3.951208324713031*^9}},ExpressionUUID->"1b0eda73-29c3-45a0-b60b-\
+a39ad65ad35b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Lagrangian", "=", 
+  RowBox[{
+   RowBox[{"Ua", "[", 
+    RowBox[{"c0", ",", "c1"}], "]"}], "/.", " ", 
+   "basketasfunctionoffinancialassetposition"}]}]], "Input",
+ CellLabel->"In[34]:=",ExpressionUUID->"9f9f62d4-9917-48f5-9af3-9bc46d35c92b"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Log", "[", 
+   RowBox[{"e0", "-", "z"}], "]"}], "+", 
+  RowBox[{"\[Delta]a", " ", 
+   RowBox[{"Log", "[", 
+    RowBox[{"e1", "+", 
+     RowBox[{"r", " ", "z"}]}], "]"}]}]}]], "Output",
+ CellChangeTimes->{3.951208329757036*^9},
+ CellLabel->"Out[34]=",ExpressionUUID->"6a07b284-41ec-4b01-8e4e-a99932b624eb"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FinancialAssetDemand", "=", 
+  RowBox[{
+   RowBox[{"Solve", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Grad", "[", 
+       RowBox[{"Lagrangian", ",", 
+        RowBox[{"{", "z", "}"}]}], "]"}], "==", "0"}], ",", "z"}], "]"}], "[", 
+   RowBox[{"[", "1", "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.951208334696821*^9, 
+  3.95120839137431*^9}},ExpressionUUID->"e5b23905-e319-40c8-95de-\
+6a48fc6da0b8"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"z", "\[Rule]", 
+   FractionBox[
+    RowBox[{
+     RowBox[{"-", "e1"}], "+", 
+     RowBox[{"e0", " ", "r", " ", "\[Delta]a"}]}], 
+    RowBox[{"r", " ", 
+     RowBox[{"(", 
+      RowBox[{"1", "+", "\[Delta]a"}], ")"}]}]]}], "}"}]], "Output",
+ CellChangeTimes->{{3.9512083497570667`*^9, 3.951208384701363*^9}},
+ CellLabel->"Out[40]=",ExpressionUUID->"3c022402-f8a6-457c-844f-eae487b0609b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"AnnaFinancialAssetDemand", "=", 
+  RowBox[{"FinancialAssetDemand", "/.", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"e0", "->", 
+      RowBox[{"ea", "[", 
+       RowBox[{"[", "1", "]"}], "]"}]}], ",", 
+     RowBox[{"e1", "->", 
+      RowBox[{"ea", "[", 
+       RowBox[{"[", "2", "]"}], "]"}]}]}], "}"}]}]}]], "Input",
+ CellChangeTimes->{{3.951208399123734*^9, 3.95120842448755*^9}, {
+  3.951208535313505*^9, 
+  3.95120853715373*^9}},ExpressionUUID->"4edef67e-8fab-4af1-92bf-\
+92e08c20df54"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"z", "\[Rule]", 
+   FractionBox[
+    RowBox[{
+     RowBox[{"-", "1"}], "+", 
+     RowBox[{"10", " ", "r", " ", "\[Delta]a"}]}], 
+    RowBox[{"r", " ", 
+     RowBox[{"(", 
+      RowBox[{"1", "+", "\[Delta]a"}], ")"}]}]]}], "}"}]], "Output",
+ CellChangeTimes->{3.9512084253811483`*^9},
+ CellLabel->"Out[41]=",ExpressionUUID->"1b329134-116f-44c9-99d3-c1fae6483da4"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"BobFinancialAssetDemand", "=", 
+  RowBox[{"FinancialAssetDemand", "/.", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"e0", "->", 
+      RowBox[{"eb", "[", 
+       RowBox[{"[", "1", "]"}], "]"}]}], ",", 
+     RowBox[{"e1", "->", 
+      RowBox[{"eb", "[", 
+       RowBox[{"[", "2", "]"}], "]"}]}], ",", 
+     RowBox[{"\[Delta]a", "->", "\[Delta]b"}]}], "}"}]}]}]], "Input",
+ CellChangeTimes->{{3.9512084319726267`*^9, 3.951208473916754*^9}},
+ CellLabel->"In[42]:=",ExpressionUUID->"97244c27-1c35-4a81-8012-e1ada21ff3ef"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"z", "\[Rule]", 
+   FractionBox[
+    RowBox[{
+     RowBox[{"-", "20"}], "+", 
+     RowBox[{"r", " ", "\[Delta]b"}]}], 
+    RowBox[{"r", " ", 
+     RowBox[{"(", 
+      RowBox[{"1", "+", "\[Delta]b"}], ")"}]}]]}], "}"}]], "Output",
+ CellChangeTimes->{3.951208477318098*^9},
+ CellLabel->"Out[42]=",ExpressionUUID->"210accc3-40b3-4593-bc2f-62118704fec5"]
+}, Open  ]],
+
+Cell["\<\
+In a financial market equilibrium, the rate of return of any financial asset \
+must be such that the net supply (or net demand) is zero. \
+\>", "Text",
+ CellChangeTimes->{{3.9512084911888523`*^9, 
+  3.95120852456735*^9}},ExpressionUUID->"475532bd-f8e3-4594-93ee-\
+abd4343d0582"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FinancialMktClears", "=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"AnnaFinancialAssetDemand", "[", 
+      RowBox[{"[", "1", "]"}], "]"}], "[", 
+     RowBox[{"[", "2", "]"}], "]"}], "+", 
+    RowBox[{
+     RowBox[{"BobFinancialAssetDemand", "[", 
+      RowBox[{"[", "1", "]"}], "]"}], "[", 
+     RowBox[{"[", "2", "]"}], "]"}]}], "==", "0"}]}]], "Input",
+ CellChangeTimes->{{3.951208544508527*^9, 3.9512085802397537`*^9}},
+ CellLabel->"In[49]:=",ExpressionUUID->"e80c0a6e-226b-427a-b3bb-ea767fd701fd"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   FractionBox[
+    RowBox[{
+     RowBox[{"-", "1"}], "+", 
+     RowBox[{"10", " ", "r", " ", "\[Delta]a"}]}], 
+    RowBox[{"r", " ", 
+     RowBox[{"(", 
+      RowBox[{"1", "+", "\[Delta]a"}], ")"}]}]], "+", 
+   FractionBox[
+    RowBox[{
+     RowBox[{"-", "20"}], "+", 
+     RowBox[{"r", " ", "\[Delta]b"}]}], 
+    RowBox[{"r", " ", 
+     RowBox[{"(", 
+      RowBox[{"1", "+", "\[Delta]b"}], ")"}]}]]}], "\[Equal]", 
+  "0"}]], "Output",
+ CellChangeTimes->{{3.951208549667461*^9, 3.951208581064165*^9}, 
+   3.951208619799992*^9},
+ CellLabel->"Out[49]=",ExpressionUUID->"34711801-d2b7-4617-ab17-f0df225a02f1"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["FinancialMktClears"], "Input",
+ CellChangeTimes->{{3.9512085825614023`*^9, 3.9512086287410717`*^9}},
+ CellLabel->"In[51]:=",ExpressionUUID->"f3b622d6-9f77-465c-8d00-7ef225f4b367"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   FractionBox[
+    RowBox[{
+     RowBox[{"-", "1"}], "+", 
+     RowBox[{"10", " ", "r", " ", "\[Delta]a"}]}], 
+    RowBox[{"r", " ", 
+     RowBox[{"(", 
+      RowBox[{"1", "+", "\[Delta]a"}], ")"}]}]], "+", 
+   FractionBox[
+    RowBox[{
+     RowBox[{"-", "20"}], "+", 
+     RowBox[{"r", " ", "\[Delta]b"}]}], 
+    RowBox[{"r", " ", 
+     RowBox[{"(", 
+      RowBox[{"1", "+", "\[Delta]b"}], ")"}]}]]}], "\[Equal]", 
+  "0"}]], "Output",
+ CellChangeTimes->{{3.951208596481172*^9, 3.95120862945397*^9}},
+ CellLabel->"Out[51]=",ExpressionUUID->"b0520ea2-f92a-4131-9cbf-985497a054da"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"EquilibriumRateofReturn", "=", 
+  RowBox[{
+   RowBox[{"Solve", "[", 
+    RowBox[{"FinancialMktClears", ",", "r"}], "]"}], "[", 
+   RowBox[{"[", "1", "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.9512086354117517`*^9, 3.951208667923031*^9}},
+ CellLabel->"In[54]:=",ExpressionUUID->"4dfe25b2-0c4f-42a2-b99a-a0042b2dd7dc"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"r", "\[Rule]", 
+   FractionBox[
+    RowBox[{"21", "+", 
+     RowBox[{"20", " ", "\[Delta]a"}], "+", "\[Delta]b"}], 
+    RowBox[{
+     RowBox[{"10", " ", "\[Delta]a"}], "+", "\[Delta]b", "+", 
+     RowBox[{"11", " ", "\[Delta]a", " ", "\[Delta]b"}]}]]}], "}"}]], "Output",
+ CellChangeTimes->{{3.951208639881239*^9, 3.9512086685288143`*^9}},
+ CellLabel->"Out[54]=",ExpressionUUID->"2aeebaee-be7e-4a90-857e-6ae2fb41706c"]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.951208675349059*^9, 
+  3.9512086775968924`*^9}},ExpressionUUID->"1525a8bf-1ada-43a0-8bd5-\
+6c0fcc94a26e"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Annabasket", "=", 
+  RowBox[{"Simplify", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"basketasfunctionoffinancialassetposition", "/.", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"e0", "->", 
+         RowBox[{"ea", "[", 
+          RowBox[{"[", "1", "]"}], "]"}]}], ",", 
+        RowBox[{"e1", "->", 
+         RowBox[{"ea", "[", 
+          RowBox[{"[", "2", "]"}], "]"}]}]}], "}"}]}], "/.", 
+     "AnnaFinancialAssetDemand"}], "/.", "EquilibriumRateofReturn"}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.951208713559168*^9, 3.9512088551993647`*^9}},
+ CellLabel->"In[63]:=",ExpressionUUID->"6e9ab8cb-1adf-41a9-a0da-61e595cf1b39"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"c0", "\[Rule]", 
+    FractionBox[
+     RowBox[{"210", "+", 
+      RowBox[{"11", " ", "\[Delta]b"}]}], 
+     RowBox[{"21", "+", 
+      RowBox[{"20", " ", "\[Delta]a"}], "+", "\[Delta]b"}]]}], ",", 
+   RowBox[{"c1", "\[Rule]", 
+    FractionBox[
+     RowBox[{"\[Delta]a", " ", 
+      RowBox[{"(", 
+       RowBox[{"210", "+", 
+        RowBox[{"11", " ", "\[Delta]b"}]}], ")"}]}], 
+     RowBox[{"\[Delta]b", "+", 
+      RowBox[{"\[Delta]a", " ", 
+       RowBox[{"(", 
+        RowBox[{"10", "+", 
+         RowBox[{"11", " ", "\[Delta]b"}]}], ")"}]}]}]]}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.951208718425267*^9, 3.951208763749146*^9}, 
+   3.95120879955655*^9, {3.951208838963475*^9, 3.951208855696232*^9}},
+ CellLabel->"Out[63]=",ExpressionUUID->"d8c50d2b-f570-4257-8977-6caec44e91ed"]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.951208740674059*^9, 
+  3.951208744262788*^9}},ExpressionUUID->"365e6a28-85b6-463d-b62f-\
+21a37ffbf3ff"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Bobbasket", "=", 
+  RowBox[{"Simplify", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"basketasfunctionoffinancialassetposition", "/.", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"e0", "->", 
+         RowBox[{"eb", "[", 
+          RowBox[{"[", "1", "]"}], "]"}]}], ",", 
+        RowBox[{"e1", "->", 
+         RowBox[{"eb", "[", 
+          RowBox[{"[", "2", "]"}], "]"}]}]}], "}"}]}], "/.", 
+     "BobFinancialAssetDemand"}], "/.", "EquilibriumRateofReturn"}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.951208866579496*^9, 3.951208867247313*^9}, {
+  3.951208918682499*^9, 3.951208933788405*^9}},
+ CellLabel->"In[66]:=",ExpressionUUID->"1696aea5-c639-4346-8b27-b0ebcbdc9b38"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"c0", "\[Rule]", 
+    FractionBox[
+     RowBox[{"21", "+", 
+      RowBox[{"220", " ", "\[Delta]a"}]}], 
+     RowBox[{"21", "+", 
+      RowBox[{"20", " ", "\[Delta]a"}], "+", "\[Delta]b"}]]}], ",", 
+   RowBox[{"c1", "\[Rule]", 
+    FractionBox[
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"21", "+", 
+        RowBox[{"220", " ", "\[Delta]a"}]}], ")"}], " ", "\[Delta]b"}], 
+     RowBox[{"\[Delta]b", "+", 
+      RowBox[{"\[Delta]a", " ", 
+       RowBox[{"(", 
+        RowBox[{"10", "+", 
+         RowBox[{"11", " ", "\[Delta]b"}]}], ")"}]}]}]]}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.951208868153678*^9, {3.951208926947207*^9, 3.9512089347135363`*^9}},
+ CellLabel->"Out[66]=",ExpressionUUID->"b9476525-30c7-4712-a46e-6a7357061b18"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{919, 611},
+WindowMargins->{{21, Automatic}, {Automatic, 73}},
+FrontEndVersion->"13.2 for Mac OS X ARM (64-bit) (January 30, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"b52ba479-330d-4794-8b1e-645f5029a7aa"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 199, 3, 30, "Input",ExpressionUUID->"be2c8140-1fb7-4e54-90d5-adaf71fe92c1"],
+Cell[CellGroupData[{
+Cell[782, 27, 164, 3, 98, "Title",ExpressionUUID->"547c9969-0e29-46c8-8c73-0f65886220bc"],
+Cell[949, 32, 462, 10, 104, "Text",ExpressionUUID->"62576bae-b290-4119-b7e3-be6729d89b2c"],
+Cell[1414, 44, 277, 6, 35, "Text",ExpressionUUID->"368d088d-59fa-4c0d-a2ba-e0f47aa0589c"],
+Cell[1694, 52, 257, 5, 30, "Input",ExpressionUUID->"901056da-2479-4076-a775-0a40a38513a3"],
+Cell[1954, 59, 416, 8, 58, "Text",ExpressionUUID->"eb25ac0f-43a7-4c35-ae12-531429bef65d"],
+Cell[CellGroupData[{
+Cell[2395, 71, 542, 11, 52, "Input",ExpressionUUID->"db684e95-2e72-49e6-b95b-7573917903ec"],
+Cell[2940, 84, 293, 5, 34, "Output",ExpressionUUID->"35dc3391-deea-46d9-aca2-54a2098c4bfd"],
+Cell[3236, 91, 291, 5, 34, "Output",ExpressionUUID->"906690f1-7f9f-4125-bcf2-d58b17af6691"]
+}, Open  ]],
+Cell[3542, 99, 597, 16, 52, "Input",ExpressionUUID->"b2ebb01e-9efb-4aac-8661-903424be17bb"],
+Cell[CellGroupData[{
+Cell[4164, 119, 381, 8, 30, "Input",ExpressionUUID->"b9c790ce-3b2c-47d2-9d39-321e366c61c0"],
+Cell[4548, 129, 281, 6, 34, "Output",ExpressionUUID->"eb8edfd5-5848-4f8b-a3ab-93511ba6a5ce"]
+}, Open  ]],
+Cell[4844, 138, 373, 8, 58, "Text",ExpressionUUID->"afe8edf8-a195-49be-8cad-f129072bf8f3"],
+Cell[CellGroupData[{
+Cell[5242, 150, 608, 15, 30, "Input",ExpressionUUID->"eddc3d00-1f80-4811-bcab-bf081ba21ef4"],
+Cell[5853, 167, 551, 14, 34, "Output",ExpressionUUID->"42fd5717-0931-454c-a6cf-d2e955d10f59"]
+}, Open  ]],
+Cell[6419, 184, 291, 6, 58, "Text",ExpressionUUID->"4c50a731-9e25-4bcc-a6a5-a4fea034acb6"],
+Cell[CellGroupData[{
+Cell[6735, 194, 664, 16, 30, "Input",ExpressionUUID->"0060f852-6f0e-47c5-9810-f55f21131540"],
+Cell[7402, 212, 845, 20, 53, "Output",ExpressionUUID->"a6b5f857-6423-46dd-9581-aa286121694c"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8284, 237, 863, 21, 52, "Input",ExpressionUUID->"f09d639d-20e8-49bb-847b-269d0d77bbe8"],
+Cell[9150, 260, 767, 19, 52, "Output",ExpressionUUID->"cf7bb49f-bb38-4b39-970b-b49c62ae4fa0"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9954, 284, 788, 19, 30, "Input",ExpressionUUID->"a09d2d6b-eefc-4733-9f3d-2d446a5b38c1"],
+Cell[10745, 305, 694, 19, 53, "Output",ExpressionUUID->"e4f99e67-a2c2-4291-8739-517f6118ed32"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11476, 329, 523, 13, 30, "Input",ExpressionUUID->"0185b9c1-2d43-4e9a-83f5-11a99bc34ecc"],
+Cell[12002, 344, 578, 13, 50, "Output",ExpressionUUID->"b54e3393-b499-45da-86e2-3d84a7cf65ec"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12617, 362, 343, 8, 30, "Input",ExpressionUUID->"160eb297-825a-4ac2-9b0a-bbfb7378fdff"],
+Cell[12963, 372, 249, 3, 34, "Output",ExpressionUUID->"12ffc8ed-a2fe-479b-9bfc-545933515d62"]
+}, Open  ]],
+Cell[13227, 378, 391, 8, 58, "Text",ExpressionUUID->"98c7f9d9-9384-42f4-b0d9-e2dcaebe3f74"],
+Cell[CellGroupData[{
+Cell[13643, 390, 642, 13, 30, "Input",ExpressionUUID->"7cdbec67-5741-4921-bc28-e45e1b543bfd"],
+Cell[14288, 405, 556, 12, 51, "Output",ExpressionUUID->"d1682344-2746-4be4-a12c-e447ca2c887e"]
+}, Open  ]],
+Cell[14859, 420, 244, 6, 35, "Text",ExpressionUUID->"669fbfcf-130c-41af-bdfc-94e035067c02"],
+Cell[CellGroupData[{
+Cell[15128, 430, 574, 14, 30, "Input",ExpressionUUID->"1ebcff2b-7490-4036-a1ac-360b335efb22"],
+Cell[15705, 446, 799, 21, 53, "Output",ExpressionUUID->"276ae033-9c52-4677-ad52-a039fc4d38bc"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16541, 472, 391, 9, 30, "Input",ExpressionUUID->"d61f2258-4122-4ac2-847a-62c9e0aae016"],
+Cell[16935, 483, 274, 4, 34, "Output",ExpressionUUID->"8be549db-1c21-4b20-a18b-d1c92a35f880"]
+}, Open  ]],
+Cell[17224, 490, 391, 8, 58, "Text",ExpressionUUID->"cb9e5d58-c2d4-4953-ad5d-6c2bacfa405a"],
+Cell[CellGroupData[{
+Cell[17640, 502, 699, 14, 30, "Input",ExpressionUUID->"75094e17-8e55-4cb1-9a4c-961d65b522da"],
+Cell[18342, 518, 554, 12, 51, "Output",ExpressionUUID->"b5116e86-b355-4451-995c-e6c3dbe76cb9"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18933, 535, 332, 8, 30, "Input",ExpressionUUID->"e5881769-9747-4227-a870-3cc47e7b08da"],
+Cell[19268, 545, 195, 3, 34, "Output",ExpressionUUID->"2fac2193-b01f-4bca-ae70-9335d9049f56"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[19512, 554, 159, 3, 98, "Title",ExpressionUUID->"6ff21f3a-c4d0-46ab-bb92-c8a23e9054f3"],
+Cell[19674, 559, 419, 8, 58, "Text",ExpressionUUID->"5d3fff19-d659-4b7f-91ac-d857050f9a16"],
+Cell[CellGroupData[{
+Cell[20118, 571, 389, 10, 30, "Input",ExpressionUUID->"02521c17-30f9-4a2a-9c06-a934289a4a55"],
+Cell[20510, 583, 336, 9, 34, "Output",ExpressionUUID->"36b0898b-13c2-4bb7-b8e5-7f776cf9be81"]
+}, Open  ]],
+Cell[20861, 595, 566, 10, 81, "Text",ExpressionUUID->"69f1becd-80a4-4451-805f-cb962c05b873"],
+Cell[21430, 607, 152, 3, 30, "Input",ExpressionUUID->"0148ebeb-88c9-4c07-9b79-03bf695b6e14"],
+Cell[CellGroupData[{
+Cell[21607, 614, 508, 11, 52, "Input",ExpressionUUID->"0a85f02d-74f3-4e24-a461-9d3c3ff6661c"],
+Cell[22118, 627, 195, 4, 34, "Output",ExpressionUUID->"ddd8e423-f308-4e4a-9664-b30d89ad7503"],
+Cell[22316, 633, 334, 9, 34, "Output",ExpressionUUID->"b8d92327-37cd-4084-a580-161acf5b9e50"]
+}, Open  ]],
+Cell[22665, 645, 295, 6, 58, "Text",ExpressionUUID->"1b0eda73-29c3-45a0-b60b-a39ad65ad35b"],
+Cell[CellGroupData[{
+Cell[22985, 655, 266, 6, 30, "Input",ExpressionUUID->"9f9f62d4-9917-48f5-9af3-9bc46d35c92b"],
+Cell[23254, 663, 340, 9, 34, "Output",ExpressionUUID->"6a07b284-41ec-4b01-8e4e-a99932b624eb"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[23631, 677, 431, 12, 30, "Input",ExpressionUUID->"e5b23905-e319-40c8-95de-6a48fc6da0b8"],
+Cell[24065, 691, 426, 11, 52, "Output",ExpressionUUID->"3c022402-f8a6-457c-844f-eae487b0609b"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[24528, 707, 515, 14, 30, "Input",ExpressionUUID->"4edef67e-8fab-4af1-92bf-92e08c20df54"],
+Cell[25046, 723, 401, 11, 52, "Output",ExpressionUUID->"1b329134-116f-44c9-99d3-c1fae6483da4"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[25484, 739, 541, 13, 30, "Input",ExpressionUUID->"97244c27-1c35-4a81-8012-e1ada21ff3ef"],
+Cell[26028, 754, 389, 11, 53, "Output",ExpressionUUID->"210accc3-40b3-4593-bc2f-62118704fec5"]
+}, Open  ]],
+Cell[26432, 768, 288, 6, 58, "Text",ExpressionUUID->"475532bd-f8e3-4594-93ee-abd4343d0582"],
+Cell[CellGroupData[{
+Cell[26745, 778, 534, 13, 30, "Input",ExpressionUUID->"e80c0a6e-226b-427a-b3bb-ea767fd701fd"],
+Cell[27282, 793, 642, 20, 53, "Output",ExpressionUUID->"34711801-d2b7-4617-ab17-f0df225a02f1"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[27961, 818, 193, 2, 30, "Input",ExpressionUUID->"f3b622d6-9f77-465c-8d00-7ef225f4b367"],
+Cell[28157, 822, 615, 19, 53, "Output",ExpressionUUID->"b0520ea2-f92a-4131-9cbf-985497a054da"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[28809, 846, 345, 7, 30, "Input",ExpressionUUID->"4dfe25b2-0c4f-42a2-b99a-a0042b2dd7dc"],
+Cell[29157, 855, 458, 10, 51, "Output",ExpressionUUID->"2aeebaee-be7e-4a90-857e-6ae2fb41706c"]
+}, Open  ]],
+Cell[29630, 868, 154, 3, 30, "Input",ExpressionUUID->"1525a8bf-1ada-43a0-8bd5-6c0fcc94a26e"],
+Cell[CellGroupData[{
+Cell[29809, 875, 663, 17, 73, "Input",ExpressionUUID->"6e9ab8cb-1adf-41a9-a0da-61e595cf1b39"],
+Cell[30475, 894, 837, 22, 53, "Output",ExpressionUUID->"d8c50d2b-f570-4257-8977-6caec44e91ed"]
+}, Open  ]],
+Cell[31327, 919, 152, 3, 30, "Input",ExpressionUUID->"365e6a28-85b6-463d-b62f-21a37ffbf3ff"],
+Cell[CellGroupData[{
+Cell[31504, 926, 708, 18, 73, "Input",ExpressionUUID->"1696aea5-c639-4346-8b27-b0ebcbdc9b38"],
+Cell[32215, 946, 793, 22, 101, "Output",ExpressionUUID->"b9476525-30c7-4712-a46e-6a7357061b18"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
