@@ -5,43 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ECON 510 - Spring 2026</title>
     <style>
+        :root {
+            /* Solarized Light */
+            --base01: #586e75;
+            --base00: #657b83;
+            --base1: #93a1a1;
+            --base2: #eee8d5;
+            --base3: #fdf6e3;
+            --yellow: #b58900;
+            --orange: #cb4b16;
+            --red: #dc322f;
+            --magenta: #d33682;
+            --violet: #6c71c4;
+            --blue: #268bd2;
+            --cyan: #2aa198;
+        }
         body {
             font-family: Arial, sans-serif;
             max-width: 800px;
             margin: 50px auto;
             padding: 20px;
             line-height: 1.6;
+            background-color: var(--base3);
+            color: var(--base00);
         }
         h1 {
-            color: #13294B; /* UNC Navy Blue */
+            color: var(--orange);
         }
         h2 {
-            color: #4B9CD3; /* Carolina Blue */
+            color: var(--blue);
         }
         .info {
-            background-color: #f4f4f4;
+            background-color: var(--base2);
             padding: 15px;
             border-radius: 5px;
             margin: 20px 0;
+            border-left: 4px solid var(--cyan);
         }
         .section-card {
-            background-color: #fff;
-            border: 1px solid #dee2e6;
+            background-color: var(--base3);
+            border: 1px solid var(--base1);
             border-radius: 8px;
             padding: 20px;
             margin: 15px 0;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .section-card h3 {
-            color: #13294B;
+            color: var(--magenta);
             margin-top: 0;
         }
         .section-card a {
-            color: #4B9CD3;
+            color: var(--blue);
             text-decoration: none;
         }
         .section-card a:hover {
             text-decoration: underline;
+            color: var(--cyan);
+        }
+        footer {
+            color: var(--base1);
         }
     </style>
 </head>

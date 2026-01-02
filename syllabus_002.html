@@ -10,47 +10,61 @@
 
     <style>
         :root {
-            --unc-navy: #13294B;
-            --carolina-blue: #4B9CD3;
-            --light-gray: #f8f9fa;
-            --border-color: #dee2e6;
+            /* Solarized Light */
+            --base03: #002b36;
+            --base02: #073642;
+            --base01: #586e75;
+            --base00: #657b83;
+            --base0: #839496;
+            --base1: #93a1a1;
+            --base2: #eee8d5;
+            --base3: #fdf6e3;
+            --yellow: #b58900;
+            --orange: #cb4b16;
+            --red: #dc322f;
+            --magenta: #d33682;
+            --violet: #6c71c4;
+            --blue: #268bd2;
+            --cyan: #2aa198;
+            --green: #859900;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             line-height: 1.6;
-            background-color: #f5f5f5;
+            background-color: var(--base3);
+            color: var(--base00);
             padding: 20px;
         }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
-            background: white;
+            background: var(--base3);
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         h1 {
-            color: var(--unc-navy);
+            color: var(--orange);
             font-size: 2rem;
             font-weight: bold;
             margin-bottom: 0.5rem;
         }
 
         .subtitle {
-            color: var(--carolina-blue);
+            color: var(--blue);
             font-size: 1.25rem;
             margin-bottom: 2rem;
         }
 
         .instructor-info {
-            background-color: var(--light-gray);
+            background-color: var(--base2);
             padding: 20px;
             border-radius: 6px;
             margin-bottom: 30px;
-            border-left: 4px solid var(--carolina-blue);
+            border-left: 4px solid var(--cyan);
         }
 
         .instructor-info p {
@@ -59,15 +73,15 @@
 
         /* Copenhagen Block Aesthetics */
         .accordion {
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--base1);
             border-radius: 6px;
             overflow: hidden;
             margin-bottom: 20px;
         }
 
         .accordion-item {
-            border-bottom: 1px solid var(--border-color);
-            background: white;
+            border-bottom: 1px solid var(--base1);
+            background: var(--base3);
         }
 
         .accordion-item:last-child {
@@ -75,8 +89,8 @@
         }
 
         .accordion-button {
-            background-color: var(--light-gray);
-            color: var(--unc-navy);
+            background-color: var(--base2);
+            color: var(--base01);
             font-weight: 600;
             font-size: 1.1rem;
             padding: 1rem 1.25rem;
@@ -84,18 +98,18 @@
         }
 
         .accordion-button:not(.collapsed) {
-            background-color: var(--carolina-blue);
-            color: white;
+            background-color: var(--blue);
+            color: var(--base3);
             box-shadow: none;
         }
 
         .accordion-button:focus {
             box-shadow: none;
-            border-color: var(--border-color);
+            border-color: var(--base1);
         }
 
         .accordion-button::after {
-            filter: brightness(0);
+            filter: brightness(0.5);
         }
 
         .accordion-button:not(.collapsed)::after {
@@ -104,8 +118,8 @@
 
         .accordion-body {
             padding: 1.25rem;
-            background-color: white;
-            border-top: 1px solid var(--border-color);
+            background-color: var(--base3);
+            border-top: 1px solid var(--base1);
         }
 
         /* Nested collapsible sections */
@@ -114,13 +128,13 @@
         }
 
         .nested-header {
-            background-color: #e9ecef;
+            background-color: var(--base2);
             padding: 0.75rem 1rem;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--base1);
             border-radius: 4px;
             cursor: pointer;
             font-weight: 500;
-            color: var(--unc-navy);
+            color: var(--base01);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -128,13 +142,14 @@
         }
 
         .nested-header:hover {
-            background-color: #dee2e6;
+            background-color: var(--base1);
+            color: var(--base3);
         }
 
         .nested-header.active {
-            background-color: var(--carolina-blue);
-            color: white;
-            border-color: var(--carolina-blue);
+            background-color: var(--cyan);
+            color: var(--base3);
+            border-color: var(--cyan);
         }
 
         .nested-header::after {
@@ -166,8 +181,8 @@
         }
 
         table th {
-            background-color: var(--unc-navy);
-            color: white;
+            background-color: var(--base01);
+            color: var(--base3);
             padding: 12px;
             text-align: left;
             font-weight: 600;
@@ -175,7 +190,7 @@
 
         table td {
             padding: 10px 12px;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--base1);
         }
 
         table tr:last-child td {
@@ -183,17 +198,18 @@
         }
 
         table tr:nth-child(even) {
-            background-color: #f8f9fa;
+            background-color: var(--base2);
         }
 
         /* Links */
         a {
-            color: var(--carolina-blue);
+            color: var(--blue);
             text-decoration: none;
         }
 
         a:hover {
             text-decoration: underline;
+            color: var(--cyan);
         }
 
         /* Lists */
@@ -207,13 +223,14 @@
         }
 
         .highlight {
-            background-color: #fff3cd;
+            background-color: var(--yellow);
+            color: var(--base3);
             padding: 2px 6px;
             border-radius: 3px;
         }
 
         .text-red {
-            color: #dc3545;
+            color: var(--red);
             font-weight: bold;
         }
 
@@ -228,25 +245,25 @@
 
         .schedule-table .week-col {
             font-weight: 600;
-            background-color: var(--light-gray);
+            background-color: var(--base2);
         }
 
         h5 {
-            color: var(--unc-navy);
+            color: var(--magenta);
             margin-top: 1.5rem;
             margin-bottom: 1rem;
         }
 
         h6 {
-            color: var(--unc-navy);
+            color: var(--violet);
             margin-top: 1rem;
             font-weight: 600;
         }
 
         blockquote {
-            background-color: var(--light-gray);
+            background-color: var(--base2);
             padding: 15px 20px;
-            border-left: 4px solid var(--carolina-blue);
+            border-left: 4px solid var(--violet);
             margin: 15px 0;
             font-style: italic;
         }
