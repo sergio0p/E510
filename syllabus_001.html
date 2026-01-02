@@ -272,7 +272,13 @@
 <body>
     <div class="container">
         <h1>ECON 510: Advanced Microeconomic Theory</h1>
-        <div class="subtitle">Spring 2026 - Section 001</div>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="subtitle" style="margin-bottom: 0;">Spring 2026 - Section 001</div>
+            <div>
+                <button class="btn btn-outline-secondary btn-sm" onclick="expandAll()">Expand All</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="collapseAll()">Collapse All</button>
+            </div>
+        </div>
 
         <div class="instructor-info">
             <p><strong>Instructor:</strong> Sérgio O. Parreiras</p>
@@ -282,12 +288,6 @@
             <p><strong>Location:</strong> Gardner Hall, Room 106</p>
             <p><strong>Office Hours:</strong> Mon-Wed-Fri 1:00 PM - 2:00 PM via Zoom (by Canvas appointment)</p>
             <p><strong>Canvas:</strong> <a href="https://uncch.instructure.com/courses/109260" target="_blank">https://uncch.instructure.com/courses/109260</a></p>
-        </div>
-
-        <!-- Expand/Collapse All Buttons -->
-        <div class="mb-3">
-            <button class="btn btn-outline-secondary btn-sm" onclick="expandAll()">Expand All</button>
-            <button class="btn btn-outline-secondary btn-sm" onclick="collapseAll()">Collapse All</button>
         </div>
 
         <!-- Main Accordion -->
