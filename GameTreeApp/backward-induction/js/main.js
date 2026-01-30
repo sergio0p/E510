@@ -1,5 +1,36 @@
 import { generateTree } from './tree-generator.js';
-import { computeLayout, adjustEarlyLeaves, redistributeColumns, renderTree } from './tree-renderer.js';
+import { computeLayout, adjustEarlyLeaves, redistributeColumns, renderTree, setupClickableEdges, markEdgeOptimal, shakeEdge } from './tree-renderer.js';
+import { updateFrontier, handleEdgeClick } from './game-logic.js';
+
+// Game state
+const gameState = {
+  root: null,
+  allNodes: [],
+  allLeaves: [],
+  frontierNodes: [],
+  phase: 'interaction'
+};
+
+function setupInteraction() {
+  setupClickableEdges(gameState.frontierNodes, (parentNode, childIndex) => {
+    handleEdgeClick(parentNode, childIndex, gameState, {
+      onCorrect: (node, index) => {
+        const child = node.children[index];
+        markEdgeOptimal(node.id, child.id, node);
+        console.log(`✓ Correct! Player ${node.player} chooses child ${index} (payoff: ${child.payoffs[node.player - 1]})`);
+      },
+      onWrong: (node, index) => {
+        const child = node.children[index];
+        shakeEdge(node.id, child.id);
+        console.log(`✗ Wrong. Player ${node.player} would not choose child ${index} (payoff: ${child.payoffs[node.player - 1]})`);
+      },
+      onFrontierComplete: (state) => {
+        console.log('🎉 All frontier nodes solved! Ready for animation phase.');
+        // Stage 3 will handle what happens next
+      }
+    });
+  });
+}
 
 function init() {
   const svg = document.getElementById('tree-svg');
@@ -97,6 +128,27 @@ function init() {
   adjustCanvasSize(allNodes, svg);
 
   renderTree(root, allNodes);
+
+  // Store in game state
+  gameState.root = root;
+  gameState.allNodes = allNodes;
+  gameState.allLeaves = allLeaves;
+  gameState.phase = 'interaction';
+
+  // Reset solved state on all nodes
+  allNodes.forEach(node => {
+    node.isSolved = false;
+    node.optimalChildIndex = null;
+  });
+
+  // Find initial frontier
+  gameState.frontierNodes = updateFrontier(allNodes);
+
+  console.log('Frontier nodes:', gameState.frontierNodes.map(n => n.id));
+  console.log('Frontier node players:', gameState.frontierNodes.map(n => `${n.id}: Player ${n.player}`));
+
+  // Set up click handlers
+  setupInteraction();
 }
 
 function adjustCanvasSize(allNodes, svg) {

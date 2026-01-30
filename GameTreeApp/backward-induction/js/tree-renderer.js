@@ -484,8 +484,16 @@ export function renderTree(root, allNodes) {
         <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.4"/>
       </filter>
       <marker id="arrowhead" markerWidth="10" markerHeight="7"
-              refX="9" refY="3.5" orient="auto" markerUnits="strokeWidth">
+              refX="9" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
         <polygon points="0 0, 10 3.5, 0 7" fill="#374151"/>
+      </marker>
+      <marker id="arrowhead-hover" markerWidth="22" markerHeight="20"
+              refX="21" refY="10" orient="auto" markerUnits="userSpaceOnUse">
+        <polygon points="0 0, 22 10, 0 20" fill="#374151"/>
+      </marker>
+      <marker id="arrowhead-red" markerWidth="10" markerHeight="7"
+              refX="9" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
+        <polygon points="0 0, 10 3.5, 0 7" fill="#DC2626"/>
       </marker>
     </defs>
     <g id="edges-layer"></g>
@@ -512,15 +520,94 @@ export function renderTree(root, allNodes) {
 function renderEdge(parent, child, childIndex) {
   const layer = document.getElementById('edges-layer');
 
-  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  path.setAttribute("id", `edge-${parent.id}-${child.id}`);
-  path.setAttribute("d", getEdgePath(parent, child));
-  path.setAttribute("fill", "none");
-  path.setAttribute("stroke", "#374151");
-  path.setAttribute("stroke-width", "2");
-  path.setAttribute("marker-end", "url(#arrowhead)");
+  const x1 = parent.x;
+  const y1 = parent.y;
+  const x2 = child.x;
+  const y2 = child.y;
 
-  layer.appendChild(path);
+  const NODE_RADIUS = 24;
+  const GAP = 1;
+  const ARROW_EXTENSION = 2;
+  const SPLIT_POINT_HORIZONTAL = 0.97; // Split at 97% for horizontal edges
+  const SPLIT_POINT_VERTICAL = 0.90; // Split at 90% for vertical edges (shorter)
+
+  const isPerpendicular = Math.abs(x2 - x1) < 5;
+
+  let fullPath, mainPath, taperPath;
+
+  if (isPerpendicular) {
+    // Vertical edge
+    const direction = y2 > y1 ? 1 : -1;
+    const startY = y1 + (NODE_RADIUS * direction);
+    const endY = y2 - ((NODE_RADIUS + GAP + ARROW_EXTENSION) * direction);
+    const splitY = startY + (endY - startY) * SPLIT_POINT_VERTICAL;
+
+    fullPath = `M ${x1} ${startY} L ${x1} ${endY}`;
+    mainPath = `M ${x1} ${startY} L ${x1} ${splitY}`;
+    taperPath = `M ${x1} ${splitY} L ${x1} ${endY}`;
+  } else {
+    // Horizontal curved edge
+    const startX = x1 + NODE_RADIUS;
+    const endX = x2 - (NODE_RADIUS + GAP + ARROW_EXTENSION);
+    const midX = (startX + endX) / 2;
+    const midY = (y1 + y2) / 2;
+    const offset = (y2 - y1) * 0.15;
+
+    // Full path
+    fullPath = `M ${startX} ${y1} Q ${midX} ${midY - offset} ${endX} ${y2}`;
+
+    // Split quadratic Bézier at specified point
+    const t = SPLIT_POINT_HORIZONTAL;
+    const splitX = (1-t)*(1-t)*startX + 2*(1-t)*t*midX + t*t*endX;
+    const splitY = (1-t)*(1-t)*y1 + 2*(1-t)*t*(midY - offset) + t*t*y2;
+
+    // Control points for the two segments
+    const mainCtrlX = (1-t)*startX + t*midX;
+    const mainCtrlY = (1-t)*y1 + t*(midY - offset);
+
+    const taperCtrlX = (1-t)*midX + t*endX;
+    const taperCtrlY = (1-t)*(midY - offset) + t*y2;
+
+    mainPath = `M ${startX} ${y1} Q ${mainCtrlX} ${mainCtrlY} ${splitX} ${splitY}`;
+    taperPath = `M ${splitX} ${splitY} Q ${taperCtrlX} ${taperCtrlY} ${endX} ${y2}`;
+  }
+
+  // Create invisible hit area (10px wide) for easier clicking
+  const hitArea = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  hitArea.setAttribute("id", `edge-hit-${parent.id}-${child.id}`);
+  hitArea.setAttribute("class", "edge-hit");
+  hitArea.setAttribute("data-parent-id", parent.id);
+  hitArea.setAttribute("data-child-index", childIndex);
+  hitArea.setAttribute("d", fullPath);
+  hitArea.setAttribute("fill", "none");
+  hitArea.setAttribute("stroke", "transparent");
+  hitArea.setAttribute("stroke-width", "10");
+  hitArea.setAttribute("pointer-events", "stroke");
+
+  // Create visible main path (85% of edge)
+  const visibleMain = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  visibleMain.setAttribute("id", `edge-main-${parent.id}-${child.id}`);
+  visibleMain.setAttribute("class", "edge edge-main");
+  visibleMain.setAttribute("d", mainPath);
+  visibleMain.setAttribute("fill", "none");
+  visibleMain.setAttribute("stroke", "#374151");
+  visibleMain.setAttribute("stroke-width", "2");
+  visibleMain.setAttribute("pointer-events", "none");
+
+  // Create visible taper path (15% near arrowhead)
+  const visibleTaper = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  visibleTaper.setAttribute("id", `edge-taper-${parent.id}-${child.id}`);
+  visibleTaper.setAttribute("class", "edge edge-taper");
+  visibleTaper.setAttribute("d", taperPath);
+  visibleTaper.setAttribute("fill", "none");
+  visibleTaper.setAttribute("stroke", "#374151");
+  visibleTaper.setAttribute("stroke-width", "2");
+  visibleTaper.setAttribute("marker-end", "url(#arrowhead)");
+  visibleTaper.setAttribute("pointer-events", "none");
+
+  layer.appendChild(hitArea);
+  layer.appendChild(visibleMain);
+  layer.appendChild(visibleTaper);
 
   // Add edge label
   const labels = ['a', 'b', 'c'];
@@ -679,4 +766,101 @@ function renderTerminalNode(node) {
   });
 
   layer.appendChild(group);
+}
+
+// Set up clickable edges on frontier nodes
+export function setupClickableEdges(frontierNodes, onClick) {
+  // First, remove all existing clickable states
+  document.querySelectorAll('.edge-hit.clickable').forEach(el => {
+    el.classList.remove('clickable');
+    el.onclick = null;
+    el.onmouseenter = null;
+    el.onmouseleave = null;
+  });
+
+  // Add clickable to frontier edges
+  frontierNodes.forEach(node => {
+    node.children.forEach((child, index) => {
+      const hitArea = document.getElementById(`edge-hit-${node.id}-${child.id}`);
+      const mainPath = document.getElementById(`edge-main-${node.id}-${child.id}`);
+      const taperPath = document.getElementById(`edge-taper-${node.id}-${child.id}`);
+
+      if (hitArea && mainPath && taperPath && !node.isSolved) {
+        hitArea.classList.add('clickable');
+        hitArea.onclick = () => onClick(node, index);
+
+        // Hover effects - apply to both main and taper paths when hit area is hovered
+        hitArea.onmouseenter = () => {
+          mainPath.classList.add('hover');
+          taperPath.classList.add('hover');
+          taperPath.setAttribute("marker-end", "url(#arrowhead-hover)");
+        };
+        hitArea.onmouseleave = () => {
+          mainPath.classList.remove('hover');
+          taperPath.classList.remove('hover');
+          taperPath.setAttribute("marker-end", "url(#arrowhead)");
+        };
+      }
+    });
+  });
+}
+
+// Mark an edge as optimal (red) and disable hover on all sibling edges
+export function markEdgeOptimal(parentId, childId, parentNode) {
+  const hitArea = document.getElementById(`edge-hit-${parentId}-${childId}`);
+  const mainPath = document.getElementById(`edge-main-${parentId}-${childId}`);
+  const taperPath = document.getElementById(`edge-taper-${parentId}-${childId}`);
+
+  if (hitArea && mainPath && taperPath) {
+    hitArea.classList.remove('clickable');
+    hitArea.onclick = null;
+    hitArea.onmouseenter = null;
+    hitArea.onmouseleave = null;
+
+    mainPath.classList.add('optimal');
+    taperPath.classList.add('optimal');
+    taperPath.setAttribute("marker-end", "url(#arrowhead-red)");
+  }
+
+  // Disable hover effects on all sibling edges of this node
+  if (parentNode && parentNode.children) {
+    parentNode.children.forEach(child => {
+      const siblingHitArea = document.getElementById(`edge-hit-${parentId}-${child.id}`);
+      const siblingMain = document.getElementById(`edge-main-${parentId}-${child.id}`);
+      const siblingTaper = document.getElementById(`edge-taper-${parentId}-${child.id}`);
+
+      if (siblingHitArea) {
+        siblingHitArea.classList.remove('clickable');
+        siblingHitArea.onmouseenter = null;
+        siblingHitArea.onmouseleave = null;
+
+        // Remove any active hover state
+        if (siblingMain) siblingMain.classList.remove('hover');
+        if (siblingTaper) {
+          siblingTaper.classList.remove('hover');
+          if (child.id !== childId) {
+            // Reset non-optimal edges to normal arrowhead
+            siblingTaper.setAttribute("marker-end", "url(#arrowhead)");
+          }
+        }
+      }
+    });
+  }
+}
+
+// Shake an edge (wrong answer feedback)
+export function shakeEdge(parentId, childId) {
+  const mainPath = document.getElementById(`edge-main-${parentId}-${childId}`);
+  const taperPath = document.getElementById(`edge-taper-${parentId}-${childId}`);
+
+  if (mainPath && taperPath) {
+    mainPath.classList.add('shake');
+    taperPath.classList.add('shake');
+
+    // Remove class after animation completes
+    setTimeout(() => {
+      mainPath.classList.remove('shake');
+      taperPath.classList.remove('shake');
+    }, 300);
+  }
 }

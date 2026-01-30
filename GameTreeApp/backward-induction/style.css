@@ -38,3 +38,35 @@ body {
 #new-game:hover {
   background: #1F2937;
 }
+
+/* Clickable hit area (invisible) */
+.edge-hit.clickable {
+  cursor: pointer;
+}
+
+/* Visible edge hover state (triggered by hit area hover) */
+.edge-main.hover {
+  stroke-width: 8px;
+}
+
+.edge-taper.hover {
+  stroke-width: 4px;
+}
+
+/* Optimal (correct) edge */
+.edge.optimal {
+  stroke: #DC2626;
+  stroke-width: 3px;
+  pointer-events: none;
+}
+
+/* Shake animation for wrong answers */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+.edge.shake {
+  animation: shake 0.3s ease-in-out;
+}
