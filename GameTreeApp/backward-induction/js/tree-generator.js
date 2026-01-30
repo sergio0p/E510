@@ -57,7 +57,24 @@ function expandNode(node) {
         y: 0
       };
     } else {
-      const actions = weightedChoice(ACTION_PROBABILITIES[childPeriod]);
+      // Determine actions for this child
+      let actions;
+
+      if (node.period === 0 && i === 0) {
+        // First child of root must be a decision node (never a leaf)
+        // Choose only between 2 or 3 actions (proportional to their original weights)
+        const prob2 = ACTION_PROBABILITIES[childPeriod][2];
+        const prob3 = ACTION_PROBABILITIES[childPeriod][3];
+        const total = prob2 + prob3;
+        actions = weightedChoice({
+          2: prob2 / total,
+          3: prob3 / total
+        });
+        console.log(`🔒 Root constraint: Forced child[0] to have ${actions} actions (not 0)`);
+      } else {
+        // Normal probabilistic choice
+        actions = weightedChoice(ACTION_PROBABILITIES[childPeriod]);
+      }
 
       if (actions === 0) {
         // Early termination — leaf
