@@ -1,6 +1,7 @@
 import { generateTree } from './tree-generator.js';
 import { computeLayout, adjustEarlyLeaves, redistributeColumns, renderTree, setupClickableEdges, markEdgeOptimal, shakeEdge } from './tree-renderer.js';
 import { updateFrontier, handleEdgeClick } from './game-logic.js';
+import { animateFrontierResolution } from './animations.js';
 
 // Game state
 const gameState = {
@@ -25,8 +26,32 @@ function setupInteraction() {
         console.log(`✗ Wrong. Player ${node.player} would not choose child ${index} (payoff: ${child.payoffs[node.player - 1]})`);
       },
       onFrontierComplete: (state) => {
-        console.log('🎉 All frontier nodes solved! Ready for animation phase.');
-        // Stage 3 will handle what happens next
+        console.log('🎉 All frontier nodes solved! Starting animation phase...');
+
+        // Transition to animation phase
+        gameState.phase = 'animating';
+
+        // Collect all solved nodes (current frontier)
+        const solvedNodes = state.frontierNodes.filter(n => n.isSolved);
+
+        // Start animation sequence
+        animateFrontierResolution(solvedNodes, state, {
+          onAllAnimationsComplete: () => {
+            console.log('✅ Animation phase complete!');
+
+            // Update frontier for next round
+            gameState.frontierNodes = updateFrontier(state.allNodes);
+
+            if (gameState.frontierNodes.length > 0) {
+              console.log('🔄 New frontier identified. Ready for next round.');
+              gameState.phase = 'interaction';
+              setupInteraction();
+            } else {
+              console.log('🏁 Backward induction complete! Root reached.');
+              gameState.phase = 'complete';
+            }
+          }
+        });
       }
     });
   });
