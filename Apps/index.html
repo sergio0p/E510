@@ -337,14 +337,14 @@
                 </h2>
                 <div id="about" class="accordion-collapse collapse" data-bs-parent="#appsAccordion">
                     <div class="accordion-body">
-                        <p>All apps feature:</p>
+                        <p><strong>Please send suggestions or bug reports via Canvas message.</strong></p>
+
+                        <p>These apps are designed to help you practice course concepts:</p>
                         <ul>
-                            <li><strong>No installation required</strong> - Run directly in your web browser</li>
-                            <li><strong>Random problem generation</strong> - Practice with unlimited examples</li>
-                            <li><strong>Instant feedback</strong> - Check your understanding immediately</li>
-                            <li><strong>Detailed solutions</strong> - Learn the step-by-step process</li>
-                            <li><strong>Print-friendly</strong> - Save or print problems for offline study</li>
-                            <li><strong>Responsive design</strong> - Works on desktop, tablet, and mobile devices</li>
+                            <li>Run directly in your browser (no installation needed)</li>
+                            <li>Generate random practice problems</li>
+                            <li>View step-by-step solutions</li>
+                            <li>Print problems for offline work</li>
                         </ul>
                     </div>
                 </div>
@@ -364,16 +364,16 @@
     <!-- Custom JavaScript for expand/collapse all -->
     <script>
         function expandAll() {
-            // Expand all accordion sections
             document.querySelectorAll('#appsAccordion .accordion-collapse').forEach(el => {
-                new bootstrap.Collapse(el, { toggle: false }).show();
+                const bsCollapse = bootstrap.Collapse.getOrCreateInstance(el);
+                bsCollapse.show();
             });
         }
 
         function collapseAll() {
-            // Collapse all accordion sections
             document.querySelectorAll('#appsAccordion .accordion-collapse').forEach(el => {
-                new bootstrap.Collapse(el, { toggle: false }).hide();
+                const bsCollapse = bootstrap.Collapse.getOrCreateInstance(el);
+                bsCollapse.hide();
             });
         }
     </script>
