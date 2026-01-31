@@ -122,6 +122,14 @@
             border-top: 1px solid var(--base1);
         }
 
+        .accordion-body p {
+            margin-bottom: 0.5rem;
+        }
+
+        .accordion-body p:last-child {
+            margin-bottom: 0;
+        }
+
         /* Section info styling */
         .section-details {
             background-color: var(--base2);
@@ -190,15 +198,25 @@
             </div>
         </div>
 
-        <div class="instructor-info">
-            <p><strong>Instructor:</strong> Sérgio O. Parreiras</p>
-            <p><strong>Email:</strong> sergiop@unc.edu</p>
-            <p><strong>Office:</strong> Gardner Hall, Room 200B</p>
-            <p><strong>Office Hours:</strong> Mon-Wed-Fri 1:00 PM - 2:00 PM via Zoom (by Canvas appointment)</p>
-        </div>
-
         <!-- Main Accordion -->
         <div class="accordion" id="courseAccordion">
+
+            <!-- Instructor Info -->
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#instructorInfo" aria-expanded="true">
+                        Instructor Information
+                    </button>
+                </h2>
+                <div id="instructorInfo" class="accordion-collapse collapse show" data-bs-parent="#courseAccordion">
+                    <div class="accordion-body">
+                        <p><strong>Instructor:</strong> Sérgio O. Parreiras</p>
+                        <p><strong>Email:</strong> sergiop@unc.edu</p>
+                        <p><strong>Office:</strong> Gardner Hall, Room 200B</p>
+                        <p><strong>Office Hours:</strong> Mon-Wed-Fri 1:00 PM - 2:00 PM via Zoom (by Canvas appointment)</p>
+                    </div>
+                </div>
+            </div>
 
             <!-- Section 001 -->
             <div class="accordion-item">
