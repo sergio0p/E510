@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Apps - ECON 510</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Solarized Light */
+            --base03: #002b36;
+            --base02: #073642;
+            --base01: #586e75;
+            --base00: #657b83;
+            --base0: #839496;
+            --base1: #93a1a1;
+            --base2: #eee8d5;
+            --base3: #fdf6e3;
+            --yellow: #b58900;
+            --orange: #cb4b16;
+            --red: #dc322f;
+            --magenta: #d33682;
+            --violet: #6c71c4;
+            --blue: #268bd2;
+            --cyan: #2aa198;
+            --green: #859900;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            background-color: var(--base3);
+            color: var(--base00);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--base3);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: var(--orange);
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--blue);
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .instructor-info {
+            background-color: var(--base2);
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--cyan);
+        }
+
+        .instructor-info p {
+            margin-bottom: 0.5rem;
+        }
+
+        .back-link {
+            color: var(--blue);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            color: var(--cyan);
+            text-decoration: underline;
+        }
+
+        .app-card {
+            background-color: var(--base2);
+            border-left: 4px solid var(--blue);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+            transition: transform 0.2s;
+        }
+
+        .app-card:hover {
+            transform: translateX(5px);
+        }
+
+        .app-card h3 {
+            margin-top: 0;
+            color: var(--magenta);
+            font-size: 1.3rem;
+        }
+
+        .app-card p {
+            margin: 10px 0;
+        }
+
+        .app-card ul {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+
+        .app-card li {
+            margin-bottom: 8px;
+        }
+
+        .app-link {
+            display: inline-block;
+            background-color: var(--blue);
+            color: var(--base3);
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+            font-weight: 500;
+        }
+
+        .app-link:hover {
+            background-color: var(--cyan);
+            color: var(--base3);
+        }
+
+        .about-section {
+            background-color: var(--base2);
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 30px;
+        }
+
+        .about-section h2 {
+            color: var(--violet);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--base1);
+            text-align: center;
+            color: var(--base1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p><a href="../index.html" class="back-link">← Back to Course Home</a></p>
+
+        <h1>Interactive Apps</h1>
+        <div class="subtitle">ECON 510 - Advanced Microeconomic Theory - Spring 2026</div>
+
+        <div class="instructor-info">
+            <p><strong>Instructor:</strong> Sérgio O. Parreiras</p>
+            <p>These interactive web applications help you understand key concepts in advanced microeconomic theory through hands-on practice and visualization.</p>
+        </div>
+
+        <!-- Backward Induction App -->
+        <div class="app-card">
+            <h3>Backward Induction Game Tree</h3>
+            <p><strong>Topics:</strong> Game Theory, Backward Induction, Sequential Games, Subgame Perfect Equilibrium</p>
+            <p><strong>Description:</strong> Visualize and solve extensive-form games using backward induction. This interactive app helps you understand:</p>
+            <ul>
+                <li>Game tree structure and sequential decision-making</li>
+                <li>How to find subgame perfect Nash equilibria</li>
+                <li>Best response dynamics in sequential games</li>
+                <li>The power of commitment and credibility in strategic situations</li>
+            </ul>
+            <p><strong>Features:</strong> Animated tree generation, interactive node selection, step-by-step solution visualization</p>
+            <a href="../GameTreeApp/backward-induction/index.html" class="app-link">Launch App →</a>
+        </div>
+
+        <!-- Discounting & Dynamic Consistency App -->
+        <div class="app-card">
+            <h3>Discounting & Dynamic Consistency</h3>
+            <p><strong>Topics:</strong> Intertemporal Choice, Exponential Discounting, Hyperbolic Discounting, Time Inconsistency</p>
+            <p><strong>Description:</strong> Practice calculating present utility and test for dynamic consistency of preferences. This app helps you understand:</p>
+            <ul>
+                <li>How to calculate present utility with exponential and hyperbolic discounting</li>
+                <li>The difference between time-consistent and time-inconsistent preferences</li>
+                <li>Why hyperbolic discounting leads to preference reversals</li>
+                <li>Applications to commitment problems and self-control</li>
+            </ul>
+            <p><strong>Features:</strong> Random problem generation, exponential vs hyperbolic discounting, dynamic consistency checks, detailed step-by-step solutions</p>
+            <a href="510discounting-app-dynamic-consistency-bootstrap.html" class="app-link">Launch App →</a>
+        </div>
+
+        <!-- Recursive Utility App -->
+        <div class="app-card">
+            <h3>Recursive Utility Calculator</h3>
+            <p><strong>Topics:</strong> Recursive Preferences, Aggregator Functions, Intertemporal Substitution, Risk Aversion</p>
+            <p><strong>Description:</strong> Calculate and compare recursive utility functions with different parameter specifications. This app helps you understand:</p>
+            <ul>
+                <li>How recursive utility separates risk aversion from intertemporal substitution</li>
+                <li>The role of the aggregator function in preference formation</li>
+                <li>Epstein-Zin preferences and their applications</li>
+                <li>Comparative statics with respect to preference parameters</li>
+            </ul>
+            <p><strong>Features:</strong> Interactive parameter controls, real-time calculations, comparison across specifications, detailed mathematical explanations</p>
+            <a href="510recursive-utility-app-bootstrap.html" class="app-link">Launch App →</a>
+        </div>
+
+        <!-- Arbitrage App -->
+        <div class="app-card">
+            <h3>Arbitrage & Asset Pricing</h3>
+            <p><strong>Topics:</strong> Financial Markets, Arbitrage, Complete Markets, State Prices, Arrow-Debreu Securities</p>
+            <p><strong>Description:</strong> Identify arbitrage opportunities and calculate state prices in complete markets. This app helps you understand:</p>
+            <ul>
+                <li>What constitutes an arbitrage opportunity</li>
+                <li>How to construct arbitrage portfolios</li>
+                <li>The relationship between asset prices and state prices</li>
+                <li>Market completeness and spanning</li>
+            </ul>
+            <p><strong>Features:</strong> Random market scenarios, arbitrage detection, state price calculation, portfolio construction guidance</p>
+            <a href="510-arbitrage-app-bootstrap.html" class="app-link">Launch App →</a>
+        </div>
+
+        <!-- About Section -->
+        <div class="about-section">
+            <h2>About These Apps</h2>
+            <p>All apps feature:</p>
+            <ul>
+                <li><strong>No installation required</strong> - Run directly in your web browser</li>
+                <li><strong>Random problem generation</strong> - Practice with unlimited examples</li>
+                <li><strong>Instant feedback</strong> - Check your understanding immediately</li>
+                <li><strong>Detailed solutions</strong> - Learn the step-by-step process</li>
+                <li><strong>Print-friendly</strong> - Save or print problems for offline study</li>
+                <li><strong>Responsive design</strong> - Works on desktop, tablet, and mobile devices</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p><a href="../index.html" class="back-link">Back to Course Home</a></p>
+            <p style="margin-top: 10px;">Economics Department | UNC Chapel Hill</p>
+        </footer>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

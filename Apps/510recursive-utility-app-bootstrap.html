@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recursive Utility Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="shared-bootstrap-edu.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+    <div class="container mt-4" data-app="recursive-utility">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="mb-0">Recursive Utility Calculator</h1>
+            <div class="btn-toolbar">
+                <button class="btn btn-sm btn-outline-secondary" onclick="expandAll()">Expand All</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="collapseAll()">Collapse All</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="resetApp()">Reset</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="window.print()">Print</button>
+            </div>
+        </div>
+
+        <!-- Instructor Info -->
+        <div class="edu-instructor-info">
+            <p><strong>Instructor:</strong> Sérgio O. Parreiras</p>
+            <p><strong>Course:</strong> ECON 510 - Advanced Microeconomic Theory</p>
+        </div>
+
+        <div class="accordion" id="mainAccordion">
+            <!-- Section 1: Problem Setup -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="problemHeader">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#problemSection" aria-expanded="true" aria-controls="problemSection">
+                        Problem Setup
+                    </button>
+                </h2>
+                <div id="problemSection" class="accordion-collapse collapse show" aria-labelledby="problemHeader" data-bs-parent="#mainAccordion">
+                    <div class="accordion-body">
+                        <div class="text-center mb-3">
+                            Calculate recursive utilities for the given flows. Press ESC to quit.
+                        </div>
+
+                        <div class="text-center mb-3" id="parameters-display">
+                            $\delta$ = ? | $\theta$ = ?
+                        </div>
+
+                        <div class="edu-formula" id="formula-display">
+                            $$U_k = \left((1-\delta) \cdot u_k^\theta + \delta \cdot U_{k+1}^\theta\right)^{1/\theta}$$
+                        </div>
+
+                        <div class="edu-two-column">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="text-center mb-0">Flow A</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="edu-flow-display" id="flow-a-display">A = (?, ?, ?, ?, ?, ?, ...)</div>
+                                    <div class="mt-3">
+                                        <strong>Given:</strong> $U_3$ = <span id="u3-a-display">?</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="text-center mb-0">Flow B</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="edu-flow-display" id="flow-b-display">B = (?, ?, ?, ?, ?, ?, ...)</div>
+                                    <div class="mt-3">
+                                        <strong>Given:</strong> $U_3$ = <span id="u3-b-display">?</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Your Calculations -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="answersHeader">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#answersSection" aria-expanded="true" aria-controls="answersSection">
+                        Your Calculations
+                    </button>
+                </h2>
+                <div id="answersSection" class="accordion-collapse collapse show" aria-labelledby="answersHeader" data-bs-parent="#mainAccordion">
+                    <div class="accordion-body">
+                        <div class="edu-two-column">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="text-center mb-0">Flow A Utilities</h3>
+                                </div>
+                                <div class="card-body d-flex flex-column align-items-center">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <label class="me-2">$U_2$:</label>
+                                        <input type="number" step="0.01" class="form-control" style="width: 150px;" id="u2-a-input">
+                                    </div>
+                                    <div class="d-flex align-items-center mb-2">
+                                        <label class="me-2">$U_1$:</label>
+                                        <input type="number" step="0.01" class="form-control" style="width: 150px;" id="u1-a-input">
+                                    </div>
+                                    <div class="d-flex align-items-center mb-2">
+                                        <label class="me-2">$U_0$:</label>
+                                        <input type="number" step="0.01" class="form-control" style="width: 150px;" id="u0-a-input">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="text-center mb-0">Flow B Utilities</h3>
+                                </div>
+                                <div class="card-body d-flex flex-column align-items-center">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <label class="me-2">$U_2$:</label>
+                                        <input type="number" step="0.01" class="form-control" style="width: 150px;" id="u2-b-input">
+                                    </div>
+                                    <div class="d-flex align-items-center mb-2">
+                                        <label class="me-2">$U_1$:</label>
+                                        <input type="number" step="0.01" class="form-control" style="width: 150px;" id="u1-b-input">
+                                    </div>
+                                    <div class="d-flex align-items-center mb-2">
+                                        <label class="me-2">$U_0$:</label>
+                                        <input type="number" step="0.01" class="form-control" style="width: 150px;" id="u0-b-input">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button class="btn btn-primary" onclick="generateNewProblem()">New Problem</button>
+                            <button class="btn btn-outline-secondary" onclick="checkAnswers()">Check Answers</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Solution -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="solutionHeader">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#solutionSection" aria-expanded="false" aria-controls="solutionSection">
+                        Solution
+                    </button>
+                </h2>
+                <div id="solutionSection" class="accordion-collapse collapse" aria-labelledby="solutionHeader" data-bs-parent="#mainAccordion">
+                    <div class="accordion-body">
+                        <div id="feedback"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentProblem = {};
+        const thetaValues = [1/4, 1/3, 1/2, 2/3, 3/4, 1];
+
+        function generateFlows() {
+            // Step 1: Generate terminal values
+            const RA = Math.floor(Math.random() * 7) + 8; // [8, 14]
+            const RB = Math.floor(Math.random() * (RA + 1)); // [0, RA]
+
+            // Step 2: Set parameters
+            const delta = 0.3 + Math.random() * 0.2; // [0.3, 0.5]
+            const theta = thetaValues[Math.floor(Math.random() * thetaValues.length)];
+
+            // Step 3: Backward construction using theta=1 for equivalence
+
+            // At t=2: Force equality with theta=1
+            const r2A = Math.random() * 10 + 5; // Random positive value
+            const r2B = r2A + delta * (RA - RB) / (1 - delta);
+
+            // At t=1: Equal utilities with theta=1, so r1A = r1B
+            const r1 = Math.random() * 10 + 5; // Same for both flows
+
+            // At t=0: Equal utilities with theta=1, so r0A = r0B
+            const r0 = Math.random() * 10 + 5; // Same for both flows
+
+            return {
+                flowA: {
+                    r0: r0,
+                    r1: r1,
+                    r2: r2A,
+                    R: RA
+                },
+                flowB: {
+                    r0: r0,
+                    r1: r1,
+                    r2: r2B,
+                    R: RB
+                },
+                delta: delta,
+                theta: theta
+            };
+        }
+
+        function calculateRecursiveUtility(flow, k, delta, theta) {
+            // Calculate U_k for given flow
+            if (k >= 3) {
+                return flow.R;
+            }
+
+            let uk, Uk_plus_1;
+
+            if (k === 2) {
+                uk = flow.r2;
+                Uk_plus_1 = flow.R; // U3 = R
+            } else if (k === 1) {
+                uk = flow.r1;
+                Uk_plus_1 = calculateRecursiveUtility(flow, 2, delta, theta); // U2
+            } else if (k === 0) {
+                uk = flow.r0;
+                Uk_plus_1 = calculateRecursiveUtility(flow, 1, delta, theta); // U1
+            }
+
+            if (theta === 1) {
+                // Linear case: U_k = (1-δ)u_k + δU_{k+1}
+                return (1 - delta) * uk + delta * Uk_plus_1;
+            } else {
+                // General case: U_k = ((1-δ)u_k^θ + δU_{k+1}^θ)^(1/θ)
+                const term1 = (1 - delta) * Math.pow(uk, theta);
+                const term2 = delta * Math.pow(Uk_plus_1, theta);
+                return Math.pow(term1 + term2, 1 / theta);
+            }
+        }
+
+        function generateNewProblem() {
+            const generated = generateFlows();
+
+            // Calculate correct answers
+            const correctAnswers = {
+                u2A: calculateRecursiveUtility(generated.flowA, 2, generated.delta, generated.theta),
+                u1A: calculateRecursiveUtility(generated.flowA, 1, generated.delta, generated.theta),
+                u0A: calculateRecursiveUtility(generated.flowA, 0, generated.delta, generated.theta),
+                u2B: calculateRecursiveUtility(generated.flowB, 2, generated.delta, generated.theta),
+                u1B: calculateRecursiveUtility(generated.flowB, 1, generated.delta, generated.theta),
+                u0B: calculateRecursiveUtility(generated.flowB, 0, generated.delta, generated.theta)
+            };
+
+            currentProblem = {
+                ...generated,
+                correctAnswers: correctAnswers
+            };
+
+            updateDisplay();
+            clearInputs();
+
+            // Pre-populate the solution (hidden in collapsed accordion)
+            document.getElementById('feedback').innerHTML = buildSolutionHTML();
+            renderMathInElement(document.getElementById('feedback'), {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ],
+                throwOnError: false
+            });
+        }
+
+        function updateDisplay() {
+            // Update parameters with KaTeX
+            document.getElementById('parameters-display').innerHTML =
+                `$\\delta = ${currentProblem.delta.toFixed(3)}, \\quad \\theta = ${formatTheta(currentProblem.theta)}$`;
+
+            // Update flow displays
+            const flowA = currentProblem.flowA;
+            const flowB = currentProblem.flowB;
+
+            document.getElementById('flow-a-display').innerHTML =
+                `$A = (${flowA.r0.toFixed(2)}, ${flowA.r1.toFixed(2)}, ${flowA.r2.toFixed(2)}, ${flowA.R}, ${flowA.R}, ${flowA.R}, \\ldots)$`;
+
+            document.getElementById('flow-b-display').innerHTML =
+                `$B = (${flowB.r0.toFixed(2)}, ${flowB.r1.toFixed(2)}, ${flowB.r2.toFixed(2)}, ${flowB.R}, ${flowB.R}, ${flowB.R}, \\ldots)$`;
+
+            // Update U3 values
+            document.getElementById('u3-a-display').innerHTML = `$${flowA.R}$`;
+            document.getElementById('u3-b-display').innerHTML = `$${flowB.R}$`;
+
+            // Re-render KaTeX for the problem section
+            renderMathInElement(document.getElementById('problemSection'), {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ],
+                throwOnError: false
+            });
+        }
+
+        function formatTheta(theta) {
+            // Convert decimal to fraction for display
+            if (theta === 1/4) return '1/4';
+            if (theta === 1/3) return '1/3';
+            if (theta === 1/2) return '1/2';
+            if (theta === 2/3) return '2/3';
+            if (theta === 3/4) return '3/4';
+            if (theta === 1) return '1';
+            return theta.toFixed(3);
+        }
+
+        function formatOneOverTheta(theta) {
+            // Convert 1/theta to clean display (e.g., 1/(1/2) = 2)
+            if (theta === 1/4) return '4';
+            if (theta === 1/3) return '3';
+            if (theta === 1/2) return '2';
+            if (theta === 2/3) return '3/2';
+            if (theta === 3/4) return '4/3';
+            if (theta === 1) return '1';
+            return (1/theta).toFixed(3);
+        }
+
+        function clearInputs() {
+            const inputs = ['u2-a-input', 'u1-a-input', 'u0-a-input', 'u2-b-input', 'u1-b-input', 'u0-b-input'];
+            inputs.forEach(id => {
+                document.getElementById(id).value = '';
+            });
+            document.getElementById('feedback').innerHTML = '';
+        }
+
+        function checkAnswers() {
+            if (!currentProblem.flowA) {
+                alert('Please generate a new problem first!');
+                return;
+            }
+
+            const userAnswers = {
+                u2A: parseFloat(document.getElementById('u2-a-input').value),
+                u1A: parseFloat(document.getElementById('u1-a-input').value),
+                u0A: parseFloat(document.getElementById('u0-a-input').value),
+                u2B: parseFloat(document.getElementById('u2-b-input').value),
+                u1B: parseFloat(document.getElementById('u1-b-input').value),
+                u0B: parseFloat(document.getElementById('u0-b-input').value)
+            };
+
+            // Check if all inputs are valid numbers
+            const invalidInputs = Object.entries(userAnswers).filter(([key, value]) => isNaN(value));
+            if (invalidInputs.length > 0) {
+                showFeedback('Please enter valid numbers for all utility values!', 'error');
+                return;
+            }
+
+            // Check answers with tolerance
+            const tolerance = 0.1;
+            const correct = currentProblem.correctAnswers;
+            const results = {};
+
+            Object.keys(userAnswers).forEach(key => {
+                results[key] = Math.abs(userAnswers[key] - correct[key]) <= tolerance;
+            });
+
+            const allCorrect = Object.values(results).every(r => r);
+
+            let feedback = '';
+            let feedbackType = '';
+
+            if (allCorrect) {
+                feedback = '<div class="edu-success">Excellent! All answers are correct!</div>';
+                feedbackType = 'success';
+            } else {
+                feedback = '<div class="edu-warning">Some answers need correction:<br><br>';
+
+                const labels = {
+                    u2A: 'Flow A, $U_2$', u1A: 'Flow A, $U_1$', u0A: 'Flow A, $U_0$',
+                    u2B: 'Flow B, $U_2$', u1B: 'Flow B, $U_1$', u0B: 'Flow B, $U_0$'
+                };
+
+                Object.entries(results).forEach(([key, isCorrect]) => {
+                    if (isCorrect) {
+                        feedback += `${labels[key]}: ✓ Correct<br>`;
+                    } else {
+                        feedback += `${labels[key]}: Your answer ${userAnswers[key].toFixed(3)} should be ${correct[key].toFixed(3)}<br>`;
+                    }
+                });
+                feedback += '</div>';
+                feedbackType = 'warning';
+            }
+
+            // Add the full solution
+            feedback += buildSolutionHTML();
+
+            // Populate feedback and expand accordion
+            document.getElementById('feedback').innerHTML = feedback;
+            const solutionSection = document.getElementById('solutionSection');
+            new bootstrap.Collapse(solutionSection, {toggle: false}).show();
+
+            // Render KaTeX
+            renderMathInElement(document.getElementById('feedback'), {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ],
+                throwOnError: false
+            });
+        }
+
+        function buildSolutionHTML() {
+            const flowA = currentProblem.flowA;
+            const flowB = currentProblem.flowB;
+            const delta = currentProblem.delta;
+            const theta = currentProblem.theta;
+            const correct = currentProblem.correctAnswers;
+
+            let solution = `<div class="edu-code" style="margin-top: 20px;">`;
+            solution += `$$\\text{Complete Solution}$$`;
+            solution += `$$\\text{Given:}$$`;
+            solution += `$$\\text{Flow A} = (${flowA.r0.toFixed(2)}, ${flowA.r1.toFixed(2)}, ${flowA.r2.toFixed(2)}, ${flowA.R}, ${flowA.R}, ${flowA.R}, \\ldots)$$`;
+            solution += `$$\\text{Flow B} = (${flowB.r0.toFixed(2)}, ${flowB.r1.toFixed(2)}, ${flowB.r2.toFixed(2)}, ${flowB.R}, ${flowB.R}, ${flowB.R}, \\ldots)$$`;
+            solution += `$$\\delta = ${delta.toFixed(3)}, \\quad \\theta = ${formatTheta(theta)}$$`;
+            solution += `$$\\text{Formula: } U_k = \\left((1-\\delta) \\cdot u_k^\\theta + \\delta \\cdot U_{k+1}^\\theta\\right)^{1/\\theta}$$`;
+            solution += `$$\\text{Flow A Calculations:}$$`;
+            solution += `$$U_2^A = \\left((1-${delta.toFixed(3)}) \\cdot ${flowA.r2.toFixed(2)}^{${formatTheta(theta)}} + ${delta.toFixed(3)} \\cdot ${flowA.R}^{${formatTheta(theta)}}\\right)^{${formatOneOverTheta(theta)}} = ${correct.u2A.toFixed(3)}$$`;
+            solution += `$$U_1^A = \\left((1-${delta.toFixed(3)}) \\cdot ${flowA.r1.toFixed(2)}^{${formatTheta(theta)}} + ${delta.toFixed(3)} \\cdot ${correct.u2A.toFixed(3)}^{${formatTheta(theta)}}\\right)^{${formatOneOverTheta(theta)}} = ${correct.u1A.toFixed(3)}$$`;
+            solution += `$$U_0^A = \\left((1-${delta.toFixed(3)}) \\cdot ${flowA.r0.toFixed(2)}^{${formatTheta(theta)}} + ${delta.toFixed(3)} \\cdot ${correct.u1A.toFixed(3)}^{${formatTheta(theta)}}\\right)^{${formatOneOverTheta(theta)}} = ${correct.u0A.toFixed(3)}$$`;
+            solution += `$$\\text{Flow B Calculations:}$$`;
+            solution += `$$U_2^B = \\left((1-${delta.toFixed(3)}) \\cdot ${flowB.r2.toFixed(2)}^{${formatTheta(theta)}} + ${delta.toFixed(3)} \\cdot ${flowB.R}^{${formatTheta(theta)}}\\right)^{${formatOneOverTheta(theta)}} = ${correct.u2B.toFixed(3)}$$`;
+            solution += `$$U_1^B = \\left((1-${delta.toFixed(3)}) \\cdot ${flowB.r1.toFixed(2)}^{${formatTheta(theta)}} + ${delta.toFixed(3)} \\cdot ${correct.u2B.toFixed(3)}^{${formatTheta(theta)}}\\right)^{${formatOneOverTheta(theta)}} = ${correct.u1B.toFixed(3)}$$`;
+            solution += `$$U_0^B = \\left((1-${delta.toFixed(3)}) \\cdot ${flowB.r0.toFixed(2)}^{${formatTheta(theta)}} + ${delta.toFixed(3)} \\cdot ${correct.u1B.toFixed(3)}^{${formatTheta(theta)}}\\right)^{${formatOneOverTheta(theta)}} = ${correct.u0B.toFixed(3)}$$`;
+            solution += `</div>`;
+
+            return solution;
+        }
+
+        function showFeedback(message, type) {
+            const feedback = document.getElementById('feedback');
+            feedback.innerHTML = message;
+            const classMap = {'success': 'edu-success', 'error': 'edu-error', 'warning': 'edu-warning', 'code': 'edu-code'};
+            feedback.className = classMap[type] || 'edu-success';
+
+            // Auto-expand the solution accordion section
+            const solutionSection = document.getElementById('solutionSection');
+            new bootstrap.Collapse(solutionSection, {toggle: false}).show();
+        }
+
+        // Bootstrap utility functions
+        function expandAll() {
+            document.querySelectorAll('.accordion-collapse').forEach(el => {
+                new bootstrap.Collapse(el, { toggle: false }).show();
+            });
+        }
+
+        function collapseAll() {
+            document.querySelectorAll('.accordion-collapse').forEach(el => {
+                new bootstrap.Collapse(el, { toggle: false }).hide();
+            });
+        }
+
+        function resetApp() {
+            document.querySelectorAll('input[type="number"], input[type="text"]').forEach(i => i.value = '');
+            document.getElementById('feedback').innerHTML = '';
+            document.querySelectorAll('.btn.active').forEach(b => b.classList.remove('active'));
+            // Collapse the solution section when resetting
+            const solutionSection = document.getElementById('solutionSection');
+            new bootstrap.Collapse(solutionSection, {toggle: false}).hide();
+        }
+
+        // Keyboard event handling
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                if (confirm('Are you sure you want to quit?')) {
+                    window.close();
+                }
+            }
+        });
+
+        // Initialize on page load
+        window.addEventListener('load', function() {
+            generateNewProblem();
+        });
+    </script>
+
+    <!-- Bootstrap JS must load before our scripts use bootstrap.Collapse -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- KaTeX auto-render on page load -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false},
+                    {left: '\\[', right: '\\]', display: true},
+                    {left: '\\(', right: '\\)', display: false}
+                ],
+                throwOnError: false
+            });
+        });
+    </script>
+</body>
+</html>

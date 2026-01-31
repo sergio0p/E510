@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arbitrage</title>
+
+    <!-- Bootstrap 5.3.0 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Shared Educational Styles -->
+    <link rel="stylesheet" href="shared-bootstrap-edu.css">
+
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+    <style>
+        /* Arbitrage-specific styles */
+        .arb-button {
+            padding: 12px 35px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: 2px solid var(--base01);
+            cursor: pointer;
+            transition: all 0.3s;
+            background: var(--base3);
+            color: var(--base01);
+            text-transform: uppercase;
+        }
+
+        .arb-button:hover {
+            background: var(--base2);
+        }
+
+        .arb-button.selected {
+            background: var(--blue);
+            border-color: var(--blue);
+            color: var(--base3);
+        }
+
+        #question2-section {
+            display: none;
+        }
+
+        .returns-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .returns-table th {
+            background-color: var(--base01);
+            color: var(--base3);
+            padding: 12px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .returns-table td {
+            padding: 10px 12px;
+            border: 1px solid var(--base1);
+            text-align: center;
+            background-color: var(--base3);
+        }
+
+        .returns-table tr:nth-child(even) td {
+            background-color: var(--base2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4" data-app="arbitrage">
+        <!-- Header with utility buttons -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="mb-0">Arbitrage</h1>
+            <div class="btn-toolbar gap-1">
+                <button class="btn btn-sm btn-outline-secondary" onclick="expandAll()">Expand All</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="collapseAll()">Collapse All</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="resetApp()">Reset</button>
+                <button class="btn btn-sm btn-outline-secondary" onclick="window.print()">Print</button>
+            </div>
+        </div>
+
+        <!-- Instructor Info -->
+        <div class="edu-instructor-info">
+            <p><strong>Instructor:</strong> Sérgio O. Parreiras</p>
+            <p><strong>Course:</strong> ECON 510 - Advanced Microeconomic Theory</p>
+        </div>
+
+        <!-- Main accordion -->
+        <div class="accordion" id="mainAccordion">
+            <!-- Problem Setup -->
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#problemSection">
+                        Problem Setup
+                    </button>
+                </h2>
+                <div id="problemSection" class="accordion-collapse collapse show">
+                    <div class="accordion-body">
+                        <p>
+                            Consider a financial-markets economy with three states: <strong>$s_0$, $s_1$, $s_2$</strong>.
+                            There are also three financial assets: <strong>$a$, $b$, $c$</strong> whose (gross) returns
+                            in each state are:
+                        </p>
+
+                        <table class="returns-table">
+                            <thead>
+                                <tr>
+                                    <th>Asset</th>
+                                    <th>State $s_0$</th>
+                                    <th>State $s_1$</th>
+                                    <th>State $s_2$</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Asset $a$</strong></td>
+                                    <td id="r0a">-1</td>
+                                    <td id="r1a">?</td>
+                                    <td id="r2a">?</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Asset $b$</strong></td>
+                                    <td id="r0b">-1</td>
+                                    <td id="r1b">?</td>
+                                    <td id="r2b">?</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Asset $c$</strong></td>
+                                    <td id="r0c">-1</td>
+                                    <td id="r1c">?</td>
+                                    <td id="r2c">?</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="text-center mt-3">
+                            <button class="btn btn-primary" onclick="generateNewProblem()">New Problem</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Your Calculations -->
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#answersSection">
+                        Your Calculations
+                    </button>
+                </h2>
+                <div id="answersSection" class="accordion-collapse collapse show">
+                    <div class="accordion-body">
+                        <!-- Question 1 -->
+                        <div id="question1-section">
+                            <div class="edu-question">
+                                <h5>Question 1: Are there arbitrage opportunities in this economy?</h5>
+                                <div class="d-flex gap-3 justify-content-center mt-3">
+                                    <button class="arb-button" id="arb-yes">YES</button>
+                                    <button class="arb-button" id="arb-no">NO</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Question 2 (hidden initially) -->
+                        <div id="question2-section">
+                            <div class="edu-question">
+                                <h5>Question 2: Create a portfolio to exploit the arbitrage opportunity</h5>
+                                <p style="font-size: 0.9rem; margin-top: 10px;">
+                                    Enter the dollar amount you would invest in each asset.
+                                    If you are selling (shorting) an asset, enter a negative amount.
+                                </p>
+                                <div class="card-body d-flex flex-column align-items-center">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <label class="me-2">$z_a$:</label>
+                                        <input type="number" step="0.01" class="form-control" style="width: 150px;" id="za-input" placeholder="Asset a">
+                                    </div>
+                                    <div class="d-flex align-items-center mb-2">
+                                        <label class="me-2">$z_b$:</label>
+                                        <input type="number" step="0.01" class="form-control" style="width: 150px;" id="zb-input" placeholder="Asset b">
+                                    </div>
+                                    <div class="d-flex align-items-center mb-2">
+                                        <label class="me-2">$z_c$:</label>
+                                        <input type="number" step="0.01" class="form-control" style="width: 150px;" id="zc-input" placeholder="Asset c">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-3">
+                            <button class="btn btn-primary" id="submit-btn" onclick="handleSubmit()">Submit Answer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Solution -->
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#solutionSection">
+                        Solution
+                    </button>
+                </h2>
+                <div id="solutionSection" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <div id="feedback"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- KaTeX JS -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+    <script>
+        // Global state
+        let currentProblem = {};
+        let userAnswer1 = null;
+        let stage = 1;
+
+        // Helper function to format numbers without trailing zeros
+        function formatNumber(num, maxDecimals = 4) {
+            return parseFloat(num.toFixed(maxDecimals)).toString();
+        }
+
+        function generateReturns() {
+            const r0a = -1, r0b = -1, r0c = -1;
+
+            const r1a = Math.floor(Math.random() * 5) + 2;
+            const r2b = Math.floor(Math.random() * 5) + 2;
+
+            const minVal = Math.min(r1a, r2b);
+            const maxRange = minVal - 1;
+
+            // Generate discrete values with 0.1 increments
+            const possibleValues = [];
+            for (let i = 0.2; i <= maxRange; i += 0.1) {
+                possibleValues.push(parseFloat(i.toFixed(1)));
+            }
+
+            const r2a = possibleValues[Math.floor(Math.random() * possibleValues.length)];
+            const r1b = possibleValues[Math.floor(Math.random() * possibleValues.length)];
+
+            const coinFlip = Math.random() < 0.5;
+
+            const lambdaValues = [];
+            for (let i = 0.25; i <= 0.75; i += 0.05) {
+                lambdaValues.push(parseFloat(i.toFixed(2)));
+            }
+            const lambda = lambdaValues[Math.floor(Math.random() * lambdaValues.length)];
+
+            let r1c, r2c;
+            let arbitrageExists = false;
+            let arbitragePortfolio = null;
+            let e = 0;
+
+            if (coinFlip) {
+                r1c = lambda * r1a + (1 - lambda) * r1b;
+                r2c = lambda * r2a + (1 - lambda) * r2b;
+                arbitrageExists = false;
+            } else {
+                const eValues = [];
+                for (let i = -0.75; i <= -0.10; i += 0.05) {
+                    eValues.push(parseFloat(i.toFixed(2)));
+                }
+                for (let i = 0.10; i <= 0.75; i += 0.05) {
+                    eValues.push(parseFloat(i.toFixed(2)));
+                }
+                e = eValues[Math.floor(Math.random() * eValues.length)];
+
+                r1c = (lambda + e) * r1a + (1 - lambda) * r1b;
+                r2c = (lambda + e) * r2a + (1 - lambda) * r2b;
+                arbitrageExists = true;
+
+                if (lambda + e > 0) {
+                    arbitragePortfolio = {
+                        za: -(lambda + e),
+                        zb: -(1 - lambda),
+                        zc: 1
+                    };
+                } else {
+                    arbitragePortfolio = {
+                        za: (lambda + e),
+                        zb: (1 - lambda),
+                        zc: -1
+                    };
+                }
+            }
+
+            return {
+                returns: {
+                    a: [r0a, r1a, r2a],
+                    b: [r0b, r1b, r2b],
+                    c: [r0c, r1c, r2c]
+                },
+                arbitrageExists: arbitrageExists,
+                arbitragePortfolio: arbitragePortfolio,
+                lambda: lambda,
+                e: e
+            };
+        }
+
+        function isArbitrage(za, zb, zc, returns) {
+            const payoffs = [];
+            for (let state = 0; state < 3; state++) {
+                const payoff = za * returns.a[state] + zb * returns.b[state] + zc * returns.c[state];
+                payoffs.push(payoff);
+            }
+
+            const allNonNegative = payoffs.every(p => p >= -0.001);
+            const somePositive = payoffs.some(p => p > 0.001);
+
+            return { isArb: allNonNegative && somePositive, payoffs: payoffs };
+        }
+
+        // Generate "no arbitrage" feedback with KaTeX
+        function generateNoArbitrageFeedback() {
+            const r = currentProblem.returns;
+            let feedback = `<strong>Correct!</strong> There is no arbitrage opportunity in this economy.<br><br>`;
+            feedback += `<div class="edu-two-column">`;
+
+            // Left column
+            feedback += `<div>`;
+            feedback += `There is no portfolio $\\mathbf{z} = (z_a, z_b, z_c)$ such that:<br><br>`;
+            feedback += `The portfolio does not yield losses in any state:<br><br>`;
+            feedback += `$z_a \\cdot r_{0a} + z_b \\cdot r_{0b} + z_c \\cdot r_{0c} \\geq 0$<br><br>`;
+            feedback += `$z_a \\cdot r_{1a} + z_b \\cdot r_{1b} + z_c \\cdot r_{1c} \\geq 0$<br><br>`;
+            feedback += `$z_a \\cdot r_{2a} + z_b \\cdot r_{2b} + z_c \\cdot r_{2c} \\geq 0$<br><br>`;
+            feedback += `AND yields gains in at least one state (with at least one inequality strict).`;
+            feedback += `</div>`;
+
+            // Right column - specific values
+            feedback += `<div>`;
+            feedback += `<br><br>`;
+            feedback += `With the given returns:<br><br>`;
+            feedback += `$-z_a - z_b - z_c \\geq 0$<br><br>`;
+            feedback += `$${formatNumber(r.a[1])} z_a + ${formatNumber(r.b[1])} z_b + ${formatNumber(r.c[1])} z_c \\geq 0$<br><br>`;
+            feedback += `$${formatNumber(r.a[2])} z_a + ${formatNumber(r.b[2])} z_b + ${formatNumber(r.c[2])} z_c \\geq 0$<br><br>`;
+            feedback += `</div>`;
+
+            feedback += `</div>`;
+            return feedback;
+        }
+
+        function generateNewProblem() {
+            const problem = generateReturns();
+            currentProblem = problem;
+
+            document.getElementById('r1a').textContent = formatNumber(problem.returns.a[1]);
+            document.getElementById('r2a').textContent = formatNumber(problem.returns.a[2]);
+            document.getElementById('r1b').textContent = formatNumber(problem.returns.b[1]);
+            document.getElementById('r2b').textContent = formatNumber(problem.returns.b[2]);
+            document.getElementById('r1c').textContent = formatNumber(problem.returns.c[1]);
+            document.getElementById('r2c').textContent = formatNumber(problem.returns.c[2]);
+
+            stage = 1;
+            userAnswer1 = null;
+            document.getElementById('question1-section').style.display = 'block';
+            document.getElementById('question2-section').style.display = 'none';
+            document.getElementById('arb-yes').classList.remove('selected');
+            document.getElementById('arb-no').classList.remove('selected');
+            document.getElementById('za-input').value = '';
+            document.getElementById('zb-input').value = '';
+            document.getElementById('zc-input').value = '';
+            document.getElementById('feedback').innerHTML = '';
+            document.getElementById('submit-btn').textContent = 'Submit Answer';
+
+            // Re-render KaTeX in problem section
+            renderMathInElement(document.getElementById('problemSection'), {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ],
+                throwOnError: false
+            });
+        }
+
+        document.getElementById('arb-yes').addEventListener('click', function() {
+            userAnswer1 = 'yes';
+            document.getElementById('arb-yes').classList.add('selected');
+            document.getElementById('arb-no').classList.remove('selected');
+        });
+
+        document.getElementById('arb-no').addEventListener('click', function() {
+            userAnswer1 = 'no';
+            document.getElementById('arb-no').classList.add('selected');
+            document.getElementById('arb-yes').classList.remove('selected');
+        });
+
+        function handleSubmit() {
+            if (stage === 1) {
+                handleQuestion1Submit();
+            } else if (stage === 2) {
+                handleQuestion2Submit();
+            }
+        }
+
+        function handleQuestion1Submit() {
+            if (userAnswer1 === null) {
+                showFeedback('Please select YES or NO before submitting.', 'error');
+                return;
+            }
+
+            const correctAnswer = currentProblem.arbitrageExists ? 'yes' : 'no';
+
+            if (userAnswer1 === 'no' && correctAnswer === 'no') {
+                let feedback = generateNoArbitrageFeedback();
+                showFeedback(feedback, 'success');
+            } else if (userAnswer1 === 'no' && correctAnswer === 'yes') {
+                const arb = currentProblem.arbitragePortfolio;
+                const result = isArbitrage(arb.za, arb.zb, arb.zc, currentProblem.returns);
+
+                let feedback = `<strong>Incorrect.</strong> There IS an arbitrage opportunity in this economy.<br><br>`;
+                feedback += `<strong>Example arbitrage portfolio:</strong><br>`;
+                feedback += `$\\mathbf{z} = (${formatNumber(arb.za, 3)}, ${formatNumber(arb.zb, 3)}, ${formatNumber(arb.zc, 3)})$<br><br>`;
+                feedback += `<strong>Payoffs by state:</strong><br>`;
+                feedback += `State $s_0$: ${formatNumber(result.payoffs[0], 3)}<br>`;
+                feedback += `State $s_1$: ${formatNumber(result.payoffs[1], 3)}<br>`;
+                feedback += `State $s_2$: ${formatNumber(result.payoffs[2], 3)}<br><br>`;
+                feedback += `This is an arbitrage because all payoffs are non-negative and at least one is strictly positive.`;
+                showFeedback(feedback, 'error');
+            } else if (userAnswer1 === 'yes') {
+                stage = 2;
+                document.getElementById('question2-section').style.display = 'block';
+                document.getElementById('submit-btn').textContent = 'Check Portfolio';
+                document.getElementById('feedback').innerHTML = '';
+
+                // Render KaTeX in the newly visible section
+                renderMathInElement(document.getElementById('question2-section'), {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        function handleQuestion2Submit() {
+            const za = parseFloat(document.getElementById('za-input').value);
+            const zb = parseFloat(document.getElementById('zb-input').value);
+            const zc = parseFloat(document.getElementById('zc-input').value);
+
+            if (isNaN(za) || isNaN(zb) || isNaN(zc)) {
+                showFeedback('Please enter valid numbers for all three portfolio positions.', 'error');
+                return;
+            }
+
+            const result = isArbitrage(za, zb, zc, currentProblem.returns);
+            const correctAnswer = currentProblem.arbitrageExists ? 'yes' : 'no';
+
+            let feedback = `<strong>Your portfolio:</strong> $\\mathbf{z} = (${formatNumber(za, 3)}, ${formatNumber(zb, 3)}, ${formatNumber(zc, 3)})$<br><br>`;
+            feedback += `<strong>Payoffs by state:</strong><br>`;
+            feedback += `State $s_0$: $${formatNumber(za, 3)} \\times (-1) + ${formatNumber(zb, 3)} \\times (-1) + ${formatNumber(zc, 3)} \\times (-1) = ${formatNumber(result.payoffs[0], 3)}$<br>`;
+            feedback += `State $s_1$: $${formatNumber(za, 3)} \\times ${formatNumber(currentProblem.returns.a[1])} + ${formatNumber(zb, 3)} \\times ${formatNumber(currentProblem.returns.b[1])} + ${formatNumber(zc, 3)} \\times ${formatNumber(currentProblem.returns.c[1])} = ${formatNumber(result.payoffs[1], 3)}$<br>`;
+            feedback += `State $s_2$: $${formatNumber(za, 3)} \\times ${formatNumber(currentProblem.returns.a[2])} + ${formatNumber(zb, 3)} \\times ${formatNumber(currentProblem.returns.b[2])} + ${formatNumber(zc, 3)} \\times ${formatNumber(currentProblem.returns.c[2])} = ${formatNumber(result.payoffs[2], 3)}$<br><br>`;
+
+            if (result.isArb) {
+                feedback += `<strong>This portfolio is an arbitrage opportunity</strong> because all payoffs are non-negative and at least one is strictly positive.`;
+            } else {
+                feedback += `<strong>This portfolio is not an arbitrage opportunity</strong> because `;
+                if (result.payoffs.some(p => p < -0.001)) {
+                    feedback += `at least one payoff is negative.`;
+                } else {
+                    feedback += `all payoffs are zero or there are no strictly positive payoffs.`;
+                }
+            }
+
+            const q1Correct = userAnswer1 === correctAnswer;
+            const q2Correct = result.isArb && correctAnswer === 'yes';
+
+            if (q1Correct && q2Correct) {
+                showFeedback(feedback, 'success');
+            } else {
+                feedback += '<br><br>';
+
+                if (userAnswer1 === 'yes' && correctAnswer === 'no') {
+                    feedback += `<hr style="margin: 15px 0; border: 1px solid var(--base1);">`;
+                    feedback += `<strong>Additional feedback:</strong><br><br>`;
+                    feedback += generateNoArbitrageFeedback();
+                    showFeedback(feedback, 'warning');
+                } else if (userAnswer1 === 'yes' && correctAnswer === 'yes' && !result.isArb) {
+                    const arb = currentProblem.arbitragePortfolio;
+                    const arbResult = isArbitrage(arb.za, arb.zb, arb.zc, currentProblem.returns);
+
+                    feedback += `<hr style="margin: 15px 0; border: 1px solid var(--base1);">`;
+                    feedback += `<strong>Additional feedback:</strong> Your portfolio is not an arbitrage. However, arbitrage DOES exist in this economy.<br><br>`;
+                    feedback += `<strong>Example arbitrage portfolio:</strong><br>`;
+                    feedback += `$\\mathbf{z} = (${formatNumber(arb.za, 3)}, ${formatNumber(arb.zb, 3)}, ${formatNumber(arb.zc, 3)})$<br><br>`;
+                    feedback += `<strong>Payoffs by state:</strong><br>`;
+                    feedback += `State $s_0$: ${formatNumber(arbResult.payoffs[0], 3)}<br>`;
+                    feedback += `State $s_1$: ${formatNumber(arbResult.payoffs[1], 3)}<br>`;
+                    feedback += `State $s_2$: ${formatNumber(arbResult.payoffs[2], 3)}<br><br>`;
+                    feedback += `This is an arbitrage because all payoffs are non-negative and at least one is strictly positive.`;
+                    showFeedback(feedback, 'warning');
+                } else {
+                    showFeedback(feedback, 'success');
+                }
+            }
+        }
+
+        function showFeedback(message, type) {
+            const feedback = document.getElementById('feedback');
+            feedback.innerHTML = message;
+            const classMap = {
+                'success': 'edu-success',
+                'error': 'edu-error',
+                'warning': 'edu-warning'
+            };
+            feedback.className = classMap[type] || 'edu-success';
+
+            // Auto-expand solution section
+            const solutionSection = document.getElementById('solutionSection');
+            new bootstrap.Collapse(solutionSection, {toggle: false}).show();
+
+            // Render KaTeX in feedback
+            renderMathInElement(feedback, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false}
+                ],
+                throwOnError: false
+            });
+        }
+
+        // Utility functions
+        function expandAll() {
+            document.querySelectorAll('.accordion-collapse').forEach(el => {
+                new bootstrap.Collapse(el, {toggle: false}).show();
+            });
+        }
+
+        function collapseAll() {
+            document.querySelectorAll('.accordion-collapse').forEach(el => {
+                new bootstrap.Collapse(el, {toggle: false}).hide();
+            });
+        }
+
+        function resetApp() {
+            document.querySelectorAll('input[type="number"], input[type="text"]').forEach(i => i.value = '');
+            document.getElementById('feedback').innerHTML = '';
+            document.getElementById('feedback').className = '';
+            document.querySelectorAll('.arb-button').forEach(b => b.classList.remove('selected'));
+            stage = 1;
+            userAnswer1 = null;
+            document.getElementById('question1-section').style.display = 'block';
+            document.getElementById('question2-section').style.display = 'none';
+            document.getElementById('submit-btn').textContent = 'Submit Answer';
+        }
+
+        window.addEventListener('load', function() {
+            // Wait for KaTeX to load
+            setTimeout(function() {
+                generateNewProblem();
+                // Initial KaTeX render
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }, 100);
+        });
+    </script>
+</body>
+</html>
