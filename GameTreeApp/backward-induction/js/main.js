@@ -101,6 +101,12 @@ function setupInteraction() {
                   onReplayComplete: () => {
                     console.log('✨ Replay complete! SPNE path highlighted.');
                     gameState.phase = 'complete';
+
+                    // Show print button
+                    const printButtonContainer = document.getElementById('print-button-container');
+                    if (printButtonContainer) {
+                      printButtonContainer.style.display = 'block';
+                    }
                   }
                 });
               });

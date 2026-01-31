@@ -60,3 +60,76 @@ body {
 .particle {
   pointer-events: none;
 }
+
+/* Print button styling */
+#print-button {
+  background-color: #2563EB;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+#print-button:hover {
+  background-color: #1D4ED8;
+}
+
+#print-button:active {
+  background-color: #1E40AF;
+}
+
+/* Print-specific styles */
+@media print {
+  /* Hide everything except the tree */
+  #print-button-container {
+    display: none !important;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: white;
+  }
+
+  #container {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  #tree-svg {
+    border: none;
+    border-radius: 0;
+    width: 100%;
+    height: auto;
+    page-break-inside: avoid;
+  }
+
+  /* Landscape orientation for better tree visibility */
+  @page {
+    size: landscape;
+    margin: 0.5in;
+  }
+
+  /* Ensure optimal edges are clearly visible in print */
+  .edge.optimal {
+    stroke: #000000 !important;
+    stroke-width: 4px !important;
+  }
+
+  /* Make all text darker for better print quality */
+  text {
+    fill: #000000 !important;
+  }
+
+  /* Ensure all interactive elements are hidden */
+  .edge-hit {
+    display: none !important;
+  }
+}
