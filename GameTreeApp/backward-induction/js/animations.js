@@ -5,7 +5,7 @@ const CONFIG = {
   explosionDuration: 2.5,        // 0.5 / 0.2
   explosionSpread: 60,
   contractionDuration: 1.0,      // Reduced from 2.0
-  pauseBetweenNodes: 2.0,        // 0.4 / 0.2
+  pauseBetweenNodes: 0.5,        // Reduced from 2.0
   blackFillDuration: 0.3         // Duration to fill nodes with black before explosion
 };
 
@@ -357,20 +357,44 @@ function renderReplacementLeaf(node) {
   circle.setAttribute("filter", "url(#drop-shadow)");
   group.appendChild(circle);
 
-  // Divider lines for 3 players
-  [-8, 8].forEach(yPos => {
+  const numPlayers = node.payoffs.length;
+
+  // Draw divider lines based on number of players
+  if (numPlayers === 2) {
+    // Single divider line for 2 players
     const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
     line.setAttribute("x1", "-18");
     line.setAttribute("x2", "18");
-    line.setAttribute("y1", yPos);
-    line.setAttribute("y2", yPos);
+    line.setAttribute("y1", "0");
+    line.setAttribute("y2", "0");
     line.setAttribute("stroke", "#9CA3AF");
     line.setAttribute("stroke-width", "1");
     group.appendChild(line);
-  });
+  } else if (numPlayers === 3) {
+    // Two divider lines for 3 players
+    [-8, 8].forEach(yPos => {
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      line.setAttribute("x1", "-18");
+      line.setAttribute("x2", "18");
+      line.setAttribute("y1", yPos);
+      line.setAttribute("y2", yPos);
+      line.setAttribute("stroke", "#9CA3AF");
+      line.setAttribute("stroke-width", "1");
+      group.appendChild(line);
+    });
+  }
 
-  // Payoff text
-  const yPositions = [-16, 0, 16];
+  // Position payoffs based on number of players
+  let yPositions;
+  if (numPlayers === 2) {
+    yPositions = [-10, 10];
+  } else if (numPlayers === 3) {
+    yPositions = [-16, 0, 16];
+  } else {
+    // Fallback for single player
+    yPositions = [0];
+  }
+
   node.payoffs.forEach((payoff, i) => {
     const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
     text.setAttribute("y", yPositions[i]);
@@ -432,6 +456,440 @@ function calculateEdgePaths(x1, y1, x2, y2) {
   }
 
   return { mainPath, taperPath };
+}
+
+// Growth/replay animation after completion
+export function animateTreeGrowth(contractionHistory, originalTreeData, state, callbacks) {
+  console.log('Growth replay:', contractionHistory.length, 'levels to restore');
+
+  // Build SPNE path (set of edges that are part of optimal solution)
+  const spnePath = new Set();
+  contractionHistory.forEach(levelData => {
+    levelData.forEach(nodeData => {
+      const optimalChild = nodeData.children[nodeData.optimalChildIndex];
+      const edgeKey = `${String(nodeData.nodeId)}-${String(optimalChild.id)}`;
+      spnePath.add(edgeKey);
+      console.log('SPNE edge:', edgeKey);
+    });
+  });
+  console.log('Complete SPNE path:', Array.from(spnePath));
+
+  // Reverse the history to replay in opposite order
+  const growthSequence = [...contractionHistory].reverse();
+
+  const GROWTH_DURATION = 0.5; // Half of contraction speed (faster)
+  const PAUSE_BETWEEN_LEVELS = 1.0;
+
+  let currentLevel = 0;
+
+  // Helper to find node in original tree by id
+  function findNodeInOriginalTree(node, id) {
+    if (node.id === id) return node;
+    if (node.children) {
+      for (const child of node.children) {
+        const found = findNodeInOriginalTree(child, id);
+        if (found) return found;
+      }
+    }
+    return null;
+  }
+
+  function growNextLevel() {
+    if (currentLevel >= growthSequence.length) {
+      // All levels grown
+      callbacks.onReplayComplete();
+      return;
+    }
+
+    const levelData = growthSequence[currentLevel];
+    console.log(`Growing level ${currentLevel + 1}/${growthSequence.length}:`, levelData.map(n => n.nodeId));
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        currentLevel++;
+        gsap.delayedCall(PAUSE_BETWEEN_LEVELS, growNextLevel);
+      }
+    });
+
+    // For each node in this level, restore it and grow its children
+    levelData.forEach(nodeData => {
+      const parentNode = state.allNodes.find(n => n.id === nodeData.nodeId);
+      if (!parentNode) return;
+
+      // Find parent in original tree to get correct data
+      const originalParent = findNodeInOriginalTree(originalTreeData, nodeData.nodeId);
+      if (!originalParent) return;
+
+      // Restore parent as decision node (use original data)
+      parentNode.isLeaf = false;
+      parentNode.player = originalParent.player;
+      parentNode.payoffs = null;
+      parentNode.children = [];
+      parentNode.optimalChildIndex = nodeData.optimalChildIndex;
+
+      // Remove old leaf representation
+      const oldLeafGroup = document.getElementById(`node-${parentNode.id}`);
+      if (oldLeafGroup) oldLeafGroup.remove();
+
+      // Render parent as decision node
+      renderDecisionNodeForGrowth(parentNode);
+
+      // Create and grow children (use ORIGINAL tree's full children, not history)
+      originalParent.children.forEach((originalChild, childIndex) => {
+        const originalChildData = originalChild;
+
+        // Check if child already exists in state (was restored in previous level)
+        let childNode = state.allNodes.find(n => n.id === originalChildData.id);
+        let nodeAlreadyExists = false;
+
+        if (childNode) {
+          // Child already exists (was a parent in previous level)
+          // Update its parent reference but DON'T remove from DOM
+          childNode.parent = parentNode;
+          nodeAlreadyExists = true;
+        } else {
+          // Child is new, create it
+          childNode = {
+            id: originalChildData.id,
+            x: originalChildData.x,
+            y: originalChildData.y,
+            payoffs: originalChildData.payoffs ? [...originalChildData.payoffs] : null,
+            isLeaf: originalChildData.isLeaf,
+            player: originalChildData.player,
+            parent: parentNode,
+            children: []
+          };
+
+          state.allNodes.push(childNode);
+          if (childNode.isLeaf) {
+            state.allLeaves.push(childNode);
+          }
+        }
+
+        parentNode.children.push(childNode);
+
+        // Check if this edge is part of SPNE
+        const edgeKey = `${parentNode.id}-${childNode.id}`;
+        const isOptimal = spnePath.has(edgeKey);
+
+        // Only render if node doesn't already exist
+        if (!nodeAlreadyExists) {
+          // Render child at parent position initially (for animation)
+          renderChildForGrowth(childNode, parentNode, isOptimal);
+        } else {
+          // Node already exists - it might have been faded out during contraction
+          // Reset its opacity and color (might have been filled black before explosion)
+          const existingChildGroup = document.getElementById(`node-${childNode.id}`);
+          if (existingChildGroup) {
+            // Reset circle fill if it's a leaf node (was filled black before explosion)
+            if (childNode.isLeaf) {
+              const circle = existingChildGroup.querySelector('circle');
+              if (circle) {
+                // Animate color back to grey
+                tl.to(circle, {
+                  fill: '#E5E7EB',
+                  duration: GROWTH_DURATION * 0.5,
+                  ease: "power2.out"
+                }, 0);
+              }
+            }
+
+            // Fade in opacity
+            tl.to(existingChildGroup, {
+              opacity: 1,
+              duration: GROWTH_DURATION * 0.5,
+              ease: "power2.out"
+            }, 0);
+          }
+        }
+
+        // Always render edge (edges were not preserved from previous level)
+        renderEdgeForGrowth(parentNode, childNode, childIndex, isOptimal);
+
+        // Animate child growing from parent position to final position
+        const childGroup = document.getElementById(`node-${childNode.id}`);
+        if (childGroup && !nodeAlreadyExists) {
+          // New node - animate from parent position
+          tl.to(childGroup, {
+            attr: { transform: `translate(${childNode.x}, ${childNode.y})` },
+            opacity: 1,
+            duration: GROWTH_DURATION,
+            ease: "power2.out"
+          }, 0);
+        } else if (childGroup && nodeAlreadyExists) {
+          // Existing node - already at correct position, but ensure it's visible
+          gsap.set(childGroup, { opacity: 1 });
+        }
+
+        // Animate edge growing
+        const edgeGroup = document.getElementById(`edge-${parentNode.id}-${childNode.id}`);
+        if (edgeGroup) {
+          const mainPath = edgeGroup.querySelector('.edge-main');
+          const taperPath = edgeGroup.querySelector('.edge-taper');
+
+          if (mainPath && taperPath) {
+            // Animate edge from zero-length to full-length
+            const growPos = { progress: 0 };
+            tl.to(growPos, {
+              progress: 1,
+              duration: GROWTH_DURATION,
+              ease: "power2.out",
+              onUpdate: () => {
+                const currentX = parentNode.x + (childNode.x - parentNode.x) * growPos.progress;
+                const currentY = parentNode.y + (childNode.y - parentNode.y) * growPos.progress;
+                const paths = calculateEdgePaths(parentNode.x, parentNode.y, currentX, currentY);
+                mainPath.setAttribute('d', paths.mainPath);
+                taperPath.setAttribute('d', paths.taperPath);
+              }
+            }, 0);
+          }
+        }
+
+        // Render edge label and fade it in alongside edge growth
+        renderEdgeLabelForGrowth(parentNode, childNode, childIndex);
+        const edgeLabel = document.getElementById(`edge-label-${parentNode.id}-${childNode.id}`);
+        if (edgeLabel) {
+          tl.to(edgeLabel,
+            { opacity: 1, duration: GROWTH_DURATION, ease: "power2.out" },
+            0  // Start at same time as edge growth
+          );
+        }
+      });
+    });
+  }
+
+  // Start the growth sequence
+  growNextLevel();
+}
+
+// Helper functions for growth rendering
+function renderDecisionNodeForGrowth(node) {
+  const layer = document.getElementById('nodes-layer');
+  const COLORS = { 1: '#DC2626', 2: '#16A34A', 3: '#2563EB' };
+
+  const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  group.setAttribute("id", `node-${node.id}`);
+  group.setAttribute("transform", `translate(${node.x}, ${node.y})`);
+
+  const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  circle.setAttribute("r", "24");
+  circle.setAttribute("fill", COLORS[node.player]);
+  circle.setAttribute("filter", "url(#drop-shadow)");
+
+  const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  label.setAttribute("fill", "white");
+  label.setAttribute("font-size", "18");
+  label.setAttribute("font-weight", "bold");
+  label.setAttribute("text-anchor", "middle");
+  label.setAttribute("dominant-baseline", "central");
+  label.textContent = node.player;
+
+  group.appendChild(circle);
+  group.appendChild(label);
+  layer.appendChild(group);
+}
+
+function renderChildForGrowth(node, parent, isOptimal) {
+  const layer = document.getElementById('nodes-layer');
+  const COLORS = { 1: '#DC2626', 2: '#16A34A', 3: '#2563EB' };
+
+  const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  group.setAttribute("id", `node-${node.id}`);
+  group.setAttribute("transform", `translate(${parent.x}, ${parent.y})`); // Start at parent position
+
+  if (node.isLeaf) {
+    // Terminal node with payoffs
+    const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    circle.setAttribute("r", "24");
+    circle.setAttribute("fill", "#E5E7EB");
+    circle.setAttribute("stroke", "#9CA3AF");
+    circle.setAttribute("stroke-width", "2");
+    circle.setAttribute("filter", "url(#drop-shadow)");
+    group.appendChild(circle);
+
+    const numPlayers = node.payoffs ? node.payoffs.length : 3;
+
+    // Draw divider lines based on number of players
+    if (numPlayers === 2) {
+      // Single divider line for 2 players
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      line.setAttribute("x1", "-18");
+      line.setAttribute("x2", "18");
+      line.setAttribute("y1", "0");
+      line.setAttribute("y2", "0");
+      line.setAttribute("stroke", "#9CA3AF");
+      line.setAttribute("stroke-width", "1");
+      group.appendChild(line);
+    } else if (numPlayers === 3) {
+      // Two divider lines for 3 players
+      [-8, 8].forEach(yPos => {
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", "-18");
+        line.setAttribute("x2", "18");
+        line.setAttribute("y1", yPos);
+        line.setAttribute("y2", yPos);
+        line.setAttribute("stroke", "#9CA3AF");
+        line.setAttribute("stroke-width", "1");
+        group.appendChild(line);
+      });
+    }
+
+    // Position payoffs based on number of players
+    let yPositions;
+    if (numPlayers === 2) {
+      yPositions = [-10, 10];
+    } else if (numPlayers === 3) {
+      yPositions = [-16, 0, 16];
+    } else {
+      yPositions = [0];
+    }
+
+    if (node.payoffs) {
+      node.payoffs.forEach((payoff, i) => {
+        const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        text.setAttribute("y", yPositions[i]);
+        text.setAttribute("fill", "#374151");
+        text.setAttribute("font-size", "14");
+        text.setAttribute("font-weight", "bold");
+        text.setAttribute("text-anchor", "middle");
+        text.setAttribute("dominant-baseline", "central");
+        text.textContent = payoff;
+        group.appendChild(text);
+      });
+    }
+  } else {
+    // Decision node with player number and color
+    const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    circle.setAttribute("r", "24");
+    circle.setAttribute("fill", COLORS[node.player]);
+    circle.setAttribute("filter", "url(#drop-shadow)");
+
+    const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    label.setAttribute("fill", "white");
+    label.setAttribute("font-size", "18");
+    label.setAttribute("font-weight", "bold");
+    label.setAttribute("text-anchor", "middle");
+    label.setAttribute("dominant-baseline", "central");
+    label.textContent = node.player;
+
+    group.appendChild(circle);
+    group.appendChild(label);
+  }
+
+  layer.appendChild(group);
+}
+
+function renderEdgeForGrowth(parent, child, childIndex, isOptimal) {
+  const layer = document.getElementById('edges-layer');
+
+  // Check if edge already exists (might have been faded out during contraction)
+  let group = document.getElementById(`edge-${parent.id}-${child.id}`);
+
+  if (group) {
+    // Edge already exists - just reset its opacity and color
+    group.style.opacity = '1';
+    const mainPath = group.querySelector('.edge-main');
+    const taperPath = group.querySelector('.edge-taper');
+    if (mainPath) {
+      mainPath.setAttribute("stroke", isOptimal ? "#DC2626" : "#374151");
+      mainPath.setAttribute("stroke-width", isOptimal ? "3" : "2");
+    }
+    if (taperPath) {
+      taperPath.setAttribute("stroke", isOptimal ? "#DC2626" : "#374151");
+      taperPath.setAttribute("stroke-width", isOptimal ? "3" : "2");
+      taperPath.setAttribute("marker-end", isOptimal ? "url(#arrowhead-red)" : "url(#arrowhead)");
+    }
+    return;
+  }
+
+  // Create new edge
+  group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  group.setAttribute("id", `edge-${parent.id}-${child.id}`);
+
+  // Start with zero-length edge (will be animated)
+  const hitArea = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  hitArea.setAttribute("class", "edge-hit");
+  hitArea.setAttribute("d", `M ${parent.x} ${parent.y} L ${parent.x} ${parent.y}`);
+  hitArea.setAttribute("fill", "none");
+  hitArea.setAttribute("stroke", "transparent");
+  hitArea.setAttribute("stroke-width", "10");
+  hitArea.setAttribute("pointer-events", "none");
+
+  const visibleMain = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  visibleMain.setAttribute("class", "edge edge-main");
+  visibleMain.setAttribute("d", `M ${parent.x} ${parent.y} L ${parent.x} ${parent.y}`);
+  visibleMain.setAttribute("fill", "none");
+  visibleMain.setAttribute("stroke", isOptimal ? "#DC2626" : "#374151");
+  visibleMain.setAttribute("stroke-width", isOptimal ? "3" : "2");
+  visibleMain.setAttribute("pointer-events", "none");
+
+  const visibleTaper = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  visibleTaper.setAttribute("class", "edge edge-taper");
+  visibleTaper.setAttribute("d", `M ${parent.x} ${parent.y} L ${parent.x} ${parent.y}`);
+  visibleTaper.setAttribute("fill", "none");
+  visibleTaper.setAttribute("stroke", isOptimal ? "#DC2626" : "#374151");
+  visibleTaper.setAttribute("stroke-width", isOptimal ? "3" : "2");
+  visibleTaper.setAttribute("marker-end", isOptimal ? "url(#arrowhead-red)" : "url(#arrowhead)");
+  visibleTaper.setAttribute("pointer-events", "none");
+
+  group.appendChild(hitArea);
+  group.appendChild(visibleMain);
+  group.appendChild(visibleTaper);
+  layer.appendChild(group);
+}
+
+function renderEdgeLabelForGrowth(parent, child, childIndex) {
+  const layer = document.getElementById('edges-layer');
+  const labels = ['a', 'b', 'c'];
+  const label = labels[childIndex];
+
+  // Check if label already exists (might have been faded out during contraction)
+  const existingLabel = document.getElementById(`edge-label-${parent.id}-${child.id}`);
+  if (existingLabel) {
+    existingLabel.style.opacity = '0'; // Start from 0 for animation
+    return;
+  }
+
+  const x1 = parent.x;
+  const y1 = parent.y;
+  const x2 = child.x;
+  const y2 = child.y;
+
+  const NODE_RADIUS = 24;
+  const GAP = 1;
+  const ARROW_EXTENSION = 2;
+  const isPerpendicular = Math.abs(x2 - x1) < 5;
+
+  let labelX, labelY;
+
+  if (isPerpendicular) {
+    const direction = y2 > y1 ? 1 : -1;
+    const startY = y1 + (NODE_RADIUS * direction);
+    const endY = y2 - ((NODE_RADIUS + GAP + ARROW_EXTENSION) * direction);
+    labelX = x1 - 12;
+    labelY = (startY + endY) / 2;
+  } else {
+    const startX = x1 + NODE_RADIUS;
+    const endX = x2 - (NODE_RADIUS + GAP + ARROW_EXTENSION);
+    const midY = (y1 + y2) / 2;
+    const offset = (y2 - y1) * 0.15;
+    labelX = (startX + endX) / 2;
+    labelY = (midY - 0.5 * offset) - 8;
+  }
+
+  const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  text.setAttribute("id", `edge-label-${parent.id}-${child.id}`);
+  text.setAttribute("x", labelX);
+  text.setAttribute("y", labelY);
+  text.setAttribute("fill", "#374151");
+  text.setAttribute("font-size", "12");
+  text.setAttribute("font-weight", "normal");
+  text.setAttribute("text-anchor", "middle");
+  text.setAttribute("dominant-baseline", "central");
+  text.setAttribute("opacity", "0"); // Start invisible
+  text.textContent = label;
+
+  layer.appendChild(text);
 }
 
 // Export config for potential tweaking

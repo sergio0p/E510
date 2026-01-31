@@ -159,10 +159,12 @@ function moveSubtreeVertical(node, deltaY, allNodes) {
 
 export function adjustEarlyLeaves(allNodes) {
   // Adjust position of early leaves (periods 1-3) to save vertical space
-  const PERPENDICULAR_OFFSET = 125;
-  const SAFE_GAP = 205; // PERPENDICULAR_OFFSET + 2*radius + buffer = 125 + 48 + 32
+  const NODE_RADIUS = 24;
+  const MIN_GAP_FROM_OBSTACLE = 30; // Minimum 30px breathing room from any obstacle
+  const MIN_TOTAL_SPACE = (NODE_RADIUS + MIN_GAP_FROM_OBSTACLE) * 2; // 108px minimum
+  const DEFAULT_OFFSET = 125; // Default perpendicular offset when space is unlimited
 
-  console.log('🔄 Starting space-aware perpendicular placement...');
+  console.log('🔄 Starting adaptive perpendicular placement...');
 
   // PASS 1: Identify which nodes will move perpendicular (space-based detection)
   const perpendicularNodes = new Set();
@@ -176,13 +178,15 @@ export function adjustEarlyLeaves(allNodes) {
 
     if (leafChildren.length === 0) return;
 
-    // Determine if there's enough SPACE for perpendicular placement
-    let canPlaceAbove, canPlaceBelow;
+    // Calculate available space for adaptive placement
+    let canPlaceAbove, canPlaceBelow, adaptiveYAbove, adaptiveYBelow;
 
     if (!node.parent) {
       // Root node - assume infinite space
       canPlaceAbove = true;
       canPlaceBelow = true;
+      adaptiveYAbove = node.y - DEFAULT_OFFSET;
+      adaptiveYBelow = node.y + DEFAULT_OFFSET;
     } else {
       const grandparent = node.parent;
       const siblings = grandparent.children;
@@ -191,7 +195,7 @@ export function adjustEarlyLeaves(allNodes) {
       // Check space above
       if (myIndex > 0) {
         const siblingAbove = siblings[myIndex - 1];
-        let gapAbove = node.y - siblingAbove.y;
+        let obstacleAbove = siblingAbove.y + NODE_RADIUS; // Bottom of sibling above
 
         // Check perpendicular leaves IN THE GAP (between sibling and node)
         const perpInGap = perpendicularPositions.filter(p =>
@@ -201,21 +205,28 @@ export function adjustEarlyLeaves(allNodes) {
         );
         if (perpInGap.length > 0) {
           const closestPerp = Math.max(...perpInGap.map(p => p.y));
-          gapAbove = Math.min(gapAbove, node.y - closestPerp);
+          obstacleAbove = Math.max(obstacleAbove, closestPerp + NODE_RADIUS);
         }
 
-        canPlaceAbove = gapAbove > SAFE_GAP;
-        if (!canPlaceAbove) {
-          console.log(`    ⚠ Node ${node.id}: gap above ${Math.round(gapAbove)}px < ${SAFE_GAP}px`);
+        const availableSpace = (node.y - NODE_RADIUS) - obstacleAbove;
+        canPlaceAbove = availableSpace >= MIN_TOTAL_SPACE;
+
+        if (canPlaceAbove) {
+          // Place midway between obstacle and parent
+          adaptiveYAbove = obstacleAbove + availableSpace / 2;
+          console.log(`    ✓ Node ${node.id}: adaptive above at y=${Math.round(adaptiveYAbove)} (${Math.round(availableSpace)}px available)`);
+        } else {
+          console.log(`    ⚠ Node ${node.id}: gap above ${Math.round(availableSpace)}px < ${MIN_TOTAL_SPACE}px`);
         }
       } else {
-        canPlaceAbove = true; // First child, no sibling above
+        canPlaceAbove = true;
+        adaptiveYAbove = node.y - DEFAULT_OFFSET;
       }
 
       // Check space below
       if (myIndex < siblings.length - 1) {
         const siblingBelow = siblings[myIndex + 1];
-        let gapBelow = siblingBelow.y - node.y;
+        let obstacleBelow = siblingBelow.y - NODE_RADIUS; // Top of sibling below
 
         // Check perpendicular leaves IN THE GAP (between node and sibling)
         const perpInGap = perpendicularPositions.filter(p =>
@@ -225,15 +236,22 @@ export function adjustEarlyLeaves(allNodes) {
         );
         if (perpInGap.length > 0) {
           const closestPerp = Math.min(...perpInGap.map(p => p.y));
-          gapBelow = Math.min(gapBelow, closestPerp - node.y);
+          obstacleBelow = Math.min(obstacleBelow, closestPerp - NODE_RADIUS);
         }
 
-        canPlaceBelow = gapBelow > SAFE_GAP;
-        if (!canPlaceBelow) {
-          console.log(`    ⚠ Node ${node.id}: gap below ${Math.round(gapBelow)}px < ${SAFE_GAP}px`);
+        const availableSpace = obstacleBelow - (node.y + NODE_RADIUS);
+        canPlaceBelow = availableSpace >= MIN_TOTAL_SPACE;
+
+        if (canPlaceBelow) {
+          // Place midway between parent and obstacle
+          adaptiveYBelow = (node.y + NODE_RADIUS) + availableSpace / 2;
+          console.log(`    ✓ Node ${node.id}: adaptive below at y=${Math.round(adaptiveYBelow)} (${Math.round(availableSpace)}px available)`);
+        } else {
+          console.log(`    ⚠ Node ${node.id}: gap below ${Math.round(availableSpace)}px < ${MIN_TOTAL_SPACE}px`);
         }
       } else {
-        canPlaceBelow = true; // Last child, no sibling below
+        canPlaceBelow = true;
+        adaptiveYBelow = node.y + DEFAULT_OFFSET;
       }
     }
 
@@ -246,37 +264,37 @@ export function adjustEarlyLeaves(allNodes) {
         // Both leaves - try both directions
         if (canPlaceAbove) {
           perpendicularNodes.add(children[0]);
-          perpendicularPositions.push({ x: node.x, y: node.y - PERPENDICULAR_OFFSET, node: children[0] });
-          console.log(`    ✓ Node ${node.id}: child[0] can go UP`);
+          perpendicularPositions.push({ x: node.x, y: adaptiveYAbove, node: children[0] });
+          console.log(`    ✓ Node ${node.id}: child[0] can go UP to y=${Math.round(adaptiveYAbove)}`);
         }
         if (canPlaceBelow) {
           perpendicularNodes.add(children[1]);
-          perpendicularPositions.push({ x: node.x, y: node.y + PERPENDICULAR_OFFSET, node: children[1] });
-          console.log(`    ✓ Node ${node.id}: child[1] can go DOWN`);
+          perpendicularPositions.push({ x: node.x, y: adaptiveYBelow, node: children[1] });
+          console.log(`    ✓ Node ${node.id}: child[1] can go DOWN to y=${Math.round(adaptiveYBelow)}`);
         }
 
       } else if (child0IsLeaf && !child1IsLeaf) {
         // Only child[0] is leaf - use best available direction
         if (canPlaceAbove) {
           perpendicularNodes.add(children[0]);
-          perpendicularPositions.push({ x: node.x, y: node.y - PERPENDICULAR_OFFSET, node: children[0] });
-          console.log(`    ✓ Node ${node.id}: child[0] (only leaf) can go UP`);
+          perpendicularPositions.push({ x: node.x, y: adaptiveYAbove, node: children[0] });
+          console.log(`    ✓ Node ${node.id}: child[0] (only leaf) can go UP to y=${Math.round(adaptiveYAbove)}`);
         } else if (canPlaceBelow) {
           perpendicularNodes.add(children[0]);
-          perpendicularPositions.push({ x: node.x, y: node.y + PERPENDICULAR_OFFSET, node: children[0] });
-          console.log(`    ✓ Node ${node.id}: child[0] (only leaf) can go DOWN`);
+          perpendicularPositions.push({ x: node.x, y: adaptiveYBelow, node: children[0] });
+          console.log(`    ✓ Node ${node.id}: child[0] (only leaf) can go DOWN to y=${Math.round(adaptiveYBelow)}`);
         }
 
       } else if (!child0IsLeaf && child1IsLeaf) {
         // Only child[1] is leaf - use best available direction
         if (canPlaceAbove) {
           perpendicularNodes.add(children[1]);
-          perpendicularPositions.push({ x: node.x, y: node.y - PERPENDICULAR_OFFSET, node: children[1] });
-          console.log(`    ✓ Node ${node.id}: child[1] (only leaf) can go UP`);
+          perpendicularPositions.push({ x: node.x, y: adaptiveYAbove, node: children[1] });
+          console.log(`    ✓ Node ${node.id}: child[1] (only leaf) can go UP to y=${Math.round(adaptiveYAbove)}`);
         } else if (canPlaceBelow) {
           perpendicularNodes.add(children[1]);
-          perpendicularPositions.push({ x: node.x, y: node.y + PERPENDICULAR_OFFSET, node: children[1] });
-          console.log(`    ✓ Node ${node.id}: child[1] (only leaf) can go DOWN`);
+          perpendicularPositions.push({ x: node.x, y: adaptiveYBelow, node: children[1] });
+          console.log(`    ✓ Node ${node.id}: child[1] (only leaf) can go DOWN to y=${Math.round(adaptiveYBelow)}`);
         }
       }
     } else if (children.length === 3) {
@@ -285,13 +303,13 @@ export function adjustEarlyLeaves(allNodes) {
 
       if (canPlaceAbove && child0IsLeaf) {
         perpendicularNodes.add(children[0]);
-        perpendicularPositions.push({ x: node.x, y: node.y - PERPENDICULAR_OFFSET, node: children[0] });
-        console.log(`    ✓ Node ${node.id}: child[0] can go UP`);
+        perpendicularPositions.push({ x: node.x, y: adaptiveYAbove, node: children[0] });
+        console.log(`    ✓ Node ${node.id}: child[0] can go UP to y=${Math.round(adaptiveYAbove)}`);
       }
       if (canPlaceBelow && child2IsLeaf) {
         perpendicularNodes.add(children[2]);
-        perpendicularPositions.push({ x: node.x, y: node.y + PERPENDICULAR_OFFSET, node: children[2] });
-        console.log(`    ✓ Node ${node.id}: child[2] can go DOWN`);
+        perpendicularPositions.push({ x: node.x, y: adaptiveYBelow, node: children[2] });
+        console.log(`    ✓ Node ${node.id}: child[2] can go DOWN to y=${Math.round(adaptiveYBelow)}`);
       }
     }
   });
@@ -307,12 +325,14 @@ export function adjustEarlyLeaves(allNodes) {
 
     if (leafChildren.length === 0) return;
 
-    // Determine if there's enough SPACE for perpendicular placement (accounting for Pass 1 placements)
-    let canPlaceAbove, canPlaceBelow;
+    // Calculate available space for adaptive placement (accounting for Pass 1 placements)
+    let canPlaceAbove, canPlaceBelow, adaptiveYAbove, adaptiveYBelow;
 
     if (!node.parent) {
       canPlaceAbove = true;
       canPlaceBelow = true;
+      adaptiveYAbove = node.y - DEFAULT_OFFSET;
+      adaptiveYBelow = node.y + DEFAULT_OFFSET;
     } else {
       const grandparent = node.parent;
       const siblings = grandparent.children;
@@ -321,16 +341,16 @@ export function adjustEarlyLeaves(allNodes) {
       // Check space above
       if (myIndex > 0) {
         const siblingAbove = siblings[myIndex - 1];
-        let gapAbove = node.y - siblingAbove.y;
+        let obstacleAbove = siblingAbove.y + NODE_RADIUS;
 
         // Check if sibling above is perpendicular (effectively not blocking)
         if (perpendicularNodes.has(siblingAbove)) {
           // Sibling won't be at its original position, check further up
           if (myIndex > 1) {
             const nextSiblingAbove = siblings[myIndex - 2];
-            gapAbove = node.y - nextSiblingAbove.y;
+            obstacleAbove = nextSiblingAbove.y + NODE_RADIUS;
           } else {
-            gapAbove = Infinity; // Only perpendicular sibling above
+            obstacleAbove = -Infinity; // Only perpendicular sibling above, infinite space
           }
         }
 
@@ -343,26 +363,38 @@ export function adjustEarlyLeaves(allNodes) {
         );
         if (perpInGap.length > 0) {
           const closestPerp = Math.max(...perpInGap.map(p => p.y));
-          gapAbove = Math.min(gapAbove, node.y - closestPerp);
+          obstacleAbove = Math.max(obstacleAbove, closestPerp + NODE_RADIUS);
         }
 
-        canPlaceAbove = gapAbove > SAFE_GAP;
+        const availableSpace = (node.y - NODE_RADIUS) - obstacleAbove;
+
+        if (!isFinite(availableSpace)) {
+          // Infinite space - use default offset
+          canPlaceAbove = true;
+          adaptiveYAbove = node.y - DEFAULT_OFFSET;
+        } else {
+          canPlaceAbove = availableSpace >= MIN_TOTAL_SPACE;
+          if (canPlaceAbove) {
+            adaptiveYAbove = obstacleAbove + availableSpace / 2;
+          }
+        }
       } else {
         canPlaceAbove = true;
+        adaptiveYAbove = node.y - DEFAULT_OFFSET;
       }
 
       // Check space below
       if (myIndex < siblings.length - 1) {
         const siblingBelow = siblings[myIndex + 1];
-        let gapBelow = siblingBelow.y - node.y;
+        let obstacleBelow = siblingBelow.y - NODE_RADIUS;
 
         // Check if sibling below is perpendicular
         if (perpendicularNodes.has(siblingBelow)) {
           if (myIndex < siblings.length - 2) {
             const nextSiblingBelow = siblings[myIndex + 2];
-            gapBelow = nextSiblingBelow.y - node.y;
+            obstacleBelow = nextSiblingBelow.y - NODE_RADIUS;
           } else {
-            gapBelow = Infinity;
+            obstacleBelow = Infinity; // Only perpendicular sibling below, infinite space
           }
         }
 
@@ -375,12 +407,24 @@ export function adjustEarlyLeaves(allNodes) {
         );
         if (perpInGap.length > 0) {
           const closestPerp = Math.min(...perpInGap.map(p => p.y));
-          gapBelow = Math.min(gapBelow, closestPerp - node.y);
+          obstacleBelow = Math.min(obstacleBelow, closestPerp - NODE_RADIUS);
         }
 
-        canPlaceBelow = gapBelow > SAFE_GAP;
+        const availableSpace = obstacleBelow - (node.y + NODE_RADIUS);
+
+        if (!isFinite(availableSpace)) {
+          // Infinite space - use default offset
+          canPlaceBelow = true;
+          adaptiveYBelow = node.y + DEFAULT_OFFSET;
+        } else {
+          canPlaceBelow = availableSpace >= MIN_TOTAL_SPACE;
+          if (canPlaceBelow) {
+            adaptiveYBelow = (node.y + NODE_RADIUS) + availableSpace / 2;
+          }
+        }
       } else {
         canPlaceBelow = true;
+        adaptiveYBelow = node.y + DEFAULT_OFFSET;
       }
     }
 
@@ -399,12 +443,12 @@ export function adjustEarlyLeaves(allNodes) {
         // Both are leaves - try to place both perpendicular if space allows
         if (canPlaceAbove) {
           children[0].x = node.x;
-          children[0].y = node.y - PERPENDICULAR_OFFSET;
+          children[0].y = adaptiveYAbove;
           child0Perpendicular = true;
         }
         if (canPlaceBelow) {
           children[1].x = node.x;
-          children[1].y = node.y + PERPENDICULAR_OFFSET;
+          children[1].y = adaptiveYBelow;
           child1Perpendicular = true;
         }
         // If only one direction available, both try to use it (handled above)
@@ -413,11 +457,11 @@ export function adjustEarlyLeaves(allNodes) {
         // Only child[0] is leaf - place it in best available direction
         if (canPlaceAbove) {
           children[0].x = node.x;
-          children[0].y = node.y - PERPENDICULAR_OFFSET;
+          children[0].y = adaptiveYAbove;
           child0Perpendicular = true;
         } else if (canPlaceBelow) {
           children[0].x = node.x;
-          children[0].y = node.y + PERPENDICULAR_OFFSET;
+          children[0].y = adaptiveYBelow;
           child0Perpendicular = true;
         }
 
@@ -425,11 +469,11 @@ export function adjustEarlyLeaves(allNodes) {
         // Only child[1] is leaf - place it in best available direction
         if (canPlaceAbove) {
           children[1].x = node.x;
-          children[1].y = node.y - PERPENDICULAR_OFFSET;
+          children[1].y = adaptiveYAbove;
           child1Perpendicular = true;
         } else if (canPlaceBelow) {
           children[1].x = node.x;
-          children[1].y = node.y + PERPENDICULAR_OFFSET;
+          children[1].y = adaptiveYBelow;
           child1Perpendicular = true;
         }
       }
@@ -454,13 +498,13 @@ export function adjustEarlyLeaves(allNodes) {
 
       if (canPlaceAbove && child0IsLeaf) {
         children[0].x = node.x;
-        children[0].y = node.y - PERPENDICULAR_OFFSET;
+        children[0].y = adaptiveYAbove;
         child0Perpendicular = true;
       }
 
       if (canPlaceBelow && child2IsLeaf) {
         children[2].x = node.x;
-        children[2].y = node.y + PERPENDICULAR_OFFSET;
+        children[2].y = adaptiveYBelow;
         child2Perpendicular = true;
       }
 
@@ -472,7 +516,7 @@ export function adjustEarlyLeaves(allNodes) {
     }
   });
 
-  console.log('✓ Space-aware perpendicular placement complete');
+  console.log('✓ Adaptive perpendicular placement complete');
 }
 
 export function renderTree(root, allNodes) {
@@ -745,18 +789,44 @@ function renderTerminalNode(node) {
   circle.setAttribute("filter", "url(#drop-shadow)");
   group.appendChild(circle);
 
-  [-8, 8].forEach(yPos => {
+  const numPlayers = node.payoffs.length;
+
+  // Draw divider lines based on number of players
+  if (numPlayers === 2) {
+    // Single divider line for 2 players
     const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
     line.setAttribute("x1", "-18");
     line.setAttribute("x2", "18");
-    line.setAttribute("y1", yPos);
-    line.setAttribute("y2", yPos);
+    line.setAttribute("y1", "0");
+    line.setAttribute("y2", "0");
     line.setAttribute("stroke", "#9CA3AF");
     line.setAttribute("stroke-width", "1");
     group.appendChild(line);
-  });
+  } else if (numPlayers === 3) {
+    // Two divider lines for 3 players
+    [-8, 8].forEach(yPos => {
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      line.setAttribute("x1", "-18");
+      line.setAttribute("x2", "18");
+      line.setAttribute("y1", yPos);
+      line.setAttribute("y2", yPos);
+      line.setAttribute("stroke", "#9CA3AF");
+      line.setAttribute("stroke-width", "1");
+      group.appendChild(line);
+    });
+  }
 
-  const yPositions = [-16, 0, 16];
+  // Position payoffs based on number of players
+  let yPositions;
+  if (numPlayers === 2) {
+    yPositions = [-10, 10];
+  } else if (numPlayers === 3) {
+    yPositions = [-16, 0, 16];
+  } else {
+    // Fallback for single player (shouldn't happen, but just in case)
+    yPositions = [0];
+  }
+
   node.payoffs.forEach((payoff, i) => {
     const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
     text.setAttribute("y", yPositions[i]);

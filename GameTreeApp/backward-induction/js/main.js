@@ -1,7 +1,30 @@
 import { generateTree } from './tree-generator.js';
 import { computeLayout, adjustEarlyLeaves, redistributeColumns, renderTree, setupClickableEdges, markEdgeOptimal, shakeEdge } from './tree-renderer.js';
 import { updateFrontier, handleEdgeClick } from './game-logic.js';
-import { animateFrontierResolution } from './animations.js';
+import { animateFrontierResolution, animateTreeGrowth } from './animations.js';
+
+// Deep copy tree structure for replay
+function deepCopyTree(node, parent = null) {
+  const copy = {
+    id: node.id,
+    player: node.player,
+    period: node.period,
+    isLeaf: node.isLeaf,
+    payoffs: node.payoffs ? [...node.payoffs] : null,
+    x: node.x,
+    y: node.y,
+    children: [],
+    parent: parent,
+    isSolved: node.isSolved,
+    optimalChildIndex: node.optimalChildIndex
+  };
+
+  if (node.children && node.children.length > 0) {
+    copy.children = node.children.map(child => deepCopyTree(child, copy));
+  }
+
+  return copy;
+}
 
 // Game state
 const gameState = {
@@ -9,7 +32,9 @@ const gameState = {
   allNodes: [],
   allLeaves: [],
   frontierNodes: [],
-  phase: 'interaction'
+  phase: 'interaction',
+  contractionHistory: [],  // Track order of contractions for replay
+  originalTreeData: null   // Deep copy of original tree structure
 };
 
 function setupInteraction() {
@@ -34,6 +59,24 @@ function setupInteraction() {
         // Collect all solved nodes (current frontier)
         const solvedNodes = state.frontierNodes.filter(n => n.isSolved);
 
+        // Record this frontier level for replay (before contraction)
+        const frontierRecord = solvedNodes.map(node => ({
+          nodeId: node.id,
+          children: node.children.map(child => ({
+            id: child.id,
+            x: child.x,
+            y: child.y,
+            payoffs: child.payoffs ? [...child.payoffs] : null,
+            isLeaf: child.isLeaf,
+            player: child.player
+          })),
+          optimalChildIndex: node.optimalChildIndex,
+          x: node.x,
+          y: node.y,
+          player: node.player
+        }));
+        gameState.contractionHistory.push(frontierRecord);
+
         // Start animation sequence
         animateFrontierResolution(solvedNodes, state, {
           onAllAnimationsComplete: () => {
@@ -49,6 +92,18 @@ function setupInteraction() {
             } else {
               console.log('🏁 Backward induction complete! Root reached.');
               gameState.phase = 'complete';
+
+              // Wait 2 seconds, then start growth replay
+              gsap.delayedCall(2.0, () => {
+                console.log('🌱 Starting tree growth replay...');
+                gameState.phase = 'replay';
+                animateTreeGrowth(gameState.contractionHistory, gameState.originalTreeData, gameState, {
+                  onReplayComplete: () => {
+                    console.log('✨ Replay complete! SPNE path highlighted.');
+                    gameState.phase = 'complete';
+                  }
+                });
+              });
             }
           }
         });
@@ -59,8 +114,8 @@ function setupInteraction() {
 
 function init() {
   const svg = document.getElementById('tree-svg');
-  const width = svg.clientWidth || 1200;
-  const height = 840; // Start with default, will adjust dynamically later
+  const width = 1400; // Layout space - viewBox will scale to fit
+  const height = 900; // Layout space - viewBox will scale to fit
 
   const MAX_ATTEMPTS = 50;
   const COLLISION_THRESHOLD = 65; // Minimum distance between node centers
@@ -172,50 +227,71 @@ function init() {
   console.log('Frontier nodes:', gameState.frontierNodes.map(n => n.id));
   console.log('Frontier node players:', gameState.frontierNodes.map(n => `${n.id}: Player ${n.player}`));
 
+  // Save original tree for replay (deep copy before any contractions)
+  gameState.originalTreeData = deepCopyTree(root);
+  gameState.contractionHistory = [];
+
   // Set up click handlers
   setupInteraction();
 }
 
 function adjustCanvasSize(allNodes, svg) {
-  console.log('\n=== PASS 5: Canvas Size Adjustment ===');
+  console.log('\n=== PASS 5: Canvas Size Adjustment (ViewBox) ===');
+
+  const NODE_RADIUS = 24;
+  const PADDING = 150; // Large padding to account for edge labels, curves, and arrowheads
 
   // Find actual bounds of all nodes
+  let minX = Infinity;
+  let maxX = -Infinity;
   let minY = Infinity;
   let maxY = -Infinity;
 
   allNodes.forEach(node => {
-    const nodeRadius = 24;
-    minY = Math.min(minY, node.y - nodeRadius);
-    maxY = Math.max(maxY, node.y + nodeRadius);
+    if (typeof node.x !== 'number' || typeof node.y !== 'number') {
+      console.error('Invalid node position:', node);
+      return;
+    }
+    minX = Math.min(minX, node.x - NODE_RADIUS);
+    maxX = Math.max(maxX, node.x + NODE_RADIUS);
+    minY = Math.min(minY, node.y - NODE_RADIUS);
+    maxY = Math.max(maxY, node.y + NODE_RADIUS);
   });
 
-  const padding = 60; // Extra padding top and bottom
-  const requiredHeight = (maxY - minY) + (padding * 2);
-
-  console.log(`  Node bounds: y ∈ [${Math.round(minY)}, ${Math.round(maxY)}]`);
-  console.log(`  Required height: ${Math.round(requiredHeight)}px`);
-
-  // If nodes go above y=0 or extend beyond current height, adjust
-  if (minY < padding || requiredHeight > svg.clientHeight) {
-    // Shift all nodes down if some are too high
-    const shiftDown = minY < padding ? padding - minY : 0;
-
-    if (shiftDown > 0) {
-      console.log(`  Shifting all nodes down by ${Math.round(shiftDown)}px`);
-      allNodes.forEach(node => {
-        node.y += shiftDown;
-      });
-      minY += shiftDown;
-      maxY += shiftDown;
-    }
-
-    // Update SVG height
-    const newHeight = Math.max(840, Math.ceil(requiredHeight));
-    svg.style.height = newHeight + 'px';
-    console.log(`  ✅ Canvas height adjusted to ${newHeight}px (was ${svg.clientHeight}px)`);
-  } else {
-    console.log(`  ✅ Current height sufficient (${svg.clientHeight}px)`);
+  // Validate bounds
+  if (!isFinite(minX) || !isFinite(maxX) || !isFinite(minY) || !isFinite(maxY)) {
+    console.error('❌ Invalid bounds calculated:', { minX, maxX, minY, maxY });
+    console.error('   Falling back to fixed dimensions');
+    svg.setAttribute('viewBox', '0 0 1400 900');
+    svg.style.width = '100%';
+    svg.style.height = '900px';
+    return;
   }
+
+  // Add padding
+  minX -= PADDING;
+  maxX += PADDING;
+  minY -= PADDING;
+  maxY += PADDING;
+
+  const width = maxX - minX;
+  const height = maxY - minY;
+
+  console.log(`  Node bounds: x ∈ [${Math.round(minX)}, ${Math.round(maxX)}], y ∈ [${Math.round(minY)}, ${Math.round(maxY)}]`);
+  console.log(`  ViewBox size: ${Math.round(width)}px × ${Math.round(height)}px`);
+
+  // Set viewBox to show all content
+  svg.setAttribute('viewBox', `${minX} ${minY} ${width} ${height}`);
+  svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+
+  // Ensure SVG has explicit height for rendering
+  const containerWidth = svg.parentElement.clientWidth || 1200;
+  const aspectRatio = height / width;
+  const svgHeight = containerWidth * aspectRatio;
+  svg.style.height = `${svgHeight}px`;
+
+  console.log(`  ✅ ViewBox set: "${Math.round(minX)} ${Math.round(minY)} ${Math.round(width)} ${Math.round(height)}"`);
+  console.log(`  ✅ SVG height: ${Math.round(svgHeight)}px`);
 }
 
 function checkCollisions(allNodes, threshold) {
@@ -315,5 +391,4 @@ function validateTreeStructure(allNodes, stage) {
 
 document.addEventListener('DOMContentLoaded', () => {
   init();
-  document.getElementById('new-game').onclick = init;
 });

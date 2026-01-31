@@ -17,26 +17,11 @@ body {
 
 #tree-svg {
   width: 100%;
-  min-height: 840px;
+  height: auto;
   background: white;
   border: 1px solid #E5E7EB;
   border-radius: 8px;
-}
-
-#new-game {
-  margin-top: 20px;
-  padding: 10px 24px;
-  font-family: inherit;
-  font-size: 16px;
-  background: #374151;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-#new-game:hover {
-  background: #1F2937;
+  display: block;
 }
 
 /* Clickable hit area (invisible) */

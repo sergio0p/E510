@@ -8,22 +8,26 @@ const ACTION_PROBABILITIES = {
 
 // Generate complete random tree
 export function generateTree() {
-  const root = createRootNode();
-  expandNode(root);
+  const playersInGame = new Set([1]); // Start with Player 1 (root)
+  const root = createRootNode(playersInGame);
+  expandNode(root, playersInGame);
 
   const allNodes = [];
   const allLeaves = [];
   collectNodes(root, allNodes, allLeaves);
 
-  assignPayoffs(allLeaves);
+  const numPlayers = playersInGame.size;
+  console.log(`Game has ${numPlayers} player(s): ${Array.from(playersInGame).sort().join(', ')}`);
+
+  assignPayoffs(allLeaves, numPlayers);
 
   return { root, allNodes, allLeaves };
 }
 
-function createRootNode() {
+function createRootNode(playersInGame) {
   return {
     id: 'n0',
-    player: randomChoice([1, 2, 3]),
+    player: 1, // Root must always be Player 1
     period: 0,
     actions: randomChoice([2, 3]),
     payoffs: null,
@@ -35,7 +39,7 @@ function createRootNode() {
   };
 }
 
-function expandNode(node) {
+function expandNode(node, playersInGame) {
   for (let i = 0; i < node.actions; i++) {
     const childId = `${node.id}_${i}`;
     const childPeriod = node.period + 1;
@@ -91,11 +95,31 @@ function expandNode(node) {
           y: 0
         };
       } else {
-        // Decision node
-        const possiblePlayers = [1, 2, 3].filter(p => p !== node.player);
+        // Decision node - determine available players based on progression rule
+        let availablePlayers = [];
+
+        // Player 1 is always available
+        availablePlayers.push(1);
+
+        // Player 2 is available only if Player 1 exists in the game
+        if (playersInGame.has(1)) {
+          availablePlayers.push(2);
+        }
+
+        // Player 3 is available only if Player 2 exists in the game
+        if (playersInGame.has(2)) {
+          availablePlayers.push(3);
+        }
+
+        // Remove current player (can't have same player in consecutive nodes)
+        availablePlayers = availablePlayers.filter(p => p !== node.player);
+
+        const selectedPlayer = randomChoice(availablePlayers);
+        playersInGame.add(selectedPlayer);
+
         child = {
           id: childId,
-          player: randomChoice(possiblePlayers),
+          player: selectedPlayer,
           period: childPeriod,
           actions: actions,
           payoffs: null,
@@ -105,7 +129,7 @@ function expandNode(node) {
           x: 0,
           y: 0
         };
-        expandNode(child);
+        expandNode(child, playersInGame);
       }
     }
 
@@ -122,7 +146,7 @@ function collectNodes(node, allNodes, allLeaves) {
   }
 }
 
-function assignPayoffs(leaves) {
+function assignPayoffs(leaves, numPlayers) {
   const n = leaves.length;
 
   const range = [];
@@ -130,13 +154,13 @@ function assignPayoffs(leaves) {
     range.push(i);
   }
 
-  for (let playerIndex = 0; playerIndex < 3; playerIndex++) {
+  for (let playerIndex = 0; playerIndex < numPlayers; playerIndex++) {
     const shuffled = shuffle([...range]);
     const values = shuffled.slice(0, n);
 
     for (let i = 0; i < n; i++) {
       if (!leaves[i].payoffs) {
-        leaves[i].payoffs = [null, null, null];
+        leaves[i].payoffs = [];
       }
       leaves[i].payoffs[playerIndex] = values[i];
     }

@@ -409,8 +409,198 @@ Memory usage is transient - particles are garbage collected after animation.
 
 ---
 
+---
+
+## Phase 4: Growth Replay Animation
+
+After backward induction completes (root is reached), the application automatically plays a replay animation showing the tree growing back to its original structure. This helps students visualize the complete game tree and the Subgame Perfect Nash Equilibrium (SPNE) path.
+
+### Timing and Flow
+
+1. **Completion pause (2.0s)**: After root is reached, brief pause
+2. **Growth animation**: Tree grows back level by level in reverse order of contraction
+3. **Level pause (1.0s)**: Pause between each growth level
+4. **Growth speed**: 0.5s per level (half the contraction speed - faster)
+
+### Visual Representation
+
+**SPNE Path (Optimal Edges):**
+- Color: Red (#DC2626)
+- Stroke width: 3px
+- Red arrowhead marker
+
+**Non-Optimal Edges:**
+- Color: Grey (#374151)
+- Stroke width: 2px
+- Standard grey arrowhead marker
+
+### Key Implementation Details
+
+#### 1. Original Tree Preservation
+
+Before any contractions begin, the original tree is deep-copied:
+
+```javascript
+gameState.originalTreeData = deepCopyTree(root);
+```
+
+This preserves:
+- All node positions (x, y)
+- All payoffs
+- Full tree structure including perpendicular leaves
+- Player assignments
+
+#### 2. Contraction History Recording
+
+Each frontier level is recorded before contraction:
+
+```javascript
+const frontierRecord = solvedNodes.map(node => ({
+  nodeId: node.id,
+  children: node.children.map(child => ({
+    id: child.id,
+    x: child.x,
+    y: child.y,
+    payoffs: child.payoffs ? [...child.payoffs] : null,
+    isLeaf: child.isLeaf,
+    player: child.player
+  })),
+  optimalChildIndex: node.optimalChildIndex,
+  x: node.x,
+  y: node.y,
+  player: node.player
+}));
+gameState.contractionHistory.push(frontierRecord);
+```
+
+#### 3. SPNE Path Detection
+
+At the start of growth animation, build a set of optimal edges:
+
+```javascript
+const spnePath = new Set();
+contractionHistory.forEach(levelData => {
+  levelData.forEach(nodeData => {
+    const optimalChild = nodeData.children[nodeData.optimalChildIndex];
+    const edgeKey = `${nodeData.nodeId}-${optimalChild.id}`;
+    spnePath.add(edgeKey);
+  });
+});
+```
+
+#### 4. Node and Edge Restoration
+
+For each parent being restored:
+
+```javascript
+originalParent.children.forEach((originalChild, childIndex) => {
+  // Check if child already exists (was parent in previous level)
+  let childNode = state.allNodes.find(n => n.id === originalChild.id);
+
+  if (childNode) {
+    // Existing node - restore opacity and color
+    childNode.parent = parentNode;
+
+    // Reset opacity (may have been faded during contraction)
+    const existingGroup = document.getElementById(`node-${childNode.id}`);
+    existingGroup.style.opacity = '1';
+
+    // Reset leaf color (may have been filled black before explosion)
+    if (childNode.isLeaf) {
+      const circle = existingGroup.querySelector('circle');
+      tl.to(circle, { fill: '#E5E7EB', duration: GROWTH_DURATION * 0.5 });
+    }
+  } else {
+    // New node - create from scratch
+    childNode = { ...originalChild, parent: parentNode, children: [] };
+    renderChildForGrowth(childNode, parentNode, isOptimal);
+  }
+
+  // Check if edge is part of SPNE
+  const edgeKey = `${parentNode.id}-${childNode.id}`;
+  const isOptimal = spnePath.has(edgeKey);
+
+  // Restore edge
+  renderEdgeForGrowth(parentNode, childNode, childIndex, isOptimal);
+});
+```
+
+#### 5. Handling Faded Elements
+
+During contraction, non-optimal elements were set to `opacity: 0`. During growth, these must be restored:
+
+**Nodes:**
+- Reset `opacity: 1`
+- Reset leaf circle fill from black (#000000) to grey (#E5E7EB)
+
+**Edges:**
+- Check if edge already exists in DOM
+- If exists: reset opacity and update colors based on `isOptimal`
+- If new: create from scratch with correct colors
+
+**Edge Labels:**
+- Reset opacity to 0 for animation fade-in
+
+### Growth Animation Sequence
+
+For each level (in reverse order of contraction):
+
+1. **Restore parent as decision node**
+   - Remove old leaf representation
+   - Render colored circle with player number
+
+2. **Grow all children**
+   - Render child nodes at parent position (invisible initially)
+   - Render edges as zero-length lines
+   - Animate children moving to final positions (0.5s)
+   - Animate edges growing from parent to children (0.5s)
+   - Fade in edge labels (0.5s)
+
+3. **Pause before next level** (1.0s)
+
+### Critical Bug Fixes
+
+**Problem 1: Missing Non-Optimal Edges**
+- During contraction, non-optimal edges were faded to `opacity: 0` but never restored
+- Solution: Check for existing edges and reset opacity in `renderEdgeForGrowth()`
+
+**Problem 2: Black Leaf Nodes**
+- Leaves filled with black before explosion remained black during growth
+- Solution: Animate circle fill back to grey (#E5E7EB) for existing leaf nodes
+
+**Problem 3: Missing Perpendicular Leaves**
+- Initially iterated over `nodeData.children` (from contraction history)
+- History only contains terminal children, not full tree structure
+- Solution: Iterate over `originalParent.children` from deep-copied original tree
+
+### Configuration
+
+```javascript
+const GROWTH_DURATION = 0.5; // Half of contraction speed
+const PAUSE_BETWEEN_LEVELS = 1.0;
+```
+
+### Player Progression Rules
+
+The tree generator now enforces proper player introduction:
+
+1. **Root is always Player 1**
+2. **Player 2 can only appear after Player 1 exists**
+3. **Player 3 can only appear after Player 2 exists**
+4. **Payoff dimensions match number of players:**
+   - 2 players: 2-dimensional payoffs
+   - 3 players: 3-dimensional payoffs
+
+**Visual Rendering:**
+- 2 players: 1 divider line, payoffs at y = [-10, 10]
+- 3 players: 2 divider lines, payoffs at y = [-16, 0, 16]
+
+---
+
 ## Summary
 
 Phase 3 brings the backward induction algorithm to life through carefully choreographed animations. The black ink marking, particle explosions, and dynamic edge contraction create an intuitive visual representation of the elimination and consolidation process. By animating nodes sequentially and maintaining smooth transitions between phases, users can follow each step of backward induction from the terminal nodes all the way to the root.
 
-The implementation balances visual impact (dramatic explosions, smooth contraction) with performance (frame-by-frame updates, efficient particle management) and educational clarity (slow playback speed, sequential processing, clear phase transitions).
+After completion, the growth replay animation reconstructs the full game tree with the SPNE path highlighted in red, allowing students to see the complete solution in context of all possible paths.
+
+The implementation balances visual impact (dramatic explosions, smooth contraction, clear SPNE highlighting) with performance (frame-by-frame updates, efficient particle management, DOM element reuse) and educational clarity (slow playback speed, sequential processing, clear phase transitions, proper player progression).
