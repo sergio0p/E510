@@ -226,14 +226,43 @@
         <!-- Main Accordion -->
         <div class="accordion" id="appsAccordion">
 
+            <!-- Optimization with Inequalities Constraints (KKT) App -->
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kktOptimization" aria-expanded="false">
+                        Optimization with Inequalities Constraints (Recipe #2)
+                    </button>
+                </h2>
+                <div id="kktOptimization" class="accordion-collapse collapse" data-bs-parent="#appsAccordion">
+                    <div class="accordion-body">
+                        <p><strong>Topics:</strong> Constrained Optimization, Kuhn-Tucker (KKT) Conditions, Inequality Constraints, Complementary Slackness</p>
+
+                        <h5>Description</h5>
+                        <p>Master the KKT conditions for solving constrained optimization problems with inequality constraints. This interactive app guides you through:</p>
+                        <ul>
+                            <li>Formulating the Lagrangian with inequality constraints</li>
+                            <li>Setting up and applying KKT conditions</li>
+                            <li>Solving for candidate solutions</li>
+                            <li>Verifying complementary slackness and constraint satisfaction</li>
+                            <li>Visualizing feasible regions and optimal solutions</li>
+                        </ul>
+
+                        <h5>Features</h5>
+                        <p>Step-by-step problem solving, interactive Lagrangian setup, case analysis for complementary slackness, dynamic visualization of constraints and solutions</p>
+
+                        <a href="KKT/index.html" class="app-link">Launch App →</a>
+                    </div>
+                </div>
+            </div>
+
             <!-- Backward Induction App -->
             <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#backwardInduction" aria-expanded="true">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#backwardInduction" aria-expanded="false">
                         Backward Induction
                     </button>
                 </h2>
-                <div id="backwardInduction" class="accordion-collapse collapse show" data-bs-parent="#appsAccordion">
+                <div id="backwardInduction" class="accordion-collapse collapse" data-bs-parent="#appsAccordion">
                     <div class="accordion-body">
                         <p><strong>Topics:</strong> Game Theory, Backward Induction, Sequential Games, Subgame Perfect Equilibrium</p>
 
