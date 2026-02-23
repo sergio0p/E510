@@ -155,6 +155,11 @@ function drawObjectivePlot() {
     // Objective contour
     const zObj = evaluateGrid(xs, ys, objFunc);
     const levels = getContourLevels(xopt, yopt, objFunc, state.xtick);
+    const fAtOpt = objFunc(xopt, yopt);
+
+    // Check if optimum is near (5,5) - the unconstrained maximum
+    const distFromUnconstrained = Math.sqrt((xopt - 5) ** 2 + (yopt - 5) ** 2);
+    const showOptimalIC = distFromUnconstrained >= 1;
 
     // Feasible region heatmap
     const zFeas = feasibilityGrid(xs, ys);
@@ -214,6 +219,25 @@ function drawObjectivePlot() {
             hoverinfo: 'text+name'
         }
     ];
+
+    // Add highlighted indifference curve at optimum (only if not near unconstrained max)
+    if (showOptimalIC) {
+        traces.splice(2, 0, {
+            x: xs, y: ys, z: zObj,
+            type: 'contour',
+            contours: {
+                coloring: 'none',
+                start: fAtOpt,
+                end: fAtOpt,
+                size: 1
+            },
+            line: { color: '#cb4b16', width: 2.5, dash: 'dash' },
+            showscale: false,
+            hoverinfo: 'x+y+z',
+            name: `Optimal IC (f = ${formatNumber(fAtOpt)})`,
+            showlegend: true
+        });
+    }
 
     const layout = {
         xaxis: { title: 'x', range: [xMin, plotXMax] },
