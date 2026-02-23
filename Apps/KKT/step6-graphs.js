@@ -303,7 +303,7 @@ function drawLagrangianPlot() {
         {
             x: [sol.x], y: [sol.y],
             type: 'scatter', mode: 'markers',
-            marker: { color: '#b58900', size: 8, line: { color: '#073642', width: 1 } },
+            marker: { color: '#d33682', size: 10, symbol: 'diamond', line: { color: '#073642', width: 1 } },
             name: `Case sol (${formatNumber(sol.x)}, ${formatNumber(sol.y)})`,
             text: [`L = ${formatNumber(lagFn(sol.x, sol.y))}`],
             hoverinfo: 'text+name'
