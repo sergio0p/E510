@@ -154,23 +154,34 @@
     }
 
     .simple-frame-content ul {
-      list-style: none;
-      padding-left: 0;
+      list-style: none !important;
+      padding-left: 0 !important;
     }
 
     .simple-frame-content ul li {
       position: relative;
-      padding-left: 1.5rem;
+      padding-left: 1.8rem;
       margin-bottom: 0.75rem;
     }
 
     .simple-frame-content ul li::before {
-      content: '\25B6';
+      content: '' !important;
       position: absolute;
       left: 0;
-      color: #2c3e7a;
-      font-size: 0.7rem;
-      top: 0.35rem;
+      top: 0.45rem;
+      width: 0.55rem;
+      height: 0.55rem;
+      background: #2c3e7a;
+      border-radius: 50%;
+      box-shadow: 1px 1px 3px rgba(0,0,0,0.35);
+    }
+
+    /* Nested list bullets - smaller */
+    .simple-frame-content ul ul li::before {
+      width: 0.4rem;
+      height: 0.4rem;
+      top: 0.5rem;
+      background: #5c6eaa;
     }
 
     .simple-frame-content ol {
