@@ -5,38 +5,770 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mathematica Tutorial | ECON 510</title>
 
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
   <!-- KaTeX CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="css/beamer-theme.css">
+
+  <style>
+    /* Cheat Sheet Styles - Cyan Theme */
+    .cheat-sheet {
+      background: #e0f7fa;
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    .cheat-sheet-header {
+      background: #00bcd4;
+      color: white;
+      padding: 1.5rem 2rem;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+
+    .cheat-sheet .accordion {
+      border: none;
+      border-radius: 0;
+    }
+
+    .cheat-sheet .accordion-item {
+      border: none;
+      border-bottom: 1px solid #b2ebf2;
+      background: transparent;
+    }
+
+    .cheat-sheet .accordion-button {
+      background: #b2ebf2;
+      color: #006064;
+      font-weight: 600;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 0;
+    }
+
+    .cheat-sheet .accordion-button:not(.collapsed) {
+      background: #4dd0e1;
+      color: #004d40;
+      box-shadow: none;
+    }
+
+    .cheat-sheet .accordion-button:focus {
+      box-shadow: none;
+    }
+
+    .cheat-sheet .accordion-body {
+      background: #e0f7fa;
+      padding: 1rem 1.5rem;
+    }
+
+    .cheat-sheet .code-block {
+      background: #fff;
+      border-left: 4px solid #00bcd4;
+      padding: 0.75rem 1rem;
+      margin: 0.5rem 0;
+      font-family: 'Courier New', Consolas, monospace;
+      font-size: 0.95rem;
+      color: #333;
+    }
+
+    .cheat-sheet .code-comment {
+      color: #888;
+      font-style: italic;
+    }
+
+    /* Simple Beamer Style (not Crane) */
+    .simple-title-slide {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: #fff;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .simple-title-slide h1 {
+      color: #2c3e7a;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .simple-title-slide h2 {
+      color: #2c3e7a;
+      font-size: 1.5rem;
+      font-weight: normal;
+      margin-bottom: 2rem;
+    }
+
+    .simple-title-slide .author {
+      font-size: 1.2rem;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .simple-title-slide .institute {
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 0.25rem;
+    }
+
+    .simple-title-slide .date {
+      font-size: 1rem;
+      color: #666;
+      margin-top: 1rem;
+    }
+
+    /* Simple Frame Style */
+    .simple-frame {
+      min-height: 100vh;
+      padding: 2rem;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .simple-frame-title {
+      color: #2c3e7a;
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin-bottom: 0.25rem;
+      border-bottom: 2px solid #2c3e7a;
+      padding-bottom: 0.5rem;
+    }
+
+    .simple-frame-subtitle {
+      color: #666;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .simple-frame-content {
+      flex: 1;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    .simple-frame-content ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .simple-frame-content ul li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .simple-frame-content ul li::before {
+      content: '\25B6';
+      position: absolute;
+      left: 0;
+      color: #2c3e7a;
+      font-size: 0.7rem;
+      top: 0.35rem;
+    }
+
+    .simple-frame-content ol {
+      padding-left: 1.5rem;
+    }
+
+    .simple-frame-content ol li {
+      margin-bottom: 0.5rem;
+    }
+
+    .simple-frame-content .highlight {
+      color: #00bcd4;
+    }
+
+    .simple-frame-content .highlight-red {
+      color: #dc322f;
+    }
+
+    .simple-frame-content .math-display {
+      text-align: center;
+      margin: 1.5rem 0;
+      font-size: 1.3rem;
+    }
+
+    .simple-frame-content .code-inline {
+      font-family: 'Courier New', Consolas, monospace;
+      background: #f5f5f5;
+      padding: 0.1rem 0.4rem;
+      border-radius: 3px;
+    }
+
+    .simple-frame-content .becomes {
+      color: #666;
+      font-style: italic;
+      margin: 1rem 0;
+    }
+
+    /* UNC Logo Footer */
+    .unc-footer {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      font-size: 0.7rem;
+      color: #00bcd4;
+      text-align: right;
+    }
+
+    .unc-footer strong {
+      display: block;
+      font-weight: 600;
+    }
+
+    /* Overlay animations */
+    .simple-frame .overlay {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .simple-frame .overlay.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Screenshot image */
+    .screenshot {
+      max-width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-top: 1rem;
+    }
+
+    /* Practice frame */
+    .practice-frame {
+      background: #fff8e1;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Section Header -->
-  <section class="section-header">
-    <div class="section-title-box">
-      <h1>Mathematica Tutorial</h1>
+  <!-- Page 1: Cheat Sheet with Bootstrap Accordion -->
+  <section class="cheat-sheet">
+    <div class="cheat-sheet-header">Mathematica Cheat Sheet</div>
+
+    <div class="accordion" id="cheatSheetAccordion">
+
+      <!-- Define functions -->
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#defineFunctions" aria-expanded="true">
+            Define functions
+          </button>
+        </h2>
+        <div id="defineFunctions" class="accordion-collapse collapse show" data-bs-parent="#cheatSheetAccordion">
+          <div class="accordion-body">
+            <div class="code-block">
+              f[x_,y_] := 1-(x-4)^2-(y-3)^2 <span class="code-comment">or equivalently,</span><br>
+              g = 1-(x-4)^2-(y-3)^2
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Compute a gradient -->
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#computeGradient">
+            Compute a gradient (list of all partial derivatives)
+          </button>
+        </h2>
+        <div id="computeGradient" class="accordion-collapse collapse" data-bs-parent="#cheatSheetAccordion">
+          <div class="accordion-body">
+            <div class="code-block">
+              Grad[f[x,y],{x,y}] <span class="code-comment">or equivalently,</span><br>
+              Grad[g,{x,y}]
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Write and solve equations -->
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#solveEquations">
+            Write and solve a system of equations
+          </button>
+        </h2>
+        <div id="solveEquations" class="accordion-collapse collapse" data-bs-parent="#cheatSheetAccordion">
+          <div class="accordion-body">
+            <div class="code-block">
+              sys = { 2x + y == 10, y/x == 2 }<br>
+              Solve[ sys, {x,y} ]
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Apply substitution rules -->
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#substitution">
+            Apply substitution (replacement) rules
+          </button>
+        </h2>
+        <div id="substitution" class="accordion-collapse collapse" data-bs-parent="#cheatSheetAccordion">
+          <div class="accordion-body">
+            <div class="code-block">
+              x*y /. { x -> 2.5, y -> 5}
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
-    <h2>ECON 510: Microeconomic Theory</h2>
   </section>
 
-  <!-- Frame 1: Mathematica Tutorial (source: lines 215-217)
-       NO OVERLAYS -->
-  <section class="frame">
-    <div class="frame-title-bar">
-      <h2 class="frame-title">Mathematica Tutorial</h2>
+  <!-- Page 2: Title Slide -->
+  <section class="simple-title-slide">
+    <h1>Mathematica Tutorial</h1>
+    <h2>Essential Commands for Economics</h2>
+    <p class="author">S&eacute;rgio O. Parreiras</p>
+    <p class="institute">Economics Department, UNC at Chapel Hill</p>
+    <p class="date">&copy; 2026, All Rights Reserved</p>
+  </section>
+
+  <!-- Frame: Computer Algebra Systems (CAS) -->
+  <section class="simple-frame overlay-frame" style="position: relative;">
+    <h2 class="simple-frame-title">Computer Algebra Systems (CAS)</h2>
+    <div class="simple-frame-content">
+      <ul>
+        <li class="overlay" data-overlay="1">CAS are extremely useful for economic modelling.</li>
+        <li class="overlay" data-overlay="2">There are several CAS in the market:
+          <ol>
+            <li class="overlay" data-overlay="3">Mathematica</li>
+            <li class="overlay" data-overlay="4">Maple (too expensive for individuals)</li>
+            <li class="overlay" data-overlay="5"><a href="https://www.sympy.org/" class="highlight">SymPy</a> (free and open source!)</li>
+          </ol>
+        </li>
+        <li class="overlay" data-overlay="6">Why Mathematica?
+          <ol>
+            <li class="overlay" data-overlay="7">UNC has license (no direct cost to you)</li>
+            <li class="overlay" data-overlay="8">Mathematica is more user-friendly than Sage</li>
+          </ol>
+        </li>
+      </ul>
     </div>
-    <div class="frame-content" style="display: flex; align-items: center; justify-content: center;">
-      <p><a href="#" style="color: var(--crane-blue); font-size: 1.2rem;">Mathematica Tutorial</a> (clickable link)</p>
+    <div class="unc-footer">
+      <strong>THE UNIVERSITY</strong>
+      <em>of</em> NORTH CAROLINA<br>
+      <em>at</em> CHAPEL HILL
+    </div>
+  </section>
+
+  <!-- Frame: Navigate Workbook Cells -->
+  <section class="simple-frame overlay-frame">
+    <h2 class="simple-frame-title">Navigate Workbook Cells</h2>
+    <div class="simple-frame-content">
+      <ul>
+        <li class="overlay" data-overlay="1">Everything you type goes into cells: brackets on the right delimit them</li>
+        <li class="overlay" data-overlay="2">Press <span class="highlight-red">shift+enter</span> to <span class="highlight">execute</span> and create a new cell.</li>
+        <li class="overlay" data-overlay="3">Press <span class="highlight-red">enter</span> alone to add a line within the current cell.</li>
+        <li class="overlay" data-overlay="4">Use arrow keys to move between cells.</li>
+        <li class="overlay" data-overlay="5">Put one command per cell for easier debugging.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Frame: Define Functions -->
+  <section class="simple-frame overlay-frame">
+    <h2 class="simple-frame-title">Define Functions</h2>
+    <div class="simple-frame-content">
+      <div class="math-display">
+        $$f(x) = -\exp(-\rho \cdot x)$$
+      </div>
+      <p class="becomes">becomes...</p>
+      <div class="math-display overlay" data-overlay="1">
+        <span class="code-inline">f[x_] := -Exp[-&rho;*x]</span>
+      </div>
+      <p class="overlay" data-overlay="2" style="margin-top: 2rem;">Spot four differences:</p>
+      <ul>
+        <li class="overlay" data-overlay="3">Use <span class="highlight-red">square brackets</span> for function arguments, not parentheses.</li>
+        <li class="overlay" data-overlay="4">Built-in functions start with a <span class="highlight-red">capital letter</span>.</li>
+        <li class="overlay" data-overlay="5">Use <span class="highlight-red">:=</span> for <span class="highlight-red">definitions</span>.</li>
+        <li class="overlay" data-overlay="6">Use underscore <span class="highlight-red">only when defining</span>, not when evaluating. Type <span class="code-inline">f[x]</span> then shift+enter.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Frame: Define Multi-Variable Functions -->
+  <section class="simple-frame overlay-frame">
+    <h2 class="simple-frame-title">Define Multi-Variable Functions</h2>
+    <div class="simple-frame-content">
+      <div class="math-display">
+        $$U(x,y) = 2 \cdot \ln(x) + 3 \cdot \ln(y)$$
+        $$V(x,y) = x^2 \cdot y^3$$
+      </div>
+      <p class="becomes">becomes...</p>
+      <div class="math-display overlay" data-overlay="1">
+        <span class="code-inline">U[x_, y_] := 2*Log[x] + 3*Log[y]</span><br><br>
+        <span class="code-inline">V[x_, y_] := x^2 * y^3</span>
+      </div>
+      <p class="overlay" data-overlay="2" style="margin-top: 1.5rem;">
+        <span class="code-inline">*</span> = multiplication &nbsp;&nbsp;&nbsp;
+        <span class="code-inline">^</span> = exponentiation
+      </p>
+    </div>
+  </section>
+
+  <!-- Frame: Verify Your Definitions -->
+  <section class="simple-frame">
+    <h2 class="simple-frame-title">Verify Your Definitions</h2>
+    <div class="simple-frame-content">
+      <p>Definitions with <span class="code-inline">:=</span> produce no output. To verify, call the function:</p>
+      <div class="math-display" style="text-align: left; margin-left: 3rem;">
+        <span class="code-inline">h[x_] := x^2</span> &lt;shift+enter&gt;<br>
+        <em>(no output)</em><br><br>
+        <span class="code-inline">h[x]</span> &lt;shift+enter&gt;<br>
+        Out= $x^2$
+      </div>
+      <p style="margin-top: 1.5rem;"><strong>Tip:</strong> You can use <span class="code-inline">=</span> instead of <span class="code-inline">:=</span> in most cases.</p>
+    </div>
+  </section>
+
+  <!-- Frame: Lists (vectors) - Extract parts -->
+  <section class="simple-frame overlay-frame">
+    <h2 class="simple-frame-title">Lists (vectors)</h2>
+    <p class="simple-frame-subtitle">Extract parts of a list</p>
+    <div class="simple-frame-content">
+      <p class="overlay" data-overlay="1">Write lists/vectors using <span class="highlight-red">curly braces</span>: $\left(\frac{1}{3}, \frac{2}{3}, \frac{6}{9}\right) \to$ <span class="code-inline">{1/3, 2/3, 6/9}</span></p>
+      <p class="overlay" data-overlay="2">Extract elements with double brackets:</p>
+      <ul>
+        <li class="overlay" data-overlay="2"><span class="code-inline">L[[k]]</span> $\to$ $k$-th element</li>
+        <li class="overlay" data-overlay="2"><span class="code-inline">L[[i;;j]]</span> $\to$ elements $i$ through $j$</li>
+      </ul>
+      <p class="overlay" data-overlay="3" style="margin-top: 1rem;"><strong>Example:</strong> <span class="code-inline">L = {a, 1, z, 9, 4}</span></p>
+      <ul>
+        <li class="overlay" data-overlay="3"><span class="code-inline">L[[1]]</span> $\to$ a &nbsp;&nbsp;&nbsp; <span class="code-inline">L[[3]]</span> $\to$ z</li>
+        <li class="overlay" data-overlay="3"><span class="code-inline">L[[2;;4]]</span> $\to$ <span class="code-inline">{1, z, 9}</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Frame: Lists - Inner Products -->
+  <section class="simple-frame overlay-frame">
+    <h2 class="simple-frame-title">Lists (vectors)</h2>
+    <p class="simple-frame-subtitle">Compute Inner Products</p>
+    <div class="simple-frame-content">
+      <p>Use a period <span class="code-inline">.</span> for dot products (element-wise multiply, then sum):</p>
+      <div class="math-display">
+        $$\left(\frac{1}{3}, \frac{2}{3}\right) \cdot (\ln(c_1), \ln(c_2)) = \frac{1}{3}\ln(c_1) + \frac{2}{3}\ln(c_2)$$
+      </div>
+      <p class="becomes">becomes...</p>
+      <div class="math-display overlay" data-overlay="1">
+        <span class="code-inline">{1/3, 2/3} . {Log[c1], Log[c2]}</span><br><br>
+        Out: $\frac{1}{3}\text{Log}[c_1] + \frac{2}{3}\text{Log}[c_2]$
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame: Lists - Vectorization -->
+  <section class="simple-frame">
+    <h2 class="simple-frame-title">Lists (vectors)</h2>
+    <p class="simple-frame-subtitle">Apply Functions to Lists (Vectorization)</p>
+    <div class="simple-frame-content">
+      <p>Functions automatically apply to each element of a list:</p>
+      <div class="math-display" style="text-align: left; margin-left: 3rem;">
+        <span class="code-inline">u[x_] := Sqrt[x]</span><br>
+        <span class="code-inline">L = {1, 25, 9, 4, 16}</span><br>
+        <span class="code-inline">u[L]</span> $\to$ <span class="code-inline">{1, 5, 3, 2, 4}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame: Write Equations and Systems -->
+  <section class="simple-frame overlay-frame">
+    <h2 class="simple-frame-title">Write Equations and Systems</h2>
+    <div class="simple-frame-content">
+      <p class="overlay" data-overlay="1">Use <span class="highlight-red">double equals ==</span> for equations (single <span class="code-inline">=</span> is for assignment).</p>
+      <p class="overlay" data-overlay="2">Systems of equations are just lists of equations:</p>
+      <div class="math-display overlay" data-overlay="2">
+        <span class="code-inline">{x + y == 10, x - y == 2}</span>
+      </div>
+      <p class="overlay" data-overlay="3" style="margin-top: 1.5rem;"><strong>Key insight:</strong> If equations are equal to a constant&mdash;no need to expand!</p>
+      <div class="math-display overlay" data-overlay="3">
+        <span class="code-inline">FOC = Grad[f[x, y], {x, y}] == 0</span>
+      </div>
+      <p class="overlay" data-overlay="4">is equivalent to</p>
+      <div class="math-display overlay" data-overlay="4">
+        <span class="code-inline">FOC = {D[f[x, y], x] == 0, D[f[x, y], y] == 0}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame: Compute Derivatives with D -->
+  <section class="simple-frame overlay-frame">
+    <h2 class="simple-frame-title">Compute Derivatives with D</h2>
+    <div class="simple-frame-content">
+      <p>Use <span class="code-inline">D[f[x], x]</span> for derivatives:</p>
+      <table style="margin: 1.5rem 0; font-size: 1rem;">
+        <tr class="overlay" data-overlay="1"><td style="padding: 0.5rem 2rem 0.5rem 0;"><span class="code-inline">D[f[x], x]</span></td><td>first derivative</td></tr>
+        <tr class="overlay" data-overlay="2"><td style="padding: 0.5rem 2rem 0.5rem 0;"><span class="code-inline">D[f[x, y], x]</span></td><td>partial w.r.t. $x$</td></tr>
+        <tr class="overlay" data-overlay="3"><td style="padding: 0.5rem 2rem 0.5rem 0;"><span class="code-inline">D[f[x, y], x, y]</span></td><td>cross partial $\partial^2/\partial x \partial y$</td></tr>
+        <tr class="overlay" data-overlay="4"><td style="padding: 0.5rem 2rem 0.5rem 0;"><span class="code-inline">D[f[x], x, x]</span></td><td>second derivative</td></tr>
+      </table>
+      <p class="overlay" data-overlay="5"><strong>Example:</strong> Arrow-Pratt risk aversion</p>
+      <div class="math-display overlay" data-overlay="5">
+        <span class="code-inline">rho = -D[f[x], x, x] / D[f[x], x]</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame: Compute the Gradient -->
+  <section class="simple-frame">
+    <h2 class="simple-frame-title">Compute the Gradient</h2>
+    <div class="simple-frame-content">
+      <p>Use <span class="code-inline">Grad</span> to get all partial derivatives at once:</p>
+      <div class="math-display">
+        <span class="code-inline">Grad[f[x, y, z], {x, y, z}]</span>
+      </div>
+      <p>returns:</p>
+      <div class="math-display">
+        $$\left\{\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}, \frac{\partial f}{\partial z}\right\}$$
+      </div>
+      <p style="margin-top: 1.5rem;"><strong>Key application:</strong> First-order conditions (FOC)</p>
+      <div class="math-display">
+        <span class="code-inline">Grad[f[x, y], {x, y}] == 0</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame: Solve Systems of Equations -->
+  <section class="simple-frame overlay-frame">
+    <h2 class="simple-frame-title">Solve Systems of Equations</h2>
+    <div class="simple-frame-content">
+      <p><strong>Basic syntax:</strong></p>
+      <div class="math-display">
+        <span class="code-inline">Solve[{eq1, eq2, ...}, {x, y, ...}]</span>
+      </div>
+      <p class="overlay" data-overlay="1"><strong>Example:</strong> Equilibrium (both FOCs = 0)</p>
+      <div class="math-display overlay" data-overlay="1">
+        <span class="code-inline">Solve[{10 - 2x - y == 0, 8 - x - 2y == 0}, {x, y}]</span>
+      </div>
+      <p class="overlay" data-overlay="2" style="margin-top: 1.5rem;"><strong>Shortcut:</strong> Solve accepts a list equal to zero directly!</p>
+      <div class="math-display overlay" data-overlay="2">
+        <span class="code-inline">FOC = Grad[u[x, y], {x, y}]</span><br>
+        <span class="code-inline">Solve[FOC == 0, {x, y}]</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame: Solve vs Reduce -->
+  <section class="simple-frame">
+    <h2 class="simple-frame-title">Solve vs Reduce</h2>
+    <div class="simple-frame-content">
+      <p><span class="highlight">Solve:</span> Simple syntax, general solutions only</p>
+      <div class="math-display" style="text-align: left; margin-left: 2rem;">
+        <span class="code-inline">Solve[{x + y == 10, x*y == 21}, {x, y}]</span>
+      </div>
+      <p style="margin-top: 1.5rem;"><span class="highlight">Reduce:</span> Handles assumptions and special cases</p>
+      <div class="math-display" style="text-align: left; margin-left: 2rem;">
+        <span class="code-inline">Reduce[{x + y == m, x > 0, y > 0}, {x, y}, Reals]</span>
+      </div>
+      <p style="margin-top: 1.5rem;"><strong>Tip:</strong> Use <span class="code-inline">Solve</span> for most economics problems. Use <span class="code-inline">Reduce</span> when you need parameter restrictions or complete case analysis.</p>
+    </div>
+  </section>
+
+  <!-- Frame: Plot Curves with ContourPlot -->
+  <section class="simple-frame overlay-frame">
+    <h2 class="simple-frame-title">Plot Curves with ContourPlot</h2>
+    <div class="simple-frame-content">
+      <p>Plot implicit equations without solving:</p>
+      <div class="math-display">
+        <span class="code-inline">ContourPlot[x^2 + y^2 == 10, {x, -5, 5}, {y, -5, 5}]</span>
+      </div>
+      <p class="overlay" data-overlay="1" style="margin-top: 1.5rem;"><strong>Plot multiple curves using lists of equations</strong></p>
+      <div class="math-display overlay" data-overlay="1">
+        <span class="code-inline">ContourPlot[{x+y == 10, Sqrt[x]+Sqrt[y] == 3}, {x, 0, 10}, {y, 0, 10}]</span>
+      </div>
+      <p class="overlay" data-overlay="1">(Budget line and indifference curve together)</p>
+    </div>
+  </section>
+
+  <!-- Frame: Plot Regions with RegionPlot -->
+  <section class="simple-frame overlay-frame">
+    <h2 class="simple-frame-title">Plot Regions with RegionPlot</h2>
+    <div class="simple-frame-content">
+      <p>Shade regions satisfying inequalities:</p>
+      <div class="math-display">
+        <span class="code-inline">RegionPlot[x + y &lt;= 10, {x, 0, 10}, {y, 0, 10}]</span>
+      </div>
+      <p class="overlay" data-overlay="1" style="margin-top: 1.5rem;"><strong>Combine conditions:</strong></p>
+      <ul>
+        <li class="overlay" data-overlay="1"><span class="code-inline">&amp;&amp;</span> = "and" (intersection)</li>
+        <li class="overlay" data-overlay="1"><span class="code-inline">||</span> = "or" (union)</li>
+      </ul>
+      <div class="math-display overlay" data-overlay="2">
+        <span class="code-inline">RegionPlot[x+y &lt;= 10 &amp;&amp; x >= 0 &amp;&amp; y >= 0, {x, 0, 10}, {y, 0, 10}]</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame: Useful Commands -->
+  <section class="simple-frame">
+    <h2 class="simple-frame-title">Useful Commands: Simplify, N, Substitution</h2>
+    <div class="simple-frame-content">
+      <table style="margin: 1rem 0; font-size: 1rem;">
+        <tr><td style="padding: 0.5rem 2rem 0.5rem 0;"><span class="code-inline">Simplify[x^2 + 2x + 1]</span></td><td>$\to (x+1)^2$</td></tr>
+        <tr><td style="padding: 0.5rem 2rem 0.5rem 0;"><span class="code-inline">N[1/3]</span></td><td>$\to 0.333333$</td></tr>
+        <tr><td style="padding: 0.5rem 2rem 0.5rem 0;"><span class="code-inline">x^2*y /. {x -> 3, y -> 7}</span></td><td>$\to 63$</td></tr>
+      </table>
+      <p style="margin-top: 1.5rem;"><strong>Substitution syntax:</strong> Type <span class="code-inline">-></span> for $\to$</p>
+      <div class="math-display" style="text-align: left; margin-left: 2rem;">
+        <span class="code-inline">expr /. {x -> value}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame: Create Indexed Variables with Table -->
+  <section class="simple-frame">
+    <h2 class="simple-frame-title">Create Indexed Variables with Table</h2>
+    <div class="simple-frame-content">
+      <p>For dynamic models, use brackets for indexing: $c_t \to$ <span class="code-inline">c[t]</span></p>
+      <p style="margin-top: 1rem;"><strong>Generate sequences:</strong></p>
+      <div style="margin: 1rem 0 1rem 2rem;">
+        <span class="code-inline">Table[c[t], {t, 0, 2}]</span> $\to$ <span class="code-inline">{c[0], c[1], c[2]}</span><br><br>
+        <span class="code-inline">Table[p[t], {t, 0, 2}].Table[c[t], {t, 0, 2}]</span> $\to \sum_t p[t]c[t]$
+      </div>
+      <p style="margin-top: 1.5rem;"><strong>Combine and sum lists:</strong></p>
+      <div style="margin: 1rem 0 1rem 2rem;">
+        <span class="code-inline">Join[{a, b}, {c, d}]</span> $\to$ <span class="code-inline">{a, b, c, d}</span><br><br>
+        <span class="code-inline">Total[{a, b, c}]</span> $\to a + b + c$
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame: Get Help -->
+  <section class="simple-frame overlay-frame">
+    <h2 class="simple-frame-title">Get Help</h2>
+    <div class="simple-frame-content">
+      <ol>
+        <li class="overlay" data-overlay="1"><span class="highlight-red">Read this tutorial first!</span></li>
+        <li class="overlay" data-overlay="2"><strong>Wolfram Documentation:</strong> Help $\to$ Wolfram Documentation $\to$ search command. Focus on <span class="highlight-red">Basic Examples</span>.</li>
+        <li class="overlay" data-overlay="3"><strong>Debug systematically:</strong>
+          <ul>
+            <li>Put <span class="code-inline">Exit[]</span> in first cell to clear memory</li>
+            <li>One command per cell</li>
+            <li>Re-run cells in order with shift+enter</li>
+          </ul>
+        </li>
+        <li class="overlay" data-overlay="4"><strong>Still stuck after 5 min?</strong> Send me your <span class="code-inline">.nb</span> file (not screenshots).</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Frame: Practice - Cournot Duopoly -->
+  <section class="simple-frame practice-frame">
+    <h2 class="simple-frame-title">Practice</h2>
+    <p class="simple-frame-subtitle" style="color: #2c3e7a;">Cournot Duopoly</p>
+    <div class="simple-frame-content">
+      <p>Define profit functions: $u_1(q_1, q_2) = (3 - q_1 - q_2)q_1$ and $u_2(q_1, q_2) = (2 - q_1 - q_2)q_2$</p>
+      <ol style="margin-top: 1.5rem;">
+        <li style="color: #2c3e7a;">Compute the gradient of $u_1$ and $u_2$ with respect to $(q_1, q_2)$.</li>
+        <li style="color: #2c3e7a;">Solve for the Nash equilibrium using:
+          <div class="math-display" style="text-align: left;">
+            <span class="code-inline">Solve[{D[u1, q1] == 0, D[u2, q2] == 0}, {q1, q2}]</span>
+          </div>
+        </li>
+        <li style="color: #2c3e7a;">Plot the region where firm 1's profit exceeds $u_1(\frac{1}{2}, \frac{1}{2})$.</li>
+        <li style="color: #2c3e7a;">Plot the intersection of regions where both firms improve over $(\frac{1}{2}, \frac{1}{2})$.</li>
+      </ol>
     </div>
   </section>
 
   <!-- Nav -->
-  <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
-    <a href="index.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Home</a>
-    <a href="methodology.html" style="color: var(--crane-blue); text-decoration: none;">Methodology &rarr;</a>
+  <div style="max-width: 900px; margin: 1rem auto; padding: 0 1rem; display: flex; justify-content: space-between; font-size: 0.9rem;">
+    <a href="index.html" style="color: #2c3e7a; text-decoration: none;">&larr; Home</a>
+    <a href="methodology.html" style="color: #2c3e7a; text-decoration: none;">Methodology &rarr;</a>
   </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- KaTeX JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <!-- GSAP for scroll animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize KaTeX
+      renderMathInElement(document.body, {
+        delimiters: [
+          {left: '$$', right: '$$', display: true},
+          {left: '$', right: '$', display: false}
+        ],
+        throwOnError: false
+      });
+
+      // Initialize GSAP ScrollTrigger for overlay frames
+      gsap.registerPlugin(ScrollTrigger);
+
+      document.querySelectorAll('.overlay-frame').forEach(frame => {
+        const overlays = frame.querySelectorAll('.overlay');
+        if (overlays.length === 0) return;
+
+        // Find max overlay number
+        let maxOverlay = 0;
+        overlays.forEach(el => {
+          const num = parseInt(el.dataset.overlay || el.dataset.overlayOnly || '0');
+          if (num > maxOverlay) maxOverlay = num;
+        });
+
+        if (maxOverlay === 0) return;
+
+        // Show first overlay immediately
+        overlays.forEach(el => {
+          if (el.dataset.overlay === '1' || el.dataset.overlayOnly === '1') {
+            el.classList.add('revealed');
+          }
+        });
+
+        const scrollPerOverlay = window.innerHeight * 0.5;
+        const totalScroll = scrollPerOverlay * (maxOverlay - 1);
+
+        ScrollTrigger.create({
+          trigger: frame,
+          start: 'top top',
+          end: `+=${totalScroll}`,
+          pin: true,
+          scrub: 0.5,
+          onUpdate: self => {
+            const progress = self.progress;
+            const currentStep = Math.floor(progress * (maxOverlay - 1)) + 1;
+
+            overlays.forEach(overlay => {
+              const step = parseInt(overlay.dataset.overlay || overlay.dataset.overlayOnly || '0');
+              if (overlay.dataset.overlayOnly) {
+                if (step === currentStep) {
+                  overlay.classList.add('revealed');
+                } else {
+                  overlay.classList.remove('revealed');
+                }
+              } else {
+                if (step <= currentStep) {
+                  overlay.classList.add('revealed');
+                } else {
+                  overlay.classList.remove('revealed');
+                }
+              }
+            });
+          }
+        });
+      });
+    });
+  </script>
 
 </body>
 </html>
