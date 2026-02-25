@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Optimization with Inequality Constraints | ECON 510</title>
+
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/beamer-theme.css">
+</head>
+<body>
+
+  <!-- Section Header -->
+  <section class="section-header">
+    <div class="section-title-box">
+      <h1>Optimization with Inequality Constraints</h1>
+    </div>
+    <h2>ECON 510: Microeconomic Theory</h2>
+  </section>
+
+  <!-- Frame 1: Set-Up and Assumptions (source: lines 1128-1140)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Constrained Optimization with Inequality Constraints</h2>
+      <p class="frame-subtitle">Set-Up and Assumptions</p>
+    </div>
+    <div class="frame-content">
+
+      <!-- \fontsize{16pt}{16pt} — main equation -->
+      <div style="font-size: 1.45em; line-height: 1.3; text-align: center; margin: 1rem 0;">
+        $$\max\limits_{\substack{\mathbf x\\ \mathrm{subject\, to} \\ \\g_1(\mathbf x)\le c_1\\ \vdots \\ g_k(\mathbf x)\le c_k }} f(\mathbf x)$$
+      </div>
+
+      <!-- \fontsize{12pt}{12pt} — bullet points -->
+      <div style="font-size: 1.09em; line-height: 1.4;">
+        <ul>
+          <li>$\max$ : maximize</li>
+          <li>$f$ : the objective function</li>
+          <li>$\mathbf x=(x_1,\ldots,x_n)$ : vector of $n$ choice variables</li>
+          <li>$g_i$ : constraint function (there are $k$ of them)</li>
+          <li>$c_i$ : constraint bound constant (there are $k$ of them)</li>
+          <li>We assume $f$ is concave and continuously differentiable and each $g_i$ is convex and continuously differentiable.</li>
+          <li>There is a value of $\mathbf x$ such that $g_j(\mathbf x)&lt; c_j$ for all $j=1,...,k$.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Frame 2: Useful facts (source: lines 1141-1149)
+       NO OVERLAYS, \fontsize{10pt}{10pt} -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Constrained Optimization with Inequality Constraints</h2>
+      <p class="frame-subtitle">Useful facts</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <ul>
+        <li>Any minimization problem can be converted in a maximization problem (and vice-versa) by setting the objective function in the maximization problem as the negative of the objective function in the minimization problem:
+        $$\max\limits_{\substack{\mathbf x\\ \mathrm{subject\, to} \\ \\g_1(\mathbf x)\le c_1\\ \vdots \\ g_k(\mathbf x)\le c_k }} f(\mathbf x) = -\min\limits_{\substack{\mathbf x\\ \mathrm{subject\, to} \\ \\g_1(\mathbf x)\le c_1\\ \vdots \\ g_k(\mathbf x)\le c_k }} -f(\mathbf x)$$</li>
+        <li>Any constraint involving the greater or equal than inequality $\geq$ can (and should!) be converted into a constraint involving the less or equal than inequality $\leq$.
+        $$ g(x)\geq c \Leftrightarrow -g(x)\leq -c$$</li>
+        <li>Any constraint involving an equality can (but in practice we do not do that!) be converted into two constraints involving the less than equal inequality
+        $$ g(x)= c \Leftrightarrow -g(x)\leq -c \text{ and } g(x)\leq c$$</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Frame 3: Binding and Slack (source: lines 1151-1158)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Optimization with Inequality Constraints</h2>
+    </div>
+    <div class="frame-content">
+      <div class="fs-14pt" style="text-align: center; margin: 1rem 0;">
+        $$\max\limits_{\substack{\mathbf x\\ \mathrm{subject\, to} \\ \\g_1(\mathbf x)\le c_1\\ \vdots \\ g_k(\mathbf x)\le c_k }} f(\mathbf x)$$
+      </div>
+
+      <div style="margin-top: 1.5rem;">
+        <ul>
+          <li>When a constraint holds as an equality, <span style="color: red;">$g_j(\mathbf x)= c_j$</span>, we say it is <span style="color: red;">binding</span>.</li>
+          <li style="margin-top: 1.5rem;">When a constraint holds as a strict inequality, <span style="color: #1565c0;">$g_j(\mathbf x)&lt;c_j$</span>, we say it is <span style="color: #1565c0;">slack</span>.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 4: Conditions For A Solution (source: lines 1160-1171)
+       NO OVERLAYS, \fontsize{9pt}{10pt}, \vspace{-3mm} -->
+  <section class="frame vspace-neg-3mm">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Optimization with Inequality Constraints</h2>
+      <p class="frame-subtitle">Conditions For A Solution</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>Given maximization problem define the Lagrangian,</p>
+      <div style="margin-top: -0.5rem;">
+        $$ \mathcal{L}(\mathbf x, \boldsymbol \lambda)=f(\mathbf x)-\sum_{j=1}^{k}\lambda_{j}\cdot(g_{j}(\mathbf x)-c_{j})$$
+      </div>
+      <p>Notice that the Lagrangian is a function of the choice variables $\mathbf x$ and also of the Lagrangian multipliers $\boldsymbol \lambda$</p>
+
+      <p>If $(\mathbf x^\ast, \boldsymbol \lambda^\ast)$ solves the following conditions, it solves the maximization problem.</p>
+      <ol>
+        <li>$\nabla_{\mathbf x}  \mathcal{L}(\mathbf x^\ast, \boldsymbol \lambda^\ast) =0$ where $\nabla_{\mathbf x}  \mathcal{L}$ is the gradient of $\mathcal{L}$ with respect the variables $\mathbf x$. Notice that this condition is identical as in the case of the equality constraints.</li>
+        <li>For every constraint $j$, $\lambda^{\ast}_{j}\cdot(g_{j}(\mathbf x^{\ast})-c_{j})=0$. Notice that when $\lambda_{j}^{\ast}>0$ this means that $g_{j}(\mathbf x^{\ast})=c_{j}$ and so, the constraint holds as an equality (it is binding).</li>
+        <li>For every constraint $j$, $\lambda_{j}^{\ast}\geq 0$. Notice this is different than the recipe for equality constraints since in that case, the Lagrange multipliers could take negative values.</li>
+        <li>Every constraint $j$ is respected, $g_{j}(\mathbf x^{\ast})\leq c_{j}$.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Frame 5: Basic recipe #2 (source: lines 1172-1187)
+       NO OVERLAYS, \fontsize{9pt}{11pt}, \vspace{-4mm} -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Optimization with Inequality Constraints</h2>
+      <p class="frame-subtitle">Basic recipe # 2</p>
+    </div>
+    <div class="frame-content fs-10pt" style="padding-top: 0;">
+      <ul>
+        <li>Write down the maximization (or minimization) problem. Do not forget to write all constraints in the form $g_j(x)\le c_j$!</li>
+        <li>Write the corresponding Lagrangian.</li>
+        <li>List all possible cases for the Lagrange multipliers ($\lambda_{j}>0$ or $\lambda_{j}=0$) in a table.</li>
+        <li>Consider a particular case. In this case let $\boldsymbol \lambda^{+}$ denote the list/vector of Lagrangian multipliers that are positive and let $\boldsymbol\lambda^{0}$ denote the list/vector of Lagrangian multipliers that are zero.</li>
+        <li>For the case in question, replace by zero all the multipliers $\boldsymbol\lambda^{0}$ in the Lagrangian and apply basic recipe #1 with the variables being $\mathbf x$ and $\boldsymbol\lambda^{+}$:</li>
+      </ul>
+      <ol>
+        <li>Solve $\nabla_{\mathbf x,\boldsymbol\lambda^{+}}  \mathcal{L}=0$ for $\mathbf x$ and $\boldsymbol\lambda^{+}$. If there is no solution, consider other cases.</li>
+        <li>Does this solution satisfy (3) in the previous page, that is, is it true that $\boldsymbol \lambda^{+}>0$ as we assumed?</li>
+        <li>Does this solution satisfy (4) in the previous page, that is, is it true that $g_j(x)\leq c_j$ for every $j$ such that we are assuming $\lambda_j=0$?</li>
+        <li>If the answers to the two previous questions are yes then we found a solution. If no, consider other cases.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Frame 6: The Value Function (source: lines 1189-1194)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">The Value Function</h2>
+    </div>
+    <div class="frame-content">
+      <div class="block">
+        <div class="block-title">Definition</div>
+        <div class="block-body">
+          The value function of a maximization (or minimization) problem is the value of the objective function evaluated at the solution.
+          $$V(c_{1},c_{2},\ldots, c_{k}) =\max\limits_{\substack{\mathbf x\\ \mathrm{subject\, to} \\ \\g_1(\mathbf x)\le c_1\\ \vdots \\ g_k(\mathbf x)\le c_k }} f(\mathbf x)$$
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 7: Value Function Examples (source: lines 1195-1201)
+       NO OVERLAYS, \fontsize{10pt}{12pt} -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">The Value Function</h2>
+      <p class="frame-subtitle">Examples</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <ul>
+        <li>Maximize the utility $u(x,y)=xy$ subject to the budget constraint $2x+3y\leq i$ where $i$ is the given income level. The solution is $x=i/4$ and $y=i/6$ so the value function is $V(i)=u(i/4,i/6)=i^{2}/24$. For these type of problems the value function is also called the <em>indirect utility</em>.</li>
+        <li>Minimize the cost of inputs $7k+2l$ subject to the quantity constraint $F(k,l)=\sqrt{kl}=Q$ where $Q$ is the given target quantity level. The solution is $k=\sqrt{2/7}Q$ and $l=\sqrt{7/2}Q$ so the value function is $V(i)=7\sqrt{2/7}Q+2\sqrt{7/2}Q=2\sqrt{14}Q$. For these type of problems the value function is also called the <em>cost function</em>.</li>
+      </ul>
+      <p style="font-size: 0.85em; color: var(--text-muted);">You should be able to solve these problems using our recipe (and Mathematica if needed) for optimization with equality constraints. Try it and check if your solution coincides with the solution presented here.</p>
+    </div>
+  </section>
+
+  <!-- Frame 8: The Envelope Theorem (source: lines 1202-1205)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">The Envelope Theorem</h2>
+    </div>
+    <div class="frame-content">
+      <p>Consider a maximization problem with inequality constraints where the objective function depends on some parameter $\theta$.
+      $$V(\theta)=\max\limits_{\substack{\mathbf x\\ \mathrm{subject\, to} \\ \\g_1(\mathbf x)\le c_1\\ \vdots \\ g_k(\mathbf x)\le c_k }} f(\mathbf x,\theta).$$
+      Let $V(\theta)$ be the corresponding value function of the optimization problem and let $x^\ast$ be the solution (notice that the solution also depends on the $\theta$ parameter). The envelope theorem states that:</p>
+      <div style="text-align: center; margin: 1rem 0; padding: 0.8rem; border: 2px solid #000; display: inline-block;">
+        $$\diff{}{\theta}V(\theta)= \diff{}{\theta}f(\mathbf x^\ast,\theta).$$
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 9: Optimal value of a multiplier (source: lines 1207-1209)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">The optimal value of a multiplier measures the impact of relaxing the constraints</h2>
+    </div>
+    <div class="frame-content">
+      <p>We will refer in the future to this important result,</p>
+      $$\diff{}{c_{j}}V(c_{1},c_{2},\ldots, c_{k})=\lambda_{j}^\ast$$
+      <p>where $\lambda_{j}^\ast$ is the numerical value of the $j_{\mathrm{th}}$-Lagrange multiplier that we obtain when solving the maximization problem.</p>
+    </div>
+  </section>
+
+  <!-- Nav -->
+  <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
+    <a href="choice-under-uncertainty.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Choice Under Uncertainty</a>
+    <span style="color: var(--text-muted);">End of Lectures</span>
+  </div>
+
+  <!-- KaTeX JS -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="js/katex-macros.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.querySelectorAll('.overlay-frame').forEach(frame => {
+      const overlays = frame.querySelectorAll('.overlay');
+      const count = overlays.length;
+      if (count === 0) return;
+      overlays[0].classList.add('revealed');
+      const scrollPerOverlay = window.innerHeight * 0.5;
+      const totalScroll = scrollPerOverlay * (count - 1);
+      ScrollTrigger.create({
+        trigger: frame,
+        start: 'top top',
+        end: `+=${totalScroll}`,
+        pin: true,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          const currentStep = Math.floor(progress * count);
+          overlays.forEach((overlay, i) => {
+            const isOnly = overlay.hasAttribute('data-overlay-only');
+            if (isOnly) {
+              overlay.classList.toggle('revealed', i === currentStep);
+            } else {
+              overlay.classList.toggle('revealed', i <= currentStep);
+            }
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

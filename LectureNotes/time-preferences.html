@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Environments and Time Preferences | ECON 510</title>
+
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/beamer-theme.css">
+</head>
+<body>
+
+  <!-- Section Header -->
+  <section class="section-header">
+    <div class="section-title-box">
+      <h1>Dynamic Environments and Time Preferences</h1>
+    </div>
+    <h2>ECON 510: Microeconomic Theory</h2>
+  </section>
+
+  <!-- Frame 1: Time (source: lines 521-533)
+       TikZ diagram — PLACEHOLDER -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Time</h2>
+    </div>
+    <div class="frame-content">
+      <p>Let $\mathbb T$ denoted the the time index set in our dynamic model. We consider the following cases:</p>
+
+      <!-- PLACEHOLDER: TikZ 2x2 grid of time index sets (source: lines 523-532)
+           Rows: Continuous / Discrete
+           Columns: Finite Horizon / Infinite Horizon
+           - Finite+Discrete: T={0,1,2,...,T} (orange)
+           - Finite+Continuous: T=[0,T] (red)
+           - Infinite+Discrete: T={0,1,2,...,+∞} (blue)
+           - Infinite+Continuous: T=[0,+∞) (green) -->
+      <div style="display: grid; grid-template-columns: auto 1fr 1fr; gap: 0.8rem; margin-top: 1rem; text-align: center;">
+        <div></div>
+        <div style="font-weight: bold;">Finite Horizon</div>
+        <div style="font-weight: bold;">Infinite Horizon</div>
+
+        <div style="font-weight: bold; display: flex; align-items: center;">Continuous</div>
+        <div style="background: rgba(220,50,50,0.15); border: 2px solid #dc322f; border-radius: 2rem; padding: 0.8rem;">$\mathbb T=[0,T]$</div>
+        <div style="background: rgba(133,153,0,0.15); border: 2px solid #859900; border-radius: 2rem; padding: 0.8rem;">$\mathbb T=[0,+\infty)$</div>
+
+        <div style="font-weight: bold; display: flex; align-items: center;">Discrete</div>
+        <div style="background: rgba(203,75,22,0.15); border: 2px solid #cb4b16; border-radius: 2rem; padding: 0.8rem;">$\mathbb T=\{0,1,2,\ldots,T\}$</div>
+        <div style="background: rgba(38,139,210,0.15); border: 2px solid #268bd2; border-radius: 2rem; padding: 0.8rem;">$\mathbb T=\{0,1,2,\ldots,+\infty\}$</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 2: Discounting (source: lines 534-541)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Time Preferences</h2>
+      <p class="frame-subtitle">Discounting</p>
+    </div>
+    <div class="frame-content">
+      <p>Let's consider an utility flow $u(t)$ for $t$ in $\mathbb{T}$ of an agent.</p>
+      <ol>
+        <li>The value of one unit of utility in period $t$ in terms of present utility ($t=0$) is $D(t)<1$.</li>
+        <li>The value of $u(t)$ units of utility in period $t$ in terms of present utility is $D(t)\cdot u(t)$.</li>
+        <li>We refer to $D(t)$ as the discount factor of the individual.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Frame 3: An Example: Present Value (source: lines 543-550)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Time Preferences</h2>
+      <p class="frame-subtitle">Discounting &mdash; An Example: Present Value</p>
+    </div>
+    <div class="frame-content">
+      <p>When $u(t)$ for $t$ in $\mathbb{T}$ is the flow of profits for a firm:</p>
+      <ol>
+        <li>The value of one dollar period $t$ in terms of present value ($t=0$) is $D(t)=\frac{1}{(1+r)^{t}}$, where $r$ is the interest rate.</li>
+        <li>The value of $u(t)$ dollars in period $t$ in terms of present value (PV) is $D(t)\cdot u(t)=\frac{u(t)}{(1+r)^{t}}$.</li>
+        <li>$\mathrm{PV}(u_{0},u_{1},u_{2},u_{3},\ldots,u_{t},\ldots)=\sum_{t=0}^{+\infty}\frac{u_t}{(1+r)^{t}}$.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Frame 4: Discounting (source: lines 551-555)
+       NO OVERLAYS, \fontsize{9}{11} at end -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Time Preferences</h2>
+      <p class="frame-subtitle">Discounting</p>
+    </div>
+    <div class="frame-content">
+      <p>Consider discrete time and an utility flow $u(t)$ for $t$ in $\mathbb{T}$ of an agent. With discounting preferences, an agent evaluates utility flows, $(u(0),u(1),u(2),\ldots)$, accordingly to the discounted value of the flow:
+      $$U(u(0),u(1),u(2),\ldots)=\sum_{t=0}^{+\infty}D(t)\cdot u(t).$$</p>
+      <div class="fs-10pt">
+        <p>Here, $D(t)$ is the discount factor of period $t$, and $D(t)\cdot u(t)$ is the present utility (the utility in terms of period $t=0$ utility) of receiving $u(t)$ utils in period $t$. Since we assume agents display impatient, they prefer to receive utility sooner than later, it follows that $0&lt;D(t)&lt;1$.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 5: Exponential Discounting (source: lines 556-561)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Time Preferences</h2>
+      <p class="frame-subtitle">Exponential Discounting</p>
+    </div>
+    <div class="frame-content">
+      <p>Exponential Discounting is the standard discounting model. Under exponential discounting $D(t)=\delta^{t}$ where $0&lt;\delta&lt;1$.
+      $$U(u(0),u(1),u(2),\ldots)=\sum_{t=0}^{+\infty}\delta^{t}\cdot u(t).$$
+      The continuous time version is:
+      $$U(u(t)_{t\in \mathbb T})=\int_{0}^{+\infty}\exp(-\rho\cdot t)\cdot u(t),$$
+      where $\rho=-\log(\delta)>0$.</p>
+    </div>
+  </section>
+
+  <!-- Frame 6: Hyperbolic Discounting (source: lines 562-565)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Time Preferences</h2>
+      <p class="frame-subtitle">Hyperbolic Discounting</p>
+    </div>
+    <div class="frame-content">
+      <p>Hyperbolic Discounting is a behavioral economics discounting model which is used as an alternative to the standard model (exponential discounting). Under hyperbolic discounting $D(t)=(1+\alpha\cdot t)^{-\frac{\beta}{\alpha}}$ where $\alpha>0$, $\beta>0$.</p>
+    </div>
+  </section>
+
+  <!-- Frame 7: Exponential as Recursive Utility (source: lines 567-571)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Time Preferences</h2>
+      <p class="frame-subtitle">Exponential Discounting as a Particular Case of Recursive Utility</p>
+    </div>
+    <div class="frame-content">
+      <p>Consider the standard exponential discounting model with discrete time and finite horizon. We shall re-normalize the discounted utility by multiplying the utility by a factor of $1-\delta$, so the the <strong>discounted utility at period zero</strong> can be expressed as:
+      $$U_{0}=(1-\delta)\sum_{t=0}^{T}\delta^{t}u_t.$$
+      Remember that $u_{t}$ is the <strong>instantaneous utility</strong>-- the utility that is actually received at period $t$. By the same token the <strong>discounted utility at period</strong> $\mathbf k$ can be written as:
+      $$U_{k}=(1-\delta)\sum_{t=k}^{T}\delta^{t-k}u_t.$$</p>
+    </div>
+  </section>
+
+  <!-- Frame 8: Recursive Utility (source: lines 572-577)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Time Preferences</h2>
+      <p class="frame-subtitle">Recursive Utility</p>
+    </div>
+    <div class="frame-content">
+      <p>Notice that we can write the <strong>discounted utility at period</strong> $\mathbf t$ in a recursive manner:</p>
+      $$U_{t}=(1-\delta)u_t+\delta U_{t+1} \tag{R}$$
+      <p>Using the fact that with a finite horizon, $U_{T+1}=0$ by definition, we can use the recursive equation (R) as a way of defining the <strong>discounted utility at a given period</strong>.</p>
+    </div>
+  </section>
+
+  <!-- Frame 9: Recursive Utility, General Case (source: lines 578-583)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Time Preferences</h2>
+      <p class="frame-subtitle">Recursive Utility, The General Case</p>
+    </div>
+    <div class="frame-content">
+      <p>We saw that exponential discounting preferences can be stated in terms of recursive utility:
+      $$U_{t}=(1-\delta)u_t+\delta U_{t+1},$$
+      The above formulation is a particular case of the following recursive preferences:
+      $$U_{t}=\left((1-\delta)u_t^{\theta}+\delta U_{t+1}^{\theta}\right)^{\frac1\theta}$$
+      where $0&lt;\theta\leq 1$ and $0&lt;\delta &lt; 1$.</p>
+    </div>
+  </section>
+
+  <!-- Frame 10: Recursive Utility, Example (source: lines 584-589)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Time Preferences</h2>
+      <p class="frame-subtitle">Recursive Utility, The General Case</p>
+    </div>
+    <div class="frame-content">
+      <p>Consider $\theta=\frac12$ and $\delta=\frac12$. Suppose $u_0=4$, $u_1=16$, and from $t=2$ onwards utility is constant: $u_2=u_3=\cdots=4$. Then:
+      $$U_2=4, \quad U_1=\left(\tfrac12\sqrt{16}+\tfrac12\sqrt{4}\right)^2=9, \quad U_0=\left(\tfrac12\sqrt{4}+\tfrac12\sqrt{9}\right)^2=6.25.$$</p>
+      <p><strong>Note:</strong> We assume that if the utility flow is constant from some period onwards, $u_t=\overline{u}$, then $U_t$ is also constant from that period onwards, $U_t=\overline{u}$. This assumption is needed because we cannot compute $U_\infty$ directly for infinite sequences.</p>
+    </div>
+  </section>
+
+  <!-- Frame 11: Dynamically Consistent Preferences (source: lines 590-594)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Time Preferences</h2>
+      <p class="frame-subtitle">Definition: Dynamically Consistent Preferences</p>
+    </div>
+    <div class="frame-content">
+      <p>Consider an agent with hyperbolic preferences whose optimal choice in period $t=0$ are $(c_{0},c_{1},\ldots,c_{T})$. After the first period elapses, if the individual re-evaluates her choices at $t=1$ (which now corresponds to the present), it is possible that her optimal choice $(\hat c_{1},\ldots,\hat c_{T})$ will differ from her original optimal choices, $\hat c_{1}\neq c_{1},\ldots,\hat c_{T}\neq c_{T}$. If that happens we say the agent behavior is <strong>dynamically inconsistent.</strong></p>
+      <p style="margin-top: 1.5rem;">Recursive preferences (which includes exponential discounting) are always dynamically consistent but hyperbolic discounting may (not always) generate dynamically inconsistent choices.</p>
+    </div>
+  </section>
+
+  <!-- Frame 12: Dynamic Consistency (source: lines 595-602)
+       NO OVERLAYS, \small -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Dynamic Consistency</h2>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>When time preferences might exhibit dynamic inconsistency behavior, we need to specify how individuals will react. There are three possible alternatives:</p>
+      <ol>
+        <li>The naive approach: the individual does not realize that he/she might change her preferences in the future. He/she makes choices in the present period ignoring that his/her plans might be foiled (by himself/herself) in the future.</li>
+        <li>Strategic approach without commitment: the individual realizes that his/her future self might behave differently than his/her present-self wishes and so he/she will act expecting that her future self will react to her choices.</li>
+        <li>Strategic approach with commitment: the individual realizes that his/her future self might behave differently than his/her present self wishes and so he/she will remove the ability of her future self to make choices by committing to the present choices.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Frame 13: The Intertemporal Rate of Substitution (source: lines 603-606)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Time Preferences</h2>
+      <p class="frame-subtitle">The Intertemporal Rate of Substitution</p>
+    </div>
+    <div class="frame-content">
+      <p>Assuming exponential discounting, at period $t$, what is the maximum amount the agent would be willing to sacrifice of future utility $U_{t+1}$ in order to increase the instantaneous utility $u_{t}$ by one util?</p>
+      <p style="margin-top: 1rem;">The answer is the marginal rate of intertemporal substitution of utility, MRIS.
+      $$ (1-\delta)\Delta u_t+\delta \Delta U_{t+1}=0 \Rightarrow \mathrm{MRIS}=\left|\dfrac{ \Delta U_{t+1}}{ \Delta u_{t}}\right|=\dfrac{\delta}{1-\delta}. $$</p>
+      <p>So, in the case of exponential discounting the MRIS is a constant.</p>
+    </div>
+  </section>
+
+  <!-- Frame 14: Recursive Utility and MRIS (source: lines 607-611)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Recursive Utility and Intertemporal Rate of Substitution</h2>
+    </div>
+    <div class="frame-content">
+      <p>In order to allow for preferences with non-constant MRIS, the following family of <strong>recursive utility</strong> functions is often used:
+      $$U_{t}=\left((1-\delta)u_t^{\theta}+\delta U_{t+1}^{\theta}\right)^{\frac1\theta}$$
+      where $0&lt;\theta\leq 1$.</p>
+      $$\mathrm{MRIS}=\left|\dfrac{ \Delta U_{t+1}}{ \Delta u_{t}}\right|=\dfrac{\delta}{1-\delta}\left(\dfrac{U_{t+1}}{u_{t}}\right)^{1-\theta}. $$
+    </div>
+  </section>
+
+  <!-- Nav -->
+  <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
+    <a href="dynamic-games.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Dynamic Games</a>
+    <a href="choice-under-uncertainty.html" style="color: var(--crane-blue); text-decoration: none;">Choice Under Uncertainty &rarr;</a>
+  </div>
+
+  <!-- KaTeX JS -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="js/katex-macros.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.querySelectorAll('.overlay-frame').forEach(frame => {
+      const overlays = frame.querySelectorAll('.overlay');
+      const count = overlays.length;
+      if (count === 0) return;
+      overlays[0].classList.add('revealed');
+      const scrollPerOverlay = window.innerHeight * 0.5;
+      const totalScroll = scrollPerOverlay * (count - 1);
+      ScrollTrigger.create({
+        trigger: frame,
+        start: 'top top',
+        end: `+=${totalScroll}`,
+        pin: true,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          const currentStep = Math.floor(progress * count);
+          overlays.forEach((overlay, i) => {
+            const isOnly = overlay.hasAttribute('data-overlay-only');
+            if (isOnly) {
+              overlay.classList.toggle('revealed', i === currentStep);
+            } else {
+              overlay.classList.toggle('revealed', i <= currentStep);
+            }
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

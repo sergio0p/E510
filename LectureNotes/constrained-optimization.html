@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Optimization with Equality Constraints | ECON 510</title>
+
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/beamer-theme.css">
+</head>
+<body>
+
+  <!-- Section Header -->
+  <section class="section-header">
+    <div class="section-title-box">
+      <h1>Optimization with Equality Constraints</h1>
+    </div>
+    <h2>ECON 510: Microeconomic Theory</h2>
+  </section>
+
+  <!-- Frame 1: Constrained Optimization (source: lines 333-342)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Constrained Optimization</h2>
+      <p class="frame-subtitle">with Equality Constraints</p>
+    </div>
+    <div class="frame-content">
+
+      <!-- \fontsize{16pt}{16pt} — main equation -->
+      <div style="font-size: 1.45em; line-height: 1.3; text-align: center; margin: 1.5rem 0;">
+        $$\max\limits_{\substack{\mathbf x\\ \mathrm{subject\, to} \\ \\g_1(\mathbf x)=c_1\\ \vdots \\ g_k(\mathbf x)=c_k }} f(\mathbf x)$$
+      </div>
+
+      <!-- \fontsize{12pt}{12pt} — bullet points -->
+      <div style="font-size: 1.09em; line-height: 1.4;">
+        <ul>
+          <li>$\max$ : maximize (the goal of the problem)</li>
+          <li>$f$ : the objective function (what we want to max.)</li>
+          <li>$\mathbf x=(x_1,\ldots,x_n)$ : vector of $n$ choice variables</li>
+          <li>$g_i$ : constraint function (there are $k\lt n$ of them)</li>
+          <li>$c_i$ : constraint bound constant<br>(there are $k$ of them)</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Frame 2: Conditions For A Solution (source: lines 343-350)
+       NO OVERLAYS, \fontsize{9pt}{10pt}, \vspace{-3mm} -->
+  <section class="frame vspace-neg-3mm">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Constrained Optimization with Equality Constraints</h2>
+      <p class="frame-subtitle">Conditions For A Solution</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>Given maximization problem define the Lagrangian,</p>
+      <div style="margin-top: -0.5rem;">
+        $$ \mathcal{L}(\mathbf x, \boldsymbol \lambda)=f(\mathbf x)-\sum_{j=1}^{k}\lambda_{j}\cdot(g_{j}(\mathbf x)-c_{j})$$
+      </div>
+      <p>Notice that the Lagrangian is a function of the choice variables $\mathbf x$ and also of the Lagrangian multipliers $\boldsymbol \lambda$</p>
+
+      <p style="margin-top: 0.5rem;">If $\mathbf x^\ast$ solves the maximization problem then there are Lagrange multipliers $\boldsymbol \lambda^\ast$ such that $$\nabla_{\mathbf x,\boldsymbol \lambda}  \mathcal{L}=0,$$ where $\nabla_{\mathbf x}  \mathcal{L}$ is the gradient of $\mathcal{L}$, the list of first partial derivatives of $\mathcal{L}$ with respect to each one of the variables:
+      $$\diff{}{x_{i}} \mathcal{L}=0 \text{ for } i=1,\ldots,n \text{ and }\diff{}{\lambda_{j}} \mathcal{L}=0\text{ for }j=1,\ldots,k.$$</p>
+
+      <p style="font-size: 0.8em; color: var(--text-muted);">Warning! You must check if the solution of these equations corresponds to a maximum or if it corresponds to a minimum.</p>
+    </div>
+  </section>
+
+  <!-- Frame 3: Basic Recipe #1 (source: lines 351-361)
+       NO OVERLAYS, \fontsize{9pt}{10pt} -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Constrained Optimization with Equality Constraints</h2>
+      <p class="frame-subtitle">Basic Recipe #1: Lagrangian Method Recipe</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <ol>
+        <li>Set up the maximization problem (objective function, choice variables, constraints, etc...)</li>
+        <li>Write down the Lagrangian (objective function minus the difference of the LHS and RHS of the constraints weighted by the corresponding Lagrangian multiplier).<br>
+          $\mathcal{L}(\mathbf x, \boldsymbol \lambda)=f(\mathbf x)-\sum_{j=1}^{k}\lambda_{j}\cdot(g_{j}(\mathbf x)-c_{j})$</li>
+        <li>Apply the basic recipe #0 to a problem in which: A) The objective function is the Lagrangian of this problem and, B) the choice variables are the choice variables of the original problem together with the Lagrange multipliers.</li>
+        <li>That is, find $(\mathbf{x},\boldsymbol{\lambda})$ that solves $\nabla_{(\mathbf{x},\boldsymbol{\lambda})}\mathcal{L}=\mathbf{0}$.</li>
+        <li>For each solution, check if it corresponds to a maximum or minimum.</li>
+        <li>Bonus/additional analysis (perform comparative statics, study how the solution depends on the exogenous variables (e.g., the constants in the constraints)).</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Nav -->
+  <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
+    <a href="equilibrium.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Equilibrium</a>
+    <a href="dynamic-games.html" style="color: var(--crane-blue); text-decoration: none;">Dynamic Games &rarr;</a>
+  </div>
+
+  <!-- KaTeX JS -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <!-- Custom KaTeX macros -->
+  <script src="js/katex-macros.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.querySelectorAll('.overlay-frame').forEach(frame => {
+      const overlays = frame.querySelectorAll('.overlay');
+      const count = overlays.length;
+      if (count === 0) return;
+      overlays[0].classList.add('revealed');
+      const scrollPerOverlay = window.innerHeight * 0.5;
+      const totalScroll = scrollPerOverlay * (count - 1);
+      ScrollTrigger.create({
+        trigger: frame,
+        start: 'top top',
+        end: `+=${totalScroll}`,
+        pin: true,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          const currentStep = Math.floor(progress * count);
+          overlays.forEach((overlay, i) => {
+            const isOnly = overlay.hasAttribute('data-overlay-only');
+            if (isOnly) {
+              overlay.classList.toggle('revealed', i === currentStep);
+            } else {
+              overlay.classList.toggle('revealed', i <= currentStep);
+            }
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unconstrained Optimization | ECON 510</title>
+
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/beamer-theme.css">
+
+  <!-- All styles now in css/beamer-theme.css -->
+</head>
+<body>
+
+  <!-- Section Header -->
+  <section class="section-header">
+    <div class="section-title-box">
+      <h1>Unconstrained Optimization</h1>
+    </div>
+    <h2>ECON 510: Microeconomic Theory</h2>
+  </section>
+
+  <!-- Frame 1: Unconstrained Optimization (source: lines 278-290)
+       NO OVERLAYS in source — all content visible immediately
+       \vspace{-9mm} after title -->
+  <section class="frame vspace-neg-9mm">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Unconstrained Optimization</h2>
+    </div>
+    <div class="frame-content">
+
+      <!-- \fontsize{14pt}{14pt} — main equation -->
+      <div class="fs-14pt" style="text-align: center; margin: 1.5rem 0;">
+        $$\max_{\mathbf{x}} f(\mathbf{x})$$
+      </div>
+
+      <!-- \fontsize{11pt}{11pt} — bullet points -->
+      <div class="fs-11pt">
+        <ul>
+          <li>$\max$ : maximize (the goal of the agent's problem)</li>
+          <li>$f$ : the objective function (what the agent wants to maximize, exogenous)</li>
+          <li>$\mathbf{x} = (x_1, \ldots, x_n)$ : vector of $n$ choice variables (endogenous variable)</li>
+          <li>We assume $f$ to be concave and differentiable with continuous derivatives.</li>
+        </ul>
+      </div>
+
+      <!-- \fontsize{10pt}{12pt} — definition as plain text (NOT a block in source) -->
+      <div class="fs-10pt" style="margin-top: 1rem;">
+        <p>Definition: A function $f$ is <strong>concave</strong> if the function evaluated at the weighted average
+        of any two points is no less than the weighted average of the function evaluated at these two points.
+        That is, for all $x$ and $y$ and for any $\alpha$ in $(0,1)$, we must have that<br>
+        $f(\alpha x + (1-\alpha) x) \ge \alpha f(x) + (1-\alpha) f(y)$.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Frame 2: Basic Recipe #0 (source: lines 292-301)
+       NO OVERLAYS in source — all content visible immediately
+       \vspace{-9mm} after title -->
+  <section class="frame vspace-neg-9mm">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Solving Unconstrained Optimization Problems</h2>
+      <p class="frame-subtitle">Basic Recipe #0</p>
+    </div>
+    <div class="frame-content">
+
+      <!-- \fontsize{14pt}{14pt} — main equation -->
+      <div class="fs-14pt" style="text-align: center; margin: 1.5rem 0;">
+        $$\max_{\mathbf{x}} f(\mathbf{x})$$
+      </div>
+
+      <!-- \fontsize{11pt}{13pt} — numbered steps -->
+      <div class="fs-11pt">
+        <ol>
+          <li>Obtain the gradient of the objective function,<br>
+            $\nabla f = \left(\dfrac{\partial f}{\partial x_1}, \ldots, \dfrac{\partial f}{\partial x_n}\right)$.</li>
+          <li>Solve the system of equations, the first-order conditions (FOC)<br>
+            $\nabla f = (0, \ldots, 0)$, for the choice variables $\mathbf{x} = (x_1, \ldots, x_n)$.</li>
+          <li>The solution(s) of the FOC are the candidate solutions for the maximization problem.</li>
+          <li>If there are multiple candidate solutions, evaluate the function at each candidate solution
+            and pick those who yield the highest value.</li>
+        </ol>
+      </div>
+
+    </div>
+  </section>
+
+  <!--
+    ============================================================
+    DEMO: Overlay frame pattern (for future frames with \pause)
+    Uncomment to test the pin + reveal system
+    ============================================================
+
+  <section class="frame overlay-frame" data-overlay-count="4">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Example Overlay Frame</h2>
+      <p class="frame-subtitle">With \pause commands</p>
+    </div>
+    <div class="frame-content">
+      <ul>
+        <li class="overlay" data-overlay="1">First point (visible from start)</li>
+        <li class="overlay" data-overlay="2">Second point (after first \pause)</li>
+        <li class="overlay" data-overlay="3">Third point (after second \pause)</li>
+        <li class="overlay" data-overlay="4">Fourth point (after third \pause)</li>
+      </ul>
+    </div>
+  </section>
+  -->
+
+  <!-- Nav -->
+  <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
+    <a href="methodology.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Methodology</a>
+    <a href="equilibrium.html" style="color: var(--crane-blue); text-decoration: none;">Equilibrium &rarr;</a>
+  </div>
+
+  <!-- KaTeX JS -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <!-- Custom KaTeX macros -->
+  <script src="js/katex-macros.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <!-- Overlay animation system -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    /**
+     * OVERLAY FRAME SYSTEM
+     *
+     * For frames with Beamer overlays (\pause, \uncover<>, <1->):
+     * 1. Pin the frame title at the top
+     * 2. Reveal each .overlay element sequentially on scroll
+     * 3. After all overlays revealed, unpin and scroll away
+     * 4. Scrolling up reverses everything
+     *
+     * Usage:
+     *   <section class="frame overlay-frame" data-overlay-count="N">
+     *     <div class="frame-title-bar">...</div>
+     *     <div class="frame-content">
+     *       <div class="overlay" data-overlay="1">First content</div>
+     *       <div class="overlay" data-overlay="2">Second content</div>
+     *       ...
+     *     </div>
+     *   </section>
+     *
+     * For frames WITHOUT overlays: just use class="frame" (no animation).
+     */
+    document.querySelectorAll('.overlay-frame').forEach(frame => {
+      const overlays = frame.querySelectorAll('.overlay');
+      const count = overlays.length;
+      if (count === 0) return;
+
+      // Reveal first overlay immediately
+      overlays[0].classList.add('revealed');
+
+      // Each additional overlay gets 150vh of scroll space
+      const scrollPerOverlay = window.innerHeight * 0.5;
+      const totalScroll = scrollPerOverlay * (count - 1);
+
+      // Pin the entire frame while overlays reveal
+      ScrollTrigger.create({
+        trigger: frame,
+        start: 'top top',
+        end: `+=${totalScroll}`,
+        pin: true,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          // Calculate which overlay should be visible based on scroll progress
+          const progress = self.progress;
+          const currentStep = Math.floor(progress * count);
+
+          overlays.forEach((overlay, i) => {
+            const isOnly = overlay.hasAttribute('data-overlay-only');
+            if (isOnly) {
+              // \only: show ONLY at exact step, hide at all others
+              if (i === currentStep) {
+                overlay.classList.add('revealed');
+              } else {
+                overlay.classList.remove('revealed');
+              }
+            } else {
+              // \uncover / \pause: cumulative reveal
+              if (i <= currentStep) {
+                overlay.classList.add('revealed');
+              } else {
+                overlay.classList.remove('revealed');
+              }
+            }
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

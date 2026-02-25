@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equilibrium | ECON 510</title>
+
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/beamer-theme.css">
+</head>
+<body>
+
+  <!-- Section Header -->
+  <section class="section-header">
+    <div class="section-title-box">
+      <h1>Equilibrium</h1>
+    </div>
+    <h2>ECON 510: Microeconomic Theory</h2>
+  </section>
+
+  <!-- Frame 1: Equilibrium Analysis (source: lines 303-310)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Equilibrium Analysis</h2>
+    </div>
+    <div class="frame-content">
+      <p>We define an economic equilibrium as the value of the endogenous variables (e.g. choice variables) such that:</p>
+      <ol>
+        <li>Agents (consumers, firms, players, etc...) chose their choice variables to maximize their objective function (utility, profits, payoffs, etc...) taking as given the exogenous variables and the actions of others. That is, any agents is best responding to her or his beliefs about the actions of the others.</li>
+        <li>The agents actions are consistent (rational expectations). The agents' beliefs matches the actions of the others.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Frame 2: Finding Equilibrium with Best Responses (source: lines 311-321)
+       NO OVERLAYS, \fontsize{9}{11} -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Equilibrium Analysis</h2>
+      <p class="frame-subtitle">Finding Equilibrium with Best Responses</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>Consider two players choosing actions $x\in\mathbb{R}$ and $y\in\mathbb{R}$ with payoffs $u_1(x,y)$ and $u_2(x,y)$. Assume payoffs exhibit diminishing marginal returns in one's own action: $\tfrac{\partial^2}{\partial x^2}u_1<0$ and $\tfrac{\partial^2}{\partial y^2}u_2<0$.</p>
+
+      <p><strong>Step 1: Derive Best Response Functions.</strong> Each player maximizes their payoff taking the other's action as given. Since there are no constraints and payoffs have diminishing marginal returns, the first-order conditions are necessary and sufficient:
+      $$\diff{}{x}u_1=0 \quad\text{and}\quad \diff{}{y}u_2=0$$
+      Solving these yields the best response functions: $x^*=BR_1(y)$ and $y^*=BR_2(x)$.</p>
+
+      <p><strong>Step 2: Find the Equilibrium.</strong> An equilibrium $(x^e, y^e)$ requires all players to be best responding:
+      $$x^e = BR_1(y^e) \quad\text{and}\quad y^e = BR_2(x^e)$$
+      This is a system of two equations in two unknowns. The equilibrium is found by solving this system simultaneously. Geometrically, this corresponds to the intersection of the two best response curves.</p>
+    </div>
+  </section>
+
+  <!-- Frame 3: A Public Good Example (source: lines 322-330)
+       NO OVERLAYS, \fontsize{9}{11} -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Equilibrium Analysis</h2>
+      <p class="frame-subtitle">A Public Good Example</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>Please refer to article on public goods on Canvas > Modules > Week 2 for the model description and set-up. In our example, we shall assume two individuals $n=2$ whose utility for the public good is given by:
+      $$u_i(x_i,G)=x_i\cdot G$$
+      As we did in class, we use the budget $x_i+g_i=w_i$ to write the utility as a function of the contribution $g_i$. Thus, individual 1 utility is $u_1=(w_1-g_1)\cdot (g_1+g_2)$ since $G=g_1+g_2$. Ignoring non-negativity constraints, $g_1\geq 0$, the individual 1 maximizes utility when
+      $$\diff{}{g_1}u_1=-1\cdot (g_1+g_2)+(w_1-g_1)\cdot 1=w_1-g_2-2g_1=0\Leftrightarrow g_1=\dfrac{w_1-g_2}2$$
+      That is, $g_1=\dfrac{w_1-g_2}2$ is individual 1's best-response.</p>
+
+      <p>The best responses of the individuals are consistent only if there is a solution to the system of equations given by the best responses: $g_1=\dfrac{w_1-g_2}2$ and $g_2=\dfrac{w_2-g_1}2$.
+      For the computation of the equilibrium, please refer to the Mathematica notebook on public goods, week 2 module.</p>
+    </div>
+  </section>
+
+  <!-- Nav -->
+  <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
+    <a href="unconstrained-optimization.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Unconstrained Optimization</a>
+    <a href="constrained-optimization.html" style="color: var(--crane-blue); text-decoration: none;">Constrained Optimization &rarr;</a>
+  </div>
+
+  <!-- KaTeX JS -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <!-- Custom KaTeX macros -->
+  <script src="js/katex-macros.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <!-- Overlay animation system -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.querySelectorAll('.overlay-frame').forEach(frame => {
+      const overlays = frame.querySelectorAll('.overlay');
+      const count = overlays.length;
+      if (count === 0) return;
+
+      overlays[0].classList.add('revealed');
+
+      const scrollPerOverlay = window.innerHeight * 0.5;
+      const totalScroll = scrollPerOverlay * (count - 1);
+
+      ScrollTrigger.create({
+        trigger: frame,
+        start: 'top top',
+        end: `+=${totalScroll}`,
+        pin: true,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          const currentStep = Math.floor(progress * count);
+
+          overlays.forEach((overlay, i) => {
+            const isOnly = overlay.hasAttribute('data-overlay-only');
+            if (isOnly) {
+              if (i === currentStep) {
+                overlay.classList.add('revealed');
+              } else {
+                overlay.classList.remove('revealed');
+              }
+            } else {
+              if (i <= currentStep) {
+                overlay.classList.add('revealed');
+              } else {
+                overlay.classList.remove('revealed');
+              }
+            }
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choice Under Uncertainty | ECON 510</title>
+
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/beamer-theme.css">
+</head>
+<body>
+
+  <!-- Section Header -->
+  <section class="section-header">
+    <div class="section-title-box">
+      <h1>Choice Under Uncertainty</h1>
+    </div>
+    <h2>ECON 510: Microeconomic Theory</h2>
+  </section>
+
+  <!-- Frame 1: States of the World (source: lines 614-624)
+       HAS OVERLAYS: 4x \pause -->
+  <section class="frame overlay-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Choice Under Uncertainty</h2>
+      <p class="frame-subtitle">States of the World</p>
+    </div>
+    <div class="frame-content">
+      <div class="block">
+        <div class="block-title">Definition: States of the World</div>
+        <div class="block-body">A state of the world $\omega$ is a complete description of reality.</div>
+      </div>
+
+      <div class="overlay" data-overlay="1" style="margin-top: 0.5rem;">
+        <p>The set of all possible sets of the world is denoted by $\Omega$.</p>
+      </div>
+      <div class="overlay" data-overlay="2">
+        <p>The definition is too ambitious to be of any practical use.</p>
+      </div>
+      <div class="overlay" data-overlay="3">
+        <p>In practice, we assume $\Omega$ is small (finite).</p>
+      </div>
+      <div class="overlay" data-overlay="4">
+        <p>As any model simplifies reality:</p>
+        <p style="margin-left: 2rem;">-- Think of a state of the world $\omega$ as describing <strong>all relevant</strong> information to some decision making problem.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 2: States of the World - Example 1 (source: lines 625-633)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">States of the World</h2>
+      <p class="frame-subtitle">Example 1</p>
+    </div>
+    <div class="frame-content">
+      <dl class="beamer-description">
+        <dt>Decision Problem</dt>
+        <dd>In a sunny morning, choose whether to carry an umbrella, a parasol or nothing to work.</dd>
+        <dt style="margin-top: 1rem;">Possible States of The World</dt>
+        <dd style="margin-top: 1rem;">$\Omega=\{\omega_1,\omega_2,\omega_3\}$.</dd>
+        <dt>$\omega_1$</dt>
+        <dd>$\longrightarrow\,$ The afternoon is also sunny.</dd>
+        <dt>$\omega_2$</dt>
+        <dd>$\longrightarrow\,$ The afternoon is cloudy but it does not rain.</dd>
+        <dt>$\omega_3$</dt>
+        <dd>$\longrightarrow\,$ The afternoon is rainy.</dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- Frame 3: States of the World - Example 2 (source: lines 634-643)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">States of the World</h2>
+      <p class="frame-subtitle">Example 2</p>
+    </div>
+    <div class="frame-content">
+      <dl class="beamer-description">
+        <dt>Decision Problem</dt>
+        <dd>Decide whether to lower the target range for the federal funds rate.</dd>
+        <dt style="margin-top: 1rem;">Possible States of The World</dt>
+        <dd style="margin-top: 1rem;">$\Omega=\{\omega_1, \omega_2, \omega_3, \omega_4\}$.</dd>
+        <dt>$\omega_1$</dt>
+        <dd>$\longrightarrow\,$ Low inflation and low unemployment.</dd>
+        <dt>$\omega_2$</dt>
+        <dd>$\longrightarrow\,$ Low inflation and high unemployment.</dd>
+        <dt>$\omega_3$</dt>
+        <dd>$\longrightarrow\,$ High inflation and low unemployment.</dd>
+        <dt>$\omega_4$</dt>
+        <dd>$\longrightarrow\,$ High inflation and high unemployment.</dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- Frame 4: Knowledge - Sherlock Holmes (source: lines 645-658)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Knowledge</h2>
+    </div>
+    <div class="frame-content">
+      <p>"Is there any point to which you would wish to draw my attention?"</p>
+      <p>"To the curious incident of the dog in the night-time."</p>
+      <p>"The dog did nothing in the night-time."</p>
+      <p>"That was the curious incident," remarked Sherlock Holmes.</p>
+      <p style="margin-top: 1.5rem; color: var(--text-muted); font-size: 0.9em;">Source: Doyle, A. C. (1894). The Memoirs of Sherlock Holmes. London, England: George Newnes.</p>
+    </div>
+  </section>
+
+  <!-- Frame 5: Knowledge - Rumsfeld (source: lines 660-664)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Knowledge</h2>
+    </div>
+    <div class="frame-content">
+      <blockquote style="border-left: 3px solid var(--crane-amber); padding-left: 1rem; margin: 1rem 0; font-style: italic;">
+        "Reports that say that something hasn't happened are always interesting to me, because as we know, there are known knowns; there are things we know we know. We also know there are known unknowns; that is to say we know there are some things we do not know. But there are also unknown unknowns — the ones we don't know we don't know. And if one looks throughout the history of our country and other free countries, it is the latter category that tend to be the difficult ones."
+      </blockquote>
+      <p>Donald Rumsfeld, February 12, 2002.</p>
+    </div>
+  </section>
+
+  <!-- Frame 6: Information Partitions (source: lines 666-673)
+       HAS OVERLAYS: 1x \pause -->
+  <section class="frame overlay-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Information Partitions</h2>
+    </div>
+    <div class="frame-content">
+      <p class="overlay" data-overlay="1">Individual $i$'s knowledge about the states of the world is represented by a partition $\mathcal P$ of the set $\Omega$.</p>
+
+      <div class="overlay" data-overlay="2">
+        <div class="block" style="margin-top: 1rem;">
+          <div class="block-title">Definition</div>
+          <div class="block-body">
+            A partition $\mathcal P$ of $\Omega$ is a collection of subsets of $\Omega$ such that:<br>
+            1. If $A\in \mathcal P$ and $B\in \mathcal P$ and $A\neq B$ then $A\cap B=\emptyset$.<br>
+            2. $\cup_{A\in \mathcal P} A =\Omega$.
+          </div>
+        </div>
+        <p style="margin-top: 1rem;">If two states are in the same element of our knowledge partition, it means we cannot distinguish between these states. But if two states are in different elements of the partition, we can distinguish them.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 7: Information partition - Weather example (source: lines 674-686)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Information partition</h2>
+      <p class="frame-subtitle">Weather in the afternoon example</p>
+    </div>
+    <div class="frame-content">
+      <dl class="beamer-description" style="margin-bottom: 1rem;">
+        <dt>Possible States of The World</dt>
+        <dd>$\Omega=\{\omega_1,\omega_2,\omega_3\}$.</dd>
+        <dt>$\omega_1$</dt>
+        <dd>$\longrightarrow\,$ The afternoon is also sunny.</dd>
+        <dt>$\omega_2$</dt>
+        <dd>$\longrightarrow\,$ The afternoon is cloudy but it does not rain.</dd>
+        <dt>$\omega_3$</dt>
+        <dd>$\longrightarrow\,$ The afternoon is rainy.</dd>
+      </dl>
+      <ol style="list-style: lower-alpha;">
+        <li style="margin-bottom: 0.5rem;">$\mathcal P_a=\{\{\omega_1\},\{\omega_2,\omega_3\}\}$, we know if the afternoon is sunny or not, but if it is not sunny, we cannot tell if it is rainy or cloudy.</li>
+        <li style="margin-bottom: 0.5rem;">$\mathcal P_b=\{\{\omega_1,\omega_2,\omega_3\}\}$, we do not know anything about the weather in the afternoon.</li>
+        <li style="margin-bottom: 0.5rem;">$\mathcal P_c=\{\{\omega_1,\omega_2\},\{\omega_3\}\}$, we know if the afternoon is rainy or not, but if it is not rainy, we cannot tell if it is sunny or cloudy.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Frame 8: Cheryl's birthday (source: lines 689-709)
+       NO OVERLAYS, \small — normal frame, scrolls naturally -->
+  <section class="frame" id="cheryl-story">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Information Partitions</h2>
+      <p class="frame-subtitle">Cheryl's birthday</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>Albert and Bernard just met Cheryl.<br>
+      "When's your birthday?" -- Albert asked Cheryl. Cheryl thought a second and said, "I'm not going to tell you, but I'll give you some clues." She wrote down a list of 10 dates:</p>
+
+      <div style="margin: 1rem 0; font-size: 1.1em;">
+        <p style="margin: 0.3rem 0;">May 15, May 16, May 19</p>
+        <p style="margin: 0.3rem 0;">June 17, June 18</p>
+        <p style="margin: 0.3rem 0;">July 14, July 16</p>
+        <p style="margin: 0.3rem 0;">August 14, August 15, August 17</p>
+      </div>
+
+      <p>"My birthday is one of these," -- she said.<br>
+      Then Cheryl whispered in Albert's ear the month and only the month of her birthday. To Bernard, she whispered the day, and only the day.<br>
+      "Can you figure it out now?" -- she asked Albert.<br>
+      Albert: I don't know when your birthday is, but I know Bernard doesn't know, either.<br>
+      Bernard: I didn't know originally, but now I do.<br>
+      Albert: Well, now I know, too!<br>
+      When is Cheryl's birthday?</p>
+    </div>
+  </section>
+
+  <!-- Frame 9: Cheryl's birthday solution (source: lines 711-741)
+       HAS OVERLAYS: 7 steps — reimplemented as HTML/CSS/JS
+       Original TikZ: matrix of nodes with fit rectangles spanning cell ranges -->
+  <section class="frame vspace-neg-4mm" id="cheryl-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Information Partitions</h2>
+      <p class="frame-subtitle">Cheryl's birthday &mdash; Solution</p>
+    </div>
+    <div class="frame-content">
+      <style>
+        .cheryl-grid {
+          display: grid;
+          grid-template-columns: repeat(6, 1fr);
+          grid-template-rows: repeat(4, auto);
+          gap: 1rem;
+          max-width: 680px;
+          margin: 0 auto;
+          background: #fdf6e3;
+          border-radius: 8px;
+          padding: 0 0.5rem 0.5rem 0.5rem;
+        }
+        .cheryl-cell {
+          text-align: center;
+          padding: 0.5rem 0.3rem;
+          font-size: 0.9375rem;
+          font-weight: 500;
+          color: #586e75;
+          position: relative;
+          z-index: 2;
+        }
+        .cheryl-cell.empty {
+          visibility: hidden;
+        }
+        /* Overlay rectangles — grid items with explicit placement, overlap cells */
+        .cheryl-box {
+          border-radius: 6px;
+          pointer-events: none;
+          opacity: 0;
+          transition: opacity 0.4s;
+          z-index: 1;
+          margin: -3px;
+        }
+        .cheryl-box.visible { opacity: 1; }
+        .cheryl-box.blue  { border: 2.5px solid #268bd2; }
+        .cheryl-box.red   { border: 2.5px solid #dc322f; }
+        .cheryl-box.green  { background: rgba(133,153,0,0.35); z-index: 0; }
+        .cheryl-box.orange { background: rgba(108,113,196,0.35); z-index: 0; }
+        .cheryl-box.dark   { background: rgba(7,54,66,0.25); z-index: 0; }
+        .cheryl-box.answer {
+          border: none;
+        }
+        .cheryl-caption {
+          margin-top: 0;
+          font-size: 1.05rem;
+          line-height: 1.3;
+          min-height: 5.5rem;
+        }
+        .cheryl-caption p {
+          margin: 0.2rem 0;
+          opacity: 0;
+          transition: opacity 0.4s;
+        }
+        .cheryl-caption p.visible { opacity: 1; }
+      </style>
+
+      <div class="cheryl-grid" id="cheryl-grid">
+        <!-- Row 1: May -->
+        <span class="cheryl-cell empty" style="grid-row:1; grid-column:1;"></span>
+        <span class="cheryl-cell" style="grid-row:1; grid-column:2;">May 15</span>
+        <span class="cheryl-cell" style="grid-row:1; grid-column:3;">May 16</span>
+        <span class="cheryl-cell empty" style="grid-row:1; grid-column:4;"></span>
+        <span class="cheryl-cell empty" style="grid-row:1; grid-column:5;"></span>
+        <span class="cheryl-cell" style="grid-row:1; grid-column:6;">May 19</span>
+        <!-- Row 2: Jun -->
+        <span class="cheryl-cell empty" style="grid-row:2; grid-column:1;"></span>
+        <span class="cheryl-cell empty" style="grid-row:2; grid-column:2;"></span>
+        <span class="cheryl-cell empty" style="grid-row:2; grid-column:3;"></span>
+        <span class="cheryl-cell" style="grid-row:2; grid-column:4;">Jun 17</span>
+        <span class="cheryl-cell" style="grid-row:2; grid-column:5;">Jun 18</span>
+        <span class="cheryl-cell empty" style="grid-row:2; grid-column:6;"></span>
+        <!-- Row 3: Jul -->
+        <span class="cheryl-cell" style="grid-row:3; grid-column:1;">Jul 14</span>
+        <span class="cheryl-cell empty" style="grid-row:3; grid-column:2;"></span>
+        <span class="cheryl-cell" style="grid-row:3; grid-column:3;">Jul 16</span>
+        <span class="cheryl-cell empty" style="grid-row:3; grid-column:4;"></span>
+        <span class="cheryl-cell empty" style="grid-row:3; grid-column:5;"></span>
+        <span class="cheryl-cell empty" style="grid-row:3; grid-column:6;"></span>
+        <!-- Row 4: Aug -->
+        <span class="cheryl-cell" style="grid-row:4; grid-column:1;">Aug 14</span>
+        <span class="cheryl-cell" style="grid-row:4; grid-column:2;">Aug 15</span>
+        <span class="cheryl-cell empty" style="grid-row:4; grid-column:3;"></span>
+        <span class="cheryl-cell" style="grid-row:4; grid-column:4;">Aug 17</span>
+        <span class="cheryl-cell empty" style="grid-row:4; grid-column:5;"></span>
+        <span class="cheryl-cell empty" style="grid-row:4; grid-column:6;"></span>
+
+        <!-- Blue month rectangles (grid items that overlap cells) -->
+        <div class="cheryl-box blue" id="bx-may" style="grid-row:1; grid-column:2/7;"></div>
+        <div class="cheryl-box blue" id="bx-jun" style="grid-row:2; grid-column:3/6;"></div>
+        <div class="cheryl-box blue" id="bx-jul" style="grid-row:3; grid-column:1/4;"></div>
+        <div class="cheryl-box blue" id="bx-aug" style="grid-row:4; grid-column:1/5;"></div>
+        <!-- Red day rectangles -->
+        <div class="cheryl-box red" id="bx-d14" style="grid-row:3/5; grid-column:1;"></div>
+        <div class="cheryl-box red" id="bx-d15" style="grid-row:1/5; grid-column:2;"></div>
+        <div class="cheryl-box red" id="bx-d16" style="grid-row:1/4; grid-column:3;"></div>
+        <div class="cheryl-box red" id="bx-d17" style="grid-row:2/5; grid-column:4;"></div>
+        <div class="cheryl-box red" id="bx-d18" style="grid-row:2; grid-column:5;"></div>
+        <div class="cheryl-box red" id="bx-d19" style="grid-row:1; grid-column:6;"></div>
+        <!-- Green elimination fills -->
+        <div class="cheryl-box green" id="bx-elim-may" style="grid-row:1; grid-column:2/7;"></div>
+        <div class="cheryl-box green" id="bx-elim-jun" style="grid-row:2; grid-column:3/6;"></div>
+        <!-- Orange elimination fill -->
+        <div class="cheryl-box orange" id="bx-elim-14" style="grid-row:3/5; grid-column:1;"></div>
+        <!-- Dark elimination fill -->
+        <div class="cheryl-box dark" id="bx-elim-aug" style="grid-row:4; grid-column:2/5;"></div>
+        <!-- Answer highlight -->
+        <div class="cheryl-box answer" id="bx-answer" style="grid-row:3; grid-column:3;"></div>
+      </div>
+
+      <!-- Captions that appear at each step -->
+      <div class="cheryl-caption" id="cheryl-caption">
+        <p id="cap-blue" style="color: #268bd2;">"whispered in Albert's ear the month"</p>
+        <p id="cap-red" style="color: #dc322f;">"To Bernard, she whispered the day"</p>
+        <p id="cap-green" style="color: #859900;">Albert: I don't know when your birthday is,<br>but I know Bernard doesn't know, either.</p>
+        <p id="cap-orange" style="color: #6c71c4;">Bernard: I didn't know originally, but now I do.</p>
+        <p id="cap-dark" style="color: #073642;">Albert: Well, now I know, too!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 10: Uncertainty and Time (source: lines 743-754)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Uncertainty and Time</h2>
+    </div>
+    <div class="frame-content">
+      <p>Let's consider an economy with three periods $t=0,1$ and $2$; and two sources of uncertainty: inflation (low or high) and unemployment (low or high). Therefore there are four <strong>states of the world</strong>:</p>
+      <ol>
+        <li>$\omega_1$ (low inflation and low unemployment),</li>
+        <li>$\omega_2$ (low inflation and high unemployment),</li>
+        <li>$\omega_3$ (high inflation and low unemployment),</li>
+        <li>$\omega_4$ (high inflation and high unemployment).</li>
+      </ol>
+      <p>The set of the states of the world is
+      $$\Omega = \{ \omega_1, \omega_2, \omega_3, \omega_4 \}.$$
+      Usually, in an economy <span class="alert-text">uncertainty is gradually resolved over time</span>.</p>
+    </div>
+  </section>
+
+  <!-- Frame 11: Uncertainty and Time cont. (source: lines 755-774)
+       NO OVERLAYS, \fontsize{8}{9} -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Uncertainty and Time</h2>
+      <p class="frame-subtitle">Continuation</p>
+    </div>
+    <div class="frame-content" style="font-size: 0.82em; line-height: 1.35;">
+      <p>In an economy, uncertainty is resolved over time as <span class="alert-text">new information is revealed over time</span>. For example:</p>
+      <ul>
+        <li>In period $t=0$, agents do not learn any information.</li>
+        <li>In period $t=1$, agents learn the inflation level.</li>
+        <li>In period $t=2$, agents learn the unemployment level.</li>
+      </ul>
+      <p>The knowledge of the agents is described by the following partitions:</p>
+      <ol>
+        <li>$\mathcal P_0=\{\{ \omega_1, \omega_2, \omega_3, \omega_4 \}\}$.</li>
+        <li>$\mathcal P_1=\{\{ \omega_1, \omega_2 \}, \{ \omega_3, \omega_4 \}\}$.</li>
+        <li>$\mathcal P_2=\{\{ \omega_1 \}, \{ \omega_2 \}, \{ \omega_3 \}, \{ \omega_4 \}\}$.</li>
+      </ol>
+      <p>The partitions reflect the gradual information revelation:</p>
+      <ul>
+        <li>$\mathcal P_0$: At $t=0$, all states are indistinguishable (one element containing all four states).</li>
+        <li>$\mathcal P_1$: At $t=1$, agents know inflation level, so low inflation states $\{\omega_1, \omega_2\}$ are distinguishable from high inflation states $\{\omega_3, \omega_4\}$.</li>
+        <li>$\mathcal P_2$: At $t=2$, agents know both inflation and unemployment, so all states are distinguishable.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Frame 12: Filtrations (source: lines 775-795)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Filtrations</h2>
+      <p class="frame-subtitle">A General Definition</p>
+    </div>
+    <div class="frame-content">
+      <p>A <strong>filtration</strong> is a sequence of partitions $\mathcal{F} = (\mathcal{P}_0, \mathcal{P}_1, \ldots, \mathcal{P}_T)$ where each partition represents the information available at time $t$, and the partitions become progressively finer over time.</p>
+
+      <p>Formally, a filtration satisfies:</p>
+      <ul>
+        <li>Each $\mathcal{P}_t$ is a partition of $\Omega$.</li>
+        <li>For any $t &lt; s$, the partition $\mathcal{P}_s$ is <span class="alert-text">finer</span> than $\mathcal{P}_t$.</li>
+      </ul>
+
+      <p><strong>What does "finer" mean?</strong></p>
+      <p>Partition $\mathcal{P}_s$ is finer than $\mathcal{P}_t$ if every element of $\mathcal{P}_s$ is a subset of some element of $\mathcal{P}_t$.</p>
+
+      <p><strong>Intuition:</strong> As time progresses, agents can distinguish between more states. They never "forget" information—they only gain more precision about which state occurred.</p>
+    </div>
+  </section>
+
+  <!-- Frame 13: Filtrations - Example (source: lines 797-814)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Filtrations</h2>
+      <p class="frame-subtitle">Interpreting Our Example</p>
+    </div>
+    <div class="frame-content">
+      <p>In our inflation-unemployment example:
+      $$\mathcal{F} = (\mathcal{P}_0, \mathcal{P}_1, \mathcal{P}_2)$$
+      where:
+      $$\begin{aligned}
+      \mathcal{P}_0 &= \{\{\omega_1, \omega_2, \omega_3, \omega_4\}\} \\
+      \mathcal{P}_1 &= \{\{\omega_1, \omega_2\}, \{\omega_3, \omega_4\}\} \\
+      \mathcal{P}_2 &= \{\{\omega_1\}, \{\omega_2\}, \{\omega_3\}, \{\omega_4\}\}
+      \end{aligned}$$</p>
+
+      <p>Notice that:</p>
+      <ul>
+        <li>Each element of $\mathcal{P}_1$ is contained in an element of $\mathcal{P}_0$ (both are contained in the single element $\{\omega_1, \omega_2, \omega_3, \omega_4\}$).</li>
+        <li>Each element of $\mathcal{P}_2$ is contained in an element of $\mathcal{P}_1$ (e.g., $\{\omega_1\} \subset \{\omega_1, \omega_2\}$).</li>
+      </ul>
+      <p>This confirms $\mathcal{F}$ is indeed a filtration.</p>
+    </div>
+  </section>
+
+  <!-- Frame 14: Information Tree TikZ (source: lines 816-845) -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Filtration</h2>
+      <p class="frame-subtitle">Information Tree</p>
+    </div>
+    <div class="frame-content" style="display: flex; align-items: center; justify-content: center;">
+      <div style="position: relative; width: 100%; overflow: visible;">
+        <svg viewBox="0 0 2000 1100" style="display: block; width: 100%; background: #fdf6e3; border-radius: 8px;">
+          <defs>
+            <filter id="info-tree-shadow" x="-50%" y="-50%" width="200%" height="200%">
+              <feDropShadow dx="4" dy="4" stdDeviation="6" flood-opacity="0.5"/>
+            </filter>
+            <marker id="info-tree-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#374151"/>
+            </marker>
+          </defs>
+
+          <!-- Edges: gentle angles thanks to wide horizontal spacing -->
+          <!-- A→B: dx=402, dy=250, angle≈32° -->
+          <line x1="280" y1="550" x2="682" y2="300" stroke="#374151" stroke-width="2" marker-end="url(#info-tree-arrow)"/>
+          <!-- A→C: dx=402, dy=250, angle≈32° -->
+          <line x1="280" y1="550" x2="682" y2="800" stroke="#374151" stroke-width="2" marker-end="url(#info-tree-arrow)"/>
+          <!-- B→D: dx=482, dy=120, angle≈14° -->
+          <line x1="1010" y1="300" x2="1492" y2="180" stroke="#374151" stroke-width="2" marker-end="url(#info-tree-arrow)"/>
+          <!-- B→E: dx=482, dy=120, angle≈14° -->
+          <line x1="1010" y1="300" x2="1492" y2="420" stroke="#374151" stroke-width="2" marker-end="url(#info-tree-arrow)"/>
+          <!-- C→F: dx=482, dy=120, angle≈14° -->
+          <line x1="1010" y1="800" x2="1492" y2="680" stroke="#374151" stroke-width="2" marker-end="url(#info-tree-arrow)"/>
+          <!-- C→G: dx=482, dy=120, angle≈14° -->
+          <line x1="1010" y1="800" x2="1492" y2="920" stroke="#374151" stroke-width="2" marker-end="url(#info-tree-arrow)"/>
+
+          <!-- Edge labels (larger font for legibility) -->
+          <text x="455" y="380" text-anchor="middle" font-size="42" fill="#374151" font-family="'STIX Two Text', 'Times New Roman', serif">L Infl.</text>
+          <text x="455" y="725" text-anchor="middle" font-size="42" fill="#374151" font-family="'STIX Two Text', 'Times New Roman', serif">H Infl.</text>
+          <text x="1230" y="200" text-anchor="middle" font-size="42" fill="#374151" font-family="'STIX Two Text', 'Times New Roman', serif">L Unemp.</text>
+          <text x="1240" y="405" text-anchor="middle" font-size="42" fill="#374151" font-family="'STIX Two Text', 'Times New Roman', serif">H Unemp.</text>
+          <text x="1230" y="700" text-anchor="middle" font-size="42" fill="#374151" font-family="'STIX Two Text', 'Times New Roman', serif">L Unemp.</text>
+          <text x="1240" y="905" text-anchor="middle" font-size="42" fill="#374151" font-family="'STIX Two Text', 'Times New Roman', serif">H Unemp.</text>
+
+          <!-- Node rectangles (labels via HTML overlay) -->
+          <!-- A: Ω — center (180, 550) -->
+          <rect x="80" y="500" width="200" height="100" rx="12" ry="12"
+                fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#info-tree-shadow)"/>
+          <!-- B: {ω₁,ω₂} — center (850, 300) -->
+          <rect x="690" y="250" width="320" height="100" rx="12" ry="12"
+                fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#info-tree-shadow)"/>
+          <!-- C: {ω₃,ω₄} — center (850, 800) -->
+          <rect x="690" y="750" width="320" height="100" rx="12" ry="12"
+                fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#info-tree-shadow)"/>
+          <!-- D: {ω₁} — center (1600, 180) -->
+          <rect x="1500" y="130" width="200" height="100" rx="12" ry="12"
+                fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#info-tree-shadow)"/>
+          <!-- E: {ω₂} — center (1600, 420) -->
+          <rect x="1500" y="370" width="200" height="100" rx="12" ry="12"
+                fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#info-tree-shadow)"/>
+          <!-- F: {ω₃} — center (1600, 680) -->
+          <rect x="1500" y="630" width="200" height="100" rx="12" ry="12"
+                fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#info-tree-shadow)"/>
+          <!-- G: {ω₄} — center (1600, 920) -->
+          <rect x="1500" y="870" width="200" height="100" rx="12" ry="12"
+                fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#info-tree-shadow)"/>
+        </svg>
+
+        <!-- KaTeX node labels (absolutely positioned over SVG) -->
+        <span style="position:absolute;left:9%;top:50%;transform:translate(-50%,-50%);color:#586e75;font-size:1.1em;pointer-events:none;white-space:nowrap;">$\Omega$</span>
+        <span style="position:absolute;left:42.5%;top:27.27%;transform:translate(-50%,-50%);color:#586e75;font-size:0.9em;pointer-events:none;white-space:nowrap;">$\{\omega_1,\omega_2\}$</span>
+        <span style="position:absolute;left:42.5%;top:72.73%;transform:translate(-50%,-50%);color:#586e75;font-size:0.9em;pointer-events:none;white-space:nowrap;">$\{\omega_3,\omega_4\}$</span>
+        <span style="position:absolute;left:80%;top:16.36%;transform:translate(-50%,-50%);color:#586e75;font-size:0.9em;pointer-events:none;white-space:nowrap;">$\{\omega_1\}$</span>
+        <span style="position:absolute;left:80%;top:38.18%;transform:translate(-50%,-50%);color:#586e75;font-size:0.9em;pointer-events:none;white-space:nowrap;">$\{\omega_2\}$</span>
+        <span style="position:absolute;left:80%;top:61.82%;transform:translate(-50%,-50%);color:#586e75;font-size:0.9em;pointer-events:none;white-space:nowrap;">$\{\omega_3\}$</span>
+        <span style="position:absolute;left:80%;top:83.64%;transform:translate(-50%,-50%);color:#586e75;font-size:0.9em;pointer-events:none;white-space:nowrap;">$\{\omega_4\}$</span>
+        <!-- KaTeX time-period labels -->
+        <span style="position:absolute;left:9%;top:95.45%;transform:translate(-50%,-50%);color:#586e75;font-size:0.9em;pointer-events:none;white-space:nowrap;">$t = 0$</span>
+        <span style="position:absolute;left:42.5%;top:95.45%;transform:translate(-50%,-50%);color:#586e75;font-size:0.9em;pointer-events:none;white-space:nowrap;">$t = 1$</span>
+        <span style="position:absolute;left:80%;top:95.45%;transform:translate(-50%,-50%);color:#586e75;font-size:0.9em;pointer-events:none;white-space:nowrap;">$t = 2$</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 15: Lotteries (source: lines 847-851)
+       HAS OVERLAYS: 1x \pause -->
+  <section class="frame overlay-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Lotteries</h2>
+    </div>
+    <div class="frame-content">
+      <div class="overlay" data-overlay="1">
+        <p>Assume we have $n$ states of the world and a probability distribution over the states. A lottery is a real-random variable. Or put simply,</p>
+        <p>Definition: A lottery is a list of prizes and probabilities,</p>
+        <div class="fs-14pt" style="text-align: center;">
+          $$\ell=\left((x_1,x_2,\ldots,x_n),(p_1,p_2,\ldots,p_n)\right),$$
+        </div>
+        <p>where $x_k \in \mathbb{R}^m$ is the prize the lottery gives when state $k$ occurs, and $p_k\ge 0$ is the probability that state $k$ occurs.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 16: Lotteries - Graph (source: lines 853-866)
+       HAS OVERLAYS: 1x \pause, TikZ lottery tree — PLACEHOLDER -->
+  <section class="frame overlay-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Lotteries</h2>
+    </div>
+    <div class="frame-content">
+      <p class="overlay" data-overlay="1">In practice, it is very useful to depict lotteries as a graph.</p>
+
+      <!-- Lottery tree (source: .tex lines 855-865): ℓ fans upward to x₁..xₙ -->
+      <div class="overlay" data-overlay="2">
+        <div style="position: relative; width: 100%; overflow: visible;">
+          <svg viewBox="0 0 1200 500" style="display: block; width: 100%; background: #fdf6e3; border-radius: 8px;">
+            <defs>
+              <filter id="lot-shadow" x="-50%" y="-50%" width="200%" height="200%">
+                <feDropShadow dx="4" dy="4" stdDeviation="6" flood-opacity="0.5"/>
+              </filter>
+              <marker id="lot-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#374151"/>
+              </marker>
+            </defs>
+            <!-- Edges (r=42) -->
+            <line x1="566" y1="385" x2="174" y2="105" stroke="#374151" stroke-width="2" marker-end="url(#lot-arrow)"/>
+            <line x1="578" y1="374" x2="422" y2="116" stroke="#374151" stroke-width="2" marker-end="url(#lot-arrow)"/>
+            <line x1="610" y1="369" x2="680" y2="105" stroke="#374151" stroke-width="1" stroke-dasharray="8,6"/>
+            <line x1="634" y1="385" x2="1026" y2="105" stroke="#374151" stroke-width="2" marker-end="url(#lot-arrow)"/>
+            <!-- Node circles -->
+            <circle cx="600" cy="410" r="42" fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#lot-shadow)"/>
+            <circle cx="140" cy="80" r="42" fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#lot-shadow)"/>
+            <circle cx="400" cy="80" r="42" fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#lot-shadow)"/>
+            <circle cx="1060" cy="80" r="42" fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#lot-shadow)"/>
+          </svg>
+          <!-- KaTeX node labels -->
+          <span style="position:absolute;left:50%;top:82%;transform:translate(-50%,-50%);color:#586e75;font-size:1.1em;pointer-events:none;white-space:nowrap;">$\ell$</span>
+          <span style="position:absolute;left:11.67%;top:16%;transform:translate(-50%,-50%);color:#586e75;font-size:1.1em;pointer-events:none;white-space:nowrap;">$x_1$</span>
+          <span style="position:absolute;left:33.33%;top:16%;transform:translate(-50%,-50%);color:#586e75;font-size:1.1em;pointer-events:none;white-space:nowrap;">$x_2$</span>
+          <span style="position:absolute;left:56.67%;top:16%;transform:translate(-50%,-50%);color:#586e75;font-size:1.1em;pointer-events:none;white-space:nowrap;">$\ldots$</span>
+          <span style="position:absolute;left:88.33%;top:16%;transform:translate(-50%,-50%);color:#586e75;font-size:1.1em;pointer-events:none;white-space:nowrap;">$x_n$</span>
+          <!-- KaTeX edge labels -->
+          <span style="position:absolute;left:27%;top:45%;transform:translate(-50%,-50%);color:#374151;font-size:0.95em;pointer-events:none;white-space:nowrap;">$p_1$</span>
+          <span style="position:absolute;left:39%;top:44%;transform:translate(-50%,-50%);color:#374151;font-size:0.95em;pointer-events:none;white-space:nowrap;">$p_2$</span>
+          <span style="position:absolute;left:72%;top:45%;transform:translate(-50%,-50%);color:#374151;font-size:0.95em;pointer-events:none;white-space:nowrap;">$p_n$</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 17: The Certain Lottery (source: lines 867-876)
+       TikZ — PLACEHOLDER -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">The Certain Lottery</h2>
+    </div>
+    <div class="frame-content">
+      <p>The lottery that gives prize $x$ with probability one (with certainty) is denoted by:
+      $$\delta_x=\left((x),(1)\right).$$</p>
+
+      <!-- Certain lottery (source: .tex lines 871-875): δ_x → x with prob 1 -->
+      <div style="position: relative; width: 100%; overflow: visible; margin-top: 1rem;">
+        <svg viewBox="0 0 1000 300" style="display: block; width: 100%; background: #fdf6e3; border-radius: 8px;">
+          <defs>
+            <filter id="cert-shadow" x="-50%" y="-50%" width="200%" height="200%">
+              <feDropShadow dx="4" dy="4" stdDeviation="6" flood-opacity="0.5"/>
+            </filter>
+            <marker id="cert-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#374151"/>
+            </marker>
+          </defs>
+          <!-- Edge: δ_x → x (r=42) -->
+          <line x1="322" y1="174" x2="678" y2="126" stroke="#374151" stroke-width="2" marker-end="url(#cert-arrow)"/>
+          <!-- Node circles -->
+          <circle cx="280" cy="180" r="42" fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#cert-shadow)"/>
+          <circle cx="720" cy="120" r="42" fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#cert-shadow)"/>
+        </svg>
+        <!-- KaTeX node labels -->
+        <span style="position:absolute;left:28%;top:60%;transform:translate(-50%,-50%);color:#586e75;font-size:1.1em;pointer-events:none;white-space:nowrap;">$\delta_x$</span>
+        <span style="position:absolute;left:72%;top:40%;transform:translate(-50%,-50%);color:#586e75;font-size:1.1em;pointer-events:none;white-space:nowrap;">$x$</span>
+        <!-- KaTeX edge label -->
+        <span style="position:absolute;left:48%;top:42%;transform:translate(-50%,-50%);color:#374151;font-size:0.95em;pointer-events:none;white-space:nowrap;">$1$</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 18: Expectation and Variance (source: lines 878-883)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Expectation and Variance</h2>
+    </div>
+    <div class="frame-content">
+      <p>The expected value of a lottery $\ell_1=\left((x_1,x_2,\ldots,x_n),(p_1,p_2,\ldots,p_n)\right)$ is:
+      $$\mathbb{E}[\ell_1]=p_1\cdot x_1+p_2\cdot x_2 +\ldots p_n\cdot x_n = \sum_{i=1}^n p_i\cdot x_i;$$
+      and the variance of a lottery $\ell$ is:
+      $$\begin{aligned}\mathrm{Var}[\ell_1]=&p_1\cdot (x_1-\mathbb{E}[\ell_1])^2+p_2\cdot (x_2-\mathbb{E}[\ell_1])^2 +\ldots p_n\cdot (x_n-\mathbb{E}[\ell_1])^2 = \\ =& \sum_{i=1}^n p_i\cdot (x_i-\mathbb{E}[\ell_1])^2.\end{aligned}$$</p>
+    </div>
+  </section>
+
+  <!-- Frame 19: Composition of Lotteries (source: lines 887-908)
+       HAS OVERLAYS: \alt<1>{...}{...}, \uncover<2->, TikZ with <2> and <3> — PLACEHOLDER -->
+  <section class="frame overlay-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Composition of Lotteries</h2>
+    </div>
+    <div class="frame-content" style="padding-top: 0.3rem;">
+      <div class="overlay" data-overlay="1">
+        <p style="margin-bottom: 0.3rem; line-height: 1.3;">Given two lotteries, $\ell_1=\left((x_1,x_2,\ldots,x_n),(p_1,p_2,\ldots,p_n)\right)$ and $\ell_2=\left((y_1,y_2,\ldots,y_m),(q_1,q_2,\ldots,q_n)\right)$ and a number $\alpha$ in the interval $(0,1)$, we can create a compound lottery $\ell$ that plays $\ell_1$ with prob. $\alpha$ and $\ell_2$ with prob. $1-\alpha$.</p>
+      </div>
+
+      <!-- Trees share same space: compound (only step 1) overlays reduced (from step 2) -->
+      <div style="position: relative;">
+        <!-- Compound lottery tree — \only<2>: absolute so it doesn't affect layout when hidden -->
+        <div class="overlay" data-overlay="2" data-overlay-only style="position: absolute; top: 0; left: 0; width: 100%;">
+          <p style="margin-bottom: 0.2rem;">The compound lottery $\ell$ plays $\ell_1$ with prob. $\alpha$ and $\ell_2$ with prob. $1-\alpha$:</p>
+          <div style="position: relative; width: 100%; overflow: visible;">
+            <svg viewBox="0 0 1400 650" style="display: block; width: 100%; background: #fdf6e3; border-radius: 8px;">
+              <defs>
+                <filter id="comp-shadow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feDropShadow dx="4" dy="4" stdDeviation="6" flood-opacity="0.5"/>
+                </filter>
+                <marker id="comp-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                  <polygon points="0 0, 10 3.5, 0 7" fill="#374151"/>
+                </marker>
+              </defs>
+              <!-- Edges: ℓ→ℓ₁, ℓ→ℓ₂, ℓ₁→x₁, ℓ₁→x₂, ℓ₂→y₁, ℓ₂→y₂ (r=42) -->
+              <line x1="158" y1="306" x2="412" y2="179" stroke="#374151" stroke-width="2" marker-end="url(#comp-arrow)"/>
+              <line x1="158" y1="344" x2="412" y2="471" stroke="#374151" stroke-width="2" marker-end="url(#comp-arrow)"/>
+              <line x1="492" y1="154" x2="1008" y2="86" stroke="#374151" stroke-width="2" marker-end="url(#comp-arrow)"/>
+              <line x1="492" y1="166" x2="1008" y2="234" stroke="#374151" stroke-width="2" marker-end="url(#comp-arrow)"/>
+              <line x1="492" y1="484" x2="1008" y2="416" stroke="#374151" stroke-width="2" marker-end="url(#comp-arrow)"/>
+              <line x1="492" y1="496" x2="1008" y2="564" stroke="#374151" stroke-width="2" marker-end="url(#comp-arrow)"/>
+              <!-- Node circles -->
+              <circle cx="120" cy="325" r="42" fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#comp-shadow)"/>
+              <circle cx="450" cy="160" r="42" fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#comp-shadow)"/>
+              <circle cx="450" cy="490" r="42" fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#comp-shadow)"/>
+              <circle cx="1050" cy="80" r="42" fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#comp-shadow)"/>
+              <circle cx="1050" cy="240" r="42" fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#comp-shadow)"/>
+              <circle cx="1050" cy="410" r="42" fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#comp-shadow)"/>
+              <circle cx="1050" cy="570" r="42" fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#comp-shadow)"/>
+            </svg>
+            <!-- KaTeX node labels -->
+            <span style="position:absolute;left:8.6%;top:50%;transform:translate(-50%,-50%);color:#586e75;font-size:1.1em;pointer-events:none;white-space:nowrap;">$\ell$</span>
+            <span style="position:absolute;left:32.1%;top:24.6%;transform:translate(-50%,-50%);color:#586e75;font-size:1.1em;pointer-events:none;white-space:nowrap;">$\ell_1$</span>
+            <span style="position:absolute;left:32.1%;top:75.4%;transform:translate(-50%,-50%);color:#586e75;font-size:1.1em;pointer-events:none;white-space:nowrap;">$\ell_2$</span>
+            <span style="position:absolute;left:75%;top:12.3%;transform:translate(-50%,-50%);color:#586e75;font-size:1.1em;pointer-events:none;white-space:nowrap;">$x_1$</span>
+            <span style="position:absolute;left:75%;top:36.9%;transform:translate(-50%,-50%);color:#586e75;font-size:1.1em;pointer-events:none;white-space:nowrap;">$x_2$</span>
+            <span style="position:absolute;left:75%;top:63.1%;transform:translate(-50%,-50%);color:#586e75;font-size:1.1em;pointer-events:none;white-space:nowrap;">$y_1$</span>
+            <span style="position:absolute;left:75%;top:87.7%;transform:translate(-50%,-50%);color:#586e75;font-size:1.1em;pointer-events:none;white-space:nowrap;">$y_2$</span>
+            <!-- KaTeX edge labels -->
+            <span style="position:absolute;left:18%;top:33%;transform:translate(-50%,-50%);color:#374151;font-size:0.95em;pointer-events:none;white-space:nowrap;">$\alpha$</span>
+            <span style="position:absolute;left:17%;top:67%;transform:translate(-50%,-50%);color:#374151;font-size:0.95em;pointer-events:none;white-space:nowrap;">$1-\alpha$</span>
+            <span style="position:absolute;left:52%;top:14%;transform:translate(-50%,-50%);color:#374151;font-size:0.95em;pointer-events:none;white-space:nowrap;">$p$</span>
+            <span style="position:absolute;left:54%;top:35%;transform:translate(-50%,-50%);color:#374151;font-size:0.95em;pointer-events:none;white-space:nowrap;">$1-p$</span>
+            <span style="position:absolute;left:52%;top:65%;transform:translate(-50%,-50%);color:#374151;font-size:0.95em;pointer-events:none;white-space:nowrap;">$q$</span>
+            <span style="position:absolute;left:54%;top:86%;transform:translate(-50%,-50%);color:#374151;font-size:0.95em;pointer-events:none;white-space:nowrap;">$1-q$</span>
+          </div>
+          <p style="margin-top: 0.3rem; text-align: center; font-size: 0.75em;">$$\ell = \alpha\ell_1 \oplus (1-\alpha)\ell_2 = \left((x_1,x_2,y_1,y_2),(\alpha p,\,\alpha(1-p),\,(1-\alpha)q,\,(1-\alpha)(1-q))\right)$$</p>
+        </div>
+
+        <!-- Reduced compound lottery — \uncover<3->: normal flow, sets container height -->
+        <div class="overlay" data-overlay="3">
+          <p>The reduced form — $\ell$ connects directly to prizes:</p>
+          <div style="position: relative; width: 100%; overflow: visible;">
+            <svg viewBox="0 0 1400 650" style="display: block; width: 100%; background: #fdf6e3; border-radius: 8px;">
+              <defs>
+                <filter id="red-shadow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feDropShadow dx="4" dy="4" stdDeviation="6" flood-opacity="0.5"/>
+                </filter>
+                <marker id="red-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                  <polygon points="0 0, 10 3.5, 0 7" fill="#374151"/>
+                </marker>
+              </defs>
+              <!-- Edges: ℓ directly to x₁, x₂, y₁, y₂ (r=42) -->
+              <line x1="161" y1="314" x2="1009" y2="91" stroke="#374151" stroke-width="2" marker-end="url(#red-arrow)"/>
+              <line x1="162" y1="321" x2="1008" y2="244" stroke="#374151" stroke-width="2" marker-end="url(#red-arrow)"/>
+              <line x1="162" y1="329" x2="1008" y2="406" stroke="#374151" stroke-width="2" marker-end="url(#red-arrow)"/>
+              <line x1="161" y1="336" x2="1009" y2="559" stroke="#374151" stroke-width="2" marker-end="url(#red-arrow)"/>
+              <!-- Node circles -->
+              <circle cx="120" cy="325" r="42" fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#red-shadow)"/>
+              <circle cx="1050" cy="80" r="42" fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#red-shadow)"/>
+              <circle cx="1050" cy="240" r="42" fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#red-shadow)"/>
+              <circle cx="1050" cy="410" r="42" fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#red-shadow)"/>
+              <circle cx="1050" cy="570" r="42" fill="#ffffff" stroke="#586e75" stroke-width="2" filter="url(#red-shadow)"/>
+            </svg>
+            <!-- KaTeX node labels -->
+            <span style="position:absolute;left:8.6%;top:50%;transform:translate(-50%,-50%);color:#586e75;font-size:1.1em;pointer-events:none;white-space:nowrap;">$\ell$</span>
+            <span style="position:absolute;left:75%;top:12.3%;transform:translate(-50%,-50%);color:#586e75;font-size:1.1em;pointer-events:none;white-space:nowrap;">$x_1$</span>
+            <span style="position:absolute;left:75%;top:36.9%;transform:translate(-50%,-50%);color:#586e75;font-size:1.1em;pointer-events:none;white-space:nowrap;">$x_2$</span>
+            <span style="position:absolute;left:75%;top:63.1%;transform:translate(-50%,-50%);color:#586e75;font-size:1.1em;pointer-events:none;white-space:nowrap;">$y_1$</span>
+            <span style="position:absolute;left:75%;top:87.7%;transform:translate(-50%,-50%);color:#586e75;font-size:1.1em;pointer-events:none;white-space:nowrap;">$y_2$</span>
+            <!-- KaTeX edge labels -->
+            <span style="position:absolute;left:31%;top:28%;transform:translate(-50%,-50%);color:#374151;font-size:0.9em;pointer-events:none;white-space:nowrap;">$\alpha \cdot p$</span>
+            <span style="position:absolute;left:33%;top:41%;transform:translate(-50%,-50%);color:#374151;font-size:0.9em;pointer-events:none;white-space:nowrap;">$\alpha \cdot (1-p)$</span>
+            <span style="position:absolute;left:33%;top:59%;transform:translate(-50%,-50%);color:#374151;font-size:0.9em;pointer-events:none;white-space:nowrap;">$(1-\alpha) \cdot q$</span>
+            <span style="position:absolute;left:31%;top:72%;transform:translate(-50%,-50%);color:#374151;font-size:0.9em;pointer-events:none;white-space:nowrap;">$(1-\alpha) \cdot (1-q)$</span>
+          </div>
+          <p style="margin-top: 0.3rem; text-align: center; font-size: 0.75em;">$$\ell = \alpha\ell_1 \oplus (1-\alpha)\ell_2 = \left((x_1,x_2,y_1,y_2),(\alpha p,\,\alpha(1-p),\,(1-\alpha)q,\,(1-\alpha)(1-q))\right)$$</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 20: Preferences Over Lotteries (source: lines 910-922)
+       HAS OVERLAYS: \item<1->, ..., <6-> -->
+  <section class="frame overlay-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Preferences Over Lotteries</h2>
+    </div>
+    <div class="frame-content">
+      <p>Given two lotteries $\ell_a$ and $\ell_b$ such that a decision maker (DM) <span class="alert-text">chooses $\ell_a$ over $\ell_b$</span>,<br> the following statements are <span class="alert-text">equivalent</span>:</p>
+      <ul>
+        <li class="overlay" data-overlay="1">The DM judges $\ell_a$ no worst than $\ell_b$ (everyday language);</li>
+        <li class="overlay" data-overlay="2">The DM prefers $\ell_a$ to $\ell_b$ (economics language);</li>
+        <li class="overlay" data-overlay="3">$\ell_a\succeq_{\text{DM}} \ell_b$ (mathematics language).</li>
+      </ul>
+      <div class="overlay" data-overlay="4">
+        <p>For simplicity we write:</p>
+        <ul>
+          <li class="overlay" data-overlay="5">$\ell_a\succ \ell_b$ when $\ell_a\succeq\ell_b$ but $\ell_b\not\succeq\ell_a$ (strict preference)</li>
+          <li class="overlay" data-overlay="6">$\ell_a\sim \ell_b$ when $\ell_a\succeq\ell_b$ and $\ell_b\succeq\ell_a$ (indifference).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 21: Preferences Over Lotteries - numerical score (source: lines 926-930)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Preferences Over Lotteries</h2>
+    </div>
+    <div class="frame-content">
+      <ul>
+        <li>A preference of the DM, $\succeq_{\text{DM}}$, over the set of lotteries is just the DM's ranking of lotteries.</li>
+        <li>We wish (for convenience) a <span style="color: #859900;">numerical score</span> that reflects the DM's ranking.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Frame 22: vNM Assumptions (source: lines 933-944)
+       HAS OVERLAYS: <2->, <3->, <4->, <6-> (TikZ overlay too)
+       \vspace{-2.5cm} -->
+  <section class="frame overlay-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">von Neumann &amp; Morgenstern's Assumptions</h2>
+    </div>
+    <div class="frame-content" style="padding-top: 0;">
+      <dl class="beamer-description">
+        <dt class="overlay" data-overlay="1">Completeness</dt>
+        <dd class="overlay" data-overlay="1">For any two lotteries $\ell_1$ and $\ell_2$,<br> $\ell_1\succeq \ell_2$ and/or $\ell_2\succeq \ell_1$.</dd>
+
+        <dt class="overlay" data-overlay="2">Transitivity</dt>
+        <dd class="overlay" data-overlay="2">For any lotteries $\ell_1$, $\ell_2$ and $\ell_3$,<br> if $\ell_1\succeq \ell_2$ and $\ell_2\succeq \ell_3$ then $\ell_1\succeq \ell_3$.</dd>
+
+        <dt class="overlay" data-overlay="3">Continuity</dt>
+        <dd class="overlay" data-overlay="3">If $\ell_1\succeq\ell_2\succeq \ell_3$ then exists $p\in[0,1]$ such that $\ell_2\sim p\ell_1\oplus(1-p)\ell_3$.</dd>
+
+        <dt class="overlay" data-overlay="4">Independence</dt>
+        <dd class="overlay" data-overlay="4">If $\ell_1\succ\ell_2$ then for any $\ell_3$ and any $0&lt;p&lt;1$, $p\ell_1\oplus (1-p)\ell_3\succ p\ell_2\oplus(1-p)\ell_3$.</dd>
+      </dl>
+
+      <div class="overlay" data-overlay="5" style="background: rgba(38,139,210,0.2); border: 2px solid #268bd2; border-radius: 8px; padding: 1rem; margin-top: 1rem;">
+        <p>If $\succeq$ satisfy all of the above, there exists $u:\mathbb{R}\rightarrow\mathbb{R}$ such that
+        $$\left((x_1,\ldots,x_n),(p_1,\ldots,p_n)\right)\succ \left((y_1,\ldots,y_m),(q_1,\ldots,q_m)\right)$$
+        if and only if
+        $$\sum_{k=1}^n u(x_k)\cdot p_k>  \sum_{k=1}^m u(y_k)\cdot q_k.$$</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 23: Expected Utility (source: lines 947-956)
+       HAS OVERLAYS: \pause x2 -->
+  <section class="frame overlay-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Expected Utility</h2>
+    </div>
+    <div class="frame-content">
+      <div class="overlay" data-overlay="1">
+        <p>We write:
+        $$ U(\ell_1)=u(x_1)\cdot p_1+\ldots + u(x_n)\cdot p_n, $$</p>
+      </div>
+      <div class="overlay" data-overlay="2">
+        <p>and refer to $U$ as the <span class="alert-text">expected utility</span></p>
+      </div>
+      <div class="overlay" data-overlay="3">
+        <p>and to $u$ as the:</p>
+        <ol>
+          <li><span style="color: #859900;">utility for money</span> or</li>
+          <li><span style="color: #859900;">Bernoulli utility</span> or</li>
+          <li><span style="color: #859900;">von Neumann-Morgenstern utility (vNM)</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 24: Risk Aversion — Interactive Graph
+       u(x,α) = 2·(x^α − X1^α)/(X2^α − X1^α) + 100
+       Normalized so u(100)=100, u(102)=102 for all α.
+       Abstract coords: X1=1 (labeled 100), X2=5 (labeled 102), XMID=3 (labeled 101).
+       svgY = 350 − (u − 99)·82.5  →  u=100↦267.5, u=101↦185, u=102↦102.5 -->
+  <section class="frame" id="risk-aversion-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Risk Aversion</h2>
+    </div>
+    <div class="frame-content" style="display: flex; flex-direction: column; align-items: center; gap: 0.3rem; overflow: visible;">
+      <div id="ra-alpha-display" style="font-family: 'Times New Roman', serif; font-size: 1.1rem; color: #586e75; text-align: center;"></div>
+      <div style="width: 100%; background: #fdf6e3; border-radius: 8px; overflow: visible;">
+      <div id="ra-container" style="position: relative; max-width: 700px; margin: 0 auto; overflow: visible; transform: translateX(4.5rem);">
+        <svg id="ra-svg" viewBox="-45 -20 585 400" style="display: block; width: 100%; overflow: visible;">
+          <defs>
+            <marker id="ra-arw" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#586e75"/>
+            </marker>
+            <clipPath id="ra-plot-clip">
+              <rect x="20" y="6" width="475" height="369"/>
+            </clipPath>
+          </defs>
+          <!-- Axes -->
+          <line x1="20" y1="350" x2="495" y2="350" stroke="#586e75" stroke-width="2" marker-end="url(#ra-arw)"/>
+          <line x1="20" y1="350" x2="20" y2="6" stroke="#586e75" stroke-width="2" marker-end="url(#ra-arw)"/>
+          <!-- Axis labels -->
+          <text x="505" y="355" font-family="Times New Roman, serif" font-size="24" font-style="italic" fill="#586e75">x</text>
+          <text x="20" y="-2" text-anchor="middle" font-family="Times New Roman, serif" font-size="24" font-style="italic" fill="#586e75">u</text>
+          <!-- x-axis ticks -->
+          <line x1="98.3" y1="345" x2="98.3" y2="355" stroke="#586e75" stroke-width="1.5"/>
+          <line x1="255" y1="345" x2="255" y2="355" stroke="#586e75" stroke-width="1.5"/>
+          <line x1="411.7" y1="345" x2="411.7" y2="355" stroke="#586e75" stroke-width="1.5"/>
+          <!-- x-axis tick labels -->
+          <text x="98.3" y="375" text-anchor="middle" font-family="Times New Roman, serif" font-size="20" font-style="italic" fill="#586e75">100</text>
+          <text x="255" y="375" text-anchor="middle" font-family="Times New Roman, serif" font-size="20" font-style="italic" fill="#586e75">101</text>
+          <text x="411.7" y="375" text-anchor="middle" font-family="Times New Roman, serif" font-size="20" font-style="italic" fill="#586e75">102</text>
+          <!-- STATIC ref lines at x=100 (u=100 → svgY=267.5) -->
+          <line x1="98.3" y1="350" x2="98.3" y2="267.5" stroke="#586e75" stroke-width="1.5" stroke-dasharray="8,6"/>
+          <line x1="20" y1="267.5" x2="98.3" y2="267.5" stroke="#586e75" stroke-width="1.5" stroke-dasharray="8,6"/>
+          <!-- STATIC ref lines at x=102 (u=102 → svgY=102.5) -->
+          <line x1="411.7" y1="350" x2="411.7" y2="102.5" stroke="#586e75" stroke-width="1.5" stroke-dasharray="8,6"/>
+          <line x1="20" y1="102.5" x2="411.7" y2="102.5" stroke="#586e75" stroke-width="1.5" stroke-dasharray="8,6"/>
+          <!-- DYNAMIC vertical ref at x=101 -->
+          <line id="ra-vmid" x1="255" y1="350" x2="255" y2="185" stroke="#586e75" stroke-width="1.5" stroke-dasharray="8,6"/>
+          <!-- STATIC horizontal dashed line extending left past y-axis to near U(X) label, then to chord at x=101 -->
+          <line x1="-61" y1="185" x2="255" y2="185" stroke="#268bd2" stroke-width="1" stroke-dasharray="6,4"/>
+          <!-- DYNAMIC horizontal dashed line from y-axis to curve at x=101 (u(101), red) -->
+          <line id="ra-hmid-curve" x1="20" y1="185" x2="255" y2="185" stroke="#dc322f" stroke-width="1" stroke-dasharray="6,4"/>
+          <!-- STATIC chord (solarized blue, normal thickness) -->
+          <line x1="98.3" y1="267.5" x2="411.7" y2="102.5" stroke="#268bd2" stroke-width="2"/>
+          <!-- DYNAMIC utility curve (red, thick) -->
+          <path id="ra-curve" d="" fill="none" stroke="#dc322f" stroke-width="3" clip-path="url(#ra-plot-clip)"/>
+          <!-- STATIC dots at lottery endpoints (half-size) -->
+          <circle cx="98.3" cy="267.5" r="2.5" fill="#586e75"/>
+          <circle cx="411.7" cy="102.5" r="2.5" fill="#586e75"/>
+          <!-- DYNAMIC dot on curve at 101 (red, half-size) -->
+          <circle id="ra-dcm" cx="255" cy="185" r="2.5" fill="#dc322f"/>
+          <!-- STATIC dot on chord at 101 (blue, half-size) -->
+          <circle cx="255" cy="185" r="2.5" fill="#268bd2"/>
+          <!-- STATIC y-axis ticks -->
+          <line x1="15" y1="267.5" x2="20" y2="267.5" stroke="#586e75" stroke-width="1.5"/>
+          <line x1="15" y1="102.5" x2="20" y2="102.5" stroke="#586e75" stroke-width="1.5"/>
+          <line x1="15" y1="185" x2="20" y2="185" stroke="#586e75" stroke-width="1.5"/>
+          <!-- DYNAMIC y-axis tick for u(101) -->
+          <line id="ra-yt-mid" x1="15" y1="185" x2="20" y2="185" stroke="#586e75" stroke-width="1.5"/>
+        </svg>
+        <!-- KaTeX y-axis labels (STATIC positions) -->
+        <span style="position:absolute; left:9.7%; top:71.9%; transform:translate(-100%,-50%); color:#586e75; font-size:0.85em; pointer-events:none; white-space:nowrap;">$u(100)$</span>
+        <span style="position:absolute; left:9.7%; top:30.6%; transform:translate(-100%,-50%); color:#586e75; font-size:0.85em; pointer-events:none; white-space:nowrap;">$u(102)$</span>
+        <!-- STATIC label U(X) on y-axis at svgY=185 (u=101), positioned far left -->
+        <span style="position:absolute; left:calc(2% - 2rem); top:51.25%; transform:translate(-100%,-50%); color:#268bd2; font-size:0.75em; pointer-events:none; white-space:nowrap;">$U(X)\!=\!{\scriptsize\tfrac{u(100)}{2}+\tfrac{u(102)}{2}}$</span>
+        <!-- DYNAMIC label u(101) on y-axis -->
+        <span id="ra-lu101" style="position:absolute; left:9.7%; top:51.25%; transform:translate(-100%,-50%); color:#dc322f; font-size:0.8em; pointer-events:none; white-space:nowrap;">$u(101)$</span>
+      </div>
+      </div>
+      <div style="font-size:0.75rem; color:#93a1a1; text-align:center;">Use &larr; &rarr; arrow keys to change &alpha;</div>
+    </div>
+  </section>
+
+  <!-- Frame 25: Attitudes Towards Risk (source: lines 995-1001)
+       HAS OVERLAYS: \item<1,4>, <2,4>, <3,4> — show at specific steps -->
+  <section class="frame overlay-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Expected Utility Theory</h2>
+      <p class="frame-subtitle">Attitudes Towards Risk</p>
+    </div>
+    <div class="frame-content">
+      <ol>
+        <li class="overlay" data-overlay="1">Diminishing marginal utility, $u$ is concave, $u^{\prime\prime}&lt;0\Rightarrow$, the consumer is risk-averse. $$U(X)&lt;u(\mathrm{E}[X]) \text{ for all } X$$</li>
+        <li class="overlay" data-overlay="2">Increasing marginal utility, $u$ is convex, $u^{\prime\prime}>0\Rightarrow$, the consumer is risk-loving. $$U(X)>u(\mathrm{E}[X]) \text{ for all } X$$</li>
+        <li class="overlay" data-overlay="3">Constant marginal utility, $u$ is affine (linear plus a constant), $u^{\prime\prime}=0\Rightarrow$, the consumer is risk-neutral, $$U(X)=u(\mathrm{E}[X]) \text{ for all } X$$</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Frame 26: Arrow-Pratt (source: lines 1003-1005)
+       HAS OVERLAYS: \uncover<2> -->
+  <section class="frame overlay-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Measuring the Degree of Risk-Aversion</h2>
+      <p class="frame-subtitle">The Arrow-Pratt or Absolute Measure of Risk Aversion</p>
+    </div>
+    <div class="frame-content">
+      <div class="overlay" data-overlay="1">
+        <div class="block">
+          <div class="block-title">Definition</div>
+          <div class="block-body">
+            The <span class="alert-text">Arrow-Pratt</span> absolute measure of risk-aversion of an agent with VN-M utility $u$ at wealth level $w$ is: $$\rho_{u}(w)=\dfrac{-u^{\prime\prime}(w)}{u^{\prime}(w)}.$$
+          </div>
+        </div>
+      </div>
+
+      <div class="overlay" data-overlay="2" style="margin-top: 1rem;">
+        <p>If for two individuals with VN-M utilities $u$ and $\widetilde{u}$ we have that $\rho_{u}(w)>\rho_{\widetilde{u}}(w)$ for all wealth levels $w$ then we say that the agent with utility $u$ is more risk-averse than the agent with utility $\widetilde{u}$.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 27: Relative Measure (source: lines 1007-1011)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Measuring the Degree of Risk-Aversion</h2>
+      <p class="frame-subtitle">The Relative Measure of Risk-Aversion</p>
+    </div>
+    <div class="frame-content">
+      <div class="block">
+        <div class="block-title">Definition</div>
+        <div class="block-body">
+          The <span class="alert-text">relative</span> measure of risk-aversion of an agent with utility $u$ at wealth level $w$ is:
+          $$r_{u}(w)=\dfrac{-u^{\prime\prime}(w)\,w}{u^{\prime}(w)}.$$
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 28: How to use expected utility (source: lines 1015-1040)
+       HAS OVERLAYS: \item<1->, <2->, <3->, <4->
+       \fontsize{9}{11}, \vspace{-3mm} -->
+  <section class="frame overlay-frame vspace-neg-3mm">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">How to use expected utility</h2>
+    </div>
+    <div class="frame-content fs-10pt">
+      <ul>
+        <li class="overlay" data-overlay="1"><strong>Step 1: Set up the decision problem</strong>
+          <ul>
+            <li>States of the world: $\Omega = \{\omega_1, \ldots, \omega_n\}$</li>
+            <li>Prior probabilities: $\Pr(\omega_1), \ldots, \Pr(\omega_n)$</li>
+            <li>Information partition: $\mathcal{P} = \{I_1, \ldots, I_k\}$</li>
+          </ul>
+        </li>
+        <li class="overlay" data-overlay="2"><strong>Step 2: Define strategies</strong>
+          <ul>
+            <li>A strategy $s$ specifies one action for each information set: $s: \mathcal{P} \to A$</li>
+            <li>You choose your action based only on what you know (your information set)</li>
+          </ul>
+        </li>
+        <li class="overlay" data-overlay="3"><strong>Step 3: Evaluate each strategy</strong>
+          <ul>
+            <li>For strategy $s$, expected utility is:
+            $$\mathbb{E}[u|s] = \sum_{j} \Pr(I_j) \cdot \mathbb{E}[u \,|\, I_j, s]$$
+            where $\mathbb{E}[u \,|\, I_j, s] = \sum_{\omega \in I_j} \Pr(\omega|I_j) \cdot u(s(I_j), \omega)$</li>
+          </ul>
+        </li>
+        <li class="overlay" data-overlay="4"><strong>Step 4: Choose optimal strategy</strong>
+          <ul>
+            <li>Select the strategy $s^*$ that maximizes expected utility.</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Frame 29: Umbrella or Parasol? (source: lines 1043-1060)
+       NO OVERLAYS, \fontsize{9}{11} -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">How to use expected utility</h2>
+      <p class="frame-subtitle">Example: Umbrella or Parasol?</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p><strong>Decision Problem:</strong> Before leaving home, choose whether to carry an umbrella, a parasol, or nothing.</p>
+
+      <p><strong>Set-up:</strong></p>
+      <ul>
+        <li>States (afternoon weather): $\Omega = \{\omega_1, \omega_2, \omega_3\}$ where $\omega_1$ = sunny, $\omega_2$ = cloudy, $\omega_3$ = rainy</li>
+        <li>Probabilities: $\Pr(\omega_1) = 1/2$, $\Pr(\omega_2) = 1/4$, $\Pr(\omega_3) = 1/4$</li>
+        <li>Actions: $A = \{\text{umbrella}, \text{parasol}, \text{nothing}\}$</li>
+        <li>Information partition: $\mathcal{P} = \{\{\omega_1\}, \{\omega_2, \omega_3\}\}$ (you can tell if it will be sunny or not)</li>
+      </ul>
+
+      <p><strong>Strategies:</strong> A strategy assigns an action to each information set.</p>
+      <ul>
+        <li>$I_1 = \{\omega_1\}$: You know it will be sunny $\Rightarrow$ choose parasol</li>
+        <li>$I_2 = \{\omega_2, \omega_3\}$: You know it won't be sunny $\Rightarrow$ choose umbrella</li>
+      </ul>
+      <p>Strategy $s^*$: parasol if sunny, umbrella if not sunny.</p>
+    </div>
+  </section>
+
+  <!-- Frame 30: Computing Expected Utility (source: lines 1062-1079)
+       NO OVERLAYS, \fontsize{9}{11} -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">How to use expected utility</h2>
+      <p class="frame-subtitle">Example: Computing Expected Utility</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p><strong>Utility matrix</strong> $u(\text{action}, \omega)$:</p>
+      <div style="overflow-x: auto;">
+        <table style="border-collapse: collapse; margin: 0.5rem auto;">
+          <tr>
+            <th style="border: 1px solid #000; padding: 0.3rem 0.5rem;"></th>
+            <th style="border: 1px solid #000; padding: 0.3rem 0.5rem;">$\omega_1$ (sunny)</th>
+            <th style="border: 1px solid #000; padding: 0.3rem 0.5rem;">$\omega_2$ (cloudy)</th>
+            <th style="border: 1px solid #000; padding: 0.3rem 0.5rem;">$\omega_3$ (rainy)</th>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #000; padding: 0.3rem 0.5rem;">umbrella</td>
+            <td style="border: 1px solid #000; padding: 0.3rem 0.5rem;">6</td>
+            <td style="border: 1px solid #000; padding: 0.3rem 0.5rem;">7</td>
+            <td style="border: 1px solid #000; padding: 0.3rem 0.5rem;">10</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #000; padding: 0.3rem 0.5rem;">parasol</td>
+            <td style="border: 1px solid #000; padding: 0.3rem 0.5rem;">12</td>
+            <td style="border: 1px solid #000; padding: 0.3rem 0.5rem;">6</td>
+            <td style="border: 1px solid #000; padding: 0.3rem 0.5rem;">2</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #000; padding: 0.3rem 0.5rem;">nothing</td>
+            <td style="border: 1px solid #000; padding: 0.3rem 0.5rem;">10</td>
+            <td style="border: 1px solid #000; padding: 0.3rem 0.5rem;">8</td>
+            <td style="border: 1px solid #000; padding: 0.3rem 0.5rem;">0</td>
+          </tr>
+        </table>
+      </div>
+
+      <p><strong>Expected utility of strategy $s^*$</strong> (parasol if sunny, umbrella if not):</p>
+      $$\begin{aligned}
+      \mathbb{E}[u|s^*] &= \Pr(I_1) \cdot u(s^*(I_1), \omega_1) + \Pr(I_2) \cdot \mathbb{E}[u|I_2, s^*] \\
+      &= \frac{1}{2} \cdot u(\text{parasol}, \omega_1) + \frac{1}{2} \cdot \left[\Pr(\omega_2|I_2) \cdot u(\text{umb}, \omega_2) + \Pr(\omega_3|I_2) \cdot u(\text{umb}, \omega_3)\right] \\
+      &= \frac{1}{2} \cdot 12 + \frac{1}{2} \cdot \left[\frac{1}{2} \cdot 7 + \frac{1}{2} \cdot 10\right] = 6 + \frac{17}{4} = 10.25
+      \end{aligned}$$
+    </div>
+  </section>
+
+  <!-- Frame 31: Federal Reserve Example (source: lines 1081-1104)
+       NO OVERLAYS, \fontsize{9}{11} -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">How to use expected utility</h2>
+      <p class="frame-subtitle">Example: Federal Reserve</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p><strong>Decision Problem:</strong> The Federal Reserve must decide whether to lower interest rates or keep them unchanged.</p>
+
+      <p><strong>Set-up:</strong></p>
+      <ul>
+        <li>States: $\Omega = \{\omega_1, \omega_2, \omega_3, \omega_4\}$
+          <ul>
+            <li>$\omega_1$ = Low inflation, low unemployment</li>
+            <li>$\omega_2$ = Low inflation, high unemployment</li>
+            <li>$\omega_3$ = High inflation, low unemployment</li>
+            <li>$\omega_4$ = High inflation, high unemployment</li>
+          </ul>
+        </li>
+        <li>Probabilities: $\Pr(\omega_1) = 0.4$, $\Pr(\omega_2) = 0.1$, $\Pr(\omega_3) = 0.3$, $\Pr(\omega_4) = 0.2$</li>
+        <li>Actions: $A = \{\text{lower}, \text{keep}\}$</li>
+        <li>Information partition: $\mathcal{P} = \{\{\omega_1, \omega_2\}, \{\omega_3, \omega_4\}\}$ (FED knows if inflation is high or not)</li>
+      </ul>
+
+      <p><strong>Strategies:</strong> A strategy assigns an action to each information set.</p>
+      <ul>
+        <li>$I_1 = \{\omega_1, \omega_2\}$: FED knows inflation is low $\Rightarrow$ lower rates</li>
+        <li>$I_2 = \{\omega_3, \omega_4\}$: FED knows inflation is high $\Rightarrow$ keep rates</li>
+      </ul>
+      <p>Strategy $s^*$: lower if low inflation, keep if high inflation.</p>
+    </div>
+  </section>
+
+  <!-- Frame 32: FED Expected Utility (source: lines 1106-1125)
+       NO OVERLAYS, \fontsize{9}{11} -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">How to use expected utility</h2>
+      <p class="frame-subtitle">Example: FED Expected Utility</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p><strong>Utility matrix</strong> $u(\text{action}, \omega)$:</p>
+      <div style="overflow-x: auto;">
+        <table style="border-collapse: collapse; margin: 0.5rem auto;">
+          <tr>
+            <th style="border: 1px solid #000; padding: 0.3rem 0.5rem;"></th>
+            <th style="border: 1px solid #000; padding: 0.3rem 0.5rem;">$\omega_1$ (LI, LU)</th>
+            <th style="border: 1px solid #000; padding: 0.3rem 0.5rem;">$\omega_2$ (LI, HU)</th>
+            <th style="border: 1px solid #000; padding: 0.3rem 0.5rem;">$\omega_3$ (HI, LU)</th>
+            <th style="border: 1px solid #000; padding: 0.3rem 0.5rem;">$\omega_4$ (HI, HU)</th>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #000; padding: 0.3rem 0.5rem;">lower</td>
+            <td style="border: 1px solid #000; padding: 0.3rem 0.5rem;">6</td>
+            <td style="border: 1px solid #000; padding: 0.3rem 0.5rem;">10</td>
+            <td style="border: 1px solid #000; padding: 0.3rem 0.5rem;">2</td>
+            <td style="border: 1px solid #000; padding: 0.3rem 0.5rem;">4</td>
+          </tr>
+          <tr>
+            <td style="border: 1px solid #000; padding: 0.3rem 0.5rem;">keep</td>
+            <td style="border: 1px solid #000; padding: 0.3rem 0.5rem;">8</td>
+            <td style="border: 1px solid #000; padding: 0.3rem 0.5rem;">5</td>
+            <td style="border: 1px solid #000; padding: 0.3rem 0.5rem;">9</td>
+            <td style="border: 1px solid #000; padding: 0.3rem 0.5rem;">7</td>
+          </tr>
+        </table>
+      </div>
+
+      <p><strong>Expected utility of strategy $s^*$</strong> (lower if low inflation, keep if high):</p>
+      $$\begin{aligned}
+      \mathbb{E}[u|s^*] &= \Pr(I_1) \cdot \mathbb{E}[u|I_1, s^*] + \Pr(I_2) \cdot \mathbb{E}[u|I_2, s^*] \\[4pt]
+      \mathbb{E}[u|I_1, s^*] &= \Pr(\omega_1|I_1) \cdot u(\text{lower}, \omega_1) + \Pr(\omega_2|I_1) \cdot u(\text{lower}, \omega_2) \\[4pt]
+      &= 0.8 \cdot 6 + 0.2 \cdot 10 = 6.8 \\[4pt]
+      \mathbb{E}[u|I_2, s^*] &= \Pr(\omega_3|I_2) \cdot u(\text{keep}, \omega_3) + \Pr(\omega_4|I_2) \cdot u(\text{keep}, \omega_4) \\[4pt]
+      &= 0.6 \cdot 9 + 0.4 \cdot 7 = 8.2 \\[4pt]
+      \mathbb{E}[u|s^*] &= 0.5 \cdot 6.8 + 0.5 \cdot 8.2 = 7.5
+      \end{aligned}$$
+    </div>
+  </section>
+
+  <!-- Nav -->
+  <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
+    <a href="time-preferences.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Time Preferences</a>
+    <a href="inequality-constraints.html" style="color: var(--crane-blue); text-decoration: none;">Inequality Constraints &rarr;</a>
+  </div>
+
+  <!-- KaTeX JS -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="js/katex-macros.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // === Cheryl's Birthday: 7-step pin animation ===
+    (function() {
+      const frame = document.getElementById('cheryl-frame');
+      if (!frame) return;
+
+      const STEPS = 7;
+      const scrollPerStep = window.innerHeight * 0.5;
+
+      const boxes = {
+        'bx-may': [2,4], 'bx-jun': [2,4], 'bx-jul': [2,4], 'bx-aug': [2,4],
+        'bx-d14': [3,4], 'bx-d15': [3,4], 'bx-d16': [3,4],
+        'bx-d17': [3,4], 'bx-d18': [3,4], 'bx-d19': [3,4],
+        'bx-elim-may': [5], 'bx-elim-jun': [5],
+        'bx-elim-14': [6],
+        'bx-elim-aug': [7],
+        'bx-answer': [7]
+      };
+
+      const captions = {
+        'cap-blue': [2,4], 'cap-red': [3,4],
+        'cap-green': [5], 'cap-orange': [6], 'cap-dark': [7]
+      };
+
+      function isVisible(specs, step) {
+        if (specs.length === 1) return step >= specs[0];
+        if (specs.length === 2) return step === specs[0] || step >= specs[1];
+        return false;
+      }
+
+      function applyStep(step) {
+        for (const [id, specs] of Object.entries(boxes)) {
+          const el = document.getElementById(id);
+          if (el) el.classList.toggle('visible', isVisible(specs, step));
+        }
+        for (const [id, specs] of Object.entries(captions)) {
+          const el = document.getElementById(id);
+          if (el) el.classList.toggle('visible', isVisible(specs, step));
+        }
+      }
+
+      applyStep(1);
+
+      ScrollTrigger.create({
+        trigger: frame,
+        start: 'top top',
+        end: `+=${scrollPerStep * (STEPS - 1)}`,
+        pin: true,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          const step = Math.min(STEPS, Math.floor(self.progress * STEPS) + 1);
+          applyStep(step);
+        }
+      });
+    })();
+
+    // === Generic overlay-frame handler ===
+    document.querySelectorAll('.overlay-frame').forEach(frame => {
+      const overlays = frame.querySelectorAll('.overlay');
+      const count = overlays.length;
+      if (count === 0) return;
+      overlays[0].classList.add('revealed');
+      const scrollPerOverlay = window.innerHeight * 0.5;
+      const totalScroll = scrollPerOverlay * (count - 1);
+      ScrollTrigger.create({
+        trigger: frame,
+        start: 'top top',
+        end: `+=${totalScroll}`,
+        pin: true,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          const currentStep = Math.floor(progress * count);
+          overlays.forEach((overlay, i) => {
+            const isOnly = overlay.hasAttribute('data-overlay-only');
+            if (isOnly) {
+              overlay.classList.toggle('revealed', i === currentStep);
+            } else {
+              overlay.classList.toggle('revealed', i <= currentStep);
+            }
+          });
+        }
+      });
+    });
+
+    // === Risk Aversion Interactive Graph ===
+    // u(x,α) = 2·(x^α − X1^α)/(X2^α − X1^α) + 100
+    // Normalized: u(X1)=100, u(X2)=102 for all α. E[u(X)]=101 (chord at mid).
+    // Abstract coords: X1=1, X2=5, XMID=3. SVG y: 350 − (u−99)·82.5
+    (function() {
+      var XMAX = 6, X1 = 1, X2 = 5, XMID = 3;
+      var xO = 20, yO = 350, gW = 470;
+      var YSCALE = 82.5; // px per utility unit (offset from 99)
+      var alpha = 0.50;
+      var AMIN = 0.00, AMAX = 2.00, ASTEP = 0.05;
+      var navOn = false;
+
+      function uFn(x) {
+        if (alpha < 0.001) {
+          // Limit as α→0: u(x) = 2·ln(x/X1)/ln(X2/X1) + 100
+          if (x <= 0) return -Infinity;
+          return 2 * Math.log(x / X1) / Math.log(X2 / X1) + 100;
+        }
+        var xa = Math.pow(x, alpha);
+        var x1a = Math.pow(X1, alpha);
+        var x2a = Math.pow(X2, alpha);
+        return 2 * (xa - x1a) / (x2a - x1a) + 100;
+      }
+
+      function toSvgY(u) { return yO - (u - 99) * YSCALE; }
+      function percY(sy) { return ((sy + 20) / 400) * 100; }
+
+      function curvePath() {
+        var d = '', n = 200;
+        for (var i = 0; i <= n; i++) {
+          var x = (i / n) * XMAX;
+          if (x <= 0 && alpha < 0.001) x = 0.001; // avoid ln(0)
+          var sx = xO + ((i / n) * XMAX / XMAX) * gW;
+          var sy = toSvgY(uFn(x));
+          d += (i === 0 ? 'M' : 'L') + sx.toFixed(1) + ',' + sy.toFixed(1);
+        }
+        return d;
+      }
+
+      function sa(id, a, v) { document.getElementById(id).setAttribute(a, v); }
+
+      function update() {
+        var uMid = uFn(XMID); // u(101) on curve — varies with α
+        var yCM = toSvgY(uMid);
+        var yCH = 185; // chord at E[u(X)]=101 — fixed
+
+        // Curve path
+        sa('ra-curve', 'd', curvePath());
+        // Curve dot at x=101
+        sa('ra-dcm', 'cy', yCM);
+        // Vertical ref at x=101 (extends to higher of curve/chord)
+        sa('ra-vmid', 'y2', Math.min(yCM, yCH));
+        // Horizontal dashed from y-axis to curve at x=101
+        sa('ra-hmid-curve', 'y1', yCM);
+        sa('ra-hmid-curve', 'y2', yCM);
+        // Dynamic y-axis tick for u(101)
+        sa('ra-yt-mid', 'y1', yCM);
+        sa('ra-yt-mid', 'y2', yCM);
+        // u(101) KaTeX label position
+        var lbl = document.getElementById('ra-lu101');
+        lbl.style.top = percY(yCM) + '%';
+
+        // Alpha display
+        var att = Math.abs(alpha - 1) < 0.001 ? 'Linear (Risk Neutral)' :
+                  alpha < 1 ? 'Concave (Risk Averse)' : 'Convex (Risk Loving)';
+        document.getElementById('ra-alpha-display').textContent =
+          '\u03B1 = ' + alpha.toFixed(2) + ' \u2014 ' + att;
+      }
+
+      document.addEventListener('keydown', function(e) {
+        if (!navOn) return;
+        if (e.key === 'ArrowLeft' && alpha > AMIN + 0.001) {
+          e.preventDefault();
+          alpha = Math.max(AMIN, Math.round((alpha - ASTEP) * 100) / 100);
+          update();
+        } else if (e.key === 'ArrowRight' && alpha < AMAX - 0.001) {
+          e.preventDefault();
+          alpha = Math.min(AMAX, Math.round((alpha + ASTEP) * 100) / 100);
+          update();
+        }
+      });
+
+      // Enable arrows whenever any part of the frame is visible
+      var obs = new IntersectionObserver(function(entries) {
+        navOn = entries[0].isIntersecting;
+      }, { threshold: 0.05 });
+      obs.observe(document.getElementById('risk-aversion-frame'));
+      // Fallback: also enable on scroll near the frame
+      navOn = true;
+
+      update();
+    })();
+  </script>
+
+</body>
+</html>

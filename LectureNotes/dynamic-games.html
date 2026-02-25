@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Games | ECON 510</title>
+
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/beamer-theme.css">
+</head>
+<body>
+
+  <!-- Section Header -->
+  <section class="section-header">
+    <div class="section-title-box">
+      <h1>Dynamic Games</h1>
+    </div>
+    <h2>ECON 510: Microeconomic Theory</h2>
+  </section>
+
+  <!-- Frame 1: Dynamic Games - game tree (source: lines 363-396)
+       NO OVERLAYS, TikZ game tree — PLACEHOLDER -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Dynamic Games</h2>
+      <p class="frame-subtitle">How I stopped to worry and love the bomb</p>
+    </div>
+    <div class="frame-content">
+      <!-- Static game tree: General vs President (source: lines 364-395) -->
+      <div style="position: relative; width: 100%; margin: 0 auto;">
+        <svg id="gt1-svg" viewBox="0 0 1400 850" style="display: block; width: 100%; background: #fdf6e3; border-radius: 8px;">
+          <defs>
+            <filter id="gt-shadow" x="-50%" y="-50%" width="200%" height="200%">
+              <feDropShadow dx="4" dy="4" stdDeviation="6" flood-opacity="0.5"/>
+            </filter>
+            <marker id="gt-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+              <polygon points="0 0, 10 3.5, 0 7" fill="#374151"/>
+            </marker>
+          </defs>
+
+          <g id="gt1-tree">
+            <!-- Upper subgame: P1 → T1 (nuke USSR), T2 (don't nuke) -->
+            <g id="gt1-sub-upper">
+              <path id="gt1-e-P1-T1" d="M 761 225 Q 936.5 190 1112 125" fill="none" stroke="#374151" stroke-width="2" marker-end="url(#gt-arrow)"/>
+              <path id="gt1-e-P1-T2" d="M 761 225 Q 936.5 260 1112 325" fill="none" stroke="#374151" stroke-width="2" marker-end="url(#gt-arrow)"/>
+              <text x="948.5" y="145" text-anchor="middle" font-family="'STIX Two Text','Times New Roman',serif" font-size="30" fill="#374151">nuke USSR</text>
+              <text x="948.5" y="310" text-anchor="middle" font-family="'STIX Two Text','Times New Roman',serif" font-size="30" fill="#374151">don't nuke</text>
+              <!-- P1 decision node (President, P2 green) -->
+              <circle cx="700" cy="225" r="67" fill="#16A34A" filter="url(#gt-shadow)"/>
+              <text x="700" y="225" text-anchor="middle" dominant-baseline="central" font-family="'STIX Two Text','Times New Roman',serif" font-size="55" font-weight="bold" fill="white">P</text>
+              <!-- T1: payoff (3, -1) -->
+              <circle cx="1200" cy="125" r="67" fill="#E5E7EB" stroke="#9CA3AF" stroke-width="2" filter="url(#gt-shadow)"/>
+              <line x1="1150" y1="125" x2="1250" y2="125" stroke="#9CA3AF" stroke-width="1"/>
+              <text x="1222" y="96" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">3</text>
+              <text x="1222" y="154" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">-1</text>
+              <!-- T2: payoff (-2, -2) -->
+              <circle cx="1200" cy="325" r="67" fill="#E5E7EB" stroke="#9CA3AF" stroke-width="2" filter="url(#gt-shadow)"/>
+              <line x1="1150" y1="325" x2="1250" y2="325" stroke="#9CA3AF" stroke-width="1"/>
+              <text x="1222" y="296" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">-2</text>
+              <text x="1222" y="354" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">-2</text>
+            </g>
+
+            <!-- Lower subgame: P2 → T3 (nuke USSR), T4 (don't nuke) -->
+            <g id="gt1-sub-lower">
+              <path id="gt1-e-P2-T3" d="M 761 625 Q 936.5 590 1112 525" fill="none" stroke="#374151" stroke-width="2" marker-end="url(#gt-arrow)"/>
+              <path id="gt1-e-P2-T4" d="M 761 625 Q 936.5 660 1112 725" fill="none" stroke="#374151" stroke-width="2" marker-end="url(#gt-arrow)"/>
+              <text x="948.5" y="545" text-anchor="middle" font-family="'STIX Two Text','Times New Roman',serif" font-size="30" fill="#374151">nuke USSR</text>
+              <text x="948.5" y="710" text-anchor="middle" font-family="'STIX Two Text','Times New Roman',serif" font-size="30" fill="#374151">don't nuke</text>
+              <!-- P2 decision node (President, P2 green) -->
+              <circle cx="700" cy="625" r="67" fill="#16A34A" filter="url(#gt-shadow)"/>
+              <text x="700" y="625" text-anchor="middle" dominant-baseline="central" font-family="'STIX Two Text','Times New Roman',serif" font-size="55" font-weight="bold" fill="white">P</text>
+              <!-- T3: payoff (0, -3) -->
+              <circle cx="1200" cy="525" r="67" fill="#E5E7EB" stroke="#9CA3AF" stroke-width="2" filter="url(#gt-shadow)"/>
+              <line x1="1150" y1="525" x2="1250" y2="525" stroke="#9CA3AF" stroke-width="1"/>
+              <text x="1222" y="496" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">0</text>
+              <text x="1222" y="554" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">-3</text>
+              <!-- T4: payoff (-1, 3) -->
+              <circle cx="1200" cy="725" r="67" fill="#E5E7EB" stroke="#9CA3AF" stroke-width="2" filter="url(#gt-shadow)"/>
+              <line x1="1150" y1="725" x2="1250" y2="725" stroke="#9CA3AF" stroke-width="1"/>
+              <text x="1222" y="696" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">-1</text>
+              <text x="1222" y="754" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">3</text>
+            </g>
+
+            <!-- Root edges: G → P1, G → P2 -->
+            <g id="gt1-root-edges">
+              <path id="gt1-e-G-P1" d="M 261 425 Q 448.5 355 636 225" fill="none" stroke="#374151" stroke-width="2" marker-end="url(#gt-arrow)"/>
+              <path id="gt1-e-G-P2" d="M 261 425 Q 448.5 495 636 625" fill="none" stroke="#374151" stroke-width="2" marker-end="url(#gt-arrow)"/>
+              <text x="428.5" y="302" text-anchor="middle" font-family="'STIX Two Text','Times New Roman',serif" font-size="30" fill="#374151">nuke USSR</text>
+              <text x="428.5" y="552" text-anchor="middle" font-family="'STIX Two Text','Times New Roman',serif" font-size="30" fill="#374151">don't nuke</text>
+            </g>
+
+            <!-- G (General, Player 1, red) — root node, drawn on top -->
+            <g id="gt1-node-G">
+              <circle cx="200" cy="425" r="67" fill="#DC2626" filter="url(#gt-shadow)"/>
+              <text x="200" y="425" text-anchor="middle" dominant-baseline="central" font-family="'STIX Two Text','Times New Roman',serif" font-size="55" font-weight="bold" fill="white">G</text>
+            </g>
+
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 2: Quickstart guide on game trees (source: lines 397-404)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Dynamic Games</h2>
+      <p class="frame-subtitle">quickstart guide on game trees</p>
+    </div>
+    <div class="frame-content">
+      <dl class="beamer-description">
+        <dt>Decision nodes</dt>
+        <dd>the label inside the circle indicates the player whose turn it is to move.</dd>
+
+        <dt>Edges</dt>
+        <dd>the label on the edge indicates the action taken by the player.</dd>
+
+        <dt>Terminal nodes</dt>
+        <dd>the numbers inside the split circles indicate the payoffs to each player (the top number is the payoff to player 1, the bottom number is the payoff to player 2). In games with more than two players, we usually just use commas to separate the payoffs.</dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- Frame 3: Strategies are not equivalent to actions (source: lines 405-420)
+       NO OVERLAYS, \fontsize{9}{11}, \vspace{5mm} -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Dynamic Games</h2>
+      <p class="frame-subtitle">Strategies are not equivalent to actions</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>In dynamic games, a player's strategy must specify an action for each of the nodes the player controls. In other words, a strategy for a player is a function from the history of the game (the sequence of actions taken so far) to the action the player will take at each of her or his decision nodes.</p>
+
+      <div style="margin-top: 1.2rem;">
+        <p>In the previous game while the general strategy coincides with his actions since he only moves once, the president strategy must specify what to do when the general chose to "nuke USSR" and what to do when the general choose to "not nuke". Thus, the President has four strategies:</p>
+      </div>
+
+      <div style="margin-top: 1.2rem;">
+        <dl class="beamer-description">
+          <dt>NN</dt>
+          <dd>Always "nuke USSR"</dd>
+          <dt>DD</dt>
+          <dd>Always "don't nuke"</dd>
+          <dt>ND</dt>
+          <dd>"nuke USSR" if the General nukes, "don't nuke" if the General doesn't</dd>
+          <dt>DN</dt>
+          <dd>"don't nuke" if the General nukes, "nuke USSR" if the General doesn't</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 4: Payoff Matrix (source: lines 421-438)
+       NO OVERLAYS, table + itemize -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Strategies are not equivalent to actions</h2>
+      <p class="frame-subtitle">Payoff Matrix</p>
+    </div>
+    <div class="frame-content">
+      <!-- \fontsize{14}{15} — table -->
+      <div class="fs-14pt">
+        <div style="overflow-x: auto;">
+          <table style="border-collapse: collapse; margin: 0 auto;">
+            <tr>
+              <th style="border: 1px solid #000; padding: 0.3rem 0.6rem;"></th>
+              <th style="border: 1px solid #000; padding: 0.3rem 0.6rem;">NN</th>
+              <th style="border: 1px solid #000; padding: 0.3rem 0.6rem;">DD</th>
+              <th style="border: 1px solid #000; padding: 0.3rem 0.6rem;">ND</th>
+              <th style="border: 1px solid #000; padding: 0.3rem 0.6rem;">DN</th>
+            </tr>
+            <tr>
+              <td style="border: 1px solid #000; padding: 0.3rem 0.6rem;">nuke USSR</td>
+              <td style="border: 1px solid #000; padding: 0.3rem 0.6rem;"><span style="color:red;">$\phantom{-}3$</span>,<span style="color:blue;">$-1$</span></td>
+              <td style="border: 1px solid #000; padding: 0.3rem 0.6rem;">$-2$,$-2$</td>
+              <td style="border: 1px solid #000; padding: 0.3rem 0.6rem;"><span style="color:red;">$\phantom{-}3$</span>,<span style="color:blue;">$-1$</span></td>
+              <td style="border: 1px solid #000; padding: 0.3rem 0.6rem;">$-2$,$-2$</td>
+            </tr>
+            <tr>
+              <td style="border: 1px solid #000; padding: 0.3rem 0.6rem;">don't nuke</td>
+              <td style="border: 1px solid #000; padding: 0.3rem 0.6rem;">$\phantom{-}0$,$-3$</td>
+              <td style="border: 1px solid #000; padding: 0.3rem 0.6rem;"><span style="color:red;">$-1$</span>,<span style="color:blue;">$\phantom{-}3$</span></td>
+              <td style="border: 1px solid #000; padding: 0.3rem 0.6rem;">$-1$,<span style="color:blue;">$\phantom{-}3$</span></td>
+              <td style="border: 1px solid #000; padding: 0.3rem 0.6rem;"><span style="color:red;">$\phantom{-}0$</span>,$-3$</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- \vspace{8mm} then \fontsize{11}{12} -->
+      <div class="fs-11pt" style="margin-top: 1.5rem;">
+        <p>The payoffs that correspond to best responses are highlighted. Notice that this game has three equilibria (both players are best responding):</p>
+        <ul>
+          <li>(nuke USSR, NN) with payoffs (3,-1)</li>
+          <li>(nuke USSR, ND) with payoffs (3,-1)</li>
+          <li>(don't nuke, DD) with payoffs (-1,3)</li>
+        </ul>
+        <p>but the only credible (subgame perfect equilibrium) is the (nuke USSR, ND). The next slide defines subgame perfect equilibrium.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 5: Subgame Perfect Equilibrium (source: lines 439-499)
+       Interactive: baby tree on left, click P nodes to extract subgames to right -->
+  <section class="frame vspace-neg-5mm" id="spe-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Subgame Perfect Equilibrium</h2>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>A subgame perfect equilibrium (SPE) is a strategy profile such that players are best responding in every decision node (not only in the nodes reached in equilibrium). The subgame perfect Nash equilibrium is depicted in red in the tree below:</p>
+
+      <div id="spe-stage" style="position: relative; width: 100%; margin-top: 0.5rem;">
+        <!-- Baby tree on the left (50% width) -->
+        <div id="spe-tree-box" style="width: 50%; display: inline-block; vertical-align: top;">
+          <svg id="spe-svg" viewBox="0 0 1400 850" style="display: block; width: 100%; background: #fdf6e3; border-radius: 8px;">
+            <defs>
+              <filter id="spe-shadow" x="-50%" y="-50%" width="200%" height="200%">
+                <feDropShadow dx="4" dy="4" stdDeviation="6" flood-opacity="0.5"/>
+              </filter>
+              <marker id="spe-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#374151"/>
+              </marker>
+            </defs>
+
+            <g id="spe-tree">
+              <!-- Upper subgame -->
+              <g id="spe-sub-upper">
+                <path d="M 761 225 Q 936.5 190 1112 125" fill="none" stroke="#374151" stroke-width="2" marker-end="url(#spe-arrow)"/>
+                <path d="M 761 225 Q 936.5 260 1112 325" fill="none" stroke="#374151" stroke-width="2" marker-end="url(#spe-arrow)"/>
+                <text x="948.5" y="145" text-anchor="middle" font-family="'STIX Two Text','Times New Roman',serif" font-size="30" fill="#374151">nuke USSR</text>
+                <text x="948.5" y="310" text-anchor="middle" font-family="'STIX Two Text','Times New Roman',serif" font-size="30" fill="#374151">don't nuke</text>
+                <circle id="spe-p-upper" cx="700" cy="225" r="67" fill="#16A34A" filter="url(#spe-shadow)" style="cursor:pointer"/>
+                <text x="700" y="225" text-anchor="middle" dominant-baseline="central" font-family="'STIX Two Text','Times New Roman',serif" font-size="55" font-weight="bold" fill="white" style="pointer-events:none">P</text>
+                <circle cx="1200" cy="125" r="67" fill="#E5E7EB" stroke="#9CA3AF" stroke-width="2" filter="url(#spe-shadow)"/>
+                <line x1="1150" y1="125" x2="1250" y2="125" stroke="#9CA3AF" stroke-width="1"/>
+                <text x="1222" y="96" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">3</text>
+                <text x="1222" y="154" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">-1</text>
+                <circle cx="1200" cy="325" r="67" fill="#E5E7EB" stroke="#9CA3AF" stroke-width="2" filter="url(#spe-shadow)"/>
+                <line x1="1150" y1="325" x2="1250" y2="325" stroke="#9CA3AF" stroke-width="1"/>
+                <text x="1222" y="296" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">-2</text>
+                <text x="1222" y="354" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">-2</text>
+              </g>
+
+              <!-- Lower subgame -->
+              <g id="spe-sub-lower">
+                <path d="M 761 625 Q 936.5 590 1112 525" fill="none" stroke="#374151" stroke-width="2" marker-end="url(#spe-arrow)"/>
+                <path d="M 761 625 Q 936.5 660 1112 725" fill="none" stroke="#374151" stroke-width="2" marker-end="url(#spe-arrow)"/>
+                <text x="948.5" y="545" text-anchor="middle" font-family="'STIX Two Text','Times New Roman',serif" font-size="30" fill="#374151">nuke USSR</text>
+                <text x="948.5" y="710" text-anchor="middle" font-family="'STIX Two Text','Times New Roman',serif" font-size="30" fill="#374151">don't nuke</text>
+                <circle id="spe-p-lower" cx="700" cy="625" r="67" fill="#16A34A" filter="url(#spe-shadow)" style="cursor:pointer"/>
+                <text x="700" y="625" text-anchor="middle" dominant-baseline="central" font-family="'STIX Two Text','Times New Roman',serif" font-size="55" font-weight="bold" fill="white" style="pointer-events:none">P</text>
+                <circle cx="1200" cy="525" r="67" fill="#E5E7EB" stroke="#9CA3AF" stroke-width="2" filter="url(#spe-shadow)"/>
+                <line x1="1150" y1="525" x2="1250" y2="525" stroke="#9CA3AF" stroke-width="1"/>
+                <text x="1222" y="496" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">0</text>
+                <text x="1222" y="554" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">-3</text>
+                <circle cx="1200" cy="725" r="67" fill="#E5E7EB" stroke="#9CA3AF" stroke-width="2" filter="url(#spe-shadow)"/>
+                <line x1="1150" y1="725" x2="1250" y2="725" stroke="#9CA3AF" stroke-width="1"/>
+                <text x="1222" y="696" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">-1</text>
+                <text x="1222" y="754" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">3</text>
+              </g>
+
+              <!-- Root edges -->
+              <g id="spe-root-edges">
+                <path d="M 261 425 Q 448.5 355 636 225" fill="none" stroke="#374151" stroke-width="2" marker-end="url(#spe-arrow)"/>
+                <path d="M 261 425 Q 448.5 495 636 625" fill="none" stroke="#374151" stroke-width="2" marker-end="url(#spe-arrow)"/>
+                <text x="428.5" y="302" text-anchor="middle" font-family="'STIX Two Text','Times New Roman',serif" font-size="30" fill="#374151">nuke USSR</text>
+                <text x="428.5" y="552" text-anchor="middle" font-family="'STIX Two Text','Times New Roman',serif" font-size="30" fill="#374151">don't nuke</text>
+              </g>
+
+              <!-- G node -->
+              <g id="spe-node-G">
+                <circle cx="200" cy="425" r="67" fill="#DC2626" filter="url(#spe-shadow)"/>
+                <text x="200" y="425" text-anchor="middle" dominant-baseline="central" font-family="'STIX Two Text','Times New Roman',serif" font-size="55" font-weight="bold" fill="white">G</text>
+              </g>
+
+              <!-- Dashed rects (hidden, revealed on click) -->
+              <rect id="spe-dash-upper" x="610" y="35" width="680" height="385" fill="none" stroke="#268bd2" stroke-width="4" stroke-dasharray="12,8" rx="16" opacity="0"/>
+              <rect id="spe-dash-lower" x="610" y="435" width="680" height="385" fill="none" stroke="#268bd2" stroke-width="4" stroke-dasharray="12,8" rx="16" opacity="0"/>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Replica area (right side) -->
+        <div id="spe-replicas" style="position: absolute; top: 0; right: 2rem; width: 35%; height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 1.5rem;">
+          <!-- Upper subgame replica -->
+          <div id="spe-replica-upper" style="opacity: 0; transform: translateX(30px); display: flex; align-items: center; gap: 0.3rem;">
+            <span style="font-family: 'STIX Two Text','Times New Roman',serif; font-size: 0.7rem; color: #586e75; text-align: right; line-height: 1.3; white-space: nowrap;">&lsquo;nuke USSR&rsquo;<br>subgame</span>
+            <svg viewBox="580 20 740 400" style="display: block; flex: 1; background: #fdf6e3; border-radius: 8px;">
+              <defs>
+                <filter id="spe-shadow-r1" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="4" dy="4" stdDeviation="6" flood-opacity="0.5"/></filter>
+                <marker id="spe-arrow-r1" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#374151"/></marker>
+              </defs>
+              <path id="spe-r1-br-edge" d="M 761 225 Q 936.5 190 1112 125" fill="none" stroke="#374151" stroke-width="2" marker-end="url(#spe-arrow-r1)"/>
+              <path d="M 761 225 Q 936.5 260 1112 325" fill="none" stroke="#374151" stroke-width="2" marker-end="url(#spe-arrow-r1)"/>
+              <text id="spe-r1-br-label" x="948.5" y="145" text-anchor="middle" font-family="'STIX Two Text','Times New Roman',serif" font-size="30" fill="#374151">nuke USSR</text>
+              <text x="948.5" y="310" text-anchor="middle" font-family="'STIX Two Text','Times New Roman',serif" font-size="30" fill="#374151">don't nuke</text>
+              <circle cx="700" cy="225" r="67" fill="#16A34A" filter="url(#spe-shadow-r1)"/>
+              <text x="700" y="225" text-anchor="middle" dominant-baseline="central" font-family="'STIX Two Text','Times New Roman',serif" font-size="55" font-weight="bold" fill="white">P</text>
+              <circle cx="1200" cy="125" r="67" fill="#E5E7EB" stroke="#9CA3AF" stroke-width="2" filter="url(#spe-shadow-r1)"/>
+              <line x1="1150" y1="125" x2="1250" y2="125" stroke="#9CA3AF" stroke-width="1"/>
+              <text x="1222" y="96" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">3</text>
+              <text x="1222" y="154" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">-1</text>
+              <circle cx="1200" cy="325" r="67" fill="#E5E7EB" stroke="#9CA3AF" stroke-width="2" filter="url(#spe-shadow-r1)"/>
+              <line x1="1150" y1="325" x2="1250" y2="325" stroke="#9CA3AF" stroke-width="1"/>
+              <text x="1222" y="296" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">-2</text>
+              <text x="1222" y="354" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">-2</text>
+            </svg>
+          </div>
+          <!-- Lower subgame replica -->
+          <div id="spe-replica-lower" style="opacity: 0; transform: translateX(30px); display: flex; align-items: center; gap: 0.3rem;">
+            <span style="font-family: 'STIX Two Text','Times New Roman',serif; font-size: 0.7rem; color: #586e75; text-align: right; line-height: 1.3; white-space: nowrap;">&lsquo;don&rsquo;t nuke&rsquo;<br>subgame</span>
+            <svg viewBox="580 420 740 400" style="display: block; flex: 1; background: #fdf6e3; border-radius: 8px;">
+              <defs>
+                <filter id="spe-shadow-r2" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="4" dy="4" stdDeviation="6" flood-opacity="0.5"/></filter>
+                <marker id="spe-arrow-r2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#374151"/></marker>
+              </defs>
+              <path d="M 761 625 Q 936.5 590 1112 525" fill="none" stroke="#374151" stroke-width="2" marker-end="url(#spe-arrow-r2)"/>
+              <path id="spe-r2-br-edge" d="M 761 625 Q 936.5 660 1112 725" fill="none" stroke="#374151" stroke-width="2" marker-end="url(#spe-arrow-r2)"/>
+              <text x="948.5" y="545" text-anchor="middle" font-family="'STIX Two Text','Times New Roman',serif" font-size="30" fill="#374151">nuke USSR</text>
+              <text id="spe-r2-br-label" x="948.5" y="710" text-anchor="middle" font-family="'STIX Two Text','Times New Roman',serif" font-size="30" fill="#374151">don't nuke</text>
+              <circle cx="700" cy="625" r="67" fill="#16A34A" filter="url(#spe-shadow-r2)"/>
+              <text x="700" y="625" text-anchor="middle" dominant-baseline="central" font-family="'STIX Two Text','Times New Roman',serif" font-size="55" font-weight="bold" fill="white">P</text>
+              <circle cx="1200" cy="525" r="67" fill="#E5E7EB" stroke="#9CA3AF" stroke-width="2" filter="url(#spe-shadow-r2)"/>
+              <line x1="1150" y1="525" x2="1250" y2="525" stroke="#9CA3AF" stroke-width="1"/>
+              <text x="1222" y="496" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">0</text>
+              <text x="1222" y="554" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">-3</text>
+              <circle cx="1200" cy="725" r="67" fill="#E5E7EB" stroke="#9CA3AF" stroke-width="2" filter="url(#spe-shadow-r2)"/>
+              <line x1="1150" y1="725" x2="1250" y2="725" stroke="#9CA3AF" stroke-width="1"/>
+              <text x="1222" y="696" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">-1</text>
+              <text x="1222" y="754" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">3</text>
+            </svg>
+          </div>
+        </div>
+
+      </div>
+
+      <p style="font-size: 0.7rem; color: #93a1a1; text-align: center; margin-top: 0.3rem;">Click on the P nodes in the tree to extract subgames</p>
+
+      <!-- Reduced game (hidden, revealed by scroll) -->
+      <div id="spe-reduced" style="opacity: 0; width: 35%; margin: 0.5rem auto 0;">
+        <p style="font-family: 'STIX Two Text','Times New Roman',serif; font-size: 0.75rem; color: #586e75; text-align: center; margin: 0 0 0.3rem;">Reduced game</p>
+        <svg viewBox="0 0 800 500" style="display: block; width: 100%; background: #fdf6e3; border-radius: 8px;">
+          <defs>
+            <filter id="spe-rg-shadow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="4" dy="4" stdDeviation="6" flood-opacity="0.5"/></filter>
+            <marker id="spe-rg-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#374151"/></marker>
+          </defs>
+
+          <!-- Edges -->
+          <path id="spe-rg-br-edge" d="M 200 250 Q 375 197 550 100" fill="none" stroke="#374151" stroke-width="2" marker-end="url(#spe-rg-arrow)"/>
+          <path d="M 200 250 Q 375 303 550 400" fill="none" stroke="#374151" stroke-width="2" marker-end="url(#spe-rg-arrow)"/>
+
+          <!-- Edge labels -->
+          <text id="spe-rg-br-label" x="350" y="150" text-anchor="middle" font-family="'STIX Two Text','Times New Roman',serif" font-size="26" fill="#374151">nuke USSR</text>
+          <text x="350" y="350" text-anchor="middle" font-family="'STIX Two Text','Times New Roman',serif" font-size="26" fill="#374151">don't nuke</text>
+
+          <!-- G node (drawn on top) -->
+          <circle cx="150" cy="250" r="55" fill="#DC2626" filter="url(#spe-rg-shadow)"/>
+          <text x="150" y="250" text-anchor="middle" dominant-baseline="central" font-family="'STIX Two Text','Times New Roman',serif" font-size="46" font-weight="bold" fill="white">G</text>
+
+          <!-- Terminal: (3, -1) -->
+          <circle cx="600" cy="100" r="55" fill="#E5E7EB" stroke="#9CA3AF" stroke-width="2" filter="url(#spe-rg-shadow)"/>
+          <line x1="559" y1="100" x2="641" y2="100" stroke="#9CA3AF" stroke-width="1"/>
+          <text x="618" y="76" text-anchor="end" dominant-baseline="central" font-size="36" font-weight="bold" fill="#374151">3</text>
+          <text x="618" y="124" text-anchor="end" dominant-baseline="central" font-size="36" font-weight="bold" fill="#374151">-1</text>
+
+          <!-- Terminal: (-1, 3) -->
+          <circle cx="600" cy="400" r="55" fill="#E5E7EB" stroke="#9CA3AF" stroke-width="2" filter="url(#spe-rg-shadow)"/>
+          <line x1="559" y1="400" x2="641" y2="400" stroke="#9CA3AF" stroke-width="1"/>
+          <text x="618" y="376" text-anchor="end" dominant-baseline="central" font-size="36" font-weight="bold" fill="#374151">-1</text>
+          <text x="618" y="424" text-anchor="end" dominant-baseline="central" font-size="36" font-weight="bold" fill="#374151">3</text>
+        </svg>
+      </div>
+
+      <!-- SPNE tree (hidden, revealed by scroll below reduced game) -->
+      <div id="spe-spne-tree" style="opacity: 0; width: 50%; margin: 0.5rem auto 0;">
+        <p style="font-family: 'STIX Two Text','Times New Roman',serif; font-size: 0.75rem; color: #586e75; text-align: center; margin: 0 0 0.3rem;">SPNE path</p>
+        <svg viewBox="0 0 1400 850" style="display: block; width: 100%; background: #fdf6e3; border-radius: 8px;">
+          <defs>
+            <filter id="spe-spne-shadow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="4" dy="4" stdDeviation="6" flood-opacity="0.5"/></filter>
+            <marker id="spe-spne-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#374151"/></marker>
+            <marker id="spe-spne-arrow-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#DC2626"/></marker>
+          </defs>
+
+          <!-- SPNE edges (red, thick) -->
+          <path d="M 261 425 Q 448.5 355 636 225" fill="none" stroke="#DC2626" stroke-width="5" marker-end="url(#spe-spne-arrow-red)"/>
+          <path d="M 761 225 Q 936.5 190 1112 125" fill="none" stroke="#DC2626" stroke-width="5" marker-end="url(#spe-spne-arrow-red)"/>
+          <path d="M 761 625 Q 936.5 660 1112 725" fill="none" stroke="#DC2626" stroke-width="5" marker-end="url(#spe-spne-arrow-red)"/>
+
+          <!-- Non-SPNE edges (normal) -->
+          <path d="M 261 425 Q 448.5 495 636 625" fill="none" stroke="#374151" stroke-width="2" marker-end="url(#spe-spne-arrow)"/>
+          <path d="M 761 225 Q 936.5 260 1112 325" fill="none" stroke="#374151" stroke-width="2" marker-end="url(#spe-spne-arrow)"/>
+          <path d="M 761 625 Q 936.5 590 1112 525" fill="none" stroke="#374151" stroke-width="2" marker-end="url(#spe-spne-arrow)"/>
+
+          <!-- SPNE labels (red) -->
+          <text x="428.5" y="302" text-anchor="middle" font-family="'STIX Two Text','Times New Roman',serif" font-size="30" fill="#DC2626">nuke USSR</text>
+          <text x="948.5" y="145" text-anchor="middle" font-family="'STIX Two Text','Times New Roman',serif" font-size="30" fill="#DC2626">nuke USSR</text>
+          <text x="948.5" y="710" text-anchor="middle" font-family="'STIX Two Text','Times New Roman',serif" font-size="30" fill="#DC2626">don't nuke</text>
+
+          <!-- Non-SPNE labels (normal) -->
+          <text x="428.5" y="552" text-anchor="middle" font-family="'STIX Two Text','Times New Roman',serif" font-size="30" fill="#374151">don't nuke</text>
+          <text x="948.5" y="310" text-anchor="middle" font-family="'STIX Two Text','Times New Roman',serif" font-size="30" fill="#374151">don't nuke</text>
+          <text x="948.5" y="545" text-anchor="middle" font-family="'STIX Two Text','Times New Roman',serif" font-size="30" fill="#374151">nuke USSR</text>
+
+          <!-- G node -->
+          <circle cx="200" cy="425" r="67" fill="#DC2626" filter="url(#spe-spne-shadow)"/>
+          <text x="200" y="425" text-anchor="middle" dominant-baseline="central" font-family="'STIX Two Text','Times New Roman',serif" font-size="55" font-weight="bold" fill="white">G</text>
+
+          <!-- P1 node -->
+          <circle cx="700" cy="225" r="67" fill="#16A34A" filter="url(#spe-spne-shadow)"/>
+          <text x="700" y="225" text-anchor="middle" dominant-baseline="central" font-family="'STIX Two Text','Times New Roman',serif" font-size="55" font-weight="bold" fill="white">P</text>
+
+          <!-- P2 node -->
+          <circle cx="700" cy="625" r="67" fill="#16A34A" filter="url(#spe-spne-shadow)"/>
+          <text x="700" y="625" text-anchor="middle" dominant-baseline="central" font-family="'STIX Two Text','Times New Roman',serif" font-size="55" font-weight="bold" fill="white">P</text>
+
+          <!-- T1: (3, -1) -->
+          <circle cx="1200" cy="125" r="67" fill="#E5E7EB" stroke="#9CA3AF" stroke-width="2" filter="url(#spe-spne-shadow)"/>
+          <line x1="1150" y1="125" x2="1250" y2="125" stroke="#9CA3AF" stroke-width="1"/>
+          <text x="1222" y="96" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">3</text>
+          <text x="1222" y="154" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">-1</text>
+
+          <!-- T2: (-2, -2) -->
+          <circle cx="1200" cy="325" r="67" fill="#E5E7EB" stroke="#9CA3AF" stroke-width="2" filter="url(#spe-spne-shadow)"/>
+          <line x1="1150" y1="325" x2="1250" y2="325" stroke="#9CA3AF" stroke-width="1"/>
+          <text x="1222" y="296" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">-2</text>
+          <text x="1222" y="354" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">-2</text>
+
+          <!-- T3: (0, -3) -->
+          <circle cx="1200" cy="525" r="67" fill="#E5E7EB" stroke="#9CA3AF" stroke-width="2" filter="url(#spe-spne-shadow)"/>
+          <line x1="1150" y1="525" x2="1250" y2="525" stroke="#9CA3AF" stroke-width="1"/>
+          <text x="1222" y="496" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">0</text>
+          <text x="1222" y="554" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">-3</text>
+
+          <!-- T4: (-1, 3) -->
+          <circle cx="1200" cy="725" r="67" fill="#E5E7EB" stroke="#9CA3AF" stroke-width="2" filter="url(#spe-spne-shadow)"/>
+          <line x1="1150" y1="725" x2="1250" y2="725" stroke="#9CA3AF" stroke-width="1"/>
+          <text x="1222" y="696" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">-1</text>
+          <text x="1222" y="754" text-anchor="end" dominant-baseline="central" font-size="43" font-weight="bold" fill="#374151">3</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 6: Backward Induction (source: lines 500-507)
+       HAS OVERLAYS: \item<1->, <2->, <3->, <4-> -->
+  <section class="frame overlay-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Backward Induction</h2>
+      <p class="frame-subtitle">A Recursive Method</p>
+    </div>
+    <div class="frame-content">
+      <ul>
+        <li class="overlay" data-overlay="1">Start at the final period $T$. The last mover chooses an action to maximize their payoff given the history of play. Solve for the optimal action as a function of that history.</li>
+        <li class="overlay" data-overlay="2">The solution at period $T$ defines the <strong>value of the subgame</strong> starting at $T$. This value depends on the actions taken in earlier periods.</li>
+        <li class="overlay" data-overlay="3">Move to period $T-1$. The player moving at $T-1$ anticipates how the player at $T$ will respond. Substitute the optimal action from $T$ into the $T-1$ player's objective function.</li>
+        <li class="overlay" data-overlay="4">The $T-1$ player now faces a reduced problem: maximize their payoff where the <strong>continuation value</strong> (from $T$ onward) is already determined by the subgame solution.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Frame 7: Backward Induction cont. (source: lines 509-515)
+       HAS OVERLAYS: \item<1->, <2->, <3-> -->
+  <section class="frame overlay-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Backward Induction</h2>
+      <p class="frame-subtitle">A Recursive Method (cont.)</p>
+    </div>
+    <div class="frame-content">
+      <ul>
+        <li class="overlay" data-overlay="1">Repeat: solve for the optimal action at $T-1$, which defines the value of the subgame starting at $T-1$. Move to $T-2$ and continue.</li>
+        <li class="overlay" data-overlay="2">At each step, the current player's utility incorporates the value of all future subgames, treating future optimal play as given.</li>
+        <li class="overlay" data-overlay="3">The process terminates at period $1$, yielding the <strong>subgame perfect equilibrium</strong> path.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Nav -->
+  <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
+    <a href="constrained-optimization.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Constrained Optimization</a>
+    <a href="time-preferences.html" style="color: var(--crane-blue); text-decoration: none;">Time Preferences &rarr;</a>
+  </div>
+
+  <!-- KaTeX JS -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="js/katex-macros.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // === SPE Frame: click P nodes + scroll-driven animation ===
+    (function() {
+      var pUpper = document.getElementById('spe-p-upper');
+      var pLower = document.getElementById('spe-p-lower');
+      if (!pUpper || !pLower) return;
+
+      pUpper.addEventListener('click', function() {
+        gsap.to('#spe-dash-upper', { opacity: 1, duration: 0.4 });
+        gsap.to('#spe-replica-upper', { opacity: 1, x: 0, duration: 0.6, delay: 0.2 });
+      });
+
+      pLower.addEventListener('click', function() {
+        gsap.to('#spe-dash-lower', { opacity: 1, duration: 0.4 });
+        gsap.to('#spe-replica-lower', { opacity: 1, x: 0, duration: 0.6, delay: 0.2 });
+      });
+
+      // Scroll-driven animation
+      // t=0–1: buffer (clicks), t=1–2: red BR edges, t=2–3: reduced game,
+      // t=3–4: buffer (view reduced game), t=4–5: G red + SPNE tree fades in
+      var tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '#spe-frame',
+          start: 'top top',
+          end: '+=2500',
+          pin: true,
+          scrub: 0.5,
+          onLeaveBack: function() {
+            gsap.set('#spe-dash-upper, #spe-dash-lower', { opacity: 0 });
+            gsap.set('#spe-replica-upper, #spe-replica-lower', { opacity: 0, x: 30 });
+          }
+        }
+      });
+
+      // Step 1 (t 1–2): BR edges in replicas turn red + thicken
+      tl.to('#spe-r1-br-edge', { attr: { stroke: '#DC2626', 'stroke-width': 5 }, duration: 1 }, 1)
+        .to('#spe-r1-br-label', { attr: { fill: '#DC2626' }, duration: 1 }, 1)
+        .to('#spe-r2-br-edge', { attr: { stroke: '#DC2626', 'stroke-width': 5 }, duration: 1 }, 1)
+        .to('#spe-r2-br-label', { attr: { fill: '#DC2626' }, duration: 1 }, 1)
+      // Step 2 (t 2–3): Reduced game fades in
+        .to('#spe-reduced', { opacity: 1, duration: 1 }, 2)
+      // t 3–4: buffer (view the reduced game)
+      // Step 3 (t 4–5): G's BR red + SPNE tree fades in together
+        .to('#spe-rg-br-edge', { attr: { stroke: '#DC2626', 'stroke-width': 5 }, duration: 1 }, 4)
+        .to('#spe-rg-br-label', { attr: { fill: '#DC2626' }, duration: 1 }, 4)
+        .to('#spe-spne-tree', { opacity: 1, duration: 1 }, 4);
+    })();
+
+    document.querySelectorAll('.overlay-frame').forEach(frame => {
+      const overlays = frame.querySelectorAll('.overlay');
+      const count = overlays.length;
+      if (count === 0) return;
+      overlays[0].classList.add('revealed');
+      const scrollPerOverlay = window.innerHeight * 0.5;
+      const totalScroll = scrollPerOverlay * (count - 1);
+      ScrollTrigger.create({
+        trigger: frame,
+        start: 'top top',
+        end: `+=${totalScroll}`,
+        pin: true,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          const currentStep = Math.floor(progress * count);
+          overlays.forEach((overlay, i) => {
+            const isOnly = overlay.hasAttribute('data-overlay-only');
+            if (isOnly) {
+              overlay.classList.toggle('revealed', i === currentStep);
+            } else {
+              overlay.classList.toggle('revealed', i <= currentStep);
+            }
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
