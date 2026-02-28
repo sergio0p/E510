@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="nav-prev" content="choice-under-uncertainty.html">
+  <meta name="nav-next" content="index.html">
   <title>Optimization with Inequality Constraints | ECON 510</title>
 
   <!-- KaTeX CSS -->
@@ -181,8 +183,10 @@
       <p>Consider a maximization problem with inequality constraints where the objective function depends on some parameter $\theta$.
       $$V(\theta)=\max\limits_{\substack{\mathbf x\\ \mathrm{subject\, to} \\ \\g_1(\mathbf x)\le c_1\\ \vdots \\ g_k(\mathbf x)\le c_k }} f(\mathbf x,\theta).$$
       Let $V(\theta)$ be the corresponding value function of the optimization problem and let $x^\ast$ be the solution (notice that the solution also depends on the $\theta$ parameter). The envelope theorem states that:</p>
-      <div style="text-align: center; margin: 1rem 0; padding: 0.8rem; border: 2px solid #000; display: inline-block;">
-        $$\diff{}{\theta}V(\theta)= \diff{}{\theta}f(\mathbf x^\ast,\theta).$$
+      <div style="text-align: center; margin: 1rem 0;">
+        <div style="padding: 0.8rem; border: 2px solid #000; display: inline-block;">
+          $$\diff{}{\theta}V(\theta)= \diff{}{\theta}f(\mathbf x^\ast,\theta)$$
+        </div>
       </div>
     </div>
   </section>
@@ -191,19 +195,20 @@
        NO OVERLAYS -->
   <section class="frame">
     <div class="frame-title-bar">
-      <h2 class="frame-title">The optimal value of a multiplier measures the impact of relaxing the constraints</h2>
+      <h2 class="frame-title">The Economic Meaning of The Lagrangian Multipliers</h2>
+      <p class="frame-subtitle">Shadow Prices</p>
     </div>
     <div class="frame-content">
-      <p>We will refer in the future to this important result,</p>
+      <p>The value of a multiplier Lagrangian multiplier $\lambda_j^\ast$ (at the solution) is the marginal value of relaxing the constraints:</p>
       $$\diff{}{c_{j}}V(c_{1},c_{2},\ldots, c_{k})=\lambda_{j}^\ast$$
-      <p>where $\lambda_{j}^\ast$ is the numerical value of the $j_{\mathrm{th}}$-Lagrange multiplier that we obtain when solving the maximization problem.</p>
+      <p>Instead. The value of the objective function at the optimal will increase by $\approx \Delta c_j\times \lambda_j^\ast$ if we increase $c_j$ by $\Delta c_j$.</p>
     </div>
   </section>
 
   <!-- Nav -->
   <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
     <a href="choice-under-uncertainty.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Choice Under Uncertainty</a>
-    <span style="color: var(--text-muted);">End of Lectures</span>
+    <a href="index.html" style="color: var(--crane-blue); text-decoration: none;">Home &rarr;</a>
   </div>
 
   <!-- KaTeX JS -->
@@ -214,6 +219,7 @@
   <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="js/scroll-animations.js"></script>
 
   <script>
     gsap.registerPlugin(ScrollTrigger);

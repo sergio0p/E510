@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="nav-prev" content="mathematica-tutorial.html">
+  <meta name="nav-next" content="unconstrained-optimization.html">
   <title>Microeconomic Theory Methodology | ECON 510</title>
 
   <!-- KaTeX CSS -->
@@ -55,20 +57,20 @@
   </section>
 
   <!-- Frame 2: Mont Sainte Victoire (source: lines 232-241)
-       HAS OVERLAYS: \only<1> photo, \only<2> Cézanne painting -->
-  <section class="frame overlay-frame">
+       Arrow key navigation: Left/Right to switch between photo and Cézanne painting -->
+  <section class="frame" id="mont-victoire-frame">
     <div class="frame-title-bar">
       <h2 class="frame-title">Mont Sainte Victoire</h2>
       <p class="frame-subtitle">Photography vs C&eacute;zanne</p>
     </div>
-    <div class="frame-content" style="display: flex; align-items: center; justify-content: center;">
+    <div class="frame-content" style="display: flex; align-items: center; justify-content: center; position: relative; min-height: 60vh;">
 
-      <div class="overlay" data-overlay="1" data-overlay-only style="text-align: center;">
+      <div id="victoire-photo" style="text-align: center;">
         <img src="svg/sainte-victoire-photo.jpg" alt="Mont Sainte Victoire - Photograph"
              style="max-width: 100%; max-height: 60vh; border-radius: 4px; box-shadow: 2px 2px 8px rgba(0,0,0,0.2);">
       </div>
 
-      <div class="overlay" data-overlay="2" data-overlay-only style="text-align: center; position: absolute;">
+      <div id="victoire-cezanne" style="text-align: center; position: absolute; opacity: 0; pointer-events: none;">
         <img src="svg/mont-sainte-victoire.jpg" alt="Mont Sainte Victoire - Cézanne"
              style="max-width: 100%; max-height: 60vh; border-radius: 4px; box-shadow: 2px 2px 8px rgba(0,0,0,0.2);">
       </div>
@@ -150,6 +152,7 @@
   <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="js/scroll-animations.js"></script>
 
   <!-- Overlay animation system -->
   <script>
@@ -198,6 +201,52 @@
           });
         }
       });
+    });
+
+    // Mont Sainte Victoire arrow key navigation
+    const victoirePhoto = document.getElementById('victoire-photo');
+    const victoireCezanne = document.getElementById('victoire-cezanne');
+    const victoireFrame = document.getElementById('mont-victoire-frame');
+    let showingPhoto = true;
+    let victoireNavEnabled = false;
+
+    function switchVictoireImage(toPhoto) {
+      if (toPhoto === showingPhoto) return;
+
+      showingPhoto = toPhoto;
+
+      if (toPhoto) {
+        gsap.to(victoireCezanne, { opacity: 0, duration: 0.3, pointerEvents: 'none' });
+        gsap.to(victoirePhoto, { opacity: 1, duration: 0.3, pointerEvents: 'auto' });
+      } else {
+        gsap.to(victoirePhoto, { opacity: 0, duration: 0.3, pointerEvents: 'none' });
+        gsap.to(victoireCezanne, { opacity: 1, duration: 0.3, pointerEvents: 'auto' });
+      }
+    }
+
+    // Enable navigation when frame is in view
+    ScrollTrigger.create({
+      trigger: victoireFrame,
+      start: 'top bottom',
+      end: 'bottom top',
+      onEnter: () => { victoireNavEnabled = true; },
+      onLeave: () => { victoireNavEnabled = false; },
+      onEnterBack: () => { victoireNavEnabled = true; },
+      onLeaveBack: () => { victoireNavEnabled = false; }
+    });
+
+    // Arrow key handler for Mont Victoire frame
+    document.addEventListener('keydown', function(e) {
+      if (!victoireNavEnabled) return;
+      if (e.shiftKey) return; // Don't interfere with global Shift+Arrow navigation
+
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        switchVictoireImage(true); // Show photo
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        switchVictoireImage(false); // Show Cézanne
+      }
     });
   </script>
 
