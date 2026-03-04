@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="nav-prev" content="inequality-constraints.html">
+  <meta name="nav-next" content="index.html">
+  <title>Markets | ECON 510</title>
+
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <!-- Caveat font for handwritten annotations -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/beamer-theme.css">
+
+  <style>
+    .augie {
+      font-family: 'Caveat', cursive;
+      font-weight: 400;
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Section Header -->
+  <section class="section-header">
+    <div class="section-title-box">
+      <h1>Markets</h1>
+    </div>
+    <h2>ECON 510: Microeconomic Theory</h2>
+  </section>
+
+  <!-- Frame 1: It's a Wonderful Life (source: lines 1213-1223)
+       shrink=7.5, vspace -2mm, NO OVERLAYS -->
+  <section class="frame vspace-neg-3mm">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">It's a Wonderful Life</h2>
+      <p class="frame-subtitle">Market Interdependence</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <dl class="beamer-description">
+        <dt>Building &amp; Loan → Housing Market:</dt>
+        <dd>George's institution gives loans to regular working families (like Mr. Martini the immigrant) who traditional banks would reject. Each loan creates a new homeowner in Bailey Park instead of a slum renter.</dd>
+
+        <dt>Housing → Labor Market:</dt>
+        <dd>When families own homes in Bailey Park, they're not paying high rents. They have stability, their kids can go to school longer (like Harry going to college), and workers can take better jobs rather than whatever low-wage positions are available.</dd>
+
+        <dt>Labor Market → Retail/Main Street:</dt>
+        <dd>With better jobs and no crushing rents, people have disposable income. Gower can run his pharmacy, Martini can open his bar, Ernie can run his taxi business. The town supports diverse small businesses.</dd>
+
+        <dt>Retail/Main Street → Building &amp; Loan:</dt>
+        <dd>Those successful small businesses and stable working families put their savings back in the Building &amp; Loan. Creating the funds for more loans.</dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- Frame 2: It's a Miserable Life (source: lines 1224-1234)
+       shrink=11, NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">It's a Miserable Life</h2>
+      <p class="frame-subtitle">Market Interdependence</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <dl class="beamer-description">
+        <dt>Potter's Bank → Housing Market:</dt>
+        <dd>Without the Building &amp; Loan, working families cannot get loans from Potter's bank. Potter rejects them, forcing everyone to rent from him in Potter's Field slums at extortionate prices.</dd>
+
+        <dt>Housing → Labor Market:</dt>
+        <dd>Families trapped paying Potter's high rents cannot save or invest in education. Children leave school early for work. Workers must accept whatever Potter offers, creating a captive labor force with suppressed wages.</dd>
+
+        <dt>Labor Market → Retail/Main Street:</dt>
+        <dd>With minimal disposable income after paying Potter's rents, families cannot support local businesses. Main Street becomes Pottersville - pawn shops, bars, and predatory lenders. Small business diversity disappears.</dd>
+
+        <dt>Retail/Main Street → Potter's Bank:</dt>
+        <dd>Without competitive businesses or savings alternatives, all wealth flows to Potter. His bank monopolizes deposits and lending. The economy stagnates in extractive equilibrium with Potter controlling all capital flows.</dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- Frame 3: A Pure Trade Economy - An Example (source: lines 1235-1241)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">A Pure Trade Economy</h2>
+      <p class="frame-subtitle">An Example</p>
+    </div>
+    <div class="frame-content">
+      <p>Market interdependence grows complex quickly, so we focus on pure trade economies --- economies without production.</p>
+
+      <p style="margin-top: 0.5rem;">Consider an economy with two agents (Adam and Eve), one consumption good (apples), and two periods (today and tomorrow). Each agent owns an apple tree that yields a fixed harvest in each period; we call this the agent's endowment.</p>
+
+      <p style="margin-top: 0.5rem;">In a pure-trade economy, harvesting is effortless --- no inputs are required. Adam and Eve simply decide how many apples to buy or sell from their endowments.</p>
+    </div>
+  </section>
+
+  <!-- Frame 4: A Pure Trade Economy - continuation (source: lines 1243-1252)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">A Pure Trade Economy</h2>
+      <p class="frame-subtitle">(continuation)</p>
+    </div>
+    <div class="frame-content">
+      <p>There are two markets in the economy. In the first market, one can buy or sell apples for delivery today. In the second market, one can buy or sell apples for delivery tomorrow.
+      All trading happens today. No trades (only deliveries) happen tomorrow.</p>
+
+      <p style="margin-top: 1rem;">An agent maximizes the discounted utility of consumption given the budget constraint:</p>
+
+      <div style="text-align: center; margin: 1rem 0;">
+        $$\max_{\substack{\phantom{1}\\\mathrm{s.t.}\\ \phantom{1}\\p_0 \cdot c_0 + p_1 \cdot c_1 \le p_0 \cdot e_0 + p_1 \cdot e_1}} u(c_0) + \delta \cdot u(c_1)$$
+      </div>
+
+      <p>where $c_0$ is the amount of apples consumed today, $c_1$ is the amount of apples consumed tomorrow, $e_0$ is the endowment of apples today, and $e_1$ is the endowment of apples tomorrow.</p>
+    </div>
+  </section>
+
+  <!-- Frame 5: Contingent Goods (source: lines 1254-1269)
+       NO OVERLAYS, fontsize changes -->
+  <section class="frame vspace-neg-3mm">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Contingent Goods</h2>
+    </div>
+    <div class="frame-content">
+      <div class="block">
+        <div class="block-title">Definition</div>
+        <div class="block-body">
+          A <strong>contingent good</strong> is a contract to deliver one unit of a good (specified by its physical properties and qualities) at some specified geographic location, at some specified date, only if some pre-specified state occurs.
+        </div>
+      </div>
+
+      <div class="fs-10pt" style="margin-top: 1rem;">
+        <p>Two contingent goods are distinct whenever they differ in delivery location, date, or event --- even if the underlying physical good is identical. Their prices need not be equal. For instance, a barrel of oil delivered on December 31st, 2027 is a different contingent good than one delivered on July 2nd, 2029.</p>
+      </div>
+
+      <div style="margin-top: 0.5rem;">
+        <div class="block">
+          <div class="block-title">Price of Contingent Goods</div>
+          <div class="block-body">
+            Let $p_s$ denote the market price of the contingent good (contract) that delivers one unit of consumption good when state $s$ occurs and zero otherwise.
+          </div>
+        </div>
+      </div>
+
+      <div class="fs-10pt" style="margin-top: 1rem;">
+        <p>Agents buy and sell contingent good contracts exclusively in period zero. For simplicity, we focus on a single consumption good — though the model extends naturally to multiple physical goods.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 6: Contingent Goods - States (source: lines 1270-1275)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Contingent Goods</h2>
+      <p class="frame-subtitle">States</p>
+    </div>
+    <div class="frame-content">
+      <div class="block">
+        <div class="block-title">States</div>
+        <div class="block-body">
+          A state is a pair $s_t=(t,I_t)$ where $t$ is the time period, $I_t$ is an information set in the partition $\mathcal{F}_t$. Agents have symmetric information — they share a common filtration $\mathcal{F}=\left(\mathcal{F}_t\right)_{t\in T}$.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 7: General Equilibrium - Complete Markets (source: lines 1277-1288)
+       NO OVERLAYS, fontsize 10pt -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">General Equilibrium of A Trade Economy,</h2>
+      <p class="frame-subtitle">Complete Markets</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <ul>
+        <li>Consumers have symmetric information — they share a common filtration $\mathcal{F}=\left(\mathcal{F}_t\right)$. Also, the probabilities of the states of the world and the horizon length are common-knowledge amongst the consumers.</li>
+        <li>Consumers have preferences over contingent goods which are represented by the consumer's discounted expected utility.</li>
+        <li>Consumers are endowed with baskets of contingent goods.</li>
+        <li>A consumer's income is the value of the consumer's endowment.</li>
+        <li>A contingent good's supply is the total endowment of that contingent good.</li>
+        <li>There are markets for every contingent good (complete markets) in period zero.</li>
+        <li>Consumers buy and sell contingent goods to maximize their discounted expected utility.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Frame 8: Endowments (source: lines 1289-1300)
+       HAS OVERLAYS: \pause and enumerate with <+-> -->
+  <section class="frame overlay-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Endowments</h2>
+    </div>
+    <div class="frame-content">
+      <div class="overlay" data-overlay="1">
+        <div class="block">
+          <div class="block-title">Definition</div>
+          <div class="block-body">
+            Assume there are $J$ contingent goods (contracts). An individual's <em>endowment</em>, $\mathbf e=(e_{0},e_1,e_2,\ldots,e_{J-1})$, is the basket of (contingent) goods that the individual possesses prior to any trade or consumption takes place.
+          </div>
+        </div>
+      </div>
+
+      <div class="overlay" data-overlay="2">
+        <ol>
+          <li>How we calculate a consumer's income?</li>
+        </ol>
+      </div>
+
+      <div class="overlay" data-overlay="3">
+        <ol start="2">
+          <li>A consumer's income is the <strong>value of the endowment</strong>,</li>
+        </ol>
+        <div style="text-align: center; margin: 1rem 0;">
+          $$\boxed{\mathrm{income}=\mathbf{p} \cdot \mathbf{e} =p_{0}\cdot e_{0}+ p_{1}\cdot e_{1}+\ldots+p_{J-1}\cdot e_{J-1}}$$
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 9: Consumer Choice with Endowments (source: lines 1301-1308)
+       HAS OVERLAYS: itemize with <+-> -->
+  <section class="frame overlay-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Consumer Choice with Endowments</h2>
+    </div>
+    <div class="frame-content">
+      <div class="overlay" data-overlay="1">
+        <p>Let $x^{i}=(x_{0}^{i},x_{1}^{i},x_{2}^{i},\ldots,x_{J}^{i})$ be the optimal (basket) choice of individual $i$ and $\mathbf{e} = (e_{0},e_1,e_2,\ldots,e_J)$ be her endowment. For any given good $j$:</p>
+      </div>
+
+      <ul>
+        <li class="overlay" data-overlay="2">if $e_j\gt x_j$, we say that $e_j-x_j$ is the net supply of good $j$ by the individual.</li>
+        <li class="overlay" data-overlay="3">if $e_j\lt x_j$, we say that $x_j-e_j$ is the net demand of good $j$ by the individual.</li>
+        <li class="overlay" data-overlay="4">if $e_j=x_j$, we say that the individual does not trade good $j$.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Frame 10: Complete Markets Equilibrium (source: lines 1309-1315)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Complete Markets Equilibrium</h2>
+    </div>
+    <div class="frame-content">
+      <p>Assume there are $N$ consumers indexed by $i=1,2,\ldots,N$ and $J$ contingent goods. A market equilibrium is a list of prices (the price of each contingent good) $\mathbf{p}=(p_{1},p_{2},\ldots,p_{J})$ and a basket of goods $\mathbf{x}^{i}=(x_{1}^{i},x_{2}^{i},\ldots,x_{J}^{i})$ for each consumer $i$ so that:</p>
+
+      <ul>
+        <li>Given the prices, each consumer is maximizing his/her own expected utility.</li>
+        <li>For each contingent good $j$, $\sum_{i=1}^{N} e_{j}^{i}=\sum_{i=1}^{N} x_{j}^{i}$. The supply (the aggregate endowment of good $j$) is equal to the demand of good $j$.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Frame 11: Market Equilibrium (source: lines 1347-1363)
+       NO OVERLAYS, \small font -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Market Equilibrium</h2>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>By solving the consumer choice problem for each individual, we obtain his/her individual demand for each good, $x^i_j(\mathbf{p},I^i)$ (demand of consumer $i$ for good $j$).
+      The market (aggregate) demand is the sum of the individual demands $D_j(\mathbf{p})=x^1_j(\mathbf{p},I^1)+\ldots +x^n_j(\mathbf{p},I^n)$.</p>
+
+      <p style="margin-top: 0.5rem;"><span class="augie">Remember: income of consumer $i$ is the value of $i$'s endowment:</span> $I^i=p_0\,e_0^i+\ldots+p_J\, e_J^i$.</p>
+
+      <p style="margin-top: 0.5rem;">The market supply of a given good in an exchange economy (without production) is simply the aggregate endowment of that good, $S_j(\mathbf{p})=e^1_j+\ldots +e^N_j$.</p>
+
+      <div class="block" style="margin-top: 1rem;">
+        <div class="block-title">Definition</div>
+        <div class="block-body">
+          A market equilibrium is a vector of prices $\mathbf{p}$ such that:
+          If $p_j\gt 0$ then $D_j(\mathbf{p})=S_j$ and if $p_j=0$ then $D_j(\mathbf{p})\le S_j$.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 12: Finding a market equilibrium - An example (source: lines 1365-1385)
+       HAS OVERLAYS: \pause -->
+  <section class="frame overlay-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Finding a market equilibrium</h2>
+      <p class="frame-subtitle">An example</p>
+    </div>
+    <div class="frame-content">
+      <div class="overlay" data-overlay="1">
+        <p>We consider an economy with Adam and Eve whose endowments are $\mathbf{e}^A=(100,4)$ and $\mathbf{e}^E=(9,25)$, and utilities</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$u^A(c_0,c_1)=\sqrt{c_0}+\delta\sqrt{c_1}
+          \qquad\text{and}\qquad
+          u^E(c_0,c_1)=\sqrt{c_0}+\delta\sqrt{c_1}.$$
+        </div>
+        <p>For simplicity, set $p_0=1$ (<span style="color: #dc322f;">Answer: Why can we do this normalization?</span>).</p>
+      </div>
+
+      <div class="overlay" data-overlay="2">
+        <p style="margin-top: 1rem;"><strong>Individual demands.</strong></p>
+        <p>Each consumer solves $\max\sqrt{c_0}+\delta\sqrt{c_1}$ s.t. $c_0+p_1 c_1=I$.
+        The FOCs give $\frac{1}{2\sqrt{c_0}}=\lambda$ and $\frac{\delta}{2\sqrt{c_1}}=\lambda p_1$,
+        so $\sqrt{c_0}=\frac{1}{2\lambda}$ and $\sqrt{c_1}=\frac{\delta}{2\lambda p_1}$.
+        Substituting into the budget constraint yields $\frac{1}{4\lambda^2}=\frac{p_1 I}{p_1+\delta^2}$, hence</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$c_0^*(p_1,I)=\frac{p_1\, I}{p_1+\delta^2}.$$
+        </div>
+        <p>Since $I^A=100+4p_1$, Adam's demand is $c_0^A(p_1)=\dfrac{p_1}{p_1+\delta^2}(100+4p_1)$.<br>
+        Since $I^E=9+25p_1$, Eve's demand is $c_0^E(p_1)=\dfrac{p_1}{p_1+\delta^2}(9+25p_1)$.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 13: Finding a market equilibrium - continuation (source: lines 1386-1399)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Finding a market equilibrium</h2>
+      <p class="frame-subtitle">An example (continuation)</p>
+    </div>
+    <div class="frame-content">
+      <p><strong>Market equilibrium.</strong></p>
+      <p>The market demand for good 0 is</p>
+      <div style="text-align: center; margin: 0.75rem 0;">
+        $$D_0(p_1)=\frac{p_1}{p_1+\delta^2}(109+29p_1).$$
+      </div>
+      <p>Equating with total supply $S_0=100+9=109$:</p>
+      <div style="text-align: center; margin: 0.75rem 0;">
+        $$\begin{align*}
+        \frac{p_1}{p_1+\delta^2}(109+29p_1)&=109
+        \;\Rightarrow\; 109p_1+29p_1^2=109p_1+109\delta^2\\
+        &\Rightarrow\; 29p_1^2=109\delta^2
+        \;\Rightarrow\; p_1^*=\delta\sqrt{\frac{109}{29}}.
+        \end{align*}$$
+      </div>
+    </div>
+  </section>
+
+  <!-- Navigation Links -->
+  <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
+    <a href="inequality-constraints.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Inequality Constraints</a>
+    <a href="index.html" style="color: var(--crane-blue); text-decoration: none;">Home &rarr;</a>
+  </div>
+
+  <!-- KaTeX JS -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="js/katex-macros.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="js/scroll-animations.js"></script>
+
+  <!-- Overlay animation system -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.querySelectorAll('.overlay-frame').forEach(frame => {
+      const overlays = frame.querySelectorAll('.overlay');
+      const count = overlays.length;
+      if (count === 0) return;
+      overlays[0].classList.add('revealed');
+      const scrollPerOverlay = window.innerHeight * 0.5;
+      const totalScroll = scrollPerOverlay * (count - 1);
+      ScrollTrigger.create({
+        trigger: frame,
+        start: 'top top',
+        end: `+=${totalScroll}`,
+        pin: true,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          const currentStep = Math.floor(progress * count);
+          overlays.forEach((overlay, i) => {
+            const isOnly = overlay.hasAttribute('data-overlay-only');
+            if (isOnly) {
+              overlay.classList.toggle('revealed', i === currentStep);
+            } else {
+              overlay.classList.toggle('revealed', i <= currentStep);
+            }
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
