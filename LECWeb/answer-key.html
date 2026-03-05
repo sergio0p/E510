@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="nav-prev" content="index.html">
+  <meta name="nav-next" content="mathematica-tutorial.html">
+  <title>Answer Key | ECON 510</title>
+
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/beamer-theme.css">
+</head>
+<body>
+
+  <!-- Section Header -->
+  <section class="section-header">
+    <div class="section-title-box">
+      <h1>Answer Key</h1>
+    </div>
+    <h2>ECON 510: Microeconomic Theory</h2>
+  </section>
+
+  <!-- Problem 1: Question Statement -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 1: Question 5</h2>
+    </div>
+    <div class="frame-content">
+      <p>Chuck Noland is on a desert island for three periods ($t = 0, 1, 2$). He has 100 units of perfectly divisible rations. He must choose how many rations to consume in each period and how many to save. Chuck's utility for consumption is $u(c) = 2\sqrt{c}$. Chuck's discount factors are $(1,\; 0.5,\; 0.45)$. Let $k(t)$ denote the amount of rations available at the beginning of period $t$: $k(0) = 100$. Chuck Noland's problem is then to choose how much to consume in periods 0 and 1, consuming all leftover rations in the last period. You must label all your answers and answer them in order.</p>
+      <ol type="a">
+        <li>Write Chuck Noland's utility function at period 0 as a function of $c_0$ and $c_1$.</li>
+        <li>Write explicitly the first-order conditions (Recipe #0) to maximize the above utility.</li>
+        <li>Assume $c_0$ has already been chosen. Chuck Noland now faces himself in period 1 and is allowed to revise his original plan. Write Chuck's utility from the point of view of period 1.</li>
+        <li>Obtain the first-order condition to maximize the utility in (c).</li>
+        <li>Using the same value of $c_0$ in parts (b) and (d), in which part (b or d) does Chuck have a greater incentive to consume in period 1? Why?</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Question 5(a) -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Question 5(a)</h2>
+    </div>
+    <div class="frame-content">
+      <p class="fs-10pt" style="color: var(--text-muted);">Chuck Noland is on a desert island for three periods ($t = 0, 1, 2$). He has 100 units of rations. Utility: $u(c) = 2\sqrt{c}$. Discount factors: $(1,\; 0.5,\; 0.45)$. $k(0) = 100$. He chooses $c_0$ and $c_1$, consuming all leftover rations in the last period.</p>
+      <p>Write Chuck Noland's utility function at period 0 as a function of $c_0$ and $c_1$.</p>
+      <div class="block">
+        <div class="block-title">Answer</div>
+        <div class="block-body">
+          <p>Chuck's discounted utility is $U(c_0, c_1, c_2) = u(c_0) + 0.5\, u(c_1) + 0.45\, u(c_2)$. Since in the last period he consumes all his rations, $c_2 = 100 - c_0 - c_1$, so his utility can be written as</p>
+          $$u(c_0) + 0.5\, u(c_1) + 0.45\, u(100 - c_0 - c_1)$$
+          <p>Replacing $u(c) = 2\sqrt{c}$:</p>
+          $$\begin{align*}
+          &2\sqrt{c_0} + 0.5 \cdot 2\sqrt{c_1} + 0.45 \cdot 2\sqrt{100 - c_0 - c_1} \\
+          &= 2\sqrt{c_0} + \sqrt{c_1} + 0.9\sqrt{100 - c_0 - c_1}
+          \end{align*}$$
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Question 5(b) -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Question 5(b)</h2>
+    </div>
+    <div class="frame-content">
+      <p class="fs-10pt" style="color: var(--text-muted);">Chuck Noland is on a desert island for three periods ($t = 0, 1, 2$). He has 100 units of rations. Utility: $u(c) = 2\sqrt{c}$. Discount factors: $(1,\; 0.5,\; 0.45)$. $k(0) = 100$. He chooses $c_0$ and $c_1$, consuming all leftover rations in the last period.</p>
+      <p>Write explicitly the first-order conditions (Recipe #0) to maximize the above utility.</p>
+      <div class="block">
+        <div class="block-title">Answer</div>
+        <div class="block-body">
+          <p>Since $u(c) = 2\sqrt{c}$, we have $u'(c) = \frac{1}{\sqrt{c}}$. Substituting $c_2 = 100 - c_0 - c_1$, the first-order conditions are:</p>
+          $$\begin{align*}
+          \text{FOC}(c_0): \quad & \frac{\partial U}{\partial c_0} = \frac{1}{\sqrt{c_0}} - \frac{0.45}{\sqrt{100 - c_0 - c_1}} = 0 \\
+          \\
+          \text{FOC}(c_1): \quad & \frac{\partial U}{\partial c_1} = \frac{0.5}{\sqrt{c_1}} - \frac{0.45}{\sqrt{100 - c_0 - c_1}} = 0
+          \end{align*}$$
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Question 5(c) -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Question 5(c)</h2>
+    </div>
+    <div class="frame-content">
+      <p class="fs-10pt" style="color: var(--text-muted);">Chuck Noland is on a desert island for three periods ($t = 0, 1, 2$). He has 100 units of rations. Utility: $u(c) = 2\sqrt{c}$. Discount factors: $(1,\; 0.5,\; 0.45)$. $k(0) = 100$. He chooses $c_0$ and $c_1$, consuming all leftover rations in the last period.</p>
+      <p>Assume $c_0$ has already been chosen. Chuck Noland now faces himself in period 1 and is allowed to revise his original plan. Write Chuck's utility from the point of view of period 1.</p>
+      <div class="block">
+        <div class="block-title">Answer</div>
+        <div class="block-body">
+          <p>Discount factors shift: from period 1's point of view, the discount factors are $(1, 0.5)$. Since $c_0$ is already chosen, Chuck's utility is:</p>
+          $$U_1(c_1) = u(c_1) + 0.5\, u(100 - c_0 - c_1)$$
+          <p>Replacing $u(c) = 2\sqrt{c}$:</p>
+          $$\begin{align*}
+          U_1(c_1) &= 2\sqrt{c_1} + 0.5 \cdot 2\sqrt{100 - c_0 - c_1} \\
+          &= 2\sqrt{c_1} + \sqrt{100 - c_0 - c_1}
+          \end{align*}$$
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Question 5(d) -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Question 5(d)</h2>
+    </div>
+    <div class="frame-content">
+      <p class="fs-10pt" style="color: var(--text-muted);">Chuck Noland is on a desert island for three periods ($t = 0, 1, 2$). He has 100 units of rations. Utility: $u(c) = 2\sqrt{c}$. Discount factors: $(1,\; 0.5,\; 0.45)$. $k(0) = 100$. He chooses $c_0$ and $c_1$, consuming all leftover rations in the last period.</p>
+      <p>Obtain the first-order condition to maximize the utility in (c).</p>
+      <div class="block">
+        <div class="block-title">Answer</div>
+        <div class="block-body">
+          <p>Since $u(c) = 2\sqrt{c}$, we have $u'(c) = \frac{1}{\sqrt{c}}$. Substituting $c_2 = 100 - c_0 - c_1$, the first-order condition is:</p>
+          $$\begin{align*}
+          \text{FOC}(c_1): \quad & \frac{\partial U_1}{\partial c_1} = \frac{1}{\sqrt{c_1}} - \frac{0.5}{\sqrt{100 - c_0 - c_1}} = 0
+          \end{align*}$$
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Question 5(e) -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Question 5(e)</h2>
+    </div>
+    <div class="frame-content">
+      <p class="fs-10pt" style="color: var(--text-muted);">Chuck Noland is on a desert island for three periods ($t = 0, 1, 2$). He has 100 units of rations. Utility: $u(c) = 2\sqrt{c}$. Discount factors: $(1,\; 0.5,\; 0.45)$. $k(0) = 100$. He chooses $c_0$ and $c_1$, consuming all leftover rations in the last period.</p>
+      <p>Using the same value of $c_0$ in parts (b) and (d), in which part (b or d) does Chuck have a greater incentive to consume in period 1? Why?</p>
+      <div class="block">
+        <div class="block-title">Answer</div>
+        <div class="block-body">
+          $$\begin{align*}
+          \text{FOC}(c_1 | t=0): \quad & \frac{0.5}{\sqrt{c_1}} - \frac{0.45}{\sqrt{100 - c_0 - c_1}} = 0 \\
+          & \frac{1}{\sqrt{c_1}} - \frac{0.9}{\sqrt{100 - c_0 - c_1}} = 0 \\
+          \\
+          \text{FOC}(c_1 | t=1): \quad & \frac{1}{\sqrt{c_1}} - \frac{0.5}{\sqrt{100 - c_0 - c_1}} = 0
+          \end{align*}$$
+          <p style="text-align: center;">$\tfrac{1}{\sqrt{c_1}} - \tfrac{0.9}{\sqrt{100 - c_0 - c_1}} = 0 \;\Rightarrow\; \tfrac{1}{\sqrt{c_1}} - \tfrac{0.5}{\sqrt{100 - c_0 - c_1}} \gt 0$</p>
+          <p>The above line says that at the optimal consumption plan for period 1: $c_1 = c_1^*$, chosen in period 0 (i.e., $\text{FOC}(c_1 | t=0)$ holds), Chuck's marginal utility for $c_1$ is positive. Thus, Chuck has an incentive to deviate from the original plan by increasing consumption in period 1.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quiz 5: Question 3 -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Quiz 5: Question 3</h2>
+    </div>
+    <div class="frame-content">
+      <p>There are three states $\omega_1$, $\omega_2$ and $\omega_3$ with probabilities $\tfrac{1}{12}$, $\tfrac{1}{6}$ and $\tfrac{9}{12}$. Suppose the agent&apos;s information sets are $I_1 = \{\omega_1, \omega_2\}$ and $I_2 = \{\omega_3\}$. The utility function is $u(\omega_i, a) = 1 - (i - a)^2$ where $a$ is the action chosen by the agent and $i = 1, 2$ or $3$ is simply the index of the state $\omega_i$. You MUST label your answers.</p>
+      <ol type="a">
+        <li>Compute the probability of the first state conditional on the information set $I_1$, $\Pr(\omega_1 | I_1)$. Hint: Bayes' rule.</li>
+        <li>Compute the probability of the second state conditional on the information set $I_1$, $\Pr(\omega_2 | I_1)$. Hint: Bayes' rule.</li>
+        <li>What is the expected utility of the agent (as a function of $a$) conditional on the information set $I_1$?</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Quiz 5: Question 3(a) -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Question 3(a)</h2>
+    </div>
+    <div class="frame-content">
+      <p class="fs-10pt" style="color: var(--text-muted);">Three states $\omega_1, \omega_2, \omega_3$ with probabilities $\tfrac{1}{12}, \tfrac{1}{6}, \tfrac{9}{12}$. Information sets: $I_1 = \{\omega_1, \omega_2\}$, $I_2 = \{\omega_3\}$. Utility: $u(\omega_i, a) = 1 - (i - a)^2$.</p>
+      <p>Compute $\Pr(\omega_1 | I_1)$. Hint: Bayes' rule.</p>
+      <div class="block">
+        <div class="block-title">Answer</div>
+        <div class="block-body">
+          $$\begin{align*}
+          \Pr(\omega_1 | I_1) &= \frac{\Pr(\omega_1)}{\Pr(I_1)} = \frac{\Pr(\omega_1)}{\Pr(\omega_1) + \Pr(\omega_2)} \\
+          &= \frac{\tfrac{1}{12}}{\tfrac{1}{12} + \tfrac{1}{6}} = \frac{\tfrac{1}{12}}{\tfrac{3}{12}} = \frac{1}{3}
+          \end{align*}$$
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quiz 5: Question 3(b) -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Question 3(b)</h2>
+    </div>
+    <div class="frame-content">
+      <p class="fs-10pt" style="color: var(--text-muted);">Three states $\omega_1, \omega_2, \omega_3$ with probabilities $\tfrac{1}{12}, \tfrac{1}{6}, \tfrac{9}{12}$. Information sets: $I_1 = \{\omega_1, \omega_2\}$, $I_2 = \{\omega_3\}$. Utility: $u(\omega_i, a) = 1 - (i - a)^2$.</p>
+      <p>Compute $\Pr(\omega_2 | I_1)$. Hint: Bayes' rule.</p>
+      <div class="block">
+        <div class="block-title">Answer</div>
+        <div class="block-body">
+          $$\begin{align*}
+          \Pr(\omega_2 | I_1) &= \frac{\Pr(\omega_2)}{\Pr(I_1)} = \frac{\Pr(\omega_2)}{\Pr(\omega_1) + \Pr(\omega_2)} \\
+          &= \frac{\tfrac{1}{6}}{\tfrac{1}{12} + \tfrac{1}{6}} = \frac{\tfrac{2}{12}}{\tfrac{3}{12}} = \frac{2}{12} \cdot \frac{12}{3} = \frac{2}{3}
+          \end{align*}$$
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quiz 5: Question 3(c) -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Question 3(c)</h2>
+    </div>
+    <div class="frame-content">
+      <p class="fs-10pt" style="color: var(--text-muted);">Three states $\omega_1, \omega_2, \omega_3$ with probabilities $\tfrac{1}{12}, \tfrac{1}{6}, \tfrac{9}{12}$. Information sets: $I_1 = \{\omega_1, \omega_2\}$, $I_2 = \{\omega_3\}$. Utility: $u(\omega_i, a) = 1 - (i - a)^2$.</p>
+      <p>What is the expected utility of the agent (as a function of $a$) conditional on the information set $I_1$?</p>
+      <div class="block">
+        <div class="block-title">Answer</div>
+        <div class="block-body">
+          $$\begin{align*}
+          \E[u(\tilde{\omega}, a) | I_1] &= \frac{1}{3}\, u(\omega_1, a) + \frac{2}{3}\, u(\omega_2, a) \\
+          &= \frac{1}{3}\left(1 - (1 - a)^2\right) + \frac{2}{3}\left(1 - (2 - a)^2\right)
+          \end{align*}$$
+          <p>We could simplify further, but there is no need unless we plan to use this expression. It is perfectly fine to stop here on the exam.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KaTeX -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="js/katex-macros.js"></script>
+
+  <!-- GSAP for navigation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="js/scroll-animations.js"></script>
+
+</body>
+</html>
