@@ -734,6 +734,7 @@
   <!-- KaTeX JS -->
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="js/katex-macros.js"></script>
 
   <!-- GSAP for scroll animations -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -742,15 +743,6 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Initialize KaTeX
-      renderMathInElement(document.body, {
-        delimiters: [
-          {left: '$$', right: '$$', display: true},
-          {left: '$', right: '$', display: false}
-        ],
-        throwOnError: false
-      });
-
       // Initialize GSAP ScrollTrigger for overlay frames
       gsap.registerPlugin(ScrollTrigger);
 

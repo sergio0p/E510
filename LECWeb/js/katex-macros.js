@@ -5,8 +5,8 @@ const katexMacros = {
   // Calculus
   "\\diff": "\\dfrac{\\partial #1}{\\partial #2}",
   "\\sdiff": "\\tfrac{\\partial #1}{\\partial #2}",
-  "\\ddiff": "\\dfrac{d #1}{d #2}",
-  "\\sddiff": "\\tfrac{d #1}{d #2}",
+  "\\ddiff": "\\dfrac{\\mathrm{d} #1}{\\mathrm{d} #2}",
+  "\\sddiff": "\\tfrac{\\mathrm{d} #1}{\\mathrm{d} #2}",
 
   // Sets and brackets
   "\\set": "\\left\\{ #1 \\right\\}",
@@ -70,23 +70,6 @@ const katexMacros = {
 
 // Initialize KaTeX on page load
 function initKaTeX() {
-  // Render all elements with class "math" or "math-display"
-  document.querySelectorAll('.math').forEach(el => {
-    katex.render(el.textContent, el, {
-      throwOnError: false,
-      macros: katexMacros
-    });
-  });
-
-  document.querySelectorAll('.math-display').forEach(el => {
-    katex.render(el.textContent, el, {
-      throwOnError: false,
-      displayMode: true,
-      macros: katexMacros
-    });
-  });
-
-  // Auto-render for $...$ and $$...$$ syntax
   renderMathInElement(document.body, {
     delimiters: [
       {left: '$$', right: '$$', display: true},
