@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information Partitions | ECON 510</title>
+
+    <!-- KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+    <style>
+        :root {
+            --unc-navy: #13294B;
+            --carolina-blue: #4B9CD3;
+            --carolina-blue-light: #7AB8E0;
+            --carolina-blue-pale: #E8F4FA;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #13294B;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --border-color: #e2e8f0;
+            --success: #48bb78;
+            --error: #f56565;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 20px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--bg-primary);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: var(--unc-navy);
+            margin: 0 0 0.5rem 0;
+            font-size: 1.8rem;
+        }
+
+        h2 {
+            color: var(--carolina-blue);
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.3rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .btn-toolbar {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-carolina {
+            background: var(--carolina-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 24px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-carolina:hover {
+            background: var(--carolina-blue-light);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--carolina-blue);
+            border: 2px solid var(--carolina-blue);
+            border-radius: 8px;
+            padding: 8px 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-outline:hover {
+            background: var(--carolina-blue-pale);
+        }
+
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 0.85rem;
+        }
+
+        .instructor-info {
+            background: var(--carolina-blue-pale);
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .instructor-info p {
+            margin: 0.2rem 0;
+        }
+
+        /* Probability Table */
+        .prob-table {
+            border-collapse: collapse;
+            margin: 1rem auto;
+            font-size: 1.1rem;
+        }
+
+        .prob-table th, .prob-table td {
+            border: 2px solid var(--unc-navy);
+            padding: 12px 20px;
+            text-align: center;
+        }
+
+        .prob-table th {
+            background: var(--unc-navy);
+            color: white;
+        }
+
+        .prob-table td {
+            background: var(--bg-primary);
+        }
+
+        .prob-table .row-header {
+            background: var(--carolina-blue-pale);
+            font-weight: 600;
+        }
+
+        /* Multiple Choice */
+        .question-box {
+            background: var(--carolina-blue-pale);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 1.5rem 0;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--unc-navy);
+            margin-bottom: 1rem;
+        }
+
+        .choice-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .choice-btn {
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px 20px;
+            text-align: left;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .choice-btn:hover {
+            border-color: var(--carolina-blue);
+            background: var(--carolina-blue-pale);
+        }
+
+        .choice-btn.selected {
+            border-color: var(--carolina-blue);
+            background: var(--carolina-blue);
+            color: white;
+        }
+
+        /* Tree Container */
+        #tree-container {
+            width: 100%;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            overflow: hidden;
+            transition: height 0.8s ease-in-out;
+        }
+
+        #tree-svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Math Container */
+        #math-container {
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s, transform 0.6s;
+            overflow-x: auto;
+        }
+
+        #math-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Info Set Path Display */
+        .path-display {
+            background: var(--carolina-blue-pale);
+            border-left: 4px solid var(--carolina-blue);
+            padding: 10px 15px;
+            margin: 1rem 0;
+            font-family: 'STIX Two Text', 'Times New Roman', serif;
+        }
+
+        /* Time indicator */
+        .time-badge {
+            display: inline-block;
+            background: var(--unc-navy);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Hidden */
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            .prob-table th, .prob-table td {
+                padding: 8px 12px;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" data-app="information-partition">
+    <!-- Header -->
+    <div class="header">
+        <h1>Information Partitions</h1>
+        <div class="btn-toolbar">
+            <button class="btn-outline btn-sm" onclick="resetApp()">New Problem</button>
+            <button class="btn-outline btn-sm" onclick="window.print()">Print</button>
+        </div>
+    </div>
+
+    <!-- Instructor Info -->
+    <div class="instructor-info">
+        <p><strong>Sergio O. Parreiras</strong> | Economics Department, UNC at Chapel Hill</p>
+        <p>ECON 510: Microeconomic Theory | Spring 2026</p>
+    </div>
+
+    <!-- Section 1: Setup -->
+    <div id="section-setup" class="section active">
+        <h2>States of the World</h2>
+        <p>The economy can be in one of three states:</p>
+
+        <div id="states-description"></div>
+
+        <h2>Prior Probabilities</h2>
+        <div id="prob-table-container"></div>
+
+        <p style="margin-top: 1rem;">Discount factor: $\delta \in (0,1)$</p>
+
+        <h2>Timeline</h2>
+        <div id="timeline-description"></div>
+
+        <h2>Information Revelation</h2>
+        <p>As the modeler, specify what information is revealed at periods $t > 0$. We assume here that consumers know nothing at $t = 0$ but alternative assumptions are possible.</p>
+
+        <div id="questions-container"></div>
+    </div>
+
+    <!-- Section 2: Tree Display -->
+    <div id="section-tree" class="section">
+        <h2>Contingent Markets Tree</h2>
+        <div id="tree-container">
+            <svg id="tree-svg" viewBox="0 0 1000 600"></svg>
+        </div>
+        <div id="math-container">
+            <h2 style="margin-top: 0;">Discounted Expected Utility</h2>
+            <div id="expected-utility"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS (for collapse if needed) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- KaTeX -->
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+<script>
+// ============ STATE ============
+let appState = {
+    T: 2,                    // number of periods (2 or 3)
+    d: 12,                   // denominator
+    n: [4, 4, 4],            // numerators for each state
+    // States: 0 = Improving, 1 = Stable, 2 = Deteriorating
+    stateLabels: ['Improving', 'Stable', 'Deteriorating'],
+    stateDescriptions: [
+        'Improving',
+        'Stable',
+        'Deteriorating'
+    ],
+    // Partition tree: each node has {infoSet: [...states], children: [...], learnedAt: t, label: string}
+    partitionTree: null,
+    currentQuestions: [],    // queue of {node, t} to ask
+    questionIndex: 0
+};
+
+// ============ RANDOM GENERATION ============
+function randInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function generateProbabilities() {
+    const d = randInt(6, 18);
+    const n1 = randInt(1, d - 2);
+    const n2 = randInt(1, d - n1 - 1);
+    const n3 = d - n1 - n2;
+
+    appState.d = d;
+    appState.n = [n1, n2, n3];
+}
+
+function generatePeriods() {
+    appState.T = randInt(2, 3);
+}
+
+// ============ PARTITION LOGIC ============
+// Information set: array of state indices [0,1,2,3]
+// States: 0 = Improving, 1 = Stable, 2 = Deteriorating
+
+function getStatePartition(infoSet, stateToSeparate) {
+    // Partition: {stateToSeparate} vs {everything else}
+    const isState = infoSet.filter(s => s === stateToSeparate);
+    const notState = infoSet.filter(s => s !== stateToSeparate);
+    return [isState, notState].filter(p => p.length > 0);
+}
+
+function getFinestPartition(infoSet) {
+    // Finest partition: each state is its own set
+    return infoSet.map(s => [s]);
+}
+
+function applyLearning(infoSet, learning) {
+    switch(learning) {
+        case 'nothing':
+            return [infoSet];
+        case 'is_improving':
+            return getStatePartition(infoSet, 0);
+        case 'is_stable':
+            return getStatePartition(infoSet, 1);
+        case 'is_deteriorating':
+            return getStatePartition(infoSet, 2);
+        case 'everything':
+            return getFinestPartition(infoSet);
+        default:
+            return [infoSet];
+    }
+}
+
+function isFinest(infoSet) {
+    return infoSet.length === 1;
+}
+
+function fillRemainingPeriods(node) {
+    // Recursively create children down to T-1 for finest partitions
+    if (node.t >= appState.T - 1) return;
+
+    const childNode = {
+        infoSet: node.infoSet,
+        children: [],
+        t: node.t + 1,
+        label: node.label,
+        notation: node.notation,
+        parent: node
+    };
+    node.children.push(childNode);
+    fillRemainingPeriods(childNode);
+}
+
+// State symbols: i = improving, s = stable, d = deteriorating
+const stateSymbols = ['i', 's', 'd'];
+
+function getInfoSetLabel(infoSet) {
+    // Returns label using s, c, r
+    if (infoSet.length === 3) return 'Ω';
+    if (infoSet.length === 1) return stateSymbols[infoSet[0]];
+
+    // For multiple states, concatenate symbols (e.g., "sc" for sunny or cloudy)
+    const sorted = [...infoSet].sort();
+    return sorted.map(s => stateSymbols[s]).join('');
+}
+
+function getInfoSetNotation(infoSet) {
+    // Same as label for this simpler example
+    return getInfoSetLabel(infoSet);
+}
+
+function arraysEqual(a, b) {
+    if (a.length !== b.length) return false;
+    const sortedA = [...a].sort();
+    const sortedB = [...b].sort();
+    return sortedA.every((v, i) => v === sortedB[i]);
+}
+
+// ============ UI RENDERING ============
+function renderStatesDescription() {
+    const container = document.getElementById('states-description');
+    const html = `
+        <p style="font-size: 1.1rem; text-align: center;">
+            $i$ = Improving, &emsp; $s$ = Stable, &emsp; $d$ = Deteriorating
+        </p>
+    `;
+    container.innerHTML = html;
+}
+
+function renderProbTable() {
+    const container = document.getElementById('prob-table-container');
+    const n = appState.n;
+    const d = appState.d;
+
+    const html = `
+        <p style="font-size: 1.1rem; text-align: center;">
+            $\\Pr(i) = \\frac{${n[0]}}{${d}}$, &emsp;
+            $\\Pr(s) = \\frac{${n[1]}}{${d}}$, &emsp;
+            $\\Pr(d) = \\frac{${n[2]}}{${d}}$
+        </p>
+    `;
+    container.innerHTML = html;
+}
+
+function renderTimeline() {
+    const container = document.getElementById('timeline-description');
+    const T = appState.T;
+
+    let html = '<p style="text-align: center;">';
+    if (T === 2) {
+        html += '$t = 0$ (period 1) &emsp; $\\rightarrow$ &emsp; $t = 1$ (period 2)';
+    } else {
+        html += '$t = 0$ (period 1) &emsp; $\\rightarrow$ &emsp; $t = 1$ (period 2) &emsp; $\\rightarrow$ &emsp; $t = 2$ (period 3)';
+    }
+    html += '</p>';
+    container.innerHTML = html;
+}
+
+function renderQuestion(node, t) {
+    const container = document.getElementById('questions-container');
+
+    const infoSetLabel = getInfoSetLabel(node.infoSet);
+    const contextText = node.infoSet.length === 3
+        ? ''
+        : ` given information set $${infoSetLabel}$`;
+
+    // Determine available choices based on what can still be learned
+    const choices = getAvailableChoices(node.infoSet);
+
+    const nextT = t + 1;
+    let html = `
+        <div class="question-box" id="question-${appState.questionIndex}">
+            <span class="time-badge">t = ${nextT}</span>
+            <div class="question-text">
+                What information do consumers know in period $t = ${nextT}$${contextText}?
+            </div>
+            <div class="choice-group">
+    `;
+
+    choices.forEach((choice, idx) => {
+        html += `<button class="choice-btn" onclick="handleChoice('${choice.value}', ${appState.questionIndex})">${choice.label}</button>`;
+    });
+
+    html += `
+            </div>
+        </div>
+    `;
+
+    container.innerHTML += html;
+    reRenderKaTeX();
+}
+
+// State descriptions for English labels
+const stateNames = {
+    0: 'improving',
+    1: 'stable',
+    2: 'deteriorating'
+};
+
+function getAvailableChoices(infoSet) {
+    const choices = [];
+
+    // Always offer "nothing"
+    choices.push({ value: 'nothing', label: 'Nothing (no new information)' });
+
+    // If only one state, no learning possible
+    if (infoSet.length === 1) {
+        return choices;
+    }
+
+    // If exactly two states, can only learn everything
+    if (infoSet.length === 2) {
+        choices.push({ value: 'everything', label: 'Everything (learn the exact state)' });
+        return choices;
+    }
+
+    // For 3 states (full uncertainty), offer "is it X or not" options
+    if (infoSet.includes(0)) {
+        choices.push({ value: 'is_improving', label: 'Whether the economy is improving or not' });
+    }
+    if (infoSet.includes(1)) {
+        choices.push({ value: 'is_stable', label: 'Whether the economy is stable or not' });
+    }
+    if (infoSet.includes(2)) {
+        choices.push({ value: 'is_deteriorating', label: 'Whether the economy is deteriorating or not' });
+    }
+
+    // Everything (finest partition)
+    choices.push({ value: 'everything', label: 'Everything (learn the exact state)' });
+
+    return choices;
+}
+
+// ============ QUESTION HANDLING ============
+function initializeQuestions() {
+    // First, ask the modeler to choose the number of time periods
+    document.getElementById('questions-container').innerHTML = '';
+    appState.questionIndex = 0;
+    renderTimePeriodQuestion();
+}
+
+function renderTimePeriodQuestion() {
+    const container = document.getElementById('questions-container');
+
+    const html = `
+        <div class="question-box" id="question-periods">
+            <span class="time-badge">Setup</span>
+            <div class="question-text">
+                How many time periods?
+            </div>
+            <div class="choice-group">
+                <button class="choice-btn" onclick="handleTimePeriodChoice(2)">2 periods (t = 0, 1)</button>
+                <button class="choice-btn" onclick="handleTimePeriodChoice(3)">3 periods (t = 0, 1, 2)</button>
+            </div>
+        </div>
+    `;
+
+    container.innerHTML = html;
+}
+
+function handleTimePeriodChoice(T) {
+    appState.T = T;
+
+    // Mark button as selected
+    const questionBox = document.getElementById('question-periods');
+    questionBox.querySelectorAll('.choice-btn').forEach(btn => btn.classList.remove('selected'));
+    event.target.classList.add('selected');
+
+    // Update timeline display now that T is chosen
+    renderTimeline();
+    reRenderKaTeX();
+
+    // Now start the partition questions
+    startPartitionQuestions();
+}
+
+function startPartitionQuestions() {
+    // Start with the full state space at t=0
+    appState.partitionTree = {
+        infoSet: [0, 1, 2],
+        children: [],
+        t: 0,
+        label: 'Ω'
+    };
+
+    appState.currentQuestions = [{ node: appState.partitionTree, t: 0 }];
+    appState.questionIndex = 0;
+
+    // Render first partition question
+    const first = appState.currentQuestions[0];
+    renderQuestion(first.node, first.t);
+}
+
+function handleChoice(choice, qIndex) {
+    // Mark button as selected
+    const questionBox = document.getElementById(`question-${qIndex}`);
+    questionBox.querySelectorAll('.choice-btn').forEach(btn => btn.classList.remove('selected'));
+    event.target.classList.add('selected');
+
+    // Get current question
+    const current = appState.currentQuestions[qIndex];
+    const node = current.node;
+    const t = current.t;
+
+    // Apply learning
+    const newPartitions = applyLearning(node.infoSet, choice);
+    node.learning = choice;
+
+    // Only create child nodes if not at the final time period
+    if (t < appState.T - 1) {
+        newPartitions.forEach(partition => {
+            const childNode = {
+                infoSet: partition,
+                children: [],
+                t: t + 1,
+                label: getInfoSetLabel(partition),
+                notation: getInfoSetNotation(partition),
+                parent: node
+            };
+            node.children.push(childNode);
+
+            // If this child is finest, propagate it down to fill remaining time periods
+            if (isFinest(partition)) {
+                fillRemainingPeriods(childNode);
+            }
+        });
+
+        // Add questions only if children are not at the final period (T-1)
+        // We ask questions at t=0 through t=T-2
+        if (t + 1 < appState.T - 1) {
+            node.children.forEach(child => {
+                if (!isFinest(child.infoSet)) {
+                    appState.currentQuestions.push({ node: child, t: t + 1 });
+                }
+            });
+        }
+    }
+
+    // Check if we need more questions
+    appState.questionIndex++;
+
+    // Render next question or show tree
+    if (appState.questionIndex < appState.currentQuestions.length) {
+        const next = appState.currentQuestions[appState.questionIndex];
+        renderQuestion(next.node, next.t);
+
+        // Scroll to new question
+        setTimeout(() => {
+            const newQ = document.getElementById(`question-${appState.questionIndex}`);
+            if (newQ) newQ.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+    } else {
+        // All questions answered, show tree
+        setTimeout(() => showTree(), 500);
+    }
+}
+
+// ============ TREE DRAWING ============
+function showTree() {
+    document.getElementById('section-setup').classList.remove('active');
+    document.getElementById('section-tree').classList.add('active');
+
+    const treeContainer = document.getElementById('tree-container');
+    treeContainer.style.height = '500px';
+
+    drawTree();
+    reRenderKaTeX();
+
+    // After 5 seconds, show expected utility and scroll to it
+    setTimeout(() => {
+        showExpectedUtility();
+
+        // Scroll to the math container
+        setTimeout(() => {
+            document.getElementById('math-container').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }, 100);
+    }, 5000);
+}
+
+function drawTree() {
+    const svg = document.getElementById('tree-svg');
+    const container = document.getElementById('tree-container');
+    const width = 1000;
+    const height = parseInt(container.style.height) || 500;
+
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+    svg.innerHTML = '';
+
+    // Add defs for arrow markers
+    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+    defs.innerHTML = `
+        <marker id="tree-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#13294B"/>
+        </marker>
+    `;
+    svg.appendChild(defs);
+
+    // Calculate tree layout
+    const tree = appState.partitionTree;
+    const layout = calculateLayout(tree, width, height);
+
+    // Draw edges and nodes
+    drawNode(svg, tree, layout);
+}
+
+function calculateLayout(tree, width, height) {
+    const layout = new Map();
+    const padding = { top: 60, bottom: 40, left: 80, right: 80 };
+
+    // Find max depth
+    function getDepth(node) {
+        if (node.children.length === 0) return 0;
+        return 1 + Math.max(...node.children.map(getDepth));
+    }
+    const maxDepth = getDepth(tree);
+
+    // Count leaves under each node
+    function countLeaves(node) {
+        if (node.children.length === 0) return 1;
+        return node.children.reduce((sum, child) => sum + countLeaves(child), 0);
+    }
+
+    // Position nodes - ensure minimum spacing between levels
+    const minLevelHeight = 80;
+    const calculatedHeight = (height - padding.top - padding.bottom) / Math.max(maxDepth, 1);
+    const levelHeight = Math.max(calculatedHeight, minLevelHeight);
+
+    function positionNode(node, depth, leftBound, rightBound) {
+        const x = (leftBound + rightBound) / 2;
+        const y = padding.top + depth * levelHeight;
+
+        layout.set(node, { x, y });
+
+        if (node.children.length > 0) {
+            // Special case: single child goes straight down
+            if (node.children.length === 1) {
+                positionNode(node.children[0], depth + 1, leftBound, rightBound);
+                return;
+            }
+
+            const totalLeaves = Math.max(countLeaves(node), node.children.length);
+            // Ensure minimum spread between children
+            const minSpread = 120;
+            const availableWidth = rightBound - leftBound;
+            const spreadWidth = Math.max(availableWidth, node.children.length * minSpread);
+            const childWidth = spreadWidth / Math.max(totalLeaves, node.children.length);
+
+            // Center the children within available space
+            const totalChildrenWidth = node.children.length * childWidth;
+            let currentLeft = (leftBound + rightBound) / 2 - totalChildrenWidth / 2;
+
+            node.children.forEach(child => {
+                const childLeaves = Math.max(countLeaves(child), 1);
+                const childRight = currentLeft + childLeaves * childWidth;
+                positionNode(child, depth + 1, currentLeft, childRight);
+                currentLeft = childRight;
+            });
+        }
+    }
+
+    positionNode(tree, 0, padding.left, width - padding.right);
+    return layout;
+}
+
+function drawNode(svg, node, layout) {
+    const pos = layout.get(node);
+
+    // Draw edges to children
+    node.children.forEach((child, idx) => {
+        const childPos = layout.get(child);
+
+        // Draw edge
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        const midY = (pos.y + childPos.y) / 2;
+        path.setAttribute('d', `M ${pos.x} ${pos.y + 25} Q ${pos.x} ${midY}, ${childPos.x} ${childPos.y - 25}`);
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke', '#13294B');
+        path.setAttribute('stroke-width', '2');
+        path.setAttribute('marker-end', 'url(#tree-arrow)');
+        svg.appendChild(path);
+
+        // Draw edge label using native SVG text (like dynamic-games app)
+        const dx = childPos.x - pos.x;
+        const dy = childPos.y - pos.y;
+        const length = Math.sqrt(dx * dx + dy * dy);
+
+        // Normalize direction vector
+        const ux = dx / length;
+        const uy = dy / length;
+
+        // Compute edge midpoint
+        const edgeMidX = (pos.x + childPos.x) / 2;
+        const edgeMidY = (pos.y + childPos.y) / 2;
+
+        // Normal vectors: (-uy, ux) points left of edge, (uy, -ux) points right of edge
+        // For left edges: offset to the left (NW)
+        // For right edges: offset to the right (NE)
+        // For vertical edges: offset to the left
+        let offsetDist = 20;
+        let normalX, normalY;
+
+        if (dx < -10) {
+            // Left edge - normal pointing NW
+            normalX = -uy;
+            normalY = ux;
+        } else if (dx > 10) {
+            // Right edge - normal pointing NE
+            normalX = uy;
+            normalY = -ux;
+        } else {
+            // Vertical edge - offset to the left
+            normalX = -1;
+            normalY = 0;
+            offsetDist = 25;
+        }
+
+        const labelX = edgeMidX + normalX * offsetDist;
+        const labelY = edgeMidY + normalY * offsetDist;
+
+        // Native SVG text element
+        const edgeLabel = (idx === 0) ? child.label : child.notation;
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', labelX);
+        text.setAttribute('y', labelY);
+        text.setAttribute('text-anchor', 'middle');
+        text.setAttribute('dominant-baseline', 'central');
+        text.setAttribute('font-family', "'STIX Two Text', 'Times New Roman', serif");
+        text.setAttribute('font-size', '18');
+        text.setAttribute('font-style', 'italic');
+        text.setAttribute('fill', '#4a5568');
+        text.textContent = edgeLabel;
+        svg.appendChild(text);
+    });
+
+    // Draw node circle
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', pos.x);
+    circle.setAttribute('cy', pos.y);
+    circle.setAttribute('r', '22');
+    circle.setAttribute('fill', isFinest(node.infoSet) ? '#E5E7EB' : '#4B9CD3');
+    circle.setAttribute('stroke', '#13294B');
+    circle.setAttribute('stroke-width', '2');
+    svg.appendChild(circle);
+
+    // Draw node label: t=X for trivial partition, Xis/Xd/etc for non-trivial
+    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    text.setAttribute('x', pos.x);
+    text.setAttribute('y', pos.y + 5);
+    text.setAttribute('text-anchor', 'middle');
+    text.setAttribute('fill', isFinest(node.infoSet) ? '#13294B' : 'white');
+    text.setAttribute('font-size', '15');
+    text.setAttribute('font-weight', 'bold');
+
+    // Label: trivial partition shows just the time, non-trivial shows time+info set symbols
+    let nodeLabel;
+    if (node.infoSet.length === 3) {
+        nodeLabel = `${node.t}`;
+    } else {
+        const symbols = node.infoSet.map(s => stateSymbols[s]).join('');
+        nodeLabel = `${node.t}${symbols}`;
+    }
+    text.textContent = nodeLabel;
+    svg.appendChild(text);
+
+    // Recursively draw children
+    node.children.forEach(child => drawNode(svg, child, layout));
+}
+
+// ============ EXPECTED UTILITY ============
+function showExpectedUtility() {
+    const container = document.getElementById('math-container');
+    const euContainer = document.getElementById('expected-utility');
+
+    // Build filtration: partition at each time t
+    const filtration = buildFiltration(appState.partitionTree);
+
+    // Check if any partition is non-trivial (has probability terms)
+    const hasNonTrivial = filtration.some(partition =>
+        !(partition.length === 1 && partition[0].length === 3)
+    );
+
+    let latex = '\\begin{align*}\n';
+    latex += 'U &= ';
+
+    // Helper to build term for time t
+    function buildTerm(t, partition, useNumerical = false) {
+        // No delta for t=0 (delta^0 = 1), delta for t=1, delta^t otherwise
+        const deltaStr = t === 0 ? '' : (t === 1 ? '\\delta' : `\\delta^{${t}}`);
+        const deltaPrefix = t === 0 ? '' : `${deltaStr} \\cdot `;
+
+        if (partition.length === 1 && partition[0].length === 3) {
+            // Trivial partition: use c_t
+            return `${deltaPrefix}u(c_{${t}})`;
+        } else {
+            // Non-trivial partition: sum over information sets
+            const terms = partition.map(infoSet => {
+                const label = getConsumptionLabel(t, infoSet);
+                if (useNumerical) {
+                    const prob = getInfoSetProb(infoSet);
+                    return `\\frac{${prob.num}}{${prob.den}} \\cdot u(${label})`;
+                } else {
+                    const probLabel = getInfoSetLabel(infoSet);
+                    return `\\Pr(${probLabel}) \\cdot u(${label})`;
+                }
+            }).join(' + ');
+
+            if (partition.length > 1) {
+                return `${deltaPrefix}\\left( ${terms} \\right)`;
+            } else {
+                return `${deltaPrefix}${terms}`;
+            }
+        }
+    }
+
+    // First line: t=0 and t=1 terms
+    for (let t = 0; t < Math.min(2, filtration.length); t++) {
+        if (t > 0) latex += ' + ';
+        latex += buildTerm(t, filtration[t]);
+    }
+
+    // Second line: t=2 and beyond
+    if (filtration.length > 2) {
+        latex += ' \\\\[0.8em]\n&\\quad + ';
+        for (let t = 2; t < filtration.length; t++) {
+            if (t > 2) latex += ' + ';
+            latex += buildTerm(t, filtration[t]);
+        }
+    }
+
+    // Only show numerical probabilities line if there are non-trivial partitions
+    if (hasNonTrivial) {
+        latex += ' \\\\[1em]\n';
+        latex += '&= ';
+        // First part: t=0 and t=1
+        for (let t = 0; t < Math.min(2, filtration.length); t++) {
+            if (t > 0) latex += ' + ';
+            latex += buildTerm(t, filtration[t], true);
+        }
+        // Second part: t=2 and beyond
+        if (filtration.length > 2) {
+            latex += ' \\\\[0.8em]\n&\\quad + ';
+            for (let t = 2; t < filtration.length; t++) {
+                if (t > 2) latex += ' + ';
+                latex += buildTerm(t, filtration[t], true);
+            }
+        }
+    }
+
+    latex += '\\end{align*}';
+
+    euContainer.innerHTML = `$$${latex}$$`;
+
+    container.classList.add('visible');
+    reRenderKaTeX();
+}
+
+function buildFiltration(tree) {
+    // Returns array of partitions, one per time period
+    const filtration = [];
+    const maxT = appState.T;
+
+    for (let t = 0; t < maxT; t++) {
+        const partition = getPartitionAtTime(tree, t);
+        filtration.push(partition);
+    }
+
+    return filtration;
+}
+
+function getPartitionAtTime(node, targetT, currentT = 0) {
+    // Collect all information sets at a given time level
+    if (currentT === targetT) {
+        return [node.infoSet];
+    }
+
+    if (node.children.length === 0) {
+        // No further branching; this info set persists
+        return [node.infoSet];
+    }
+
+    // Recurse into children
+    let result = [];
+    node.children.forEach(child => {
+        result = result.concat(getPartitionAtTime(child, targetT, currentT + 1));
+    });
+    return result;
+}
+
+function getConsumptionLabel(t, infoSet) {
+    // Returns consumption notation: c_t if trivial, c_{tI} otherwise (no comma)
+    if (infoSet.length === 3) {
+        return `c_{${t}}`;
+    }
+    const infoLabel = getInfoSetLabel(infoSet);
+    return `c_{${t}${infoLabel}}`;
+}
+
+function getFinalPartition(node) {
+    if (node.children.length === 0) {
+        return [node.infoSet];
+    }
+    return node.children.flatMap(child => getFinalPartition(child));
+}
+
+function getInfoSetProb(infoSet) {
+    const num = infoSet.reduce((sum, s) => sum + appState.n[s], 0);
+    return { num, den: appState.d };
+}
+
+// ============ UTILITIES ============
+function reRenderKaTeX() {
+    if (typeof renderMathInElement !== 'undefined') {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: '$$', right: '$$', display: true },
+                { left: '$', right: '$', display: false }
+            ],
+            throwOnError: false
+        });
+    }
+}
+
+function resetApp() {
+    // Reset state
+    generateProbabilities();
+
+    // Reset UI
+    document.getElementById('section-setup').classList.add('active');
+    document.getElementById('section-tree').classList.remove('active');
+    document.getElementById('math-container').classList.remove('visible');
+    document.getElementById('questions-container').innerHTML = '';
+    document.getElementById('timeline-description').innerHTML = '';
+
+    // Re-render
+    renderStatesDescription();
+    renderProbTable();
+    // Timeline will be rendered after user chooses number of periods
+    initializeQuestions();
+
+    reRenderKaTeX();
+}
+
+// ============ INITIALIZATION ============
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        generateProbabilities();
+        renderStatesDescription();
+        renderProbTable();
+        // Timeline will be rendered after user chooses number of periods
+        initializeQuestions();
+        reRenderKaTeX();
+    }, 100);
+});
+</script>
+
+</body>
+</html>
