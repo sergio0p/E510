@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="nav-prev" content="efficiency.html">
+  <meta name="nav-next" content="index.html">
+  <title>Financial Markets | ECON 510</title>
+
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <!-- Caveat font for handwritten annotations -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/beamer-theme.css">
+
+  <style>
+    .augie {
+      font-family: 'Caveat', cursive;
+      font-weight: 400;
+      font-size: 1.1em;
+    }
+    .tikz-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+      margin: 1rem auto;
+      padding: 2rem;
+      max-width: 500px;
+      background: #fdf6e3;
+      border: 2px dashed #586e75;
+      border-radius: 12px;
+      color: #586e75;
+      font-style: italic;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Section Header -->
+  <section class="section-header">
+    <div class="section-title-box">
+      <h1>Financial Markets</h1>
+    </div>
+    <h2>ECON 510: Microeconomic Theory</h2>
+  </section>
+
+  <!-- Frame 1: Financial Markets intro (source: lines 1479-1485)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Financial Markets</h2>
+    </div>
+    <div class="frame-content">
+      <p>Now we assume there are no contingent markets in period zero. The consumption good(s) available for consumption in a given time period or state, must be purchased at the <span style="color: #dc322f;">spot</span> (i.e. the time period/state in which the good is available for consumption and not beforehand).</p>
+
+      <p style="margin-top: 1rem;">If an agent wants to transfer income across time periods or states, the agent must buy or sell <span style="color: #dc322f;">financial assets</span>.</p>
+    </div>
+  </section>
+
+  <!-- Frame 2: Financial Assets (source: lines 1486-1510)
+       NO OVERLAYS, HAS TIKZPICTURE (placeholder) -->
+  <section class="frame vspace-neg-3mm">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Financial Assets</h2>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>In our model, a financial asset $\alpha$ is represented by a list of gross-return rates
+      $\alpha = \left(r_\alpha^{I_t}\right)$,
+      where $I_t$ is an information set that occurs in period $t$ and $r_\alpha^{I_t}$ is the price of the asset in info. set $I_t$ at time $t$
+      divided by the price of the asset when the asset was issued.
+      We set the convention that the gross return of the asset is $-1$ at the info. set in which the asset is issued.</p>
+
+      <p style="margin-top: 0.75rem; font-size: 0.85em;">Below we have the returns of an asset for a two-period economy in which there is uncertainty regarding the future
+      (state $=1$ occurs with probability $2/3$ and state $=2$ occurs with probability $1/3$). The asset return is two in state 1 and zero in state 2:</p>
+
+      <!-- Asset return tree (was TikZ) -->
+      <svg viewBox="0 0 420 200" style="max-width: 420px; width: 100%; display: block; margin: 0.75rem auto;">
+        <defs>
+          <marker id="arr" markerWidth="10" markerHeight="6" refX="9" refY="3" orient="auto">
+            <polygon points="0 0, 10 3, 0 6" fill="#586e75"/>
+          </marker>
+          <filter id="ds" x="-10%" y="-10%" width="130%" height="130%">
+            <feDropShadow dx="2" dy="2" stdDeviation="2" flood-opacity="0.25"/>
+          </filter>
+        </defs>
+        <!-- Edges (drawn first, behind nodes) -->
+        <line x1="135" y1="93" x2="245" y2="47" stroke="#586e75" stroke-width="2" marker-end="url(#arr)"/>
+        <line x1="135" y1="107" x2="245" y2="155" stroke="#586e75" stroke-width="2" marker-end="url(#arr)"/>
+        <!-- Edge labels -->
+        <text x="178" y="56" text-anchor="middle" font-family="'Times New Roman', serif" font-size="18" font-style="italic" fill="#586e75">²⁄₃</text>
+        <text x="178" y="150" text-anchor="middle" font-family="'Times New Roman', serif" font-size="18" font-style="italic" fill="#586e75">¹⁄₃</text>
+        <!-- Root node (red) -->
+        <ellipse cx="80" cy="100" rx="58" ry="22" fill="#dc322f" filter="url(#ds)"/>
+        <text x="80" y="106" text-anchor="middle" font-family="'Times New Roman', serif" font-size="15" fill="#fff" font-style="italic">
+          <tspan>r</tspan><tspan font-size="10" dy="-6">0</tspan><tspan font-size="10" dy="9" dx="-7">α</tspan><tspan dy="-3" dx="2"> = −1</tspan>
+        </text>
+        <!-- State 1 node (green) -->
+        <ellipse cx="310" cy="40" rx="55" ry="22" fill="#2e8b34" filter="url(#ds)"/>
+        <text x="310" y="46" text-anchor="middle" font-family="'Times New Roman', serif" font-size="15" fill="#fff" font-style="italic">
+          <tspan>r</tspan><tspan font-size="10" dy="-6">1</tspan><tspan font-size="10" dy="9" dx="-5">α</tspan><tspan dy="-3" dx="2"> = 2</tspan>
+        </text>
+        <!-- State 2 node (green) -->
+        <ellipse cx="310" cy="160" rx="55" ry="22" fill="#2e8b34" filter="url(#ds)"/>
+        <text x="310" y="166" text-anchor="middle" font-family="'Times New Roman', serif" font-size="15" fill="#fff" font-style="italic">
+          <tspan>r</tspan><tspan font-size="10" dy="-6">2</tspan><tspan font-size="10" dy="9" dx="-5">α</tspan><tspan dy="-3" dx="2"> = 0</tspan>
+        </text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Frame 3: Contingent Markets vs Financial Markets - An Example (source: lines 1512-1533, merged)
+       HAS OVERLAYS: itemize with <+-> -->
+  <section class="frame overlay-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Contingent Markets vs Financial Markets</h2>
+      <p class="frame-subtitle">An Example</p>
+    </div>
+    <div class="frame-content">
+      <p>We consider an economy with:</p>
+      <ul>
+        <li>One consumption good, $c$.</li>
+        <li class="overlay" data-overlay="1">Two periods, $t=0,1$.</li>
+        <li class="overlay" data-overlay="2">Two states (are learned) in period $t=1$: $s=1,2$.</li>
+        <li class="overlay" data-overlay="3">Probability of state 1 is $p$.</li>
+        <li class="overlay" data-overlay="4">We learn/discover which state happened, only in period 1.</li>
+        <li class="overlay" data-overlay="5">In period 0, there is uncertainty regarding the state of the economy in period 1.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Frame 5: Contingent Markets vs Financial Markets - detail (source: lines 1534-1553)
+       NO OVERLAYS -->
+  <section class="frame vspace-neg-3mm">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Contingent Markets vs Financial Markets</h2>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>Continuing the example...</p>
+      <p style="margin-top: 0.5rem;">We have 3 contingent goods:</p>
+      <ol>
+        <li>Consumption today $c_0$.</li>
+        <li>Consumption tomorrow if state 1 occurs, $c_1$.</li>
+        <li>Consumption tomorrow if state 2 occurs, $c_2$.</li>
+      </ol>
+
+      <p style="margin-top: 0.75rem;">Prices are:</p>
+      <ul>
+        <li>The period zero ($t=0$, today) prices for the <span style="color: #dc322f;">contingent</span> goods are $p_0$, $p_1$ and $p_2$.</li>
+        <li>The respective spot prices are $\pi_0$, $\pi_1$ and $\pi_2$.</li>
+      </ul>
+
+      <p style="margin-top: 0.75rem;">For a financial asset $a$, we write:</p>
+      <dl class="beamer-description">
+        <dt style="color: #268bd2;">$z_a$</dt>
+        <dd>for the dollar amount invested in the asset (positive or negative).</dd>
+        <dt style="color: #268bd2;">$r_a^1$</dt>
+        <dd>for the rate of return of the asset if state 1 happens.</dd>
+        <dt style="color: #268bd2;">$r_a^2$</dt>
+        <dd>for the rate of return if state 2 happens.</dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- Frame 6: Spot prices vs prices of contingent goods (source: lines 1554-1559)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Contingent Markets vs Financial Markets</h2>
+      <p class="frame-subtitle">Spot prices vs prices of contingent goods</p>
+    </div>
+    <div class="frame-content">
+      <ul>
+        <li>$p_{s}$ is the price at $t=0$ of one unit of consumption to be delivered when the state $s$ occurs.</li>
+        <li style="margin-top: 0.75rem;">$\pi_{s}$ is the price at the state $s$ (not at $t=0$!) of one unit of consumption to be delivered at the state $s$.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Frame 7: Example cont. - Budget constraints comparison (source: lines 1560-1582)
+       NO OVERLAYS, two-column layout -->
+  <section class="frame vspace-neg-3mm">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Example</h2>
+      <p class="frame-subtitle">cont.</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>We assume two financial assets, $a$ and $b$ and also that the consumer utility is given by,</p>
+      <div style="text-align: center; margin: 0.5rem 0;">
+        $$U(c_0,c_1,c_2)=u(c_0)+\delta\cdot \left( p\cdot u(c_1)+(1-p)\cdot u(c_2)\right)$$
+      </div>
+      <p style="text-align: center;">and her endowment is $\mathbf{e}=(e_0,e_1,e_2)$.</p>
+
+      <div style="display: flex; gap: 2rem; margin-top: 1rem;">
+        <div style="flex: 1;">
+          <p><strong>Contingent Markets:</strong></p>
+          <p>One budget (at $t=0$):</p>
+          <div style="text-align: center; margin: 0.5rem 0;">
+            $$\begin{align*}p_0\cdot c_0+p_1\cdot c_1+p_2\cdot c_2\le\\
+            \le p_0\cdot e_0+p_1\cdot e_1+p_2\cdot e_2\end{align*}$$
+          </div>
+          <p>Choice variables are: $c_0,c_1$ and $c_2$</p>
+        </div>
+        <div style="flex: 1;">
+          <p><strong>Financial Markets:</strong></p>
+          <p>Three spot budgets:</p>
+          <div style="margin: 0.5rem 0;">
+            $$\pi_0\cdot c_0+z_a+z_b\le \pi_0\cdot e_0$$
+            $$\pi_1\cdot c_1\le \pi_1\cdot e_1+z_a\cdot r_a^1+z_b\cdot r_b^1$$
+            $$\pi_2\cdot c_2\le \pi_2\cdot e_2+z_a\cdot r_a^2+z_b\cdot r_b^2$$
+          </div>
+          <p>Choice variables are: $c_0,c_1,c_2,z_a$ and $z_b$.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 8: Equilibrium in the Financial Markets Economy (source: lines 1583-1591)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Equilibrium in the Financial Markets Economy</h2>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>Definition: A financial markets economy is in equilibrium if:</p>
+      <ol>
+        <li>Given financial assets returns and goods' prices, each consumer maximizes his/her utility.</li>
+        <li style="margin-top: 0.5rem;">Prices are such that markets for goods clear (same as in the contingent good economy), supply must equal demand.</li>
+        <li style="margin-top: 0.5rem;">Financial asset prices (equivalently, returns) are such that each financial asset market clears. That is, financial markets are in zero net-supply.</li>
+      </ol>
+
+      <p style="margin-top: 1rem;">To understand the zero net-supply condition, consider the economy with only two agents, Anna and Bob. If Anna buys 3 units of asset $\alpha$, $z_\alpha^A=3$ then Bob must sell 3 units of asset $\alpha$, $z_\alpha^B=-3$. In general if we have $m$ agents in the economy for any asset $\alpha$ we must have</p>
+      <div style="text-align: center; margin: 0.75rem 0;">
+        $$\sum_{i=1}^m z_\alpha^i=0.$$
+      </div>
+    </div>
+  </section>
+
+  <!-- Navigation Links -->
+  <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
+    <a href="efficiency.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Efficiency</a>
+    <a href="index.html" style="color: var(--crane-blue); text-decoration: none;">Home &rarr;</a>
+  </div>
+
+  <!-- KaTeX JS -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="js/katex-macros.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="js/scroll-animations.js"></script>
+
+  <!-- Overlay animation system -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.querySelectorAll('.overlay-frame').forEach(frame => {
+      const overlays = frame.querySelectorAll('.overlay');
+      const count = overlays.length;
+      if (count === 0) return;
+      overlays[0].classList.add('revealed');
+      const scrollPerOverlay = window.innerHeight * 0.2;
+      const totalScroll = scrollPerOverlay * (count - 1);
+      ScrollTrigger.create({
+        trigger: frame,
+        start: 'top top',
+        end: `+=${totalScroll}`,
+        pin: true,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          const currentStep = Math.floor(progress * count);
+          overlays.forEach((overlay, i) => {
+            const isOnly = overlay.hasAttribute('data-overlay-only');
+            if (isOnly) {
+              overlay.classList.toggle('revealed', i === currentStep);
+            } else {
+              overlay.classList.toggle('revealed', i <= currentStep);
+            }
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

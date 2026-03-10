@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="nav-prev" content="markets.html">
+  <meta name="nav-next" content="financial-markets.html">
+  <title>Efficiency | ECON 510</title>
+
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <!-- Caveat font for handwritten annotations -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/beamer-theme.css">
+
+  <style>
+    .augie {
+      font-family: 'Caveat', cursive;
+      font-weight: 400;
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Section Header -->
+  <section class="section-header">
+    <div class="section-title-box">
+      <h1>Efficiency</h1>
+    </div>
+    <h2>ECON 510: Microeconomic Theory</h2>
+  </section>
+
+  <!-- Frame 1: Pareto Efficiency Definition (source: lines 1424-1427)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Pareto Efficiency</h2>
+      <p class="frame-subtitle">Definition</p>
+    </div>
+    <div class="frame-content">
+      <p><strong>Definition:</strong> In an economy with $n$ agents, a utility profile
+      $u^\ast=\left(u_{1}^\ast,\ldots,u_{n}^\ast\right)$ in the set of feasible utilities $\mathcal U$ is said to be <span style="color: #dc322f;">efficient</span>, if and only if, when $u_{i}^\ast\lt \tilde u_{i}$ for some agent $i$ and some alternative utility profile $\tilde u$ in $\mathcal U$ then there exists another agent $j$ such that $u_{j}^\ast\gt \tilde u_{j}$.</p>
+    </div>
+  </section>
+
+  <!-- Frame 2: Welfare Functions (source: lines 1429-1436)
+       HAS OVERLAYS: \pause -->
+  <section class="frame overlay-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Welfare Functions</h2>
+    </div>
+    <div class="frame-content">
+      <div class="overlay" data-overlay="1">
+        <p><strong>Definition:</strong> A <span style="color: #dc322f;">welfare function</span> is a strictly increasing map from the player's payoffs into the real line</p>
+        <div style="text-align: center; margin: 1rem 0;">
+          $$W:\mathbb{R}^n \longrightarrow \mathbb{R}$$
+          $$(u_1,u_2,\ldots, u_n) \longmapsto W(u_1,u_2,\ldots, u_n)$$
+        </div>
+        <div style="text-align: center;">
+          $$\diff{}{u_i}W \gt 0 \text{ for every player }i=1,2,\ldots, n.$$
+        </div>
+      </div>
+
+      <div class="overlay" data-overlay="2">
+        <p style="margin-top: 1rem;">An <span style="color: #dc322f;">iso-welfare curve</span> is a region in the utility space such that the welfare function is constant, $W(u_1,u_2,\ldots, u_n)=\text{cte.}$</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 3: Welfare Functions and Pareto Efficiency (source: lines 1438-1448)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Welfare Functions and Pareto Efficiency</h2>
+    </div>
+    <div class="frame-content">
+      <div class="block">
+        <div class="block-title">Proposition Efficiency 1</div>
+        <div class="block-body">
+          If $u^\ast$ in $\mathcal U$ maximizes $W(\mathbf u)$ then $u^\ast$ is Pareto efficient.
+        </div>
+      </div>
+
+      <p style="margin-top: 1rem;">We also have the partial converse,</p>
+
+      <div class="block" style="margin-top: 0.5rem;">
+        <div class="block-title">Proposition Efficiency 2</div>
+        <div class="block-body">
+          If the space of utility profiles that are feasible, $\mathcal U$, is a convex set and $u^\ast$ is Pareto efficient then there are $n$ positive weights $w_i\gt 0$ such that $u^\ast$ maximizes the social welfare function that is a weighted average of the utilities, $W(u)=\sum w_i \cdot u_i$.
+        </div>
+      </div>
+
+      <p class="fs-10pt" style="margin-top: 1rem;">Definition: A set $A$ is convex, if for any two points $x$ and $y$ in $A$, we have that the line connecting these points is also in $A$, $\alpha x +(1-\alpha)y$ is in $A$ for any $0\lt\alpha\lt 1$.</p>
+    </div>
+  </section>
+
+  <!-- Frame 4: Efficient Trade - An Example (source: lines 1450-1463)
+       NO OVERLAYS, fontsize 9pt -->
+  <section class="frame vspace-neg-3mm">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Efficient Trade</h2>
+      <p class="frame-subtitle">An Example</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>Recall our pure trade economy with Adam and Eve, where both have utility $u^i(c_0,c_1)=\sqrt{c_0}+\delta\sqrt{c_1}$ and the total endowments are $S_0=109$ and $S_1=29$.</p>
+
+      <p style="margin-top: 0.5rem;">By Proposition Efficiency 2, a Pareto efficient allocation maximizes a weighted welfare function:</p>
+
+      <div style="text-align: center; margin: 0.75rem 0;">
+        $$\max_{\substack{c_0,\,c_1\\ \mathrm{subject\, to} \\[1mm] -c_0\le 0\\[1mm] -c_1\le 0\\[1mm] c_0\le 109\\[1mm] c_1\le 29 }} \alpha\left(\sqrt{c_0}+\delta\sqrt{c_1}\right)+(1-\alpha)\left(\sqrt{109-c_0}+\delta\sqrt{29-c_1}\right)$$
+      </div>
+
+      <p>The Lagrangian is:</p>
+      <div style="text-align: center; margin: 0.5rem 0;">
+        $$\begin{align*}\mathcal{L}=&\;\alpha\left(\sqrt{c_0}+\delta\sqrt{c_1}\right)+(1-\alpha)\left(\sqrt{109-c_0}+\delta\sqrt{29-c_1}\right)\\
+        &-\lambda_1(-c_0)-\lambda_2(-c_1)-\lambda_3(c_0-109)-\lambda_4(c_1-29)\end{align*}$$
+      </div>
+
+      <p>The first-order conditions are:</p>
+      <div style="text-align: center; margin: 0.5rem 0;">
+        $$\begin{align*}
+        \diff{\mathcal{L}}{c_0}&=\frac{\alpha}{2\sqrt{c_0}}-\frac{1-\alpha}{2\sqrt{109-c_0}}+\lambda_1-\lambda_3=0\\[2mm]
+        \diff{\mathcal{L}}{c_1}&=\frac{\alpha\,\delta}{2\sqrt{c_1}}-\frac{(1-\alpha)\delta}{2\sqrt{29-c_1}}+\lambda_2-\lambda_4=0
+        \end{align*}$$
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 5: Efficient Trade - continuation (source: lines 1465-1476)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Efficient Trade</h2>
+      <p class="frame-subtitle">An Example (continuation)</p>
+    </div>
+    <div class="frame-content">
+      <p>Notice that for interior solutions (constraints not binding, Recipe #0), the FOC simplify to:</p>
+
+      <div style="text-align: center; margin: 0.75rem 0;">
+        $$\begin{align*}
+        \frac{\alpha}{2\sqrt{c_0}}&=\frac{1-\alpha}{2\sqrt{109-c_0}}\\[2mm]
+        \frac{\alpha\,\delta}{2\sqrt{c_1}}&=\frac{(1-\alpha)\delta}{2\sqrt{29-c_1}}
+        \end{align*}$$
+      </div>
+
+      <p>We can simplify this expression to:</p>
+      <div style="text-align: center; margin: 0.75rem 0;">
+        $$\frac{\dfrac{\alpha\,\delta}{2\sqrt{c_1}}}{\dfrac{\alpha}{2\sqrt{c_0}}}=\frac{\dfrac{(1-\alpha)\delta}{2\sqrt{29-c_1}}}{\dfrac{1-\alpha}{2\sqrt{109-c_0}}}$$
+      </div>
+
+      <p>Or</p>
+      <div style="text-align: center; margin: 0.75rem 0;">
+        $$\frac{c_0}{c_1}=\frac{109-c_0}{29-c_1}\Leftrightarrow MRS^A=MRS^E$$
+      </div>
+    </div>
+  </section>
+
+  <!-- Navigation Links -->
+  <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
+    <a href="markets.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Contingent Markets</a>
+    <a href="financial-markets.html" style="color: var(--crane-blue); text-decoration: none;">Financial Markets &rarr;</a>
+  </div>
+
+  <!-- KaTeX JS -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="js/katex-macros.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="js/scroll-animations.js"></script>
+
+  <!-- Overlay animation system -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.querySelectorAll('.overlay-frame').forEach(frame => {
+      const overlays = frame.querySelectorAll('.overlay');
+      const count = overlays.length;
+      if (count === 0) return;
+      overlays[0].classList.add('revealed');
+      const scrollPerOverlay = window.innerHeight * 0.5;
+      const totalScroll = scrollPerOverlay * (count - 1);
+      ScrollTrigger.create({
+        trigger: frame,
+        start: 'top top',
+        end: `+=${totalScroll}`,
+        pin: true,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          const currentStep = Math.floor(progress * count);
+          overlays.forEach((overlay, i) => {
+            const isOnly = overlay.hasAttribute('data-overlay-only');
+            if (isOnly) {
+              overlay.classList.toggle('revealed', i === currentStep);
+            } else {
+              overlay.classList.toggle('revealed', i <= currentStep);
+            }
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
