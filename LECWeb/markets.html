@@ -88,8 +88,7 @@
        NO OVERLAYS -->
   <section class="frame">
     <div class="frame-title-bar">
-      <h2 class="frame-title">A Pure Trade Economy</h2>
-      <p class="frame-subtitle">An Example</p>
+      <h2 class="frame-title">A Pure Trade Economy Example</h2>
     </div>
     <div class="frame-content">
       <p>Market interdependence grows complex quickly, so we focus on pure trade economies --- economies without production.</p>
@@ -104,7 +103,7 @@
        NO OVERLAYS -->
   <section class="frame">
     <div class="frame-title-bar">
-      <h2 class="frame-title">A Pure Trade Economy</h2>
+      <h2 class="frame-title">A Pure Trade Economy Example</h2>
       <p class="frame-subtitle">(continuation)</p>
     </div>
     <div class="frame-content">
@@ -121,7 +120,46 @@
     </div>
   </section>
 
-  <!-- Frame 5: Contingent Goods (source: lines 1254-1269)
+  <!-- Frame 5: The Economy (moved from former Contingent Goods - States)
+       NO OVERLAYS -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">The Economy</h2>
+      <p class="frame-subtitle">The Environment In Which Our Story Takes Place</p>
+    </div>
+    <div class="frame-content">
+      <p>These are the building blocks of our plot:</p>
+
+      <div class="block">
+        <div class="block-title">Time</div>
+        <div class="block-body">
+          Time is discrete and the horizon is finite, $t=0,1,\ldots,T$.
+        </div>
+      </div>
+
+      <p>At period $t$, consumers learn which state $s_t$ is realized. Consumers have symmetric information — they share a common filtration $\mathcal{F}=\left(\mathcal{F}_t\right)_{t\in T}$.</p>
+
+      <div class="block">
+        <div class="block-title">States</div>
+        <div class="block-body">
+          A state is a pair $s_t=(t,I_t)$ where $t$ is the time period, $I_t$ is an information set in the partition $\mathcal{F}_t$.
+        </div>
+      </div>
+
+      <p>At each state $s_t$, there is a single composite good. Let $c_{s_t}$ denote the quantity consumed.</p>
+
+      <div class="block">
+        <div class="block-title">Consumers' Preferences</div>
+        <div class="block-body">
+          There are $N$ consumers and each consumer $i$ has an utility function $u_i$ for the consumption good and maximizes the expected discounted utility $U_i = \sum_{t=0}^T \delta^t \, \mathbb{E}[u_i(c_{s_t})]$ for $i=1,\ldots,N$.
+        </div>
+      </div>
+
+      <p style="margin-top: 1rem;"><a href="https://sergio0p.github.io/E510/Apps/510-information-partition-app.html" target="_blank">Click here</a> to see how to set up consumers' discounted expected utility given the time horizon and the information structure (filtration).</p>
+    </div>
+  </section>
+
+  <!-- Frame 6: Contingent Goods (source: lines 1254-1269)
        NO OVERLAYS, fontsize changes -->
   <section class="frame vspace-neg-3mm">
     <div class="frame-title-bar">
@@ -131,170 +169,82 @@
       <div class="block">
         <div class="block-title">Definition</div>
         <div class="block-body">
-          A <strong>contingent good</strong> is a contract to deliver one unit of a good (specified by its physical properties and qualities) at some specified geographic location, at some specified date, only if some pre-specified state occurs.
+          A <strong>contingent good</strong> is a contract to deliver one unit of the consumption good at some specified date only if some pre-specified state occurs.
         </div>
       </div>
 
       <div class="fs-10pt" style="margin-top: 1rem;">
-        <p>Two contingent goods are distinct whenever they differ in delivery location, date, or event --- even if the underlying physical good is identical. Their prices need not be equal. For instance, a barrel of oil delivered on December 31st, 2027 is a different contingent good than one delivered on July 2nd, 2029.</p>
+        <p>Two contingent goods are distinct whenever they differ in the date or event that triggers the delivery --- even if the underlying physical good is identical. Their prices need not be equal. For instance, a barrel of oil delivered on December 31st, 2027 is a different contingent good than one delivered on July 2nd, 2029.</p>
       </div>
 
       <div style="margin-top: 0.5rem;">
         <div class="block">
-          <div class="block-title">Price of Contingent Goods</div>
+          <div class="block-title">Prices</div>
           <div class="block-body">
-            Let $p_s$ denote the market price of the contingent good (contract) that delivers one unit of consumption good when state $s$ occurs and zero otherwise.
+            Let $p_{s_t}$ denote the market price of the contingent good (contract) that delivers one unit of consumption good when state $s_t$ occurs in period $t$ and delivers nothing otherwise.
           </div>
         </div>
       </div>
 
       <div class="fs-10pt" style="margin-top: 1rem;">
-        <p>Agents buy and sell contingent good contracts exclusively in period zero. For simplicity, we focus on a single consumption good — though the model extends naturally to multiple physical goods.</p>
+        <p>Agents buy and sell contingent good contracts exclusively in period zero; $p_{s_t}$ is paid upfront. The spot price $\pi_{s_t}$, by contrast, is paid in period $t$ when state $s_t$ occurs.</p>
       </div>
-    </div>
-  </section>
 
-  <!-- Frame 6: Contingent Goods - States (source: lines 1270-1275)
-       NO OVERLAYS -->
-  <section class="frame">
-    <div class="frame-title-bar">
-      <h2 class="frame-title">Contingent Goods</h2>
-      <p class="frame-subtitle">States</p>
-    </div>
-    <div class="frame-content">
       <div class="block">
-        <div class="block-title">States</div>
+        <div class="block-title">Complete Markets</div>
         <div class="block-body">
-          A state is a pair $s_t=(t,I_t)$ where $t$ is the time period, $I_t$ is an information set in the partition $\mathcal{F}_t$. Agents have symmetric information — they share a common filtration $\mathcal{F}=\left(\mathcal{F}_t\right)_{t\in T}$.
+          When every contingent good can be traded in period zero, we say markets are <strong>complete</strong>. If some contingent good cannot be traded — a <strong>missing market</strong> — we say markets are <strong>incomplete</strong>.
         </div>
       </div>
-
-      <p style="margin-top: 1rem;"><a href="https://sergio0p.github.io/E510/Apps/510-information-partition-app.html" target="_blank">Click here</a> to see examples on how the number of contingent markets varies with consumers' information structure (filtration).</p>
     </div>
   </section>
 
-  <!-- Frame 7: General Equilibrium - Complete Markets (source: lines 1277-1288)
-       NO OVERLAYS, fontsize 10pt -->
-  <section class="frame">
-    <div class="frame-title-bar">
-      <h2 class="frame-title">General Equilibrium of A Trade Economy,</h2>
-      <p class="frame-subtitle">Complete Markets</p>
-    </div>
-    <div class="frame-content fs-10pt">
-      <ul>
-        <li>Consumers have symmetric information — they share a common filtration $\mathcal{F}=\left(\mathcal{F}_t\right)$. Also, the probabilities of the states of the world and the horizon length are common-knowledge amongst the consumers.</li>
-        <li>Consumers have preferences over contingent goods which are represented by the consumer's discounted expected utility.</li>
-        <li>Consumers are endowed with baskets of contingent goods.</li>
-        <li>A consumer's income is the value of the consumer's endowment.</li>
-        <li>A contingent good's supply is the total endowment of that contingent good.</li>
-        <li>There are markets for every contingent good (complete markets) in period zero.</li>
-        <li>Consumers buy and sell contingent goods to maximize their discounted expected utility.</li>
-      </ul>
-    </div>
-  </section>
 
   <!-- Frame 8: Endowments (source: lines 1289-1300)
        HAS OVERLAYS: \pause and enumerate with <+-> -->
-  <section class="frame overlay-frame">
+  <section class="frame">
     <div class="frame-title-bar">
       <h2 class="frame-title">Endowments</h2>
     </div>
     <div class="frame-content">
-      <div class="overlay" data-overlay="1">
-        <div class="block">
-          <div class="block-title">Definition</div>
-          <div class="block-body">
-            Assume there are $J$ contingent goods (contracts). An individual's <em>endowment</em>, $\mathbf e=(e_{0},e_1,e_2,\ldots,e_{J-1})$, is the basket of (contingent) goods that the individual possesses prior to any trade or consumption takes place.
-          </div>
+      <div class="block">
+        <div class="block-title">Definition</div>
+        <div class="block-body">
+          An individual's <em>endowment</em>, $\mathbf{e}_i=(e^i_{s_t})$, is the basket of (contingent) goods that individual $i$ possesses prior to any trade or consumption takes place.
         </div>
       </div>
 
-      <div class="overlay" data-overlay="2">
-        <ol>
-          <li>How we calculate a consumer's income?</li>
-        </ol>
-      </div>
+      <p>An individual's income is the <strong>value of his/her endowment basket</strong>.</p>
 
-      <div class="overlay" data-overlay="3">
-        <ol start="2">
-          <li>A consumer's income is the <strong>value of the endowment</strong>,</li>
-        </ol>
-        <div style="text-align: center; margin: 1rem 0;">
-          $$\boxed{\mathrm{income}=\mathbf{p} \cdot \mathbf{e} =p_{0}\cdot e_{0}+ p_{1}\cdot e_{1}+\ldots+p_{J-1}\cdot e_{J-1}}$$
-        </div>
-      </div>
+      <p>In a pure trade economy, the supply of each contingent good is simply the aggregate endowment of that good — there is no production. Supply is perfectly inelastic.</p>
     </div>
   </section>
 
-  <!-- Frame 9: Consumer Choice with Endowments (source: lines 1301-1308)
-       HAS OVERLAYS: itemize with <+-> -->
-  <section class="frame overlay-frame">
-    <div class="frame-title-bar">
-      <h2 class="frame-title">Consumer Choice with Endowments</h2>
-    </div>
-    <div class="frame-content">
-      <div class="overlay" data-overlay="1">
-        <p>Let $x^{i}=(x_{0}^{i},x_{1}^{i},x_{2}^{i},\ldots,x_{J}^{i})$ be the optimal (basket) choice of individual $i$ and $\mathbf{e} = (e_{0},e_1,e_2,\ldots,e_J)$ be her endowment. For any given good $j$:</p>
-      </div>
-
-      <ul>
-        <li class="overlay" data-overlay="2">if $e_j\gt x_j$, we say that $e_j-x_j$ is the net supply of good $j$ by the individual.</li>
-        <li class="overlay" data-overlay="3">if $e_j\lt x_j$, we say that $x_j-e_j$ is the net demand of good $j$ by the individual.</li>
-        <li class="overlay" data-overlay="4">if $e_j=x_j$, we say that the individual does not trade good $j$.</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- Frame 10: Complete Markets Equilibrium (source: lines 1309-1315)
+  <!-- Frame 9: Complete Markets Equilibrium (source: lines 1309-1315)
        NO OVERLAYS -->
   <section class="frame">
     <div class="frame-title-bar">
       <h2 class="frame-title">Complete Markets Equilibrium</h2>
     </div>
     <div class="frame-content">
-      <p>Assume there are $N$ consumers indexed by $i=1,2,\ldots,N$ and $J$ contingent goods. A market equilibrium is a list of prices (the price of each contingent good) $\mathbf{p}=(p_{1},p_{2},\ldots,p_{J})$ and a basket of goods $\mathbf{x}^{i}=(x_{1}^{i},x_{2}^{i},\ldots,x_{J}^{i})$ for each consumer $i$ so that:</p>
+      <p>Assume there are $N$ consumers and $J$ contingent goods. A market equilibrium is a list of prices (the price of each contingent good) $\mathbf{p}=(p_{1},p_{2},\ldots,p_{J})$ and a basket of goods $\mathbf{x}_i=(x^i_{1},x^i_{2},\ldots,x^i_{J})$ for each consumer $i$ so that:</p>
 
       <ul>
-        <li>Given the prices, each consumer is maximizing his/her own expected utility.</li>
-        <li>For each contingent good $j$, $\sum_{i=1}^{N} e_{j}^{i}=\sum_{i=1}^{N} x_{j}^{i}$. The supply (the aggregate endowment of good $j$) is equal to the demand of good $j$.</li>
+        <li>Given the prices $\mathbf{p}$, consumer $i$ chooses $\mathbf{x}_i$ to maximize his/her discounted expected utility, $U^i$, subject to the budget constraint, $\mathbf{p}\cdot \mathbf{x}_i \leq \mathbf{p}\cdot \mathbf{e}_i$.</li>
+        <li>Given the consumer decisions $\mathbf{x} = (\mathbf{x}_i)$, the market of each contingent good $j$ clears (supply equals demand), $\sum_{i=1}^{N} e^i_{j}=\sum_{i=1}^{N} x^i_{j}$.</li>
       </ul>
     </div>
   </section>
 
-  <!-- Frame 11: Market Equilibrium (source: lines 1347-1363)
-       NO OVERLAYS, \small font -->
-  <section class="frame">
-    <div class="frame-title-bar">
-      <h2 class="frame-title">Market Equilibrium</h2>
-    </div>
-    <div class="frame-content fs-10pt">
-      <p>By solving the consumer choice problem for each individual, we obtain his/her individual demand for each good, $x^i_j(\mathbf{p},I^i)$ (demand of consumer $i$ for good $j$).
-      The market (aggregate) demand is the sum of the individual demands $D_j(\mathbf{p})=x^1_j(\mathbf{p},I^1)+\ldots +x^n_j(\mathbf{p},I^n)$.</p>
-
-      <p style="margin-top: 0.5rem;"><span class="augie">Remember: income of consumer $i$ is the value of $i$'s endowment:</span> $I^i=p_0\,e_0^i+\ldots+p_J\, e_J^i$.</p>
-
-      <p style="margin-top: 0.5rem;">The market supply of a given good in an exchange economy (without production) is simply the aggregate endowment of that good, $S_j(\mathbf{p})=e^1_j+\ldots +e^N_j$.</p>
-
-      <div class="block" style="margin-top: 1rem;">
-        <div class="block-title">Definition</div>
-        <div class="block-body">
-          A market equilibrium is a vector of prices $\mathbf{p}$ such that:
-          If $p_j\gt 0$ then $D_j(\mathbf{p})=S_j$ and if $p_j=0$ then $D_j(\mathbf{p})\le S_j$.
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Frame 12: Finding a market equilibrium - An example (source: lines 1365-1385)
-       HAS OVERLAYS: \pause -->
-  <section class="frame overlay-frame">
+  <!-- Frame 10: Finding a market equilibrium - An example -->
+  <section class="frame" id="example-frame">
     <div class="frame-title-bar">
       <h2 class="frame-title">Finding a market equilibrium</h2>
       <p class="frame-subtitle">An example</p>
     </div>
     <div class="frame-content">
-      <div class="overlay" data-overlay="1">
-        <p>We consider an economy with Adam and Eve whose endowments are $\mathbf{e}^A=(100,4)$ and $\mathbf{e}^E=(9,25)$, and utilities</p>
+      <div class="scroll-reveal">
+        <p>We consider an economy with Adam and Eve whose endowments are $\mathbf{e}_A=(100,4)$ and $\mathbf{e}_E=(9,25)$, and utilities</p>
         <div style="text-align: center; margin: 0.75rem 0;">
           $$u^A(c_0,c_1)=\sqrt{c_0}+\delta\sqrt{c_1}
           \qquad\text{and}\qquad
@@ -303,7 +253,7 @@
         <p>For simplicity, set $p_0=1$ (<span style="color: #dc322f;">Answer: Why can we do this normalization?</span>).</p>
       </div>
 
-      <div class="overlay" data-overlay="2">
+      <div class="scroll-reveal">
         <p style="margin-top: 1rem;"><strong>Individual demands.</strong></p>
         <p>Each consumer solves $\max\sqrt{c_0}+\delta\sqrt{c_1}$ s.t. $c_0+p_1 c_1=I$.
         The FOCs give $\frac{1}{2\sqrt{c_0}}=\lambda$ and $\frac{\delta}{2\sqrt{c_1}}=\lambda p_1$,
@@ -312,36 +262,71 @@
         <div style="text-align: center; margin: 0.75rem 0;">
           $$c_0^*(p_1,I)=\frac{p_1\, I}{p_1+\delta^2}.$$
         </div>
-        <p>Since $I^A=100+4p_1$, Adam's demand is $c_0^A(p_1)=\dfrac{p_1}{p_1+\delta^2}(100+4p_1)$.<br>
-        Since $I^E=9+25p_1$, Eve's demand is $c_0^E(p_1)=\dfrac{p_1}{p_1+\delta^2}(9+25p_1)$.</p>
+        <p>Since $I^A=100+4p_1$, Adam's demand is $c_0^A(p_1)=\dfrac{p_1}{p_1+\delta^2}(100+4p_1)$.</p>
+        <p style="margin-top: 0.3rem;">Since $I^E=9+25p_1$, Eve's demand is $c_0^E(p_1)=\dfrac{p_1}{p_1+\delta^2}(9+25p_1)$.</p>
+      </div>
+
+      <div class="scroll-reveal">
+        <p style="margin-top: 1rem;"><strong>Market equilibrium price.</strong></p>
+        <p>The market demand for good 0 is</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$D_0(p_1)=\frac{p_1}{p_1+\delta^2}(109+29p_1).$$
+        </div>
+        <p>Equating with total supply $S_0=100+9=109$:</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$\begin{align*}
+          \frac{p_1}{p_1+\delta^2}(109+29p_1)&=109
+          \;\Rightarrow\; 109p_1+29p_1^2=109p_1+109\delta^2\\
+          \Rightarrow\; 29p_1^2&=109\delta^2
+          \;\Rightarrow\; p_1^*=\delta\sqrt{\frac{109}{29}} = 1.93872\,\delta.
+          \end{align*}$$
+        </div>
+      </div>
+
+      <div class="scroll-reveal">
+        <p style="margin-top: 1rem;"><strong>Market equilibrium quantities.</strong></p>
+        <p>To obtain the actual equilibrium quantities, we plug the market equilibrium price $p_1^* = 1.93872\,\delta$ back into Adam and Eve's respective individual demands.</p>
+        <p style="margin-top: 0.5rem;">Notice that in equilibrium Adam sells good 0 since $e_0^A \gt x_0^A$ and buys good 1 since $x_1^A \gt e_1^A$, while Eve does the opposite.</p>
       </div>
     </div>
   </section>
 
-  <!-- Frame 13: Finding a market equilibrium - continuation (source: lines 1386-1399)
-       NO OVERLAYS -->
+  <!-- COMMENTED OUT: Market Equilibrium (may re-use or delete later)
   <section class="frame">
     <div class="frame-title-bar">
-      <h2 class="frame-title">Finding a market equilibrium</h2>
-      <p class="frame-subtitle">An example (continuation)</p>
+      <h2 class="frame-title">Market Equilibrium</h2>
     </div>
-    <div class="frame-content">
-      <p><strong>Market equilibrium.</strong></p>
-      <p>The market demand for good 0 is</p>
-      <div style="text-align: center; margin: 0.75rem 0;">
-        $$D_0(p_1)=\frac{p_1}{p_1+\delta^2}(109+29p_1).$$
-      </div>
-      <p>Equating with total supply $S_0=100+9=109$:</p>
-      <div style="text-align: center; margin: 0.75rem 0;">
-        $$\begin{align*}
-        \frac{p_1}{p_1+\delta^2}(109+29p_1)&=109
-        \;\Rightarrow\; 109p_1+29p_1^2=109p_1+109\delta^2\\
-        &\Rightarrow\; 29p_1^2=109\delta^2
-        \;\Rightarrow\; p_1^*=\delta\sqrt{\frac{109}{29}}.
-        \end{align*}$$
+    <div class="frame-content fs-10pt">
+      <p>By solving the consumer choice problem for each individual, we obtain his/her individual demand for each good, $x^i_j(\mathbf{p},I^i)$ (demand of consumer $i$ for good $j$).
+      The market (aggregate) demand is the sum of the individual demands $D_j(\mathbf{p})=x^1_j(\mathbf{p},I^1)+\ldots +x^N_j(\mathbf{p},I^N)$.</p>
+      <p><span class="augie">Remember: income of consumer $i$ is the value of $i$'s endowment:</span> $I^i=p_0\,e^i_0+\ldots+p_J\, e^i_J$.</p>
+      <p>The market supply of a given good in an exchange economy (without production) is simply the aggregate endowment of that good, $S_j(\mathbf{p})=e^1_j+\ldots +e^N_j$.</p>
+      <div class="block">
+        <div class="block-title">Definition</div>
+        <div class="block-body">
+          A market equilibrium is a vector of prices $\mathbf{p}$ such that:
+          If $p_j\gt 0$ then $D_j(\mathbf{p})=S_j$ and if $p_j=0$ then $D_j(\mathbf{p})\le S_j$.
+        </div>
       </div>
     </div>
   </section>
+  -->
+
+  <!-- COMMENTED OUT: Consumer Choice with Endowments (may re-use or delete later)
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Consumer Choice with Endowments</h2>
+    </div>
+    <div class="frame-content">
+      <p>Let $x^{i}=(x_{0}^{i},x_{1}^{i},x_{2}^{i},\ldots,x_{J}^{i})$ be the optimal (basket) choice of individual $i$ and $\mathbf{e} = (e_{0},e_1,e_2,\ldots,e_J)$ be her endowment. For any given good $j$:</p>
+      <ul>
+        <li>if $e_j\gt x_j$, we say that $e_j-x_j$ is the net supply of good $j$ by the individual.</li>
+        <li>if $e_j\lt x_j$, we say that $x_j-e_j$ is the net demand of good $j$ by the individual.</li>
+        <li>if $e_j=x_j$, we say that the individual does not trade good $j$.</li>
+      </ul>
+    </div>
+  </section>
+  -->
 
   <!-- Navigation Links -->
   <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
@@ -388,6 +373,20 @@
             }
           });
         }
+      });
+    });
+
+    // Scroll-reveal: fade in on scroll down, hide on scroll up (no pinning)
+    gsap.utils.toArray('.scroll-reveal').forEach(el => {
+      const slow = el.closest('#example-frame') !== null;
+      const triggerPoint = slow ? 'top 75%' : 'top 85%';
+      gsap.set(el, { opacity: 0, y: 15 });
+      ScrollTrigger.create({
+        trigger: el,
+        start: triggerPoint,
+        end: triggerPoint,
+        onEnter: () => gsap.to(el, { opacity: 1, y: 0, duration: slow ? 0.6 : 0.5, ease: 'power2.out' }),
+        onLeaveBack: () => gsap.to(el, { opacity: 0, y: 15, duration: slow ? 0.4 : 0.3, ease: 'power2.in' }),
       });
     });
   </script>
