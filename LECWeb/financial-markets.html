@@ -72,10 +72,10 @@
     </div>
     <div class="frame-content fs-10pt">
       <p>In our model, a financial asset $\alpha$ is represented by a list of gross-return rates
-      $\alpha = \left(r_\alpha^{I_t}\right)$,
-      where $I_t$ is an information set that occurs in period $t$ and $r_\alpha^{I_t}$ is the price of the asset in info. set $I_t$ at time $t$
-      divided by the price of the asset when the asset was issued.
-      We set the convention that the gross return of the asset is $-1$ at the info. set in which the asset is issued.</p>
+      $\alpha = \left(r_\alpha^{s_t}\right)$,
+      where $s_t$ is a <a href="markets.html#def-states" style="color: #268bd2; text-decoration: none; border-bottom: 1px solid #268bd2;">state</a> that occurs in period $t$ and $r_\alpha^{s_t}$ is the gross rate of return (i.e., the price of the asset in state $s_t$ at time $t$
+      divided by the price of the asset when the asset was issued).
+      We set the convention that the gross return of the asset is $-1$ at the state in which the asset is issued.</p>
 
       <p style="margin-top: 0.75rem; font-size: 0.85em;">Below we have the returns of an asset for a two-period economy in which there is uncertainty regarding the future
       (state $=1$ occurs with probability $2/3$ and state $=2$ occurs with probability $1/3$). The asset return is two in state 1 and zero in state 2:</p>
@@ -115,80 +115,63 @@
     </div>
   </section>
 
-  <!-- Frame 3: Contingent Markets vs Financial Markets - An Example (source: lines 1512-1533, merged)
-       HAS OVERLAYS: itemize with <+-> -->
-  <section class="frame overlay-frame">
+  <!-- Frame 3: Contingent Markets vs Financial Markets - An Example
+       Phase 1: pinned, items reveal one by one via scrub
+       Phase 2: unpin, sticky title, content scrolls up naturally -->
+  <section class="frame overlay-frame vspace-neg-3mm" id="example-frame">
     <div class="frame-title-bar">
       <h2 class="frame-title">Contingent Markets vs Financial Markets</h2>
       <p class="frame-subtitle">An Example</p>
     </div>
-    <div class="frame-content">
-      <p>We consider an economy with:</p>
-      <ul>
-        <li>One consumption good, $c$.</li>
-        <li class="overlay" data-overlay="1">Two periods, $t=0,1$.</li>
-        <li class="overlay" data-overlay="2">Two states (are learned) in period $t=1$: $s=1,2$.</li>
-        <li class="overlay" data-overlay="3">Probability of state 1 is $p$.</li>
-        <li class="overlay" data-overlay="4">We learn/discover which state happened, only in period 1.</li>
-        <li class="overlay" data-overlay="5">In period 0, there is uncertainty regarding the state of the economy in period 1.</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- Frame 5: Contingent Markets vs Financial Markets - detail (source: lines 1534-1553)
-       NO OVERLAYS -->
-  <section class="frame vspace-neg-3mm">
-    <div class="frame-title-bar">
-      <h2 class="frame-title">Contingent Markets vs Financial Markets</h2>
-    </div>
     <div class="frame-content fs-10pt">
-      <p>Continuing the example...</p>
-      <p style="margin-top: 0.5rem;">We have 3 contingent goods:</p>
+      <p class="pinned-reveal">We consider an economy with:</p>
+      <ul>
+        <li class="pinned-reveal">One consumption good, $c$.</li>
+        <li class="pinned-reveal">Two periods, $t=0,1$.</li>
+        <li class="pinned-reveal">Two states (are learned) in period $t=1$: $s=1,2$.</li>
+        <li class="pinned-reveal">Probability of state 1 is $p$.</li>
+        <li class="pinned-reveal">We learn/discover which state happened, only in period 1.</li>
+        <li class="pinned-reveal">In period 0, there is uncertainty regarding the state of the economy in period 1.</li>
+      </ul>
+
+      <p class="pinned-reveal">We have 3 contingent goods:</p>
       <ol>
-        <li>Consumption today $c_0$.</li>
-        <li>Consumption tomorrow if state 1 occurs, $c_1$.</li>
-        <li>Consumption tomorrow if state 2 occurs, $c_2$.</li>
+        <li class="pinned-reveal">Consumption today $c_0$.</li>
+        <li class="pinned-reveal">Consumption tomorrow if state 1 occurs, $c_1$.</li>
+        <li class="pinned-reveal">Consumption tomorrow if state 2 occurs, $c_2$.</li>
       </ol>
 
-      <p style="margin-top: 0.75rem;">Prices are:</p>
+      <p class="pinned-reveal" style="margin-top: 0.75rem;">Prices are:</p>
       <ul>
-        <li>The period zero ($t=0$, today) prices for the <span style="color: #dc322f;">contingent</span> goods are $p_0$, $p_1$ and $p_2$.</li>
-        <li>The respective spot prices are $\pi_0$, $\pi_1$ and $\pi_2$.</li>
+        <li class="pinned-reveal">The period zero ($t=0$, today) prices for the <span style="color: #dc322f;">contingent</span> goods are $p_0$, $p_1$ and $p_2$.</li>
+        <li class="pinned-reveal">The respective spot prices are $\pi_0$, $\pi_1$ and $\pi_2$.</li>
       </ul>
 
-      <p style="margin-top: 0.75rem;">For a financial asset $a$, we write:</p>
+      <p class="pinned-reveal" style="margin-top: 0.75rem;">For a financial asset $a$, we write:</p>
       <dl class="beamer-description">
-        <dt style="color: #268bd2;">$z_a$</dt>
-        <dd>for the dollar amount invested in the asset (positive or negative).</dd>
-        <dt style="color: #268bd2;">$r_a^1$</dt>
-        <dd>for the rate of return of the asset if state 1 happens.</dd>
-        <dt style="color: #268bd2;">$r_a^2$</dt>
-        <dd>for the rate of return if state 2 happens.</dd>
+        <div class="pinned-reveal">
+          <dt style="color: #268bd2;">$z_a$</dt>
+          <dd>for the dollar amount invested in the asset (positive or negative).</dd>
+        </div>
+        <div class="pinned-reveal">
+          <dt style="color: #268bd2;">$r_a^1$</dt>
+          <dd>for the rate of return of the asset if state 1 happens.</dd>
+        </div>
+        <div class="pinned-reveal">
+          <dt style="color: #268bd2;">$r_a^2$</dt>
+          <dd>for the rate of return if state 2 happens.</dd>
+        </div>
       </dl>
     </div>
   </section>
 
-  <!-- Frame 6: Spot prices vs prices of contingent goods (source: lines 1554-1559)
-       NO OVERLAYS -->
-  <section class="frame">
-    <div class="frame-title-bar">
-      <h2 class="frame-title">Contingent Markets vs Financial Markets</h2>
-      <p class="frame-subtitle">Spot prices vs prices of contingent goods</p>
-    </div>
-    <div class="frame-content">
-      <ul>
-        <li>$p_{s}$ is the price at $t=0$ of one unit of consumption to be delivered when the state $s$ occurs.</li>
-        <li style="margin-top: 0.75rem;">$\pi_{s}$ is the price at the state $s$ (not at $t=0$!) of one unit of consumption to be delivered at the state $s$.</li>
-      </ul>
-    </div>
-  </section>
 
   <!-- Frame 7: Example cont. - Budget constraints comparison (source: lines 1560-1582)
        NO OVERLAYS, two-column layout -->
   <section class="frame vspace-neg-3mm">
     <div class="frame-title-bar">
-      <h2 class="frame-title">Example</h2>
-      <p class="frame-subtitle">cont.</p>
+      <h2 class="frame-title">Contingent Markets vs Financial Markets</h2>
+      <p class="frame-subtitle">An Example (continuation)</p>
     </div>
     <div class="frame-content fs-10pt">
       <p>We assume two financial assets, $a$ and $b$ and also that the consumer utility is given by,</p>
@@ -230,14 +213,14 @@
     <div class="frame-content fs-10pt">
       <p>Definition: A financial markets economy is in equilibrium if:</p>
       <ol>
-        <li>Given financial assets returns and goods' prices, each consumer maximizes his/her utility.</li>
-        <li style="margin-top: 0.5rem;">Prices are such that markets for goods clear (same as in the contingent good economy), supply must equal demand.</li>
+        <li>Given financial assets returns and goods' spot prices, each consumer maximizes his/her utility.</li>
+        <li style="margin-top: 0.5rem;">Prices are such that markets for goods clear (same as in the contingent goods economy), supply must equal demand.</li>
         <li style="margin-top: 0.5rem;">Financial asset prices (equivalently, returns) are such that each financial asset market clears. That is, financial markets are in zero net-supply.</li>
       </ol>
 
-      <p style="margin-top: 1rem;">To understand the zero net-supply condition, consider the economy with only two agents, Anna and Bob. If Anna buys 3 dollars worth of asset $\alpha$, $z_\alpha^A=3$ then Bob must sell 3 dollars worth of asset $\alpha$, $z_\alpha^B=-3$. In general if we have $m$ agents in the economy for any asset $\alpha$ we must have</p>
+      <p style="margin-top: 1rem;">To understand the zero net-supply condition, consider the economy with only two agents, Anna and Bob. If Anna buys 3 dollars worth of asset $\alpha$, $z_\alpha^A=3$ then Bob must sell 3 dollars worth of asset $\alpha$, $z_\alpha^B=-3$. In general if we have $N$ consumers in the economy for any asset $\alpha$ we must have</p>
       <div style="text-align: center; margin: 0.75rem 0;">
-        $$\sum_{i=1}^m z_\alpha^i=0.$$
+        $$\sum_{i=1}^N z_\alpha^i=0.$$
       </div>
     </div>
   </section>
@@ -289,6 +272,50 @@
         }
       });
     });
+
+    // Scroll-reveal: fade in on scroll down, fade out on scroll up
+    gsap.utils.toArray('.scroll-reveal').forEach(el => {
+      gsap.set(el, { opacity: 0, y: 15 });
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 85%',
+        end: 'top 85%',
+        onEnter: () => gsap.to(el, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }),
+        onLeaveBack: () => gsap.to(el, { opacity: 0, y: 15, duration: 0.3, ease: 'power2.in' }),
+      });
+    });
+
+    // Pinned-reveal for #example-frame:
+    // Phase 1: pin the frame, reveal items one by one via scrub
+    // Phase 2: after unpin, sticky title keeps content scrolling under it
+    (function() {
+      const frame = document.querySelector('#example-frame');
+      const items = frame.querySelectorAll('.pinned-reveal');
+      const count = items.length;
+      if (count === 0) return;
+
+      // Hide all items initially
+      items.forEach(el => gsap.set(el, { opacity: 0, y: 15 }));
+
+      const scrollPerItem = window.innerHeight * 0.18;
+      const totalPinScroll = scrollPerItem * count;
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: frame,
+          start: 'top top',
+          end: `+=${totalPinScroll}`,
+          pin: true,
+          scrub: 1,
+          anticipatePin: 1,
+        }
+      });
+
+      // Each item fades in at its step
+      items.forEach((el, i) => {
+        tl.to(el, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, i);
+      });
+    })();
   </script>
 
 </body>
