@@ -258,12 +258,17 @@
         <p>Each consumer solves $\max\sqrt{c_0}+\delta\sqrt{c_1}$ s.t. $c_0+p_1 c_1=I$.
         The FOCs give $\frac{1}{2\sqrt{c_0}}=\lambda$ and $\frac{\delta}{2\sqrt{c_1}}=\lambda p_1$,
         so $\sqrt{c_0}=\frac{1}{2\lambda}$ and $\sqrt{c_1}=\frac{\delta}{2\lambda p_1}$.
-        Substituting into the budget constraint yields $\frac{1}{4\lambda^2}=\frac{p_1 I}{p_1+\delta^2}$, hence</p>
+        So, $\sqrt{c_1}=\frac{\delta}{p_1}\,\sqrt{c_0}$ and $c_1=\frac{\delta^2}{p_1^2}\,c_0$.
+        Substituting $c_1=\frac{\delta^2}{p_1^2}\,c_0$ into the budget constraint and solving for $c_0$ yields,</p>
         <div style="text-align: center; margin: 0.75rem 0;">
           $$c_0^*(p_1,I)=\frac{p_1\, I}{p_1+\delta^2}.$$
         </div>
-        <p>Since $I^A=100+4p_1$, Adam's demand is $c_0^A(p_1)=\dfrac{p_1}{p_1+\delta^2}(100+4p_1)$.</p>
-        <p style="margin-top: 0.3rem;">Since $I^E=9+25p_1$, Eve's demand is $c_0^E(p_1)=\dfrac{p_1}{p_1+\delta^2}(9+25p_1)$.</p>
+        <p>And substituting back the optimal $c_0$ into $c_1=\frac{\delta^2}{p_1^2}\,c_0$ we obtain</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$c_1^*(p_1,I)=\frac{\delta^2\, I}{p_1(p_1+\delta^2)}.$$
+        </div>
+        <p>Since $I^A=100+4p_1$, Adam's demand for current consumption is $c_0^A(p_1)=\dfrac{p_1}{p_1+\delta^2}(100+4p_1)$.</p>
+        <p style="margin-top: 0.3rem;">Since $I^E=9+25p_1$, Eve's demand for current consumption is $c_0^E(p_1)=\dfrac{p_1}{p_1+\delta^2}(9+25p_1)$.</p>
       </div>
 
       <div class="scroll-reveal">
@@ -288,6 +293,59 @@
         <p>To obtain the actual equilibrium quantities, we plug the market equilibrium price $p_1^* = 1.93872\,\delta$ back into Adam and Eve's respective individual demands.</p>
         <p style="margin-top: 0.5rem;">Notice that in equilibrium Adam sells good 0 since $e_0^A \gt x_0^A$ and buys good 1 since $x_1^A \gt e_1^A$, while Eve does the opposite.</p>
       </div>
+    </div>
+  </section>
+
+  <!-- Frame: Finding a market equilibrium - Summary -->
+  <section class="frame vspace-neg-3mm">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Finding a market equilibrium</h2>
+      <p class="frame-subtitle">An Example: Summary</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p style="margin-bottom: 0.75rem;">Equilibrium price: $p_1^*=1.93872\,\delta$</p>
+      <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: 0.95em;">
+        <thead>
+          <tr style="background: #f9a825; color: #000;">
+            <th style="padding: 0.6rem 0.48rem; text-align: left; border-top-left-radius: 6px;"></th>
+            <th style="padding: 0.6rem 0.48rem;">Adam</th>
+            <th style="padding: 0.6rem 0.48rem;">Eve</th>
+            <th style="padding: 0.6rem 0.48rem; border-top-right-radius: 6px;">Economy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background: #f8f9fa; border-bottom: 1px solid #dee2e6;">
+            <td style="padding: 0.6rem 0.48rem; text-align: left; font-weight: 600;">$e_0$</td>
+            <td style="padding: 0.6rem 0.48rem;">$100$</td>
+            <td style="padding: 0.6rem 0.48rem;">$9$</td>
+            <td style="padding: 0.6rem 0.48rem;">$109$</td>
+          </tr>
+          <tr style="background: #fff; border-bottom: 1px solid #dee2e6;">
+            <td style="padding: 0.6rem 0.48rem; text-align: left; font-weight: 600;">$e_1$</td>
+            <td style="padding: 0.6rem 0.48rem;">$4$</td>
+            <td style="padding: 0.6rem 0.48rem;">$25$</td>
+            <td style="padding: 0.6rem 0.48rem;">$29$</td>
+          </tr>
+          <tr style="background: #f8f9fa; border-bottom: 1px solid #dee2e6;">
+            <td style="padding: 0.6rem 0.48rem; text-align: left; font-weight: 600;">$I$</td>
+            <td style="padding: 0.6rem 0.48rem;">$100 + 7.755\,\delta$</td>
+            <td style="padding: 0.6rem 0.48rem;">$9 + 48.468\,\delta$</td>
+            <td style="padding: 0.6rem 0.48rem;">$109 + 56.223\,\delta$</td>
+          </tr>
+          <tr style="background: #fff; border-bottom: 1px solid #dee2e6;">
+            <td style="padding: 0.6rem 0.48rem; text-align: left; font-weight: 600;">$c_0^*$</td>
+            <td style="padding: 0.6rem 0.48rem;">$\dfrac{193.872 + 15.035\,\delta}{1.939 + \delta}$</td>
+            <td style="padding: 0.6rem 0.48rem;">$\dfrac{17.449 + 93.966\,\delta}{1.939 + \delta}$</td>
+            <td style="padding: 0.6rem 0.48rem;">$109$</td>
+          </tr>
+          <tr style="background: #f8f9fa;">
+            <td style="padding: 0.6rem 0.48rem; text-align: left; font-weight: 600; border-bottom-left-radius: 6px;">$c_1^*$</td>
+            <td style="padding: 0.6rem 0.48rem;">$\dfrac{51.581 + 4\,\delta}{1.939 + \delta}$</td>
+            <td style="padding: 0.6rem 0.48rem;">$\dfrac{4.642 + 25\,\delta}{1.939 + \delta}$</td>
+            <td style="padding: 0.6rem 0.48rem; border-bottom-right-radius: 6px;">$29$</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
