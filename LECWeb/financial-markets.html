@@ -225,6 +225,69 @@
     </div>
   </section>
 
+  <!-- Frame: Finding a Financial Markets Equilibrium -->
+  <section class="frame" id="fm-example-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Finding a Financial Markets Equilibrium</h2>
+      <p class="frame-subtitle">An example</p>
+    </div>
+    <div class="frame-content">
+      <div class="scroll-reveal">
+        <p>We revisit the <a href="markets.html#example-frame" style="color: #268bd2; text-decoration: none; border-bottom: 1px solid #268bd2;">Adam and Eve example</a> from Contingent Markets. Same economy: endowments $\mathbf{e}_A=(100,4)$ and $\mathbf{e}_E=(9,25)$, and utilities</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$u^A(c_0,c_1)=\sqrt{c_0}+\delta\sqrt{c_1}
+          \qquad\text{and}\qquad
+          u^E(c_0,c_1)=\sqrt{c_0}+\delta\sqrt{c_1}.$$
+        </div>
+        <p>But now there are <strong>no contingent markets</strong>. Instead, a single <span style="color: #dc322f;">bond</span> with gross return $r$ is available. Each agent chooses how much $z$ to invest in the bond:</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$c_0 = e_0 - z, \qquad c_1 = e_1 + r\cdot z.$$
+        </div>
+      </div>
+
+      <div class="scroll-reveal">
+        <p style="margin-top: 1rem;"><strong>Individual demand for the bond.</strong></p>
+        <p>Each consumer solves $\max_{z}\;\sqrt{e_0 - z}+\delta\sqrt{e_1 + rz}$.
+        The FOC gives</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$\frac{-1}{2\sqrt{e_0 - z}}+\frac{\delta\, r}{2\sqrt{e_1 + rz}}=0
+          \quad\Rightarrow\quad
+          \delta\, r\,\sqrt{e_0 - z}=\sqrt{e_1 + rz}.$$
+        </div>
+        <p>Squaring and solving for $z$:</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$\delta^2 r^2(e_0 - z)=e_1 + rz
+          \quad\Rightarrow\quad
+          z^*(r)=\frac{\delta^2 r^2\, e_0 - e_1}{r(1+\delta^2 r)}.$$
+        </div>
+        <p>Adam's demand: $z_A(r)=\dfrac{100\,\delta^2 r^2 - 4}{r(1+\delta^2 r)}$.</p>
+        <p style="margin-top: 0.3rem;">Eve's demand: $z_E(r)=\dfrac{9\,\delta^2 r^2 - 25}{r(1+\delta^2 r)}$.</p>
+      </div>
+
+      <div class="scroll-reveal">
+        <p style="margin-top: 1rem;"><strong>Equilibrium bond return.</strong></p>
+        <p>The bond is in zero net supply, so $z_A + z_E = 0$:</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$\frac{100\,\delta^2 r^2 - 4 + 9\,\delta^2 r^2 - 25}{r(1+\delta^2 r)}=0
+          \quad\Rightarrow\quad 109\,\delta^2 r^2 = 29.$$
+        </div>
+        <p>Solving:</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$r^* = \frac{1}{\delta}\sqrt{\frac{29}{109}} = \frac{0.51581}{\delta}.$$
+        </div>
+      </div>
+
+      <div class="scroll-reveal">
+        <p style="margin-top: 1rem;"><strong>Comparison with contingent markets.</strong></p>
+        <p>In the <a href="markets.html#example-frame" style="color: #268bd2; text-decoration: none; border-bottom: 1px solid #268bd2;">contingent markets equilibrium</a>, the price of tomorrow's consumption was $p_1^*=\delta\sqrt{109/29}$. Notice that</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$\frac{1}{r^*}=\delta\sqrt{\frac{109}{29}}=p_1^*.$$
+        </div>
+        <p>The bond return is the reciprocal of the contingent price. With the bond, agents can replicate the same trades as in the contingent market — the financial markets equilibrium allocation coincides with the contingent markets allocation.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- Navigation Links -->
   <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
     <a href="efficiency.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Efficiency</a>
