@@ -247,20 +247,31 @@ if (window.visualViewport) {
   window.visualViewport.addEventListener('resize', handleViewportChange);
 }
 
-// Global navigation with Shift+Arrow keys
-// Navigate between lecture sections regardless of scroll position
+// Scroll to bottom if arriving via Option+Left (#bottom)
+if (window.location.hash === '#bottom') {
+  window.addEventListener('load', function() {
+    setTimeout(function() { window.scrollTo(0, document.body.scrollHeight); }, 100);
+  });
+}
+
+// Global navigation with Shift+Arrow and Option+Arrow keys
+// Shift+Arrow: go to top of prev/next section
+// Option+Left: go to bottom of previous section
 document.addEventListener('keydown', function(e) {
-  // Only respond to Shift+Arrow (not plain arrows, which may be used in interactive graphs)
-  if (!e.shiftKey) return;
   if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+  if (!e.shiftKey && !e.altKey) return;
 
   let targetUrl = null;
+  var goToBottom = (e.altKey && !e.shiftKey && e.key === 'ArrowLeft');
+
+  // Determine direction
+  var direction = e.key === 'ArrowLeft' ? 'prev' : 'next';
 
   // Method 1: Check for meta tags (preferred)
-  if (e.key === 'ArrowLeft') {
+  if (direction === 'prev') {
     const prevMeta = document.querySelector('meta[name="nav-prev"]');
     if (prevMeta) targetUrl = prevMeta.getAttribute('content');
-  } else if (e.key === 'ArrowRight') {
+  } else {
     const nextMeta = document.querySelector('meta[name="nav-next"]');
     if (nextMeta) targetUrl = nextMeta.getAttribute('content');
   }
@@ -274,9 +285,9 @@ document.addEventListener('keydown', function(e) {
     });
 
     let targetLink = null;
-    if (e.key === 'ArrowLeft') {
+    if (direction === 'prev') {
       targetLink = navLinks.find(link => link.textContent.includes('←'));
-    } else if (e.key === 'ArrowRight') {
+    } else {
       targetLink = navLinks.find(link => link.textContent.includes('→'));
     }
 
@@ -287,6 +298,7 @@ document.addEventListener('keydown', function(e) {
 
   if (targetUrl) {
     e.preventDefault();
+    if (goToBottom) targetUrl += '#bottom';
     window.location.href = targetUrl;
   }
 });
