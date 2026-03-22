@@ -7,6 +7,9 @@
   <meta name="nav-next" content="arbitrage.html">
   <title>Financial Markets | ECON 510</title>
 
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
   <!-- KaTeX CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
 
@@ -376,7 +379,7 @@
         &+\;\delta\cdot\bigl(p\cdot u(e_1^i + z_a^i r_a^1 + z_b^i r_b^1)+(1-p)\cdot u(e_2^i + z_a^i r_a^2 + z_b^i r_b^2)\bigr)\end{align*}$$
       </div>
 
-      <svg id="economy-tree" style="max-width: 420px; width: 100%; display: block; margin: 0.75rem auto;"></svg>
+      <svg id="economy-tree" style="max-width: 420px; width: 100%; display: block; margin: 0.75rem auto 0.75rem 2rem;"></svg>
       <script type="module">
         import { renderAutomaton } from './tikz-svg/src/automata/automata.js';
         const svg = document.getElementById('economy-tree');
@@ -398,11 +401,12 @@
             arrow: 'stealth',
           },
           states: {
-            t0: { label: 'c\u2080', position: { x: 0, y: 0 } },
-            s1: { label: 'c\u2081', position: { x: 160, y: -28 } },
-            s2: { label: 'c\u2082', position: { x: 160, y: 28 } },
-            lbl0: { label: 't\u2009=\u20090', position: { x: 0, y: 108 }, fill: 'none', stroke: 'none', labelColor: '#000000', radius: 12, fontSize: 15 },
-            lbl1: { label: 't\u2009=\u20091', position: { x: 160, y: 108 }, fill: 'none', stroke: 'none', labelColor: '#000000', radius: 12, fontSize: 15 },
+            t0: { label: 'c\u2080', position: { x: -40, y: 0 } },
+            s1: { label: 'c\u2081', position: { x: 200, y: -42 } },
+            s2: { label: 'c\u2082', position: { x: 200, y: 42 } },
+            lbl0: { label: 't\u2009=\u20090', position: { x: -40, y: 108 }, fill: 'none', stroke: 'none', labelColor: '#000000', radius: 12, fontSize: 15 },
+            lbl1: { label: 't\u2009=\u20091', position: { x: 200, y: 108 }, fill: 'none', stroke: 'none', labelColor: '#000000', radius: 12, fontSize: 15 },
+            cap: { label: 'A two period economy with uncertainty regarding the state in period 1.', position: { x: 80, y: 132 }, fill: 'none', stroke: 'none', labelColor: '#586e75', radius: 1, fontSize: 11 },
           },
           edges: [
             { from: 'lbl0', to: 't0', dashed: '4 2', arrow: 'none' },
@@ -414,7 +418,7 @@
         });
       </script>
 
-      <p style="margin-top: 1rem;">Now we can apply Recipe #0 to</p>
+      <p style="margin-top: 1rem;">Now we can apply Recipe #0 to the unconstrained maximization problem:</p>
       <div style="text-align: center; margin: 0.75rem 0; font-size: 1.1em;">
         $$\max\limits_{z_a^i,\, z_b^i}\; U_i(z_a^i, z_b^i)$$
       </div>
@@ -446,23 +450,146 @@
       <p>Let's assume that:</p>
       <ul style="margin-top: 0.75rem;">
         <li>$u(c)=\ln(c)$, $p=1/2$ and $\delta=0.9$</li>
-        <li>Asset $a$ is a <strong>bond</strong>: $r_a^1 = r_a^2 = r_a$</li>
-        <li>Asset $b$ pays only in state 1: $r_b^1 = r_b \gt 0$ and $r_b^2 = 0$</li>
+        <li>Asset $a$ is a <strong>bond</strong>: $r_a^1 = r_a^2 = r \gt 0$</li>
+        <li>Asset $b$ pays only in state 1: $r_b^1 = s \gt r$ and $r_b^2 = 0$</li>
       </ul>
 
       <p style="margin-top: 1rem;">The corresponding FOCs are:</p>
       <div style="text-align: center; margin: 0.75rem 0; font-size: 1.0em;">
-        $$\begin{align*}\diff{U_i}{z_a^i}&=-\frac{1}{e_0^i - z_a^i - z_b^i}+\frac{0.45\, r_a}{e_1^i + z_a^i r_a + z_b^i r_b}+\frac{0.45\, r_a}{e_2^i + z_a^i r_a}=0\\[6pt]
-        \diff{U_i}{z_b^i}&=-\frac{1}{e_0^i - z_a^i - z_b^i}+\frac{0.45\, r_b}{e_1^i + z_a^i r_a + z_b^i r_b}=0\end{align*}$$
+        $$\begin{align*}\diff{U_i}{z_a^i}&=-\frac{1}{e_0^i - z_a^i - z_b^i}+\frac{0.45\, r}{e_1^i + z_a^i r + z_b^i s}+\frac{0.45\, r}{e_2^i + z_a^i r}=0\\[6pt]
+        \diff{U_i}{z_b^i}&=-\frac{1}{e_0^i - z_a^i - z_b^i}+\frac{0.45\, s}{e_1^i + z_a^i r + z_b^i s}=0\end{align*}$$
+      </div>
+
+      <p style="margin-top: 1rem;">Solving for the demands:</p>
+      <div style="text-align: center; margin: 0.75rem 0; font-size: 1.0em;">
+        $$\begin{align*}z_a^i &= -\frac{9\, e_1^i\, r + 29\, e_2^i(r-s) + 9\, e_0^i\, r\, s}{38\, r(r-s)}\\[8pt]
+        z_b^i &= \frac{9\, e_0^i\, r(2r-s)\,s + e_1^i\, r(-20r+29s) + e_2^i(20r^2 - 11rs - 9s^2)}{38\, r(r-s)\,s}\end{align*}$$
+      </div>
+
+      <p style="margin-top: 1rem;">Market clearing: letting $S_0=\sum_i e_0^i$, $S_1=\sum_i e_1^i$, $S_2=\sum_i e_2^i$,</p>
+      <div style="text-align: center; margin: 0.75rem 0; font-size: 1.0em;">
+        $$\begin{align*}&\sum_i z_a^i = -\frac{9\,S_1\, r + 29\,S_2(r-s) + 9\,S_0\, r\, s}{38\, r(r-s)} = 0\\[8pt]
+        &\sum_i z_b^i = \frac{9\,S_0\, r(2r-s)\,s + S_1\, r(-20r+29s) + S_2(20r^2 - 11rs - 9s^2)}{38\, r(r-s)\,s} = 0\end{align*}$$
+      </div>
+
+      <p style="margin-top: 1rem;">Notice that we can ignore the denominators when solving for $r$ and $s$. We obtain:</p>
+      <div style="text-align: center; margin: 0.75rem 0; font-size: 1.1em;">
+        $$r = \frac{20\,S_1\,S_2}{9\,S_0(S_1+S_2)} \qquad\text{and}\qquad s = \frac{20\,S_1}{9\,S_0}$$
       </div>
     </div>
   </section>
+
+  <!-- Easter Egg: Log Utility General Solution -->
+  <div style="max-width: var(--frame-max-width); margin: 1rem auto; padding: 0 0.5rem;">
+
+    <!-- Outer toggle -->
+    <button class="frame-title-bar" data-bs-toggle="collapse" data-bs-target="#egg-outer"
+      style="width: 100%; text-align: left; border: none; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+      <span id="egg-arrow" style="font-size: 0.9em;">&#9654;</span>
+      <div>
+        <h2 class="frame-title" style="margin: 0;">The Two Period With Uncertainty Example</h2>
+        <p class="frame-subtitle" style="margin: 0;">A Log Utility Illustration</p>
+      </div>
+    </button>
+
+    <div class="collapse" id="egg-outer">
+      <div style="border: 2px solid #f9a825; border-top: none; padding: 1rem 1rem 0.5rem;">
+        <p style="margin-bottom: 0.75rem;">The same illustration as above but keeping $p$ and $\delta$ as parameters.</p>
+
+        <!-- Accordion -->
+        <div class="accordion" id="egg-accordion">
+
+          <!-- Panel 1: Assumptions -->
+          <div class="accordion-item" style="border: 1px solid #f9a825; margin-bottom: 0.4rem; border-radius: 4px;">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#egg-p1"
+                style="background: #fff8e1; color: #000; font-family: inherit; font-size: 0.95em; font-weight: 600; border-radius: 4px;">
+                Assumptions
+              </button>
+            </h2>
+            <div id="egg-p1" class="accordion-collapse collapse">
+              <div class="accordion-body" style="font-size: 0.95em;">
+                <ul>
+                  <li>$u(c)=\ln(c)$, $p\in(0,1)$, $\delta\in(0,1)$</li>
+                  <li>Asset $a$ is a <strong>bond</strong>: $r_a^1 = r_a^2 = r \gt 0$</li>
+                  <li>Asset $b$ pays only in state 1: $r_b^1 = s \gt r$ and $r_b^2 = 0$</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel 2: FOCs -->
+          <div class="accordion-item" style="border: 1px solid #f9a825; margin-bottom: 0.4rem; border-radius: 4px;">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#egg-p2"
+                style="background: #fff8e1; color: #000; font-family: inherit; font-size: 0.95em; font-weight: 600; border-radius: 4px;">
+                FOCs
+              </button>
+            </h2>
+            <div id="egg-p2" class="accordion-collapse collapse">
+              <div class="accordion-body" style="font-size: 0.95em;">
+                $$\begin{align*}\diff{U_i}{z_a^i}&=-\frac{1}{e_0^i - z_a^i - z_b^i}+\frac{\delta p\, r}{e_1^i + z_a^i r + z_b^i s}+\frac{\delta(1-p)\, r}{e_2^i + z_a^i r}=0\\[6pt]
+                \diff{U_i}{z_b^i}&=-\frac{1}{e_0^i - z_a^i - z_b^i}+\frac{\delta p\, s}{e_1^i + z_a^i r + z_b^i s}=0\end{align*}$$
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel 3: Demands -->
+          <div class="accordion-item" style="border: 1px solid #f9a825; margin-bottom: 0.4rem; border-radius: 4px;">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#egg-p3"
+                style="background: #fff8e1; color: #000; font-family: inherit; font-size: 0.95em; font-weight: 600; border-radius: 4px;">
+                Demands
+              </button>
+            </h2>
+            <div id="egg-p3" class="accordion-collapse collapse">
+              <div class="accordion-body" style="font-size: 0.95em;">
+                $$\begin{align*}z_a^i &= \frac{(p-1)\,\delta\,r(e_1^i + e_0^i\,s) - e_2^i(r-s)(1+p\,\delta)}{r(r-s)(1+\delta)}\\[8pt]
+                z_b^i &= \frac{\delta\,e_0^i\,r\,s(r-p\,s) + e_2^i(r-s)(r+p\,s\,\delta) + e_1^i\,r\bigl(-r+s(1+\delta-p\,\delta)\bigr)}{r(r-s)\,s\,(1+\delta)}\end{align*}$$
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel 4: Equilibrium Returns -->
+          <div class="accordion-item" style="border: 1px solid #f9a825; margin-bottom: 0.4rem; border-radius: 4px;">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#egg-p4"
+                style="background: #fff8e1; color: #000; font-family: inherit; font-size: 0.95em; font-weight: 600; border-radius: 4px;">
+                Equilibrium Returns
+              </button>
+            </h2>
+            <div id="egg-p4" class="accordion-collapse collapse">
+              <div class="accordion-body" style="font-size: 0.8em;">
+                <p>Market clearing: letting $S_0=\sum_i e_0^i$, $S_1=\sum_i e_1^i$, $S_2=\sum_i e_2^i$,</p>
+                $$\begin{align*}&\sum_i z_a^i = \frac{(p-1)\,\delta\,r(S_1 + S_0\,s) - S_2(r-s)(1+p\,\delta)}{r(r-s)(1+\delta)} = 0\\[8pt]
+                &\sum_i z_b^i = \frac{\delta\,S_0\,r\,s(r-p\,s) + S_2(r-s)(r+p\,s\,\delta) + S_1\,r\bigl(-r+s(1+\delta-p\,\delta)\bigr)}{r(r-s)\,s\,(1+\delta)} = 0\end{align*}$$
+                <p style="margin-top: 0.75rem;">Ignoring the denominators and solving for $r$ and $s$:</p>
+                $$r = \frac{S_1\,S_2}{\delta\,S_0\bigl((1-p)\,S_1 + p\,S_2\bigr)} \qquad\text{and}\qquad s = \frac{S_1}{p\,\delta\,S_0}$$
+              </div>
+            </div>
+          </div>
+
+        </div><!-- end accordion -->
+      </div>
+    </div>
+  </div>
 
   <!-- Navigation Links -->
   <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
     <a href="efficiency.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Efficiency</a>
     <a href="arbitrage.html" style="color: var(--crane-blue); text-decoration: none;">Arbitrage &rarr;</a>
   </div>
+
+  <!-- Bootstrap JS (collapse only) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.getElementById('egg-outer').addEventListener('show.bs.collapse', () => {
+      document.getElementById('egg-arrow').innerHTML = '&#9660;';
+    });
+    document.getElementById('egg-outer').addEventListener('hide.bs.collapse', () => {
+      document.getElementById('egg-arrow').innerHTML = '&#9654;';
+    });
+  </script>
 
   <!-- KaTeX JS -->
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>

@@ -26,21 +26,243 @@
   <!-- Frame: Financial Assets -->
   <section class="frame">
     <div class="frame-title-bar">
-      <h2 class="frame-title">Financial Assets</h2>
+      <h2 class="frame-title">Arbitrage</h2>
     </div>
     <div class="frame-content">
-      <p>Remember that in our model, a financial asset $\alpha$ is represented by a list of gross-return rates
-      $\alpha = \left(r_\alpha^{s_t}\right)$,
-      where $s_t$ is a <a href="markets.html#def-states" style="color: #268bd2; text-decoration: none; border-bottom: 1px solid #268bd2;">state</a> that occurs in period $t$ and $r_\alpha^{s_t}$ is the gross rate of return (i.e., the price of the asset in state $s_t$ at time $t$
-      divided by the price of the asset when the asset was issued).
+      <p>Remember that in our model, a financial asset $k$ is represented by a list of gross-return rates
+      $\left(r_k^{s_t}\right)$,
+      where $s_t$ is a <a href="markets.html#def-states" style="color: #268bd2; text-decoration: none; border-bottom: 1px solid #268bd2;">state</a> that occurs in period $t$ and $r_k^{s_t}$ is the gross rate of return.
       Also remember that by convention, the gross return of the asset is $-1$ at the state in which the asset is issued.</p>
 
       <div class="block" style="margin-top: 1rem;">
-        <div class="block-title">Definition: Portfolio</div>
+        <div class="block-title">Portfolio</div>
         <div class="block-body">
-          Let's index the assets in the economy by $k=1,\ldots,K$. A portfolio $\mathbf{z}=\bigl(z^k\bigr)_{k=1}^K$ is a list of dollar amounts invested in each asset.
+          Financial assets are indexed by $k=1,\ldots,K$, and remember that a portfolio $\mathbf{z}=\bigl(z_k\bigr)_{k=1}^K$ is a list of dollar amounts invested in each asset.
         </div>
       </div>
+
+      <div class="block" style="margin-top: 1rem;">
+        <div class="block-title">Definition: Arbitrage Opportunity</div>
+        <div class="block-body">
+          A financial structure admits an <strong>arbitrage opportunity</strong> if there is an investment strategy
+          that invests $w_k$ in the $k$-th asset—i.e. a portfolio $\mathbf{w}=\bigl(w_k\bigr)$—such that:
+          $$w_1\mathbf{r}_1 + \cdots + w_K\mathbf{r}_K \geq \mathbf{0} \quad\text{and}\quad w_1\mathbf{r}_1 + \cdots + w_K\mathbf{r}_K \neq \mathbf{0}$$
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame: Arbitrage Example -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Arbitrage Example</h2>
+      <p class="frame-subtitle">A Three-Period Economy with No Uncertainty</p>
+    </div>
+    <div class="frame-content">
+      <p>There are three periods and no uncertainty. The states of the economy are just the time periods.</p>
+      <svg id="filtration-tree" style="max-width: 420px; width: 100%; display: block; margin: 0.75rem auto 0.75rem 2rem;"></svg>
+      <script type="module">
+        import { renderAutomaton } from './tikz-svg/src/automata/automata.js';
+        renderAutomaton(document.getElementById('filtration-tree'), {
+          stateStyle: {
+            shape: 'circle', radius: 22, stroke: '#586e75', strokeWidth: 1,
+            labelColor: '#ffffff', fontSize: 14, fontFamily: "'Times New Roman', serif",
+          },
+          edgeStyle: { stroke: '#586e75', strokeWidth: 1.5, arrow: 'stealth' },
+          states: {
+            t0: { label: 't\u2080', position: { x: 0,   y: 0 }, fill: '#dc322f' },
+            t1: { label: 't\u2081', position: { x: 130, y: 0 }, fill: '#268bd2' },
+            t2: { label: 't\u2082', position: { x: 260, y: 0 }, fill: '#2e8b34' },
+          },
+          edges: [
+            { from: 't0', to: 't1' },
+            { from: 't1', to: 't2' },
+          ],
+        });
+      </script>
+      <p style="margin-top: 0.5rem;">There are three financial assets. Two short-term bonds and one long-term bond:</p>
+      <ol style="margin-top: 0.5rem;">
+        <li>Short-term bond 1: pays $r_1$ per dollar invested from $t_0$ to $t_1$</li>
+        <li>Short-term bond 2: pays $r_2$ per dollar invested from $t_1$ to $t_2$</li>
+        <li>Long-term (zero-coupon) bond: pays $r_3$ per dollar invested from $t_0$ to $t_2$</li>
+      </ol>
+      <svg id="assets-tree" style="max-width: 420px; width: 100%; display: block; margin: 0.75rem auto 0.75rem 2rem;"></svg>
+      <script type="module">
+        import { renderAutomaton } from './tikz-svg/src/automata/automata.js';
+        renderAutomaton(document.getElementById('assets-tree'), {
+          stateStyle: {
+            shape: 'circle', radius: 22, stroke: '#586e75', strokeWidth: 1,
+            labelColor: '#ffffff', fontSize: 14, fontFamily: "'Times New Roman', serif",
+          },
+          edgeStyle: { stroke: '#586e75', strokeWidth: 1.5, arrow: 'stealth' },
+          states: {
+            t0: { label: 't\u2080', position: { x: 0,   y: 0 }, fill: '#dc322f' },
+            t1: { label: 't\u2081', position: { x: 130, y: 0 }, fill: '#268bd2' },
+            t2: { label: 't\u2082', position: { x: 260, y: 0 }, fill: '#2e8b34' },
+          },
+          edges: [
+            { from: 't0', to: 't1', label: 'r\u2081', bend: 'left',  labelSide: 'right', labelDistance: 12 },
+            { from: 't1', to: 't2', label: 'r\u2082', bend: 'left',  labelSide: 'right', labelDistance: 12 },
+            { from: 't0', to: 't2', label: 'r\u2083', bend: 'right', labelSide: 'left',  labelDistance: 12, looseness: 1.5 },
+          ],
+        });
+      </script>
+    </div>
+  </section>
+
+  <!-- Frame: Arbitrage Example cont. -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Arbitrage Example</h2>
+      <p class="frame-subtitle">A Three-Period Economy with No Uncertainty (cont.)</p>
+    </div>
+    <div class="frame-content">
+      <p>Let's check whether the previous financial structure admits an arbitrage opportunity. The returns of the assets are:</p>
+      <ol style="margin-top: 0.75rem;">
+        <li>$\mathbf{r}_1 = (-1,\; r_1,\; 0)$</li>
+        <li>$\mathbf{r}_2 = (0,\; -1,\; r_2)$</li>
+        <li>$\mathbf{r}_3 = (-1,\; 0,\; r_3)$</li>
+      </ol>
+      <p style="margin-top: 1rem;">Let $\mathbf{w} = (w_1, w_2, w_3)$ be a portfolio. $\mathbf{w}$ is an arbitrage opportunity if and only if:</p>
+      $$\begin{align*}
+        -w_1 - w_3 &\geq 0\\
+        w_1 r_1 - w_2 &\geq 0\\
+        w_2 r_2 + w_3 r_3 &\geq 0
+      \end{align*}$$
+      <p>and <span style="color: #dc322f;"><strong>at least one</strong></span> of these inequalities is strict.</p>
+    </div>
+  </section>
+
+  <!-- Frame: Arbitrage Example 2 -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Arbitrage Example</h2>
+      <p class="frame-subtitle">A Two-Period Economy with Uncertainty</p>
+    </div>
+    <div class="frame-content">
+      <p>There are two periods and uncertainty about the state in period 1. The states of the economy are $t_0$, $s_1$ and $s_2$.</p>
+      <svg id="filtration-tree2" style="max-width: 380px; width: 100%; display: block; margin: 0.75rem auto 0.75rem 2rem;"></svg>
+      <script type="module">
+        import { renderAutomaton } from './tikz-svg/src/automata/automata.js';
+        renderAutomaton(document.getElementById('filtration-tree2'), {
+          stateStyle: {
+            shape: 'circle', radius: 22, stroke: '#586e75', strokeWidth: 1,
+            labelColor: '#ffffff', fontSize: 14, fontFamily: "'Times New Roman', serif",
+          },
+          edgeStyle: { stroke: '#586e75', strokeWidth: 1.5, arrow: 'stealth' },
+          states: {
+            t0: { label: 't\u2080', position: { x: -40, y: 0  }, fill: '#b58900' },
+            s1: { label: 's\u2081', position: { x: 160, y: -42 }, fill: '#6c71c4' },
+            s2: { label: 's\u2082', position: { x: 160, y:  42 }, fill: '#2aa198' },
+          },
+          edges: [
+            { from: 't0', to: 's1', label: 'p',       labelSide: 'right', labelDistance: 12 },
+            { from: 't0', to: 's2', label: '1\u2212p', labelSide: 'left',  labelDistance: 14 },
+          ],
+        });
+      </script>
+      <p style="margin-top: 0.5rem;">There are three financial assets:</p>
+      <ol style="margin-top: 0.5rem;">
+        <li>Bond: pays $r_0$ per dollar invested in both states</li>
+        <li>Asset 1: pays $r_1$ per dollar invested only in state $s_1$</li>
+        <li>Asset 2: pays $r_2$ per dollar invested only in state $s_2$</li>
+      </ol>
+      <svg id="assets-tree2" style="max-width: 380px; width: 100%; display: block; margin: 0.75rem auto 0.75rem 2rem;"></svg>
+      <script type="module">
+        import { renderAutomaton } from './tikz-svg/src/automata/automata.js';
+        renderAutomaton(document.getElementById('assets-tree2'), {
+          stateStyle: {
+            shape: 'circle', radius: 22, stroke: '#586e75', strokeWidth: 1,
+            labelColor: '#ffffff', fontSize: 14, fontFamily: "'Times New Roman', serif",
+          },
+          edgeStyle: { stroke: '#586e75', strokeWidth: 1.5, arrow: 'stealth' },
+          states: {
+            t0: { label: 't\u2080', position: { x: -40, y: 0  }, fill: '#b58900' },
+            s1: { label: 's\u2081', position: { x: 160, y: -42 }, fill: '#6c71c4' },
+            s2: { label: 's\u2082', position: { x: 160, y:  42 }, fill: '#2aa198' },
+          },
+          edges: [
+            { from: 't0', to: 's1', label: 'r\u2080', labelSide: 'right', labelDistance: 12 },
+            { from: 't0', to: 's2', label: 'r\u2080', labelSide: 'left',  labelDistance: 12 },
+            { from: 't0', to: 's1', label: 'r\u2081', bend: 'left',  labelSide: 'right', labelDistance: 14 },
+            { from: 't0', to: 's2', label: 'r\u2082', bend: 'right', labelSide: 'left',  labelDistance: 14 },
+          ],
+        });
+      </script>
+    </div>
+  </section>
+
+  <!-- Frame: Arbitrage Example 2 cont. -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Arbitrage Example</h2>
+      <p class="frame-subtitle">A Two-Period Economy with Uncertainty (cont.)</p>
+    </div>
+    <div class="frame-content">
+      <p>Let's check whether this financial structure admits an arbitrage opportunity. The returns of the assets are:</p>
+      <ol style="margin-top: 0.75rem;">
+        <li>$\mathbf{r}_0 = (-1,\; r_0,\; r_0)$</li>
+        <li>$\mathbf{r}_1 = (-1,\; r_1,\; 0)$</li>
+        <li>$\mathbf{r}_2 = (-1,\; 0,\; r_2)$</li>
+      </ol>
+      <p style="margin-top: 1rem;">Let $\mathbf{w} = (w_0, w_1, w_2)$ be a portfolio. $\mathbf{w}$ is an arbitrage opportunity if and only if:</p>
+      $$\begin{align*}
+        -w_0 - w_1 - w_2 &\geq 0\\
+        w_0 r_0 + w_1 r_1 &\geq 0\\
+        w_0 r_0 + w_2 r_2 &\geq 0
+      \end{align*}$$
+      <p>and <span style="color: #dc322f;"><strong>at least one</strong></span> of these inequalities is strict.</p>
+    </div>
+  </section>
+
+  <!-- Frame: Finding Arbitrage Opportunities -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Finding Arbitrage Opportunities</h2>
+      <p class="frame-subtitle">A Three-Period Economy with No Uncertainty</p>
+    </div>
+    <div class="frame-content">
+      <p>Consider the following portfolio $\mathbf{w}=(1, r_1, -1)$, which corresponds to the following dynamic strategy:</p>
+      <ol style="margin-top: 0.75rem;">
+        <li>Buy $1$ dollar worth of asset 1 and sell $1$ dollar worth of asset 3 (the strategy is self-financing).</li>
+        <li>Re-invest the returns of asset 1 in asset 2: buy $r_1$ dollars worth of asset 2, so the strategy is also self-financing in period 1.</li>
+        <li>In the last period, the strategy yields $r_2 \cdot r_1$ (return to investment in asset 2) minus $r_3$ (payment to the buyers who bought the asset from the agent in period 0).</li>
+      </ol>
+      <p style="margin-top: 1rem;">If $r_1 r_2 - r_3 \gt 0$, this strategy is an arbitrage opportunity. If $r_1 r_2 - r_3 \lt 0$, the portfolio $-\mathbf{w} = (-1, -r_1, 1)$ is an arbitrage opportunity. Finally, if $r_1 r_2 = r_3$, there are no arbitrage opportunities.</p>
+    </div>
+  </section>
+
+  <!-- Frame: Finding Arbitrage Opportunities 2 -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Finding Arbitrage Opportunities</h2>
+      <p class="frame-subtitle">A Two-Period Economy with Uncertainty</p>
+    </div>
+    <div class="frame-content">
+      <p>Consider the following portfolio $\mathbf{w} = (-r_1 r_2/r_0,\; r_2,\; r_1)$, which corresponds to the following strategy:</p>
+      <ol start="0" style="margin-top: 0.75rem;">
+        <li>Buy $r_2$ dollars of asset 1 and $r_1$ dollars of asset 2. This strategy is <em>not</em> self-financing at $t_0$: it generates a net cash flow of $r_1 r_2/r_0 - r_1 - r_2$.</li>
+        <li>Sell $r_1 r_2/r_0$ dollars of the bond to offset all future payoffs: the strategy yields zero in both states $s_1$ and $s_2$.</li>
+      </ol>
+      <p style="margin-top: 1rem;">If $r_1 r_2/r_0 - r_1 - r_2 \gt 0$, this strategy is an arbitrage opportunity. If $r_1 r_2/r_0 - r_1 - r_2 \lt 0$, the portfolio $-\mathbf{w} = (r_1 r_2/r_0,\; -r_2,\; -r_1)$ is an arbitrage opportunity. Finally, if $r_1 r_2 = r_0(r_1 + r_2)$, there are no arbitrage opportunities.</p>
+    </div>
+  </section>
+
+  <!-- Frame: Finding Arbitrage Opportunities - Intuition -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Finding Arbitrage Opportunities</h2>
+      <p class="frame-subtitle">Intuition</p>
+    </div>
+    <div class="frame-content">
+      <p>Notice that if there exists one arbitrage opportunity then there are an infinite number of arbitrage opportunities.</p>
+      <p style="margin-top: 0.75rem;">In cases like the above examples (economies with three states and three assets), try the following method. Fix any asset—let's call it asset $k$. Then create two portfolios:</p>
+      <dl class="beamer-description" style="margin-top: 0.5rem;">
+        <dt>$\mathbf{v}\rightarrow$</dt><dd>invests one dollar in asset $k$ and zero in the other assets.</dd>
+        <dt>$\mathbf{z}\rightarrow$</dt><dd>invests in the other assets but not in asset $k$. The payoff of $\mathbf{z}$ in the states in which asset $k$ is not issued coincides with the payoffs of $\mathbf{v}$.</dd>
+      </dl>
+      <p style="margin-top: 0.75rem;">Let $\mathbf{w} = \mathbf{v} - \mathbf{z}$. Portfolio $\mathbf{w}$ yields zero payoffs in every state except the state in which asset $k$ is issued.</p>
+      <p style="margin-top: 0.75rem;">If the payoff of $\mathbf{w}$ in that state is positive, then $\mathbf{w}$ is an arbitrage opportunity. If the payoff is negative, then $-\mathbf{w}$ is an arbitrage opportunity. Finally, if the payoff is zero—<span style="color: #dc322f;"><strong>for every choice of $k$</strong></span>—there are no arbitrage opportunities in this economy.</p>
     </div>
   </section>
 
@@ -61,6 +283,69 @@
       <p style="margin-top: 1rem;">When markets are complete, the equilibrium allocation (equilibrium consumption baskets) in the financial economy and in the contingent goods economy are the same.</p>
 
       <p style="margin-top: 1rem;"><span style="color: #dc322f;">Intuition:</span> If we can transfer income freely across states then it is as if we have only one budget constraint as in the case of contingent goods markets.</p>
+    </div>
+  </section>
+
+  <!-- Frame: Incomplete Markets Examples 1 -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Incomplete Markets Examples</h2>
+      <p class="frame-subtitle">A Three-Period Economy with No Uncertainty</p>
+    </div>
+    <div class="frame-content">
+      <p>Suppose the only available asset is asset 1, the short-term bond from $t_0$ to $t_1$:</p>
+      <svg id="incomplete-tree1" style="max-width: 420px; width: 100%; display: block; margin: 0.75rem auto 0.75rem 2rem;"></svg>
+      <script type="module">
+        import { renderAutomaton } from './tikz-svg/src/automata/automata.js';
+        renderAutomaton(document.getElementById('incomplete-tree1'), {
+          stateStyle: {
+            shape: 'circle', radius: 22, stroke: '#586e75', strokeWidth: 1,
+            labelColor: '#ffffff', fontSize: 14, fontFamily: "'Times New Roman', serif",
+          },
+          edgeStyle: { stroke: '#586e75', strokeWidth: 1.5, arrow: 'stealth' },
+          states: {
+            t0: { label: 't\u2080', position: { x: 0,   y: 0 }, fill: '#dc322f' },
+            t1: { label: 't\u2081', position: { x: 130, y: 0 }, fill: '#268bd2' },
+            t2: { label: 't\u2082', position: { x: 260, y: 0 }, fill: '#2e8b34' },
+          },
+          edges: [
+            { from: 't0', to: 't1', label: 'r\u2081', bend: 'left', labelSide: 'right', labelDistance: 12 },
+          ],
+        });
+      </script>
+      <p>For instance, it is impossible to transfer income from $t_1$ to $t_2$.</p>
+    </div>
+  </section>
+
+  <!-- Frame: Incomplete Markets Examples 2 -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Incomplete Markets Examples</h2>
+      <p class="frame-subtitle">A Two-Period Economy with Uncertainty</p>
+    </div>
+    <div class="frame-content">
+      <p>Suppose the only available asset is asset 0, the bond:</p>
+      <svg id="incomplete-tree2" style="max-width: 380px; width: 100%; display: block; margin: 0.75rem auto 0.75rem 2rem;"></svg>
+      <script type="module">
+        import { renderAutomaton } from './tikz-svg/src/automata/automata.js';
+        renderAutomaton(document.getElementById('incomplete-tree2'), {
+          stateStyle: {
+            shape: 'circle', radius: 22, stroke: '#586e75', strokeWidth: 1,
+            labelColor: '#ffffff', fontSize: 14, fontFamily: "'Times New Roman', serif",
+          },
+          edgeStyle: { stroke: '#586e75', strokeWidth: 1.5, arrow: 'stealth' },
+          states: {
+            t0: { label: 't\u2080', position: { x: -40, y: 0  }, fill: '#b58900' },
+            s1: { label: 's\u2081', position: { x: 160, y: -42 }, fill: '#6c71c4' },
+            s2: { label: 's\u2082', position: { x: 160, y:  42 }, fill: '#2aa198' },
+          },
+          edges: [
+            { from: 't0', to: 's1', label: 'r\u2080', labelSide: 'right', labelDistance: 12 },
+            { from: 't0', to: 's2', label: 'r\u2080', labelSide: 'left',  labelDistance: 12 },
+          ],
+        });
+      </script>
+      <p>For instance, it is impossible to transfer income from $s_1$ to $s_2$ while keeping income at $t_0$ constant.</p>
     </div>
   </section>
 
