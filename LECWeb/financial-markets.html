@@ -48,7 +48,7 @@
     <div class="section-title-box">
       <h1>Financial Markets</h1>
     </div>
-    <h2>ECON 510: Microeconomic Theory</h2>
+    <h2>ECON 510: Advanced Microeconomic Theory</h2>
   </section>
 
   <!-- Frame 1: Financial Markets intro (source: lines 1479-1485)
@@ -60,7 +60,8 @@
     <div class="frame-content">
       <p>Now we assume there are no contingent markets in period zero. The consumption good(s) available for consumption in a given time period or state, must be purchased at the <span style="color: #dc322f;">spot</span> (i.e. the time period/state in which the good is available for consumption and not beforehand).</p>
 
-      <p style="margin-top: 1rem;">If an agent wants to transfer income across time periods or states, the agent must buy or sell <span style="color: #dc322f;">financial assets</span>.</p>
+      <p style="margin-top: 1rem;">If a consumer wants to transfer income across time periods or states, the consumer must buy or sell <span style="color: #dc322f;">financial assets</span>.</p>
+
     </div>
   </section>
 
@@ -71,11 +72,15 @@
       <h2 class="frame-title">Financial Assets</h2>
     </div>
     <div class="frame-content fs-10pt">
-      <p>In our model, a financial asset $\alpha$ is represented by a list of gross-return rates
-      $\alpha = \left(r_\alpha^{s_t}\right)$,
-      where $s_t$ is a <a href="markets.html#def-states" style="color: #268bd2; text-decoration: none; border-bottom: 1px solid #268bd2;">state</a> that occurs in period $t$ and $r_\alpha^{s_t}$ is the gross rate of return (i.e., the price of the asset in state $s_t$ at time $t$
+      <p>We assume that there are $K$ financial assets indexed by $k=1,\ldots,K$.</p>
+
+      <p style="margin-top: 0.75rem;">A financial asset $k$ is represented by a list of gross-return rates
+      $\left(r_k^{s_t}\right)$,
+      where $s_t$ is a <a href="markets.html#def-states" style="color: #268bd2; text-decoration: none; border-bottom: 1px solid #268bd2;">state</a> that occurs in period $t$ and $r_k^{s_t}$ is the gross rate of return (i.e., the price of the asset in state $s_t$ at time $t$
       divided by the price of the asset when the asset was issued).
       We set the convention that the gross return of the asset is $-1$ at the state in which the asset is issued.</p>
+
+      <p style="margin-top: 0.75rem;">N.B. This financial structure is exogenous but the rate of returns of the assets will be endogenously determined in equilibrium.</p>
 
       <p style="margin-top: 0.75rem; font-size: 0.85em;">Below we have the returns of an asset for a two-period economy in which there is uncertainty regarding the future
       (state $=1$ occurs with probability $2/3$ and state $=2$ occurs with probability $1/3$). The asset return is two in state 1 and zero in state 2:</p>
@@ -99,19 +104,36 @@
         <!-- Root node (red) -->
         <ellipse cx="80" cy="100" rx="58" ry="22" fill="#dc322f" filter="url(#ds)"/>
         <text x="80" y="106" text-anchor="middle" font-family="'Times New Roman', serif" font-size="15" fill="#fff" font-style="italic">
-          <tspan>r</tspan><tspan font-size="10" dy="-6">0</tspan><tspan font-size="10" dy="9" dx="-7">α</tspan><tspan dy="-3" dx="2"> = −1</tspan>
+          <tspan>r</tspan><tspan font-size="10" dy="-6">0</tspan><tspan font-size="10" dy="9" dx="-7">k</tspan><tspan dy="-3" dx="2"> = −1</tspan>
         </text>
         <!-- State 1 node (green) -->
         <ellipse cx="310" cy="40" rx="55" ry="22" fill="#2e8b34" filter="url(#ds)"/>
         <text x="310" y="46" text-anchor="middle" font-family="'Times New Roman', serif" font-size="15" fill="#fff" font-style="italic">
-          <tspan>r</tspan><tspan font-size="10" dy="-6">1</tspan><tspan font-size="10" dy="9" dx="-5">α</tspan><tspan dy="-3" dx="2"> = 2</tspan>
+          <tspan>r</tspan><tspan font-size="10" dy="-6">1</tspan><tspan font-size="10" dy="9" dx="-5">k</tspan><tspan dy="-3" dx="2"> = 2</tspan>
         </text>
         <!-- State 2 node (green) -->
         <ellipse cx="310" cy="160" rx="55" ry="22" fill="#2e8b34" filter="url(#ds)"/>
         <text x="310" y="166" text-anchor="middle" font-family="'Times New Roman', serif" font-size="15" fill="#fff" font-style="italic">
-          <tspan>r</tspan><tspan font-size="10" dy="-6">2</tspan><tspan font-size="10" dy="9" dx="-5">α</tspan><tspan dy="-3" dx="2"> = 0</tspan>
+          <tspan>r</tspan><tspan font-size="10" dy="-6">2</tspan><tspan font-size="10" dy="9" dx="-5">k</tspan><tspan dy="-3" dx="2"> = 0</tspan>
         </text>
       </svg>
+    </div>
+  </section>
+
+  <!-- Frame: The Economy -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">The Economy</h2>
+    </div>
+    <div class="frame-content">
+      <p>With the exception of the absence of contingent good markets, the existence of spot good markets and financial markets — the structure of the economy: number of time periods, number of consumers, their preferences and endowments, the information structure, etc. is identical as in the Contingent Markets Economy.</p>
+
+      <p style="margin-top: 1rem;">But now consumer $i$ besides choosing the consumption basket $\mathbf{c}_i=(c_i^{s_t})$ must also choose a portfolio $\mathbf{z}_i=(z_i^k)$, where $z_i^k$ is the dollar amount that consumer $i$ invests in financial asset $k$.</p>
+
+      <ul style="margin-top: 0.75rem;">
+        <li>$z_i^k \gt 0 \;\Rightarrow\;$ the consumer <em>buys</em> financial asset $k$</li>
+        <li>$z_i^k \lt 0 \;\Rightarrow\;$ the consumer <em>sells</em> financial asset $k$</li>
+      </ul>
     </div>
   </section>
 
@@ -121,7 +143,7 @@
   <section class="frame overlay-frame vspace-neg-3mm" id="example-frame">
     <div class="frame-title-bar">
       <h2 class="frame-title">Contingent Markets vs Financial Markets</h2>
-      <p class="frame-subtitle">An Example</p>
+      <p class="frame-subtitle">A Two Period Example With Uncertainty</p>
     </div>
     <div class="frame-content fs-10pt">
       <p class="pinned-reveal">We consider an economy with:</p>
@@ -171,7 +193,7 @@
   <section class="frame vspace-neg-3mm">
     <div class="frame-title-bar">
       <h2 class="frame-title">Contingent Markets vs Financial Markets</h2>
-      <p class="frame-subtitle">An Example (continuation)</p>
+      <p class="frame-subtitle">A Two Period Example With Uncertainty (continuation)</p>
     </div>
     <div class="frame-content fs-10pt">
       <p>We assume two financial assets, $a$ and $b$ and also that the consumer utility is given by,</p>
@@ -218,9 +240,9 @@
         <li style="margin-top: 0.5rem;">Financial asset prices (equivalently, returns) are such that each financial asset market clears. That is, financial markets are in zero net-supply.</li>
       </ol>
 
-      <p style="margin-top: 1rem;">To understand the zero net-supply condition, consider the economy with only two agents, Anna and Bob. If Anna buys 3 dollars worth of asset $\alpha$, $z_\alpha^A=3$ then Bob must sell 3 dollars worth of asset $\alpha$, $z_\alpha^B=-3$. In general if we have $N$ consumers in the economy for any asset $\alpha$ we must have</p>
+      <p style="margin-top: 1rem;">To understand the zero net-supply condition, consider the economy with only two agents, Anna and Bob. If Anna buys 3 dollars worth of asset $k$, $z_k^A=3$ then Bob must sell 3 dollars worth of asset $k$, $z_k^B=-3$. In general if we have $N$ consumers in the economy for any asset $k$ we must have</p>
       <div style="text-align: center; margin: 0.75rem 0;">
-        $$\sum_{i=1}^N z_\alpha^i=0.$$
+        $$\sum_{i=1}^N z_k^i=0.$$
       </div>
     </div>
   </section>
@@ -229,7 +251,7 @@
   <section class="frame" id="fm-example-frame">
     <div class="frame-title-bar">
       <h2 class="frame-title">Finding a Financial Markets Equilibrium</h2>
-      <p class="frame-subtitle">An example</p>
+      <p class="frame-subtitle">Adam and Eve's Example</p>
     </div>
     <div class="frame-content">
       <div class="scroll-reveal">
@@ -239,7 +261,7 @@
           \qquad\text{and}\qquad
           u^E(c_0,c_1)=\sqrt{c_0}+\delta\sqrt{c_1}.$$
         </div>
-        <p>But now there are <strong>no contingent markets</strong>. Instead, a single <span style="color: #dc322f;">bond</span> with gross return $r$ is available. Each agent chooses how much $z$ to invest in the bond:</p>
+        <p>But now there are <strong>no contingent markets</strong>. Instead, a single <span style="color: #dc322f;">bond</span> with gross return $r$ is available. Each consumer chooses how much $z$ to invest in the bond:</p>
         <div style="text-align: center; margin: 0.75rem 0;">
           $$c_0 = e_0 - z, \qquad c_1 = e_1 + r\cdot z.$$
         </div>
@@ -283,7 +305,7 @@
         <div style="text-align: center; margin: 0.75rem 0;">
           $$\frac{1}{r^*}=\delta\sqrt{\frac{109}{29}}=p_1^*.$$
         </div>
-        <p>The bond return is the reciprocal of the contingent price. With the bond, agents can replicate the same trades as in the contingent market — the financial markets equilibrium allocation coincides with the contingent markets allocation.</p>
+        <p>The bond return is the reciprocal of the contingent price. With the bond, consumers can replicate the same trades as in the contingent market — the financial markets equilibrium allocation coincides with the contingent markets allocation.</p>
       </div>
     </div>
   </section>
@@ -292,7 +314,7 @@
   <section class="frame vspace-neg-3mm">
     <div class="frame-title-bar">
       <h2 class="frame-title">Finding a Financial Markets Equilibrium</h2>
-      <p class="frame-subtitle">An Example: Summary</p>
+      <p class="frame-subtitle">Adam and Eve's Example: Summary</p>
     </div>
     <div class="frame-content fs-10pt">
       <p style="margin-bottom: 0.75rem;">Equilibrium bond return: $r^*=\dfrac{0.51581}{\delta}$</p>
@@ -338,6 +360,101 @@
           </tr>
         </tbody>
       </table>
+    </div>
+  </section>
+
+  <!-- Frame: Finding the Equilibrium -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Finding the Equilibrium</h2>
+      <p class="frame-subtitle">Back To The Two Period With Uncertainty Example</p>
+    </div>
+    <div class="frame-content">
+      <p>We can normalize spot prices to be equal to one then using the spot budget constraints to eliminate consumption to express the utility of consumer $i$ as a function of the asset portfolio and endowments:</p>
+      <div style="text-align: center; margin: 0.75rem 0; font-size: 1.1em;">
+        $$\begin{align*}&U_i(z_a^i,z_b^i)=u(e_0^i - z_a^i - z_b^i)\\
+        &+\;\delta\cdot\bigl(p\cdot u(e_1^i + z_a^i r_a^1 + z_b^i r_b^1)+(1-p)\cdot u(e_2^i + z_a^i r_a^2 + z_b^i r_b^2)\bigr)\end{align*}$$
+      </div>
+
+      <svg id="economy-tree" style="max-width: 420px; width: 100%; display: block; margin: 0.75rem auto;"></svg>
+      <script type="module">
+        import { renderAutomaton } from './tikz-svg/src/automata/automata.js';
+        const svg = document.getElementById('economy-tree');
+        renderAutomaton(svg, {
+          nodeDistance: 130,
+          stateStyle: {
+            shape: 'circle',
+            radius: 22,
+            fill: '#4B9CD3',
+            stroke: '#13294B',
+            strokeWidth: 2,
+            labelColor: '#ffffff',
+            fontSize: 15,
+            fontFamily: "'Times New Roman', serif",
+          },
+          edgeStyle: {
+            stroke: '#13294B',
+            strokeWidth: 2,
+            arrow: 'stealth',
+          },
+          states: {
+            t0: { label: 'c\u2080', position: { x: 0, y: 0 } },
+            s1: { label: 'c\u2081', position: { x: 160, y: -28 } },
+            s2: { label: 'c\u2082', position: { x: 160, y: 28 } },
+            lbl0: { label: 't\u2009=\u20090', position: { x: 0, y: 108 }, fill: 'none', stroke: 'none', labelColor: '#000000', radius: 12, fontSize: 15 },
+            lbl1: { label: 't\u2009=\u20091', position: { x: 160, y: 108 }, fill: 'none', stroke: 'none', labelColor: '#000000', radius: 12, fontSize: 15 },
+          },
+          edges: [
+            { from: 'lbl0', to: 't0', dashed: '4 2', arrow: 'none' },
+            { from: 's1', to: 's2', dashed: '4 2', arrow: 'none' },
+            { from: 's2', to: 'lbl1', dashed: '4 2', arrow: 'none' },
+            { from: 't0', to: 's1', label: 'p', labelDistance: 12, labelSide: 'right' },
+            { from: 't0', to: 's2', label: '1\u2212p', labelDistance: 14, labelSide: 'left' },
+          ],
+        });
+      </script>
+
+      <p style="margin-top: 1rem;">Now we can apply Recipe #0 to</p>
+      <div style="text-align: center; margin: 0.75rem 0; font-size: 1.1em;">
+        $$\max\limits_{z_a^i,\, z_b^i}\; U_i(z_a^i, z_b^i)$$
+      </div>
+      <p>The FOCs are:</p>
+      <div style="text-align: center; margin: 0.75rem 0; font-size: 1.1em;">
+        $$\begin{align*}\diff{U_i}{z_a^i}&=-u'(c_0^i)+\delta\bigl(p\cdot r_a^1\cdot u'(c_1^i)+(1-p)\cdot r_a^2\cdot u'(c_2^i)\bigr)=0\\[6pt]
+        \diff{U_i}{z_b^i}&=-u'(c_0^i)+\delta\bigl(p\cdot r_b^1\cdot u'(c_1^i)+(1-p)\cdot r_b^2\cdot u'(c_2^i)\bigr)=0\end{align*}$$
+      </div>
+      <p style="margin-top: 0.75rem; font-size: 0.85em;">N.B. We use $c_0^i, c_1^i, c_2^i$ here just to save space. Remember that $c_0^i = e_0^i - z_a^i - z_b^i$,<br>
+      $c_1^i = e_1^i + z_a^i r_a^1 + z_b^i r_b^1$, and $c_2^i = e_2^i + z_a^i r_a^2 + z_b^i r_b^2$.</p>
+
+      <p style="margin-top: 1rem;">Solving the FOCs, we obtain the demands for the financial assets $z_a^{i}(\mathbf{r}_a, \mathbf{r}_b)$ and $z_b^{i}(\mathbf{r}_a, \mathbf{r}_b)$.</p>
+
+      <p style="margin-top: 1rem;">Next we impose the market clearing conditions</p>
+      <div style="text-align: center; margin: 0.75rem 0; font-size: 1.1em;">
+        $$\sum_{i=1}^N z_a^i = 0 \qquad\text{and}\qquad \sum_{i=1}^N z_b^i = 0$$
+      </div>
+      <p>and solve for $\mathbf{r}_a$ and $\mathbf{r}_b$.</p>
+    </div>
+  </section>
+
+  <!-- Frame: Numeric Illustration -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">The Two Period With Uncertainty Example</h2>
+      <p class="frame-subtitle">A Numeric Illustration</p>
+    </div>
+    <div class="frame-content">
+      <p>Let's assume that:</p>
+      <ul style="margin-top: 0.75rem;">
+        <li>$u(c)=\ln(c)$, $p=1/2$ and $\delta=0.9$</li>
+        <li>Asset $a$ is a <strong>bond</strong>: $r_a^1 = r_a^2 = r_a$</li>
+        <li>Asset $b$ pays only in state 1: $r_b^1 = r_b \gt 0$ and $r_b^2 = 0$</li>
+      </ul>
+
+      <p style="margin-top: 1rem;">The corresponding FOCs are:</p>
+      <div style="text-align: center; margin: 0.75rem 0; font-size: 1.0em;">
+        $$\begin{align*}\diff{U_i}{z_a^i}&=-\frac{1}{e_0^i - z_a^i - z_b^i}+\frac{0.45\, r_a}{e_1^i + z_a^i r_a + z_b^i r_b}+\frac{0.45\, r_a}{e_2^i + z_a^i r_a}=0\\[6pt]
+        \diff{U_i}{z_b^i}&=-\frac{1}{e_0^i - z_a^i - z_b^i}+\frac{0.45\, r_b}{e_1^i + z_a^i r_a + z_b^i r_b}=0\end{align*}$$
+      </div>
     </div>
   </section>
 
