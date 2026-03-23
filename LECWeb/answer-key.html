@@ -12,6 +12,11 @@
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="css/beamer-theme.css">
+  <style>
+    ol.custom-enum > li::before {
+      content: attr(data-label);
+    }
+  </style>
 </head>
 <body>
 
@@ -21,6 +26,70 @@
       <h1>Answer Key</h1>
     </div>
     <h2>ECON 510: Advanced Microeconomic Theory</h2>
+  </section>
+
+  <!-- PS 08: Case 1 -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">PS 08: Case 1</h2>
+      <p class="frame-subtitle">Negatively Correlated Endowments</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p style="color: var(--text-muted);">$e_A = (12, 20, 4)$, $e_E = (12, 4, 20)$, $\delta_A = \delta_E = 0.8$ and $u_A(c) = u_E(c) = \ln(c)$</p>
+      <ol class="custom-enum">
+        <li data-label="1"><strong>Prices:</strong> Since Adam and Eve face perfectly opposite risks—Adam is rich in state 1 and poor in state 2, while Eve has the reverse—both want to buy insurance against their bad state, and symmetry drives the equilibrium prices to $p_1 = p_2$. With identical preferences and symmetric endowments, the price of consumption in each state reflects only discounting and probability, not scarcity in one state versus the other.</li>
+        <li data-label="2"><strong>Adam's Basket:</strong> Adam sells some of his abundant state-1 endowment and buys state-2 consumption, smoothing his consumption across states. Because he is risk-averse (Log utility), he is willing to give up consumption in his good state to avoid the pain of low consumption in his bad state—that is the essence of risk-sharing.</li>
+        <li data-label="3"><strong>Eve's Basket:</strong> Eve does the mirror image of Adam: she sells state-2 consumption and buys state-1 consumption, ending up with the same smooth profile as Adam. This is the classic gains-from-trade story—negatively correlated risks are fully diversifiable and both individuals end up fully insured in equilibrium.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- PS 08: Case 2 -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">PS 08: Case 2</h2>
+      <p class="frame-subtitle">Perfectly Correlated Endowments</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p style="color: var(--text-muted);">$e_A = (12, 20, 4)$, $e_E = (12, 20, 4)$, $\delta_A = \delta_E = 0.8$ and $u_A(c) = u_E(c) = \ln(c)$</p>
+      <ol class="custom-enum">
+        <li data-label="1"><strong>Prices:</strong> When both individuals have the same endowment, same preferences, and same discount factor, they are identical in every way—so there are no gains from trade and the equilibrium is autarky. Prices adjust to make each person content to consume their own endowment, which means $p_1$ is low (state 1 is abundant) and $p_2$ is high (state 2 is scarce).</li>
+        <li data-label="2"><strong>Adam's Basket:</strong> Adam just consumes his endowment $(12, 20, 4)$ because there is no one on the other side of the market offering what he wants. Since both individuals are rich in state 1 and poor in state 2, there is aggregate risk that cannot be diversified away—risk-sharing is impossible when everyone faces the same risk.</li>
+        <li data-label="3"><strong>Eve's Basket:</strong> Eve also consumes her endowment $(12, 20, 4)$ for exactly the same reason—she would love to smooth consumption across states, but Adam wants the same trade she does, so no deal can be struck. This is consumption smoothing impossibility: correlated risks leave both agents exposed to uncertainty they cannot insure against.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- PS 08: Case 3 -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">PS 08: Case 3</h2>
+      <p class="frame-subtitle">Different Discount Factors</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p style="color: var(--text-muted);">$e_A = (10, 20, 4)$, $e_E = (10, 20, 4)$, $\delta_A = 0.7$, $\delta_E = 0.9$ and $u_A(c) = u_E(c) = \ln(c)$</p>
+      <ol class="custom-enum">
+        <li data-label="1"><strong>Prices:</strong> Even though endowments are identical and perfectly correlated, Adam and Eve now disagree on how much future consumption is worth—Eve, being more patient, values it more. This disagreement creates gains from trade: Eve wants to buy future consumption and Adam is happy to sell it, so equilibrium prices reflect a compromise between their two discount factors.</li>
+        <li data-label="2"><strong>Adam's Basket:</strong> Adam, the impatient one, sells future consumption in both states to finance higher consumption today—he front-loads his consumption profile. His impatience means he is willing to accept a riskier, more unequal future in exchange for more consumption in the present.</li>
+        <li data-label="3"><strong>Eve's Basket:</strong> Eve does the opposite: she sacrifices some period-0 consumption to buy more consumption in both future states, back-loading her consumption. Notice this is not risk-sharing—both agents still bear the same aggregate risk—it is pure intertemporal trade driven by differences in patience.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- PS 08: Case 4 -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">PS 08: Case 4</h2>
+      <p class="frame-subtitle">Different Risk Aversion</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p style="color: var(--text-muted);">$e_A = (12, 20, 4)$, $e_E = (12, 20, 4)$, $\delta_A = \delta_E = 0.8$, $u_A(c) = \sqrt{c}$ and $u_E(c) = \ln(c)$</p>
+      <ol class="custom-enum">
+        <li data-label="1"><strong>Prices:</strong> Here the agents agree on discounting but disagree on how painful risk is—Eve (Log) is more risk-averse than Adam (Sqrt). (Try computing their absolute measure of risk aversion.) So she is willing to pay more to smooth across states. This disagreement about the cost of risk creates gains from trade even with identical, perfectly correlated endowments.</li>
+        <li data-label="2"><strong>Adam's Basket:</strong> Adam, the less risk-averse agent, sells insurance to Eve: he accepts a more volatile consumption profile across states in exchange for higher average (or present) consumption. In effect, he is the one who bears more of the aggregate risk because it bothers him less.</li>
+        <li data-label="3"><strong>Eve's Basket:</strong> Eve buys insurance from Adam, ending up with a smoother consumption profile across states—less in the good state, more in the bad state—at the cost of giving up some consumption overall. This is the core logic of risk-sharing: risk flows from the more risk-averse to the less risk-averse agent, and both are better off for it.</li>
+      </ol>
+    </div>
   </section>
 
   <!-- Problem 1: Question Statement -->
