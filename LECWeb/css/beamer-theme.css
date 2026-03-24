@@ -57,7 +57,7 @@
 }
 
 html {
-  font-size: 24px;
+  font-size: clamp(18px, 1.67vw, 32px);
   scroll-behavior: smooth;
 }
 
@@ -284,10 +284,19 @@ ol > li::before {
 }
 
 /* Block environments - Crane theme (amber title, light yellow body, black text, no borders) */
+.block-group {
+  display: grid;
+  grid-template-columns: 1fr auto 3fr;
+  row-gap: 1rem;
+}
+.block-group > .block {
+  grid-column: 2;
+}
 .block {
-  margin: 1rem 0;
   border-radius: 8px;
   overflow: hidden;
+  width: fit-content;
+  max-width: 100%;
 }
 
 .block-title {
@@ -496,10 +505,6 @@ dl.beamer-description dt:first-of-type + dd {
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
-  html {
-    font-size: 18px;
-  }
-
   .frame {
     margin: 1rem;
     border-radius: 0;
