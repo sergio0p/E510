@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="nav-prev" content="arbitrage.html">
+  <title>Recursive Methods | ECON 510</title>
+
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/beamer-theme.css">
+</head>
+<body>
+
+  <!-- Section Header -->
+  <section class="section-header">
+    <div class="section-title-box">
+      <h1>Recursive Methods</h1>
+    </div>
+    <h2>ECON 510: Advanced Microeconomic Theory</h2>
+  </section>
+
+  <!-- Frame 1: Recursive Methods (source: lines 1673-1691) -->
+  <section class="frame overlay-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Recursive Methods</h2>
+    </div>
+    <div class="frame-content">
+      <p>How can we compute these infinite sums without doing an infinite number of summations or using Mathematica?</p>
+      $$\sum_{t=0}^{\infty}\delta^{t}=\text{?}\quad \sum_{t=T}^{\infty}\delta^{t}=\text{?}$$
+      <p class="overlay" data-overlay="1">By using recursive methods:</p>
+      <ul>
+        <li class="overlay" data-overlay="1">Let $A=1+\delta+\delta^{2}+\delta^{3}+\cdots$</li>
+        <li class="overlay" data-overlay="2">Factor out $\delta$: $A=1+\delta\cdot(1+\delta+\delta^{2}+\cdots)$</li>
+        <li class="overlay" data-overlay="3">Notice the expression in parentheses equals $A$: $A=1+\delta\cdot A$</li>
+        <li class="overlay" data-overlay="4">This is a recursive equation: $A$ is defined in terms of $A$</li>
+        <li class="overlay" data-overlay="5">We can easily solve: $A-\delta A=1$</li>
+        <li class="overlay" data-overlay="6">Therefore: $(1-\delta)A=1$</li>
+        <li class="overlay" data-overlay="7">Solution: $A=\dfrac{1}{1-\delta}$</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Frame 2: An Example (source: lines 1693-1705) -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Recursive Methods</h2>
+      <p class="frame-subtitle">An Example</p>
+    </div>
+    <div class="frame-content fs-14pt">
+      <p>Chuck Noland is castaway on a desert island forever and has $K$ units of perfectly divisible rations. He has to choose how many rations to consume in each period to maximize his discounted utility so, he solves the problem:</p>
+      $$\max\limits_{\substack{\phantom{X}\\[3pt](c_t)_{t=0}^{\infty}\\[4pt] \text{subject to} \\[4pt] \sum_{t=0}^{\infty}c_t= K }} \sum_{t=0}^{\infty}\delta^{t}u(c_t)$$
+      <p>We could apply recipe #1 here but then we would have to solve an infinite number of equations for an infinite number of unknowns!</p>
+    </div>
+  </section>
+
+  <!-- Frame 3: Value Function (source: lines 1706-1717) -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Recursive Methods Example</h2>
+      <p class="frame-subtitle">cont.</p>
+    </div>
+    <div class="frame-content fs-14pt">
+      <p>Let $c_t^\ast(K)$ be the optimal consumption at time $t$ given that Chuck has $K$ units of rations at the start. If we plug back the optimal consumption path into the discounted utility function we get the value of the maximization problem. Remember that this is (by definition) the <span class="alert-text">value function</span>:</p>
+      $$\begin{aligned}
+V(K)&=\sum_{t=0}^{\infty}\delta^{t}u(c_t^\ast(K))\\
+&=\max\limits_{\substack{\phantom{X}\\[3pt](c_t)_{t=0}^{\infty}\\[4pt] \text{subject to} \\[4pt] \sum_{t=0}^{\infty}c_t= K }} \sum_{t=0}^{\infty}\delta^{t}u(c_t)
+\end{aligned}$$
+    </div>
+  </section>
+
+  <!-- Frame 4: The Optimality Principle (source: lines 1718-1728) -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Recursive Methods Example</h2>
+      <p class="frame-subtitle">The Optimality Principle</p>
+    </div>
+    <div class="frame-content">
+      <p>Suppose that, in period zero, Chuck consumes $c_0$ which might be a non-optimal amount. Then, he has $K-c_0$ units of rations left for the future periods.</p>
+      <p>Also, suppose that from period one onwards, Chuck only makes optimal choices. Notice the optimal choices would have changed due to the period zero choice. His discounted utility can be expressed as:</p>
+      $$u(c_0)+\delta\cdot V(K-c_0)$$
+      <p>Moreover,</p>
+      $$V(K)\ge u(c_0)+\delta\cdot V(K-c_0)$$
+      <p>because $V(K)$ is the maximum discounted utility that Chuck can get with $K$ units of rations. This is called the <span class="alert-text">optimality principle</span>.</p>
+    </div>
+  </section>
+
+  <!-- Frame 5: The Recursive Equation (source: lines 1729-1734) -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Recursive Methods Example</h2>
+      <p class="frame-subtitle">The Recursive Equation</p>
+    </div>
+    <div class="frame-content">
+      <p>By the optimality principle we have that:</p>
+      $$V(K)\ge u(c_0)+\delta\cdot V(K-c_0)$$
+      <p>and since this is true for any $c_0$ such that $0\le c_0\le K$ we have that:</p>
+      <div style="text-align: center;">
+        <div style="display: inline-block; background: #fff8e1; border: 2px solid #f9a825; border-radius: 8px; padding: 0.4rem 1.2rem; font-size: 1.15em;">
+          $$V(K)=\max\limits_{0\le c\le K} u(c)+\delta\cdot V(K-c)$$
+        </div>
+      </div>
+      <p style="margin-top: 1.5rem;">This is the <span class="alert-text">recursive equation</span> for the value function $V(K)$.</p>
+    </div>
+  </section>
+
+  <!-- Frame 6: The Optimal Consumption Policy (source: lines 1736-1750) -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">The Optimal Consumption Policy</h2>
+      <p class="frame-subtitle">Example cont.</p>
+    </div>
+    <div class="frame-content">
+      <p>We refer to the function $c^\ast(K)$ that gives the optimal consumption in the current period as a function of the current level of rations $K$ as the <span class="alert-text">policy function</span>. Notice that the policy function does not depend on the calendar time $t$ because the problem is time-invariant. Chuck does not care which period it is, he only cares about how many rations he has left.</p>
+      <p>Using the policy function we can obtain the value function as:</p>
+      $$\begin{aligned}
+V(K)=&\;u(c^\ast(K))+\delta\cdot u(c^\ast(K-c^\ast(K)))+\\
+&+\delta^{2}\cdot u(c^\ast(K-c^\ast(K)-c^\ast(K-c^\ast(K))))+\cdots
+\end{aligned}$$
+      <p>Conversely, if we know the value function we can obtain the policy function as the solution of the following first order condition:</p>
+      <div style="text-align: center;">
+        <div style="display: inline-block; background: #fff8e1; border: 2px solid #f9a825; border-radius: 8px; padding: 0.4rem 1.2rem; font-size: 1.15em;">
+          $$u^\prime(c)-\delta\cdot V^\prime(K-c)=0.$$
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 7: Solving the Recursive Equation (source: lines 1751-1762) -->
+  <section class="frame overlay-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Solving the Recursive Equation</h2>
+    </div>
+    <div class="frame-content">
+      <p>Under certain conditions, any solution of the recursive equation is the value function of the original problem. To solve the recursive equation we can use <span class="alert-text">value function iteration</span>:</p>
+      <ul>
+        <li class="overlay" data-overlay="1">Start with an initial guess for the value function, $V_0(K)$.</li>
+        <li class="overlay" data-overlay="2">Solve the first order condition $u^\prime(c)-\delta\cdot V_0^\prime(K-c)=0$ to obtain the corresponding policy function $c_0^\ast(K)$.</li>
+        <li class="overlay" data-overlay="3">Plug $c_0^\ast(K)$ into $u(c)+\delta\cdot V_0(K-c)$ to obtain a new value function $V_1(K)= u(c_0^\ast(K))+\delta\cdot V_0(K-c_0^\ast(K))$.</li>
+        <li class="overlay" data-overlay="4">Repeat the process until convergence.</li>
+        <li class="overlay" data-overlay="5">Under certain conditions, this process converges to the value function of the original problem.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Nav -->
+  <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
+    <a href="arbitrage.html" style="color: var(--crane-blue); text-decoration: none;">&larr; The Financial Structure</a>
+  </div>
+
+  <!-- KaTeX JS -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="js/katex-macros.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="js/scroll-animations.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.querySelectorAll('.overlay-frame').forEach(frame => {
+      const overlays = frame.querySelectorAll('.overlay');
+      const count = overlays.length;
+      if (count === 0) return;
+      overlays[0].classList.add('revealed');
+      const scrollPerOverlay = window.innerHeight * 0.5;
+      const totalScroll = scrollPerOverlay * (count - 1);
+      ScrollTrigger.create({
+        trigger: frame,
+        start: 'top top',
+        end: `+=${totalScroll}`,
+        pin: true,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          const currentStep = Math.floor(progress * count);
+          overlays.forEach((overlay, i) => {
+            const isOnly = overlay.hasAttribute('data-overlay-only');
+            if (isOnly) {
+              overlay.classList.toggle('revealed', i === currentStep);
+            } else {
+              overlay.classList.toggle('revealed', i <= currentStep);
+            }
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
