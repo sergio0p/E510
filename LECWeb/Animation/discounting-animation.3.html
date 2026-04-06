@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discounting &mdash; Passage of Time</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <style>
+    @font-face {
+      font-family: 'Augie';
+      src: url('../fonts/augie.woff2') format('woff2'),
+           url('../fonts/augie.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      overflow: hidden;
+      background: #000;
+      font-family: 'Augie', cursive;
+    }
+
+    /* Scene keeps 16:9 aspect, centered in viewport */
+    .scene {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      aspect-ratio: 16 / 9;
+      width: min(100vw, calc(100vh * 16 / 9));
+      height: min(100vh, calc(100vw * 9 / 16));
+      overflow: hidden;
+    }
+
+    /* SVG fills the scene exactly */
+    .bg-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Equation overlay */
+    .equation-container {
+      position: absolute;
+      top: 16vh;
+      padding-left: 6vw;
+      text-align: left;
+      z-index: 10;
+      width: 100%;
+    }
+
+    /* Preamble */
+    .preamble {
+      position: absolute;
+      top: 4vh;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 20;
+      width: 95%;
+      max-width: 1200px;
+      color: #f0f0f0;
+      font-size: clamp(1.01rem, 2.25vw, 1.8rem);
+      line-height: 1.5;
+      opacity: 0;
+      text-shadow: 0 2px 15px rgba(0, 0, 0, 0.7);
+    }
+
+    .preamble-values {
+      font-size: clamp(1.13rem, 2.53vw, 2.03rem);
+    }
+
+    .preamble sub {
+      font-family: 'Augie', cursive;
+    }
+
+    .preamble-line {
+      opacity: 0;
+    }
+
+    .summary {
+      position: absolute;
+      top: 4vh;
+      padding-left: 6vw;
+      text-align: left;
+      z-index: 30;
+      width: 100%;
+      color: #000;
+      font-size: clamp(1.13rem, 2.53vw, 2.03rem);
+      line-height: 1.5;
+      opacity: 0;
+    }
+
+    .summary .summary-line {
+      opacity: 0;
+    }
+
+    .summary .summary-values {
+      font-size: clamp(1.13rem, 2.53vw, 2.03rem);
+    }
+
+    .summary .summary-eq {
+      font-size: clamp(1.31rem, 2.73vw, 2.19rem);
+      margin-top: 0.3rem;
+    }
+
+    .summary sub {
+      font-family: 'Augie', cursive;
+    }
+
+    .eq-label {
+      font-size: clamp(1.31rem, 2.73vw, 2.19rem);
+      color: #000;
+      margin-bottom: 0.8rem;
+      opacity: 0;
+    }
+
+    .eq-math {
+      font-size: clamp(1.31rem, 2.73vw, 2.19rem);
+      color: #000;
+      letter-spacing: 0.01em;
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="scene">
+  <!-- SVG background — reconstructed day/night cycle -->
+  <svg class="bg-svg" viewBox="0 0 1280 720" preserveAspectRatio="xMidYMid meet">
+    <defs>
+      <mask id="moon-mask">
+        <circle id="moon-show" cx="-100" cy="700" r="117.1" fill="white"/>
+        <circle id="moon-bite" cx="-32.6" cy="712.7" r="93.1" fill="black"/>
+      </mask>
+    </defs>
+    <!-- Layer 1: Sky -->
+    <rect id="sky" width="1280" height="720" fill="rgb(147,147,147)"/>
+    <!-- Layer 2: Sun -->
+    <circle id="sun" cx="105" cy="478" r="116.7" fill="rgb(213,213,213)" stroke="rgb(82,82,128)" stroke-width="3" stroke-opacity="0.6"/>
+    <!-- Layer 3: Moon -->
+    <circle id="moon" cx="-100" cy="700" r="117.1" fill="rgb(213,213,213)" stroke="rgb(82,82,128)" stroke-width="3" stroke-opacity="0.6" mask="url(#moon-mask)"/>
+    <!-- Layer 4: Mountain frames (crossfaded) -->
+    <image class="mountain-frame" href="mountain-frame-0001.png" x="0" y="0" width="1280" height="720" opacity="1"/>
+    <image class="mountain-frame" href="mountain-frame-0002.png" x="0" y="0" width="1280" height="720" opacity="0"/>
+    <image class="mountain-frame" href="mountain-frame-0003.png" x="0" y="0" width="1280" height="720" opacity="0"/>
+    <image class="mountain-frame" href="mountain-frame-0004.png" x="0" y="0" width="1280" height="720" opacity="0"/>
+    <image class="mountain-frame" href="mountain-frame-0005.png" x="0" y="0" width="1280" height="720" opacity="0"/>
+    <image class="mountain-frame" href="mountain-frame-0006.png" x="0" y="0" width="1280" height="720" opacity="0"/>
+    <image class="mountain-frame" href="mountain-frame-0007.png" x="0" y="0" width="1280" height="720" opacity="0"/>
+    <image class="mountain-frame" href="mountain-frame-0008.png" x="0" y="0" width="1280" height="720" opacity="0"/>
+    <image class="mountain-frame" href="mountain-frame-0009.png" x="0" y="0" width="1280" height="720" opacity="0"/>
+    <image class="mountain-frame" href="mountain-frame-0010.png" x="0" y="0" width="1280" height="720" opacity="0"/>
+    <image class="mountain-frame" href="mountain-frame-0011.png" x="0" y="0" width="1280" height="720" opacity="0"/>
+    <image class="mountain-frame" href="mountain-frame-0012.png" x="0" y="0" width="1280" height="720" opacity="0"/>
+    <image class="mountain-frame" href="mountain-frame-0013.png" x="0" y="0" width="1280" height="720" opacity="0"/>
+    <image class="mountain-frame" href="mountain-frame-0014.png" x="0" y="0" width="1280" height="720" opacity="0"/>
+    <image class="mountain-frame" href="mountain-frame-0015.png" x="0" y="0" width="1280" height="720" opacity="0"/>
+    <image class="mountain-frame" href="mountain-frame-0016.png" x="0" y="0" width="1280" height="720" opacity="0"/>
+    <image class="mountain-frame" href="mountain-frame-0017.png" x="0" y="0" width="1280" height="720" opacity="0"/>
+    <image class="mountain-frame" href="mountain-frame-0018.png" x="0" y="0" width="1280" height="720" opacity="0"/>
+  </svg>
+
+  <!-- Preamble overlay -->
+  <div class="preamble" id="preamble">
+    <p class="preamble-line">Suppose there are 5 periods, t = 0, 1, ... , 4</p>
+    <p class="preamble-line">Your consumption plan is</p>
+    <p class="preamble-line preamble-values" id="preamble-c"></p>
+    <p class="preamble-line">The discount factors are</p>
+    <p class="preamble-line preamble-values" id="preamble-d"></p>
+  </div>
+
+  <!-- Summary overlay (shown at the end) -->
+  <div class="summary" id="summary"></div>
+
+  <!-- Equation overlay -->
+  <div class="equation-container" id="eq-container">
+    <div class="eq-label" id="eq-label"></div>
+    <div class="eq-math" id="eq-math"></div>
+  </div>
+</div>
+
+<script>
+// ── Configuration ──────────────────────────────────────────────
+const CONFIG = {
+  cycleDuration: 12.61,  // seconds per cycle (10.61 animation + 2s dusk pause)
+  duskPause: 2,          // seconds to hold between sun exit and moon entry
+  sun: {
+    radius: 116.7, fill: 'rgb(213,213,213)',
+    stroke: 'rgb(82,82,128)', strokeWidth: 3,
+    entry: {cx: 105, cy: 478},   // frame 1 — lower-left
+    peak:  {cx: 694, cy: 99},    // frame 5 — top center
+    exit:  {cx: 1138, cy: 554},  // frame 9 — lower-right
+    startFrame: 0, endFrame: 8,
+  },
+  moon: {
+    radius: 117.1, biteRadius: 93.1,
+    biteOffsetX: 67.4, biteOffsetY: -12.7,
+    fill: 'rgb(213,213,213)',
+    stroke: 'rgb(82,82,128)', strokeWidth: 3,
+    entry: {cx: 89, cy: 556},    // frame 9 — lower-left
+    peak:  {cx: 690, cy: 99},    // frame 13 — top center
+    exit:  {cx: 1138, cy: 553},  // frame 17 — lower-right
+    startFrame: 8, endFrame: 16,
+  },
+};
+
+// ── 18-frame data tables ───────────────────────────────────────
+
+// Sky greyscale values (frame 1–18)
+const SKY_VALUES = [
+  147, 137, 127, 117, 107, 98, 88, 78, 68,
+  58, 58, 58, 58, 58, 80, 102, 125, 147
+];
+
+// Equation text opacity per frame
+const FRAME_OPACITY = [
+  0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1.0, 1.0, 1.0, 1.0,
+  0.875, 0.75, 0.625, 0.5, 0.375, 0.25, 0.125, 0
+];
+
+// ── Random equation generation ─────────────────────────────────
+// Discount factor pool excludes 0.7 (looks like 0.1 in Augie font)
+const SAFE_FACTORS = [0.9, 0.8, 0.6, 0.5, 0.4, 0.3, 0.2];
+
+function generate() {
+  // Exclude values containing digit 7 (looks like 1 in Augie font)
+  const SAFE_CONSUMPTION = [];
+  for (let v = 2; v <= 25; v++) { if (!String(v).includes('7')) SAFE_CONSUMPTION.push(v); }
+  const c = Array.from({ length: 5 }, () => SAFE_CONSUMPTION[Math.floor(Math.random() * SAFE_CONSUMPTION.length)]);
+  const shuffled = SAFE_FACTORS.slice().sort(() => Math.random() - 0.5);
+  const d = shuffled.slice(0, 4).sort((a, b) => b - a);
+
+  document.getElementById('preamble-c').textContent = 'c = (' + c.join(', ') + ')';
+  document.getElementById('preamble-d').innerHTML =
+    d.map((v, i) => 'd<sub>' + (i + 1) + '</sub> = ' + v).join(', ');
+
+  const equations = [];
+  for (let t = 0; t < 5; t++) {
+    const remaining = c.slice(t);
+    const factors = d.slice(0, remaining.length - 1);
+    let math = 'U<sub>' + t + '</sub> = u(' + remaining[0] + ')';
+    for (let j = 1; j < remaining.length; j++) {
+      math += ' + ' + factors[j - 1] + '&thinsp;u(' + remaining[j] + ')';
+    }
+    equations.push({ label: 'At t = ' + t + ':', math });
+  }
+  return { c, d, equations };
+}
+
+const { c, d, equations } = generate();
+
+// ── DOM references ─────────────────────────────────────────────
+const labelEl = document.getElementById('eq-label');
+const mathEl  = document.getElementById('eq-math');
+const preambleEl = document.getElementById('preamble');
+
+// SVG elements
+const skyEl = document.getElementById('sky');
+const sunEl = document.getElementById('sun');
+const moonEl = document.getElementById('moon');
+const moonShowEl = document.getElementById('moon-show');
+const moonBiteEl = document.getElementById('moon-bite');
+const mountainFrames = document.querySelectorAll('.mountain-frame');
+
+// ── Internal clock (replaces video timing) ─────────────────────
+let clockStart = 0;
+let clockPaused = true;
+let pauseElapsed = 0;
+let currentCycle = 0;
+let currentEq = 0;
+
+function startClock() {
+  clockStart = performance.now() - pauseElapsed;
+  clockPaused = false;
+}
+
+function pauseClock() {
+  pauseElapsed = performance.now() - clockStart;
+  clockPaused = true;
+}
+
+function getElapsed() {
+  return clockPaused ? pauseElapsed : performance.now() - clockStart;
+}
+
+function rewindClock(seconds) {
+  pauseElapsed = Math.max(0, getElapsed() - seconds * 1000);
+  if (!clockPaused) clockStart = performance.now() - pauseElapsed;
+}
+
+function resetClock() {
+  clockStart = 0;
+  pauseElapsed = 0;
+  currentCycle = 0;
+  clockPaused = true;
+}
+
+// ── Helper: interpolate between two frame values ───────────────
+function lerp(arr, framePos) {
+  const i = Math.min(Math.floor(framePos), 17);
+  const j = Math.min(i + 1, 17);
+  const f = framePos - i;
+  return arr[i] + (arr[j] - arr[i]) * f;
+}
+
+// ── Quadratic Bezier arc for sun/moon ──────────────────────────
+// P0 = entry, P2 = exit, peak at t=0.5 → derive control point P1
+function arcControlPoint(entry, peak, exit) {
+  return {
+    cx: 2 * peak.cx - 0.5 * entry.cx - 0.5 * exit.cx,
+    cy: 2 * peak.cy - 0.5 * entry.cy - 0.5 * exit.cy
+  };
+}
+
+// Ease-in-out: accelerate from horizon, slow at peak, accelerate to exit
+function easeInOut(t) {
+  return t < 0.5
+    ? 2 * t * t
+    : 1 - 2 * (1 - t) * (1 - t);
+}
+
+function arcPosition(body, framePos) {
+  let t = (framePos - body.startFrame) / (body.endFrame - body.startFrame);
+  if (t < 0 || t > 1) return { cx: t < 0 ? -200 : 1480, cy: 750 }; // off-screen
+  t = easeInOut(t);
+  const p0 = body.entry;
+  const p1 = arcControlPoint(body.entry, body.peak, body.exit);
+  const p2 = body.exit;
+  const u = 1 - t;
+  return {
+    cx: u * u * p0.cx + 2 * u * t * p1.cx + t * t * p2.cx,
+    cy: u * u * p0.cy + 2 * u * t * p1.cy + t * t * p2.cy
+  };
+}
+
+// ── Render one frame of SVG from progress (0–1) ───────────────
+function renderSVGFrame(progress) {
+  // Remap progress to insert a dusk pause at frame 7 (sun low behind mountains, moon still hidden)
+  const animDuration = CONFIG.cycleDuration - CONFIG.duskPause;
+  const sunPart = animDuration * (7 / 18);                 // time for frames 0–7
+  const restPart = animDuration * (11 / 18);               // time for frames 7–18
+  const elapsed = progress * CONFIG.cycleDuration;         // seconds into cycle
+  let framePos;
+  if (elapsed <= sunPart) {
+    framePos = (elapsed / sunPart) * 7;                    // frames 0–7
+  } else if (elapsed <= sunPart + CONFIG.duskPause) {
+    framePos = 7;                                          // hold at dusk
+  } else {
+    framePos = 7 + ((elapsed - sunPart - CONFIG.duskPause) / restPart) * 11;  // frames 7–18
+  }
+
+  // Snap to discrete frame positions (mimics video flipbook choppiness)
+  const snappedFrame = Math.min(Math.floor(framePos), 17);
+
+  // Sky — snapped to frame
+  const skyVal = SKY_VALUES[snappedFrame];
+  skyEl.setAttribute('fill', 'rgb(' + skyVal + ',' + skyVal + ',' + skyVal + ')');
+
+  // Sun — arc position snapped to frame
+  const sunPos = arcPosition(CONFIG.sun, snappedFrame);
+  sunEl.setAttribute('cx', sunPos.cx);
+  sunEl.setAttribute('cy', sunPos.cy);
+
+  // Moon — arc position snapped to frame + mask
+  const moonPos = arcPosition(CONFIG.moon, snappedFrame);
+  moonEl.setAttribute('cx', moonPos.cx);
+  moonEl.setAttribute('cy', moonPos.cy);
+  moonShowEl.setAttribute('cx', moonPos.cx);
+  moonShowEl.setAttribute('cy', moonPos.cy);
+  moonBiteEl.setAttribute('cx', moonPos.cx + CONFIG.moon.biteOffsetX);
+  moonBiteEl.setAttribute('cy', moonPos.cy + CONFIG.moon.biteOffsetY);
+
+  // Mountain frame — hard-cut flipbook style (preserves full occlusion)
+  const mtIdx = Math.min(Math.floor(framePos), 17);
+  for (let i = 0; i < 18; i++) {
+    mountainFrames[i].setAttribute('opacity', i === mtIdx ? 1 : 0);
+  }
+}
+
+// ── Main animation loop ────────────────────────────────────────
+function syncLoop() {
+  const elapsed = getElapsed();
+  const cycleMs = CONFIG.cycleDuration * 1000;
+  const totalCycles = Math.floor(elapsed / cycleMs);
+  const progress = (elapsed % cycleMs) / cycleMs;
+
+  // Detect new cycle
+  if (totalCycles > currentCycle) {
+    currentCycle = totalCycles;
+    currentEq++;
+    if (currentEq >= equations.length) {
+      pauseClock();
+      labelEl.textContent = '';
+      mathEl.innerHTML = '';
+      labelEl.style.opacity = 0;
+      mathEl.style.opacity = 0;
+      showSummary();
+      return;
+    }
+    labelEl.textContent = equations[currentEq].label;
+    mathEl.innerHTML = equations[currentEq].math;
+  }
+
+  // Render SVG
+  renderSVGFrame(progress);
+
+  // Equation opacity
+  const opacity = lerp(FRAME_OPACITY, progress * 18);
+  labelEl.style.opacity = Math.max(0, Math.min(1, opacity));
+  mathEl.style.opacity = Math.max(0, Math.min(1, opacity));
+
+  requestAnimationFrame(syncLoop);
+}
+
+// ── Preamble ───────────────────────────────────────────────────
+let preambleTl = null;
+let summaryTl = null;
+
+function showPreamble() {
+  preambleTl = gsap.timeline({
+    onComplete: () => {
+      // SVG starts animating only after preamble ends (matches phase 0)
+      resetClock();
+      startClock();
+      labelEl.textContent = equations[0].label;
+      mathEl.innerHTML = equations[0].math;
+      requestAnimationFrame(syncLoop);
+    }
+  });
+
+  preambleTl.set(preambleEl, { opacity: 1 }, 0);
+
+  const lines = preambleEl.querySelectorAll('.preamble-line');
+  lines.forEach((line, i) => {
+    preambleTl.to(line, { opacity: 1, duration: 1, ease: 'power2.out' }, 1 + i * 1);
+  });
+
+  const fadeOutTime = 1 + lines.length * 1 + 3;
+  preambleTl.to(preambleEl, { opacity: 0, duration: 2, ease: 'power2.in' }, fadeOutTime);
+}
+
+// ── Summary ────────────────────────────────────────────────────
+function showSummary() {
+  const summaryEl = document.getElementById('summary');
+
+  let html = '';
+  html += '<p class="summary-line">Assume 5 periods t = 0, 1, \u2026 , 4,</p>';
+  html += '<p class="summary-line">consumption plan ' + document.getElementById('preamble-c').textContent + '</p>';
+  html += '<p class="summary-line">and discount factors (d<sub>1</sub>, d<sub>2</sub>, d<sub>3</sub>, d<sub>4</sub>) = (' + d.join(', ') + ').</p>';
+  html += '<p class="summary-line">The present utility at each period is:</p>';
+  equations.forEach((eq) => {
+    html += '<p class="summary-line summary-eq">' + eq.math + '</p>';
+  });
+  summaryEl.innerHTML = html;
+
+  summaryTl = gsap.timeline();
+  summaryTl.set(summaryEl, { opacity: 1 }, 0);
+
+  const lines = summaryEl.querySelectorAll('.summary-line');
+  lines.forEach((line, i) => {
+    summaryTl.to(line, { opacity: 1, duration: 0.6, ease: 'power2.out' }, 0.5 + i * 0.5);
+  });
+}
+
+// ── Initialize ─────────────────────────────────────────────────
+// Render initial frame (frame 1 state)
+renderSVGFrame(0);
+
+// Start preamble immediately
+showPreamble();
+
+// ── Debug keyboard controls ────────────────────────────────────
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Space') {
+    e.preventDefault();
+    if (preambleTl && preambleTl.isActive()) {
+      preambleTl.paused() ? preambleTl.resume() : preambleTl.pause();
+    } else if (summaryTl && summaryTl.isActive()) {
+      summaryTl.paused() ? summaryTl.resume() : summaryTl.pause();
+    } else {
+      if (clockPaused) {
+        startClock();
+        requestAnimationFrame(syncLoop);
+      } else {
+        pauseClock();
+      }
+    }
+  }
+  if (e.code === 'ArrowLeft') {
+    e.preventDefault();
+    const elapsed = getElapsed();
+    if (elapsed < 1000) {
+      // Near start — restart from preamble
+      resetClock();
+      currentEq = 0;
+      labelEl.textContent = '';
+      mathEl.innerHTML = '';
+      labelEl.style.opacity = 0;
+      mathEl.style.opacity = 0;
+      preambleEl.querySelectorAll('.preamble-line').forEach(l => l.style.opacity = 0);
+      const summaryEl = document.getElementById('summary');
+      summaryEl.style.opacity = 0;
+      summaryEl.innerHTML = '';
+      renderSVGFrame(0);
+      showPreamble();
+    } else {
+      rewindClock(3);
+    }
+  }
+});
+</script>
+
+</body>
+</html>
