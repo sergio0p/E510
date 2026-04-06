@@ -43,7 +43,7 @@
 
   /* Spacing */
   --frame-padding: 2rem;
-  --frame-max-width: 960px;
+  --frame-max-width: 90%;
 
   /* Typography */
   --font-sans: 'Computer Modern Sans', 'Helvetica Neue', Arial, sans-serif;

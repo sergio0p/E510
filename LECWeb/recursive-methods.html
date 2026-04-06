@@ -23,23 +23,43 @@
   </section>
 
   <!-- Frame 1: Recursive Methods (source: lines 1673-1691) -->
-  <section class="frame overlay-frame">
+  <section class="frame" id="recursive-intro">
     <div class="frame-title-bar">
       <h2 class="frame-title">Recursive Methods</h2>
     </div>
     <div class="frame-content">
       <p>How can we compute these infinite sums without doing an infinite number of summations or using Mathematica?</p>
-      $$\sum_{t=0}^{\infty}\delta^{t}=\text{?}\quad \sum_{t=T}^{\infty}\delta^{t}=\text{?}$$
-      <p class="overlay" data-overlay="1">By using recursive methods:</p>
-      <ul>
-        <li class="overlay" data-overlay="1">Let $A=1+\delta+\delta^{2}+\delta^{3}+\cdots$</li>
-        <li class="overlay" data-overlay="2">Factor out $\delta$: $A=1+\delta\cdot(1+\delta+\delta^{2}+\cdots)$</li>
-        <li class="overlay" data-overlay="3">Notice the expression in parentheses equals $A$: $A=1+\delta\cdot A$</li>
-        <li class="overlay" data-overlay="4">This is a recursive equation: $A$ is defined in terms of $A$</li>
-        <li class="overlay" data-overlay="5">We can easily solve: $A-\delta A=1$</li>
-        <li class="overlay" data-overlay="6">Therefore: $(1-\delta)A=1$</li>
-        <li class="overlay" data-overlay="7">Solution: $A=\dfrac{1}{1-\delta}$</li>
-      </ul>
+      $$A=\sum_{t=0}^{\infty}\delta^{t}=\text{?}\quad \text{ or }\quad B=\sum_{t=T}^{\infty}\delta^{t}=\text{?}$$
+
+      <div class="groups-container">
+        <!-- Group A: solving for A -->
+        <div id="group-a">
+          <p>By using recursive methods:</p>
+          <ul>
+            <li>Let $A=1+\delta+\delta^{2}+\delta^{3}+\cdots$</li>
+            <li>Factor out $\delta$: $A=1+\delta\cdot(1+\delta+\delta^{2}+\cdots)$</li>
+            <li>Notice the expression in parentheses equals $A$: $A=1+\delta\cdot A$</li>
+            <li>This is a recursive equation: $A$ is defined in terms of $A$</li>
+            <li>We can easily solve: $A-\delta A=1$</li>
+            <li>Therefore: $(1-\delta)A=1$</li>
+            <li>Solution: $A=\dfrac{1}{1-\delta}$</li>
+          </ul>
+        </div>
+
+        <!-- Group B: solving for B (analogous to A) -->
+        <div id="group-b" style="opacity: 0;">
+          <p>Similarly:</p>
+          <ul>
+            <li>Let $B=\delta^{T}+\delta^{T+1}+\delta^{T+2}+\delta^{T+3}+\cdots$</li>
+            <li>Factor out $\delta$: $B=\delta^{T}+\delta\cdot(\delta^{T}+\delta^{T+1}+\delta^{T+2}+\cdots)$</li>
+            <li>Notice the expression in parentheses equals $B$: $B=\delta^{T}+\delta\cdot B$</li>
+            <li>This is a recursive equation: $B$ is defined in terms of $B$</li>
+            <li>We can easily solve: $B-\delta B=\delta^{T}$</li>
+            <li>Therefore: $(1-\delta)B=\delta^{T}$</li>
+            <li>Solution: $B=\dfrac{\delta^{T}}{1-\delta}$</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -160,8 +180,66 @@ V(K)=&\;u(c^\ast(K))+\delta\cdot u(c^\ast(K-c^\ast(K)))+\\
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="js/scroll-animations.js"></script>
 
+  <style>
+    .groups-container { position: relative; min-height: 20em; }
+    #group-a, #group-b { position: absolute; top: 0; left: 0; width: 100%; transition: opacity 0.4s; }
+    #group-a li, #group-b li { opacity: 0; transition: opacity 0.3s; }
+    #group-a p, #group-b p { opacity: 0; transition: opacity 0.3s; }
+  </style>
+
   <script>
     gsap.registerPlugin(ScrollTrigger);
+
+    // Custom two-group overlay for recursive-intro frame
+    (function() {
+      const frame = document.getElementById('recursive-intro');
+      const groupA = document.getElementById('group-a');
+      const groupB = document.getElementById('group-b');
+      const introA = groupA.querySelector('p');
+      const stepsA = groupA.querySelectorAll('li');
+      const introB = groupB.querySelector('p');
+      const stepsB = groupB.querySelectorAll('li');
+
+      // Steps: 0-6 = group A items, 7-9 = pause, 10-16 = group B items
+      const totalSteps = 17;
+      const scrollPerStep = window.innerHeight * 0.5;
+
+      ScrollTrigger.create({
+        trigger: frame,
+        start: 'top top',
+        end: `+=${scrollPerStep * totalSteps}`,
+        pin: true,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          const step = Math.floor(self.progress * totalSteps);
+
+          // Scroll content up as items accumulate to keep newest item visible
+          const content = frame.querySelector('.frame-content');
+          const maxShift = content.scrollHeight - frame.clientHeight + 40;
+
+          if (step <= 6) {
+            // Group A: reveal items progressively
+            groupA.style.opacity = '1';
+            groupB.style.opacity = '0';
+            introA.style.opacity = '1';
+            stepsA.forEach((s, i) => s.style.opacity = i <= step ? '1' : '0');
+            const shift = Math.min(maxShift, (step / 6) * maxShift);
+            content.style.transform = 'translateY(' + (-Math.max(0, shift)) + 'px)';
+          } else if (step <= 9) {
+            // Pause: group A fully visible, nothing changes
+          } else {
+            // Group B: swap and reveal, reset scroll position
+            groupA.style.opacity = '0';
+            groupB.style.opacity = '1';
+            introB.style.opacity = '1';
+            const bStep = step - 10;
+            stepsB.forEach((s, i) => s.style.opacity = i <= bStep ? '1' : '0');
+            const shift = Math.min(maxShift, (bStep / 6) * maxShift);
+            content.style.transform = 'translateY(' + (-Math.max(0, shift)) + 'px)';
+          }
+        }
+      });
+    })();
 
     document.querySelectorAll('.overlay-frame').forEach(frame => {
       const overlays = frame.querySelectorAll('.overlay');
