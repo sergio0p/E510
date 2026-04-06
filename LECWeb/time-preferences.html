@@ -65,9 +65,9 @@
     <div class="frame-content">
       <p>Let's consider an utility flow $u(t)$ for $t$ in $\mathbb{T}$ of an agent.</p>
       <ol>
-        <li>The value of one unit of utility in period $t$ in terms of present utility ($t=0$) is $D(t)\lt 1$.</li>
-        <li>The value of $u(t)$ units of utility in period $t$ in terms of present utility is $D(t)\cdot u(t)$.</li>
-        <li>We refer to $D(t)$ as the discount factor of the individual.</li>
+        <li>The value of one unit of utility in period $t$ in terms of present utility ($t=0$) is $d(t)\lt 1$.</li>
+        <li>The value of $u(t)$ units of utility in period $t$ in terms of present utility is $d(t)\cdot u(t)$.</li>
+        <li>We refer to $d(t)$ as the discount factor of the individual.</li>
       </ol>
     </div>
   </section>
@@ -82,8 +82,8 @@
     <div class="frame-content">
       <p>When $u(t)$ for $t$ in $\mathbb{T}$ is the flow of profits for a firm:</p>
       <ol>
-        <li>The value of one dollar period $t$ in terms of present value ($t=0$) is $D(t)=\frac{1}{(1+r)^{t}}$, where $r$ is the interest rate.</li>
-        <li>The value of $u(t)$ dollars in period $t$ in terms of present value (PV) is $D(t)\cdot u(t)=\frac{u(t)}{(1+r)^{t}}$.</li>
+        <li>The value of one dollar period $t$ in terms of present value ($t=0$) is $d(t)=\frac{1}{(1+r)^{t}}$, where $r$ is the interest rate.</li>
+        <li>The value of $u(t)$ dollars in period $t$ in terms of present value (PV) is $d(t)\cdot u(t)=\frac{u(t)}{(1+r)^{t}}$.</li>
         <li>$\mathrm{PV}(u_{0},u_{1},u_{2},u_{3},\ldots,u_{t},\ldots)=\sum_{t=0}^{+\infty}\frac{u_t}{(1+r)^{t}}$.</li>
       </ol>
     </div>
@@ -98,9 +98,9 @@
     </div>
     <div class="frame-content">
       <p>Consider discrete time and an utility flow $u(t)$ for $t$ in $\mathbb{T}$ of an agent. With discounting preferences, an agent evaluates utility flows, $(u(0),u(1),u(2),\ldots)$, accordingly to the discounted value of the flow:
-      $$U(u(0),u(1),u(2),\ldots)=\sum_{t=0}^{+\infty}D(t)\cdot u(t).$$</p>
+      $$U(u(0),u(1),u(2),\ldots)=\sum_{t=0}^{+\infty}d(t)\cdot u(t).$$</p>
       <div class="fs-10pt">
-        <p>Here, $D(t)$ is the discount factor of period $t$, and $D(t)\cdot u(t)$ is the present utility (the utility in terms of period $t=0$ utility) of receiving $u(t)$ utils in period $t$. Since we assume agents display impatient, they prefer to receive utility sooner than later, it follows that $0&lt;D(t)&lt;1$.</p>
+        <p>Here, $d(t)$ is the discount factor of period $t$, and $d(t)\cdot u(t)$ is the present utility (the utility in terms of period $t=0$ utility) of receiving $u(t)$ utils in period $t$. Since we assume agents display impatient, they prefer to receive utility sooner than later, it follows that $0&lt;d(t)&lt;1$.</p>
       </div>
     </div>
   </section>
@@ -113,7 +113,7 @@
       <p class="frame-subtitle">Exponential Discounting</p>
     </div>
     <div class="frame-content">
-      <p>Exponential Discounting is the standard discounting model. Under exponential discounting $D(t)=\delta^{t}$ where $0&lt;\delta&lt;1$.
+      <p>Exponential Discounting is the standard discounting model. Under exponential discounting $d(t)=\delta^{t}$ where $0&lt;\delta&lt;1$.
       $$U(u(0),u(1),u(2),\ldots)=\sum_{t=0}^{+\infty}\delta^{t}\cdot u(t).$$
       The continuous time version is:
       $$U(u(t)_{t\in \mathbb T})=\int_{0}^{+\infty}\exp(-\rho\cdot t)\cdot u(t),$$
@@ -129,7 +129,7 @@
       <p class="frame-subtitle">Hyperbolic Discounting</p>
     </div>
     <div class="frame-content">
-      <p>Hyperbolic Discounting is a behavioral economics discounting model which is used as an alternative to the standard model (exponential discounting). Under hyperbolic discounting $D(t)=(1+\alpha\cdot t)^{-\frac{\beta}{\alpha}}$ where $\alpha>0$, $\beta>0$.</p>
+      <p>Hyperbolic Discounting is a behavioral economics discounting model which is used as an alternative to the standard model (exponential discounting). Under hyperbolic discounting $d(t)=(1+\alpha\cdot t)^{-\frac{\beta}{\alpha}}$ where $\alpha>0$, $\beta>0$.</p>
       <p style="margin-top: 1rem;"><a href="https://sergio0p.github.io/E510/Apps/510discounting-app-dynamic-consistency-bootstrap.html" target="_blank">Try the app: Exponential vs. hyperbolic discounting.</a></p>
     </div>
   </section>
