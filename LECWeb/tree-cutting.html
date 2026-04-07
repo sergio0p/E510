@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tree Cutting Problem | ECON 510</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Times New Roman', serif;
+      background: #fdf6e3;
+      color: #586e75;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem 0.5rem;
+    }
+    h2 { font-size: 1.3rem; margin-bottom: 0.6rem; }
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.3rem 1.2rem;
+      margin-bottom: 1.5rem;
+      width: 100%;
+      max-width: 480px;
+    }
+    .ctrl {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .ctrl label {
+      font-style: italic;
+      min-width: 1.6em;
+      text-align: right;
+    }
+    .ctrl input[type=range] { flex: 1; min-width: 0; accent-color: #586e75; }
+    .ctrl .val {
+      font-weight: bold;
+      min-width: 2.8em;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+    svg { max-width: 520px; width: 100%; display: block; }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.2rem 1.2rem;
+      margin-top: -0.3em;
+      font-size: 0.85rem;
+    }
+    .legend-item { display: flex; align-items: center; gap: 0.3rem; }
+    .legend-swatch { width: 22px; height: 3px; border-radius: 1px; }
+    .info {
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+      text-align: center;
+      min-height: 1.5em;
+    }
+    .axis-label {
+      font-family: 'Times New Roman', serif;
+      font-size: 18px;
+      font-style: italic;
+      fill: #586e75;
+    }
+    .tick-label {
+      font-family: 'Times New Roman', serif;
+      font-size: 13px;
+      fill: #586e75;
+    }
+  </style>
+</head>
+<body>
+  <h2>A Tree Cutting Problem</h2>
+
+  <div class="controls">
+    <div class="ctrl">
+      <label>&beta;</label>
+      <input type="range" id="sl-beta" min="0.05" max="0.95" step="0.05" value="0.50">
+      <span class="val" id="vl-beta">0.50</span>
+    </div>
+    <div class="ctrl">
+      <label>&delta;</label>
+      <input type="range" id="sl-delta" min="0.05" max="0.90" step="0.01" value="0.90">
+      <span class="val" id="vl-delta">0.90</span>
+    </div>
+  </div>
+
+  <svg id="plot" viewBox="0 0 560 420">
+    <defs>
+      <clipPath id="clip">
+        <rect id="clip-rect"/>
+      </clipPath>
+      <marker id="arr" markerWidth="10" markerHeight="5" refX="9" refY="2.5" orient="auto">
+        <polygon points="0 0, 10 2.5, 0 5" fill="#586e75"/>
+      </marker>
+    </defs>
+    <g id="g-grid"></g>
+    <g id="g-axes"></g>
+    <g id="g-ticks"></g>
+    <g id="g-curves" clip-path="url(#clip)"></g>
+    <g id="g-dots" clip-path="url(#clip)"></g>
+    <g id="g-tstar"></g>
+  </svg>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-swatch" style="background:#d33682"></div><span>v(t)</span></div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#268bd2"></div><span>&delta;&middot;v(t+1)</span></div>
+  </div>
+
+  <div class="info" id="info"></div>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script>
+  (function() {
+    const M = { left: 60, right: 20, top: 40, bottom: 50 };
+    const VW = 560, VH = 420;
+    const PW = VW - M.left - M.right;
+    const PH = VH - M.top - M.bottom;
+
+    const cr = document.getElementById('clip-rect');
+    cr.setAttribute('x', M.left - 20);
+    cr.setAttribute('y', M.top);
+    cr.setAttribute('width', PW + 40);
+    cr.setAttribute('height', PH + 15);
+
+    const gGrid   = document.getElementById('g-grid');
+    const gAxes   = document.getElementById('g-axes');
+    const gTicks  = document.getElementById('g-ticks');
+    const gCurves = document.getElementById('g-curves');
+    const gDots   = document.getElementById('g-dots');
+    const gTstar  = document.getElementById('g-tstar');
+    const info    = document.getElementById('info');
+
+    let P = { beta: 0.5, delta: 0.9 };
+
+    function vt(t) { return Math.pow(t, P.beta); }
+    function dvt1(t) { return P.delta * Math.pow(t + 1, P.beta); }
+
+    const curves = [
+      { fn: t => vt(t),  color: '#d33682', width: 3.6 },
+      { fn: t => dvt1(t), color: '#268bd2', width: 3.6 },
+    ];
+
+    function findTStar() {
+      for (let t = 1; t <= 200; t++) {
+        if (vt(t) >= dvt1(t)) return t;
+      }
+      return null;
+    }
+
+    // Viewport: x-axis locked until t* leaves view, y-axis recomputes
+    let xView = null;
+
+    function computeXView(ts) {
+      const center = ts !== null ? ts : 5;
+      const tMin = Math.max(0, Math.floor(center) - 2);
+      const tMax = Math.floor(center) + 3;
+      return { tMin, tMax };
+    }
+
+    function computeYRange(tMin, tMax) {
+      const vals = [];
+      for (let t = tMin; t <= tMax; t++) {
+        for (const c of curves) {
+          const u = c.fn(t);
+          if (isFinite(u)) vals.push(u);
+        }
+      }
+      vals.sort((a, b) => a - b);
+      const uMin = 0; // always show 0 on y-axis
+      const uMax = vals[vals.length - 1];
+      const pad = (uMax - uMin) * 0.12 || 1;
+      return { uMin: uMin, uMax: uMax + pad };
+    }
+
+    function niceTicks(lo, hi, approxCount) {
+      const range = hi - lo;
+      const rough = range / approxCount;
+      const mag = Math.pow(10, Math.floor(Math.log10(rough)));
+      const residual = rough / mag;
+      let step;
+      if (residual <= 1.5) step = mag;
+      else if (residual <= 3) step = 2 * mag;
+      else if (residual <= 7) step = 5 * mag;
+      else step = 10 * mag;
+      const ticks = [];
+      let t = Math.ceil(lo / step) * step;
+      while (t <= hi + step * 0.01) {
+        ticks.push(parseFloat(t.toFixed(8)));
+        t += step;
+      }
+      return ticks;
+    }
+
+    function svgEl(tag, attrs) {
+      const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+      for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+      return el;
+    }
+
+    function clearGroup(g) { while (g.firstChild) g.removeChild(g.firstChild); }
+
+    function render() {
+      clearGroup(gGrid); clearGroup(gAxes); clearGroup(gTicks);
+      clearGroup(gCurves); clearGroup(gDots); clearGroup(gTstar);
+
+      const ts = findTStar();
+
+      if (!xView || ts === null ||
+          ts < xView.tMin || ts > xView.tMax) {
+        xView = computeXView(ts);
+      }
+
+      const { tMin, tMax } = xView;
+      const { uMin, uMax } = computeYRange(tMin, tMax);
+      const integers = [];
+      for (let t = tMin; t <= tMax; t++) integers.push(t);
+
+      const toX = t => M.left + (t - tMin) / (tMax - tMin) * PW;
+      const toY = u => M.top + PH - (u - uMin) / (uMax - uMin) * PH;
+
+      // Grid lines
+      for (const t of integers) {
+        const x = toX(t);
+        gGrid.appendChild(svgEl('line', {
+          x1: x, y1: M.top, x2: x, y2: M.top + PH,
+          stroke: '#eee8d5', 'stroke-width': 1
+        }));
+      }
+      const yTicks = niceTicks(uMin, uMax, 6);
+      for (const u of yTicks) {
+        const y = toY(u);
+        gGrid.appendChild(svgEl('line', {
+          x1: M.left, y1: y, x2: M.left + PW, y2: y,
+          stroke: '#eee8d5', 'stroke-width': 1
+        }));
+      }
+
+      // Axes
+      gAxes.appendChild(svgEl('line', {
+        x1: M.left, y1: M.top + PH, x2: M.left + PW + 8, y2: M.top + PH,
+        stroke: '#586e75', 'stroke-width': 2, 'marker-end': 'url(#arr)'
+      }));
+      gAxes.appendChild(svgEl('line', {
+        x1: M.left, y1: M.top + PH, x2: M.left, y2: M.top - 8,
+        stroke: '#586e75', 'stroke-width': 2, 'marker-end': 'url(#arr)'
+      }));
+
+      // Axis labels
+      const tlbl = svgEl('text', {
+        x: M.left + PW + 12, y: M.top + PH + 5,
+        class: 'axis-label', 'text-anchor': 'start'
+      });
+      tlbl.textContent = 't';
+      gTicks.appendChild(tlbl);
+
+      const ulbl = svgEl('text', {
+        x: M.left - 8, y: M.top - 10,
+        class: 'axis-label', 'text-anchor': 'middle'
+      });
+      ulbl.textContent = 'U';
+      gTicks.appendChild(ulbl);
+
+      // X ticks
+      for (const t of integers) {
+        const x = toX(t);
+        gTicks.appendChild(svgEl('line', {
+          x1: x, y1: M.top + PH, x2: x, y2: M.top + PH + 6,
+          stroke: '#586e75', 'stroke-width': 1.5
+        }));
+        const lb = svgEl('text', {
+          x: x, y: M.top + PH + 20,
+          class: 'tick-label', 'text-anchor': 'middle'
+        });
+        lb.textContent = t;
+        gTicks.appendChild(lb);
+      }
+
+      // Y ticks
+      for (const u of yTicks) {
+        const y = toY(u);
+        gTicks.appendChild(svgEl('line', {
+          x1: M.left - 5, y1: y, x2: M.left, y2: y,
+          stroke: '#586e75', 'stroke-width': 1.5
+        }));
+        const lb = svgEl('text', {
+          x: M.left - 8, y: y + 4,
+          class: 'tick-label', 'text-anchor': 'end'
+        });
+        lb.textContent = Math.abs(u) < 1e-10 ? '0' : (Number.isInteger(u) ? u : u.toFixed(1));
+        gTicks.appendChild(lb);
+      }
+
+      // Draw curves
+      const N = 300;
+      const tPad = (tMax - tMin) * 0.15;
+      const tLo = Math.max(0, tMin - tPad), tHi = tMax + tPad;
+      for (const c of curves) {
+        let pts = '';
+        for (let i = 0; i <= N; i++) {
+          const t = tLo + (tHi - tLo) * i / N;
+          const u = c.fn(t);
+          if (!isFinite(u)) continue;
+          const x = toX(t), y = toY(u);
+          pts += `${x.toFixed(1)},${y.toFixed(1)} `;
+        }
+        gCurves.appendChild(svgEl('polyline', {
+          points: pts.trim(),
+          fill: 'none',
+          stroke: c.color,
+          'stroke-width': c.width,
+          'stroke-linecap': 'round',
+          'stroke-linejoin': 'round'
+        }));
+      }
+
+      // Dots at integer t values
+      for (const c of curves) {
+        for (const t of integers) {
+          const u = c.fn(t);
+          if (!isFinite(u)) continue;
+          gDots.appendChild(svgEl('circle', {
+            cx: toX(t), cy: toY(u), r: 4,
+            fill: c.color, stroke: '#fdf6e3', 'stroke-width': 1.5
+          }));
+        }
+      }
+
+      // Optimal t*
+      if (ts !== null && ts >= tMin && ts <= tMax) {
+        const x = toX(ts);
+        gTstar.appendChild(svgEl('line', {
+          x1: x, y1: M.top, x2: x, y2: M.top + PH,
+          stroke: '#6c71c4', 'stroke-width': 2, 'stroke-dasharray': '8,5', opacity: 0.6
+        }));
+
+        const vtv = vt(ts).toFixed(2);
+        const dvv = dvt1(ts).toFixed(2);
+        const vtm = vt(ts - 1).toFixed(2);
+        const dvm = dvt1(ts - 1).toFixed(2);
+        info.innerHTML =
+          `<span style="color:#6c71c4"><em>t</em>* = ${ts}</span>: &ensp;` +
+          `<span style="color:#d33682"><em>v</em>(<em>t</em>*)</span> = ${vtv} &ensp;&ge;&ensp;` +
+          `<span style="color:#268bd2">&delta;&middot;<em>v</em>(<em>t</em>*+1)</span> = ${dvv}`;
+      } else {
+        info.innerHTML = 'No optimal <em>t</em>* found in range.';
+      }
+    }
+
+    // Linear sliders
+    const sliders = [
+      { id: 'sl-beta',  vl: 'vl-beta',  key: 'beta',  fmt: v => v.toFixed(2) },
+    ];
+    for (const s of sliders) {
+      const sl = document.getElementById(s.id);
+      const vl = document.getElementById(s.vl);
+      sl.addEventListener('input', () => {
+        P[s.key] = parseFloat(sl.value);
+        vl.textContent = s.fmt(P[s.key]);
+        render();
+      });
+    }
+
+    // Delta slider (linear)
+    const slDelta = document.getElementById('sl-delta');
+    const vlDelta = document.getElementById('vl-delta');
+    slDelta.addEventListener('input', () => {
+      P.delta = parseFloat(slDelta.value);
+      vlDelta.textContent = P.delta.toFixed(2);
+      render();
+    });
+
+    render();
+  })();
+  </script>
+</body>
+</html>

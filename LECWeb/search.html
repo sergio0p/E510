@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search | ECON 510</title>
+
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/beamer-theme.css">
+</head>
+<body>
+
+  <!-- Title Slide -->
+  <section class="title-slide">
+    <div class="title-box">
+      <h1>Search</h1>
+      <h2>ECON 510: Advanced Microeconomic Theory</h2>
+    </div>
+    <p class="author">Sergio O. Parreiras</p>
+    <p class="institute">Economics Department, UNC at Chapel Hill</p>
+    <p class="date">Spring 2026</p>
+  </section>
+
+  <!-- Frame 1: Search -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Search</h2>
+    </div>
+    <div class="frame-content">
+      <p>Search problems are dynamic problems with an infinite horizon where the agent has to decide to:</p>
+      <ul>
+        <li><a href="https://www.youtube.com/watch?v=xMaE6toi4mk">"Should I stay or should I go?"</a>—The Clash (1981).</li>
+        <li>Should I accept the current job offer or keep searching for better jobs?</li>
+        <li>Should I settle down or keep searching for a life partner?</li>
+        <li>Should I buy plane tickets now or keep searching for better deals?</li>
+        <li>Should I enter this market now or delay entry?</li>
+        <li>Should I exit this market now or delay exit?</li>
+        <li>Should I stop tuning and deploy this model or keep searching for better parameters?</li>
+        <li>Should I attack now or defend and wait for an opportunity of defeating the enemy?—Sun Tzu, <em>The Art of War</em></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Frame 2: A Model -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">A Model</h2>
+    </div>
+    <div class="frame-content">
+      <ul>
+        <li>At each period $t$, the agent chooses $a_t =$ stop $s$ or continue $c$.</li>
+        <li>There is a set of states $S$ and the probability of the state in period $t$ being equal to $x_t$ given past state realizations satisfies:
+          $$\Pr(s_t = x_t \mid s_{t-1} = x_{t-1}, s_{t-2} = x_{t-2}, \ldots) = \Pr(s_t = x_t \mid s_{t-1} = x_{t-1}) = q(x_t \mid x_{t-1})$$
+          <em>Note:</em> "states" here are not the same as "states" in the previous sections.</li>
+        <li>In each period $t$, provided the agent did not stop yet, the agent gets utility $u(s_t, a_t)$—it depends only on the state and the action, not on calendar time. If the agent chooses to stop, $a_t = s$, the agent receives $u(s_t, s)$ at period $t$ and zero in future periods.</li>
+        <li>The agent maximizes discounted expected utility:
+          $$\mathbb{E}\left[\sum_{t=0}^{\infty} \delta^t \, u(s_t, a_t)\right]$$</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Frame 3: The Value Function -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">The Value Function</h2>
+    </div>
+    <div class="frame-content" style="position: relative;">
+      <p>Notice that the value function will depend only on the current state but NOT on the calendar time. The value function must satisfy the <span class="alert-text">recursive equation</span>:</p>
+      <div id="value-fn-box" style="font-size: 1.2em; border: 2px solid #c17900; border-radius: 6px; padding: 0.3rem 1rem; background: #fff8e1; width: fit-content; margin: 0 auto;">
+      $$V(s_t) = \max\left\{ u(s_t, s), \; u(s_t, c) + \delta \sum_{s \in S} V(s) \cdot q(s|s_t) \right\} \quad\textcolor{#c17900}{(\text{R})}$$
+      </div>
+      <style>#value-fn-box .katex-display { margin: 0.3em 0; }</style>
+      <div style="margin-bottom: 1.5rem;"></div>
+      <div id="econ-meaning-list" style="display: grid; grid-template-columns: auto auto auto 2rem auto auto auto; gap: 0.5em 0; align-items: baseline;">
+        <span>$s_t$</span><span class="econ-meaning" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-meaning" style="opacity: 0;">current state</span><span></span><span>$V(s_t)$</span><span class="econ-right-row" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-right-row" style="opacity: 0;">value of state $s_t$</span>
+        <span>$u(s_t, s)$</span><span class="econ-meaning" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-meaning" style="opacity: 0;">instantaneous utility of stopping today</span><span></span><span>$\sum_{s} V(s) q(s|s_t)$</span><span class="econ-right-row2" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-right-row2" style="opacity: 0;">expected future<br style="margin-bottom: 2px;">state value</span>
+        <span>$u(s_t, c)$</span><span class="econ-meaning" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-meaning" style="opacity: 0;">instantaneous utility of continuing today</span><span></span><span></span><span></span><span></span>
+        <span>$\phantom{uu}s$</span><span class="econ-meaning" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-meaning" style="opacity: 0;">state tomorrow</span><span></span><span></span><span></span><span></span>
+        <span>$q(s|s_t)$</span><span class="econ-meaning" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-meaning" style="opacity: 0;">probability that $s$ is the state tomorrow<br style="margin-bottom: 2px;">given $s_t$ is the state today</span><span></span><span></span><span></span><span></span>
+      </div>
+
+      <script>
+      (function() {
+        const leftMeanings = document.querySelectorAll('#econ-meaning-list .econ-meaning');
+        const rows = [];
+        for (let i = 0; i < leftMeanings.length; i += 2) {
+          rows.push([leftMeanings[i], leftMeanings[i + 1]]);
+        }
+        rows.push(Array.from(document.querySelectorAll('.econ-right-row')));
+        rows.push(Array.from(document.querySelectorAll('.econ-right-row2')));
+        let step = -1;
+        const section = document.getElementById('econ-meaning-list').closest('.frame');
+
+        function isInView() {
+          const r = section.getBoundingClientRect();
+          return r.top < window.innerHeight && r.bottom > 0;
+        }
+
+        document.addEventListener('keydown', function(e) {
+          if (!isInView()) return;
+          if (e.key === 'ArrowRight' && step < rows.length - 1) {
+            step++;
+            rows[step].forEach(el => el.style.opacity = '1');
+          } else if (e.key === 'ArrowLeft' && step >= 0) {
+            rows[step].forEach(el => el.style.opacity = '0');
+            step--;
+          }
+        });
+      })();
+      </script>
+    </div>
+  </section>
+
+  <!-- A Tree Cutting Problem -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">A Tree Cutting Problem</h2>
+      <p class="frame-subtitle">Fudenberg &amp; Tirole, <em>Game Theory</em> (1991)</p>
+    </div>
+    <div class="frame-content">
+      <p>A landowner has a tree whose timber value $v(t)$ grows with age $t$, but at a diminishing rate ($v(0) = 0$, $v' \gt 0$, $v'' \lt 0$). At each period $t$, the owner decides to cut the tree ($s$) or to wait ($w$):</p>
+      <ul>
+        <li>If the owner cuts: $u(t, s) = v(t)$</li>
+        <li>If the owner waits: $u(t, w) = 0$</li>
+      </ul>
+      <p>The transition is deterministic: state $t$ transitions to $t + 1$ with certainty.</p>
+      <p>The value function satisfies:</p>
+      <div style="font-size: 1.2em;">$$V(t) = \max\left\{ v(t), \; \delta \cdot V(t+1) \right\}$$</div>
+    </div>
+  </section>
+
+  <!-- A Tree Cutting Problem (continuation) -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">A Tree Cutting Problem</h2>
+      <p class="frame-subtitle">Continuation</p>
+    </div>
+    <div class="frame-content">
+      <p>If $t^\ast$ is the optimal stopping time:</p>
+      <p><strong>Cutting earlier is not profitable:</strong> at $t^\ast - 1$, waiting yields more than cutting:</p>
+      $$v(t^\ast - 1) \leq \delta \cdot v(t^\ast)$$
+      <p><strong>Cutting later is not profitable:</strong> cutting at $t^\ast$ yields more than waiting:</p>
+      $$v(t^\ast) \geq \delta \cdot v(t^\ast + 1)$$
+      <iframe src="tree-cutting.html" style="width:100%; height:620px; border:none; margin-top:1rem;"></iframe>
+    </div>
+  </section>
+
+  <!-- Frame 4: Online Shopping -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Online Shopping</h2>
+      <p class="frame-subtitle">An Example</p>
+    </div>
+    <div class="frame-content">
+      <p>A consumer is searching to buy one unit of a good online. Let $p_t$ denote the price at time $t$.</p>
+      <ul>
+        <li>If the consumer buys (stops): $u(p_t, s) = v - p_t$</li>
+        <li>If the consumer keeps searching (continues): $u(p_t, c) = 0$</li>
+      </ul>
+      <p>The price increases by a factor of $\kappa \gt 1$ or decreases by a factor of $1/\kappa$, each with equal probability:</p>
+      $$q(\kappa p \mid p) = q(p/\kappa \mid p) = \tfrac{1}{2}$$
+      <p>Notice that any price is of the form $p_t = \kappa^z \cdot p_0$ where $z$ is an integer. Thus, for simplicity, we use the set of integers $\mathbb{Z}$ as the set of states.</p>
+    </div>
+  </section>
+
+  <!-- Frame 5: Online Shopping (continuation) -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Online Shopping</h2>
+      <p class="frame-subtitle">An Example (continuation)</p>
+    </div>
+    <div class="frame-content">
+      <p>It can be shown that any optimal strategy will be a threshold strategy:</p>
+      $$a^z(s_t) = \begin{cases} s & \text{if } s_t \leq z \\ c & \text{otherwise} \end{cases}$$
+      <p>Our goal is then to find the value of $z$ such that the recursive equation $\textcolor{#c17900}{(\text{R})}$ is satisfied.</p>
+      <p>Let $V^z(s_t)$ be the value of state $s_t$ if the agent follows the strategy $a^z$. Notice that $V^z$ might not be the value function. The function $V^z$ satisfies some recursive equation but it might not satisfy <span class="alert-text">the recursive equation</span> $\textcolor{#c17900}{(\text{R})}$.</p>
+      $$V^z(s) = \begin{cases} v - p_0 \kappa^s & \text{if } s \leq z \\ \frac{\delta}{2} \cdot \left( v - p_0 \cdot \kappa^z + V^z(s+1) \right) & \text{if } s = z+1 \\ \frac{\delta}{2} \cdot \left( V^z(s-1) + V^z(s+1) \right) & \text{if } s \gt z+1 \end{cases} \quad (\text{Z})$$
+    </div>
+  </section>
+
+  <!-- Frame 6: Online Shopping (solution) -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Online Shopping</h2>
+      <p class="frame-subtitle">An Example (solution)</p>
+    </div>
+    <div class="frame-content">
+      $$V^z(s) = \begin{cases} v - p_0 \kappa^s & \text{if } s \leq z \\ (v - p_0 \kappa^z) \cdot r^{s-z} & \text{if } s \gt z \end{cases}$$
+      <p>where $0 \lt r = \dfrac{1 - \sqrt{1 - \delta^2}}{\delta} \leq 1$.</p>
+      <p>We can use Mathematica <code>RSolve</code> to solve the recursive equation $(\text{Z})$.</p>
+      <p>Let $z^\ast$ be the optimal $z$, then it must satisfy the <span class="alert-text">One-shot Deviation Principle</span> we shall see next.</p>
+    </div>
+  </section>
+
+  <!-- Frame 7: One-Shot Deviation Principle -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">One-Shot Deviation Principle</h2>
+    </div>
+    <div class="frame-content">
+      <div class="block">
+        <div class="block-title">Definition: One-Shot Deviation</div>
+        <div class="block-body">Let $a = (a_t)$ be some search policy. The alternative policy $\tilde{a} = (\tilde{a}_t)$ is a <em>one-shot deviation</em> at period $t$ and state $s_t$ if $\tilde{a}_t(s_t) \neq a_t(s_t)$ but $\tilde{a}_k(s) = a_k(s)$ for all future periods $k \gt t$ and all states $s$.</div>
+      </div>
+
+      <div class="block" style="margin-top: 1rem;">
+        <div class="block-title">Definition: Profitable One-Shot Deviation</div>
+        <div class="block-body">A one-shot deviation $\tilde{a}$ from policy $a$ at period $t$ and state $s_t$ is <em>profitable</em> if it yields a strictly higher expected discounted utility than $a$ at $s_t$ where $\tilde{a}_t(s_t) \neq a_t(s_t)$.</div>
+      </div>
+
+      <div class="block" style="margin-top: 1rem;">
+        <div class="block-title">The One-Shot Deviation Principle</div>
+        <div class="block-body">A policy $a^\ast = (a_t^\ast)$ is optimal if and only if there is no alternative policy $\tilde{a}$ that is a profitable one-shot deviation.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 8: One-Shot Deviation Principle in Action -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">The One-Shot Deviation Principle in Action</h2>
+      <p class="frame-subtitle"></p>
+    </div>
+    <div class="frame-content">
+      <p>If the value of $z$ is <strong>optimal</strong>, the One-Shot Deviation Principle requires two conditions at the boundary:</p>
+      <p><strong>At $s = z$ (agent stops):</strong> deviating to continue should not be profitable:</p>
+      $$v - p_0\kappa^{z} \geq \frac{\delta}{2}\left(V^{z}(z - 1) + V^{z}(z + 1)\right)$$
+      <p><strong>At $s = z + 1$ (agent continues):</strong> deviating to stop should not be profitable:</p>
+      $$\frac{\delta}{2}\left(V^{z}(z) + V^{z}(z + 2)\right) \geq v - p_0\kappa^{z+1}$$
+      <p>Define $f(z) = v - p_0 \kappa^z$ and $g(z) = \frac{\delta}{2}\left(V^z(z) + V^z(z+2)\right)$, for the optimal $z$:</p>
+      $$f(z) \geq g(z-1) \geq g(z) \geq f(z+1)$$
+      <iframe src="search-osd.html" style="width:100%; height:620px; border:none; margin-top:1rem;"></iframe>
+    </div>
+  </section>
+
+  <!-- KaTeX -->
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="js/katex-macros.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="js/scroll-animations.js"></script>
+</body>
+</html>
