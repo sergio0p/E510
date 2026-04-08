@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="nav-prev" content="recursive-methods.html">
+  <meta name="nav-next" content="index.html">
   <title>Search | ECON 510</title>
 
   <!-- KaTeX CSS -->
@@ -13,15 +15,12 @@
 </head>
 <body>
 
-  <!-- Title Slide -->
-  <section class="title-slide">
-    <div class="title-box">
+  <!-- Section Header -->
+  <section class="section-header">
+    <div class="section-title-box">
       <h1>Search</h1>
-      <h2>ECON 510: Advanced Microeconomic Theory</h2>
     </div>
-    <p class="author">Sergio O. Parreiras</p>
-    <p class="institute">Economics Department, UNC at Chapel Hill</p>
-    <p class="date">Spring 2026</p>
+    <h2>ECON 510: Advanced Microeconomic Theory</h2>
   </section>
 
   <!-- Frame 1: Search -->
@@ -57,7 +56,7 @@
           <em>Note:</em> "states" here are not the same as "states" in the previous sections.</li>
         <li>In each period $t$, provided the agent did not stop yet, the agent gets utility $u(s_t, a_t)$—it depends only on the state and the action, not on calendar time. If the agent chooses to stop, $a_t = s$, the agent receives $u(s_t, s)$ at period $t$ and zero in future periods.</li>
         <li>The agent maximizes discounted expected utility:
-          $$\mathbb{E}\left[\sum_{t=0}^{\infty} \delta^t \, u(s_t, a_t)\right]$$</li>
+          $$U(s_t, \mathbf{a}(\cdot)) = \mathbb{E}\left[\sum_{t=0}^{\infty} \delta^t \, u(s_t, a_t)\right]$$</li>
       </ul>
     </div>
   </section>
@@ -70,16 +69,16 @@
     <div class="frame-content" style="position: relative;">
       <p>Notice that the value function will depend only on the current state but NOT on the calendar time. The value function must satisfy the <span class="alert-text">recursive equation</span>:</p>
       <div id="value-fn-box" style="font-size: 1.2em; border: 2px solid #c17900; border-radius: 6px; padding: 0.3rem 1rem; background: #fff8e1; width: fit-content; margin: 0 auto;">
-      $$V(s_t) = \max\left\{ u(s_t, s), \; u(s_t, c) + \delta \sum_{s \in S} V(s) \cdot q(s|s_t) \right\} \quad\textcolor{#c17900}{(\text{R})}$$
+      $$V(s_t) = \max\left\{ u(s_t, s), \; u(s_t, c) + \delta \sum_{s_{t+1} \in S} V(s_{t+1}) \cdot q(s_{t+1}|s_t) \right\} \quad\textcolor{#c17900}{(\text{R})}$$
       </div>
       <style>#value-fn-box .katex-display { margin: 0.3em 0; }</style>
       <div style="margin-bottom: 1.5rem;"></div>
       <div id="econ-meaning-list" style="display: grid; grid-template-columns: auto auto auto 2rem auto auto auto; gap: 0.5em 0; align-items: baseline;">
         <span>$s_t$</span><span class="econ-meaning" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-meaning" style="opacity: 0;">current state</span><span></span><span>$V(s_t)$</span><span class="econ-right-row" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-right-row" style="opacity: 0;">value of state $s_t$</span>
-        <span>$u(s_t, s)$</span><span class="econ-meaning" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-meaning" style="opacity: 0;">instantaneous utility of stopping today</span><span></span><span>$\sum_{s} V(s) q(s|s_t)$</span><span class="econ-right-row2" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-right-row2" style="opacity: 0;">expected future<br style="margin-bottom: 2px;">state value</span>
+        <span>$u(s_t, s)$</span><span class="econ-meaning" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-meaning" style="opacity: 0;">instantaneous utility of stopping today</span><span></span><span>$\sum_{s_{t+1}} V(s_{t+1}) q(s_{t+1}|s_t)$</span><span class="econ-right-row2" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-right-row2" style="opacity: 0;">expected future<br style="margin-bottom: 2px;">state value</span>
         <span>$u(s_t, c)$</span><span class="econ-meaning" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-meaning" style="opacity: 0;">instantaneous utility of continuing today</span><span></span><span></span><span></span><span></span>
-        <span>$\phantom{uu}s$</span><span class="econ-meaning" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-meaning" style="opacity: 0;">state tomorrow</span><span></span><span></span><span></span><span></span>
-        <span>$q(s|s_t)$</span><span class="econ-meaning" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-meaning" style="opacity: 0;">probability that $s$ is the state tomorrow<br style="margin-bottom: 2px;">given $s_t$ is the state today</span><span></span><span></span><span></span><span></span>
+        <span>$s_{t+1}$</span><span class="econ-meaning" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-meaning" style="opacity: 0;">state tomorrow</span><span></span><span></span><span></span><span></span>
+        <span>$q(s_{t+1}|s_t)$</span><span class="econ-meaning" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-meaning" style="opacity: 0;">probability that $s_{t+1}$ is the state tomorrow<br style="margin-bottom: 2px;">given $s_t$ is the state today</span><span></span><span></span><span></span><span></span>
       </div>
 
       <script>
@@ -141,9 +140,10 @@
     <div class="frame-content">
       <p>If $t^\ast$ is the optimal stopping time:</p>
       <p><strong>Cutting earlier is not profitable:</strong> at $t^\ast - 1$, waiting yields more than cutting:</p>
-      $$v(t^\ast - 1) \leq \delta \cdot v(t^\ast)$$
+      At period $t^\ast - 1$, $$v(t^\ast - 1) \leq \delta \cdot v(t^\ast)$$
+      <p>In particular, cutting the tree at period $t=0$ is never optimal, $v(0) = 0 \lt \delta \cdot v(1)$.</p>
       <p><strong>Cutting later is not profitable:</strong> cutting at $t^\ast$ yields more than waiting:</p>
-      $$v(t^\ast) \geq \delta \cdot v(t^\ast + 1)$$
+      At period $t^\ast$, $$v(t^\ast) \geq \delta \cdot v(t^\ast + 1)$$
       <iframe src="tree-cutting.html" style="width:100%; height:620px; border:none; margin-top:1rem;"></iframe>
     </div>
   </section>
@@ -173,10 +173,10 @@
       <p class="frame-subtitle">An Example (continuation)</p>
     </div>
     <div class="frame-content">
-      <p>It can be shown that any optimal strategy will be a threshold strategy:</p>
+      <p>It can be shown that any optimal strategy will be a threshold strategy. There is a reservation price $p_0 \kappa^z$ such that the consumer buys only if the current price is at or below the reservation price $p_t \leq p_0 \kappa^z$. Using the "state" notation:</p>
       $$a^z(s_t) = \begin{cases} s & \text{if } s_t \leq z \\ c & \text{otherwise} \end{cases}$$
       <p>Our goal is then to find the value of $z$ such that the recursive equation $\textcolor{#c17900}{(\text{R})}$ is satisfied.</p>
-      <p>Let $V^z(s_t)$ be the value of state $s_t$ if the agent follows the strategy $a^z$. Notice that $V^z$ might not be the value function. The function $V^z$ satisfies some recursive equation but it might not satisfy <span class="alert-text">the recursive equation</span> $\textcolor{#c17900}{(\text{R})}$.</p>
+      <p>Let $V^z(s_t) = U(s_t, a^z(\cdot))$ be the value of state $s_t$ if the agent follows the strategy $a^z$. Notice that $V^z$ might not be the value function. The function $V^z$ satisfies some recursive equation but it might not satisfy <span class="alert-text">the recursive equation</span> $\textcolor{#c17900}{(\text{R})}$.</p>
       $$V^z(s) = \begin{cases} v - p_0 \kappa^s & \text{if } s \leq z \\ \frac{\delta}{2} \cdot \left( v - p_0 \cdot \kappa^z + V^z(s+1) \right) & \text{if } s = z+1 \\ \frac{\delta}{2} \cdot \left( V^z(s-1) + V^z(s+1) \right) & \text{if } s \gt z+1 \end{cases} \quad (\text{Z})$$
     </div>
   </section>

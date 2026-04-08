@@ -258,6 +258,12 @@ if (window.location.hash === '#bottom') {
 // Shift+Arrow: go to top of prev/next section
 // Option+Left: go to bottom of previous section
 document.addEventListener('keydown', function(e) {
+  // Shift+ArrowUp: go to index
+  if (e.shiftKey && e.key === 'ArrowUp') {
+    e.preventDefault();
+    window.location.href = 'index.html';
+    return;
+  }
   if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
   if (!e.shiftKey && !e.altKey) return;
 
