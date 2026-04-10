@@ -1,6 +1,14 @@
 /* Beamer Theme CSS - Crane Color Scheme */
 /* Crane uses amber accents on white background */
 
+@font-face {
+  font-family: 'MonaLisa';
+  src: url('MonaLisa-webfont.woff2') format('woff2'),
+       url('MonaLisa-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   /* Crane color palette (for text pages) */
   --crane-amber: #f9a825;
@@ -306,10 +314,61 @@ ol > li::before {
   color: #000000;
 }
 
+.block {
+  margin-bottom: 1em;
+}
+
 .block-body {
   background: #fff8e1;  /* Light yellow */
-  padding: 1rem;
   color: #000000;
+  perspective: 800px;
+}
+.block-body-inner {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+}
+.block-body.flipped .block-body-inner {
+  transform: rotateY(180deg);
+}
+.block-body-front,
+.block-body-back {
+  backface-visibility: hidden;
+}
+.block-body-front {
+  position: relative;
+  background: #fff8e1;
+  padding: 1rem;
+  border-radius: 0 0 6px 6px;
+}
+.block-body-back {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotateY(180deg);
+  background: repeating-linear-gradient(
+    45deg, #fff, #fff 8px, #f0d68a 8px, #f0d68a 10px);
+  border: 2px solid #f0d68a;
+  border-radius: 0 0 6px 6px;
+  user-select: none;
+}
+.flip-circle {
+  background: #ffffff;
+  border: 2px solid #f0d68a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flip-circle .flip-q {
+  color: #c17900;
+  -webkit-text-stroke: 3px #c17900;
+  -webkit-text-fill-color: transparent;
+  font-family: 'MonaLisa', Georgia, serif;
+  line-height: 1;
 }
 
 /* Definition, Example, Alert blocks - all use same Crane styling */
@@ -323,6 +382,33 @@ ol > li::before {
 .alert-text {
   color: #c62828;
   font-weight: bold;
+}
+
+/* Key equation highlight box */
+.key-equation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.key-equation > div {
+  display: inline-block;
+  background: #fff8e1;
+  border: 2px solid var(--crane-amber);
+  border-radius: 8px;
+  padding: 0.4rem 1.2rem;
+  font-size: 1.15em;
+}
+
+.key-equation .katex-display {
+  margin: 0.3em 0;
+}
+
+.key-equation-tag {
+  font-family: 'Times New Roman', serif;
+  font-size: 1.1em;
+  color: var(--crane-amber-dark);
 }
 
 /* Two-column layout */

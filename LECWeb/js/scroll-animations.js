@@ -13,6 +13,9 @@ function initAnimations() {
 
   // Step-by-step reveals within frames
   initStepReveals();
+
+  // Block body flip (Ctrl+click title to hide/reveal)
+  initBlockFlip();
 }
 
 // Reveal animations for .reveal elements
@@ -206,6 +209,58 @@ function pulseHighlight(selector) {
         start: 'top 80%',
         invalidateOnRefresh: true
       }
+    });
+  });
+}
+
+// Block body flip — Ctrl+click (or right-click) on block title to toggle
+function initBlockFlip() {
+  document.querySelectorAll('.block-body').forEach(body => {
+    const inner = document.createElement('div');
+    inner.className = 'block-body-inner';
+
+    const front = document.createElement('div');
+    front.className = 'block-body-front';
+    while (body.firstChild) front.appendChild(body.firstChild);
+
+    const back = document.createElement('div');
+    back.className = 'block-body-back';
+
+    const circle = document.createElement('div');
+    circle.className = 'flip-circle';
+    const q = document.createElement('span');
+    q.className = 'flip-q';
+    q.textContent = '?';
+    circle.appendChild(q);
+    back.appendChild(circle);
+
+    inner.appendChild(front);
+    inner.appendChild(back);
+    body.appendChild(inner);
+
+    // Size circle to block body height, ? to fit inside
+    const h = body.offsetHeight;
+    const w = body.offsetWidth;
+    const d = Math.min(h * 0.9, h - 12);
+    circle.style.width = d + 'px';
+    circle.style.height = d + 'px';
+    q.style.fontSize = (d * 0.65) + 'px';
+    // Let flexbox center vertically; offset horizontally to 1/3
+    circle.style.marginRight = (w / 3) + 'px';
+  });
+
+  document.querySelectorAll('.block-title').forEach(title => {
+    title.style.cursor = 'pointer';
+    title.addEventListener('contextmenu', e => {
+      e.preventDefault();
+      const body = title.closest('.block').querySelector('.block-body');
+      if (body) body.classList.toggle('flipped');
+    });
+    title.addEventListener('click', e => {
+      if (!e.metaKey) return;
+      e.preventDefault();
+      const body = title.closest('.block').querySelector('.block-body');
+      if (body) body.classList.toggle('flipped');
     });
   });
 }
