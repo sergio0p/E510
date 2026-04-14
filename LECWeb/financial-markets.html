@@ -50,7 +50,6 @@
     <div class="section-title-box">
       <h1>Financial Markets</h1>
     </div>
-    <h2>ECON 510: Advanced Microeconomic Theory</h2>
   </section>
 
   <!-- Frame 1: Financial Markets intro (source: lines 1479-1485)
@@ -380,9 +379,9 @@
 
       <svg id="economy-tree" style="max-width: 420px; width: 100%; display: block; margin: 0.75rem auto 0.75rem 2rem;"></svg>
       <script type="module">
-        import { renderAutomaton } from './tikz-svg/src/automata/automata.js';
+        import { render } from './tikz-svg/src-v2/index.js';
         const svg = document.getElementById('economy-tree');
-        renderAutomaton(svg, {
+        render(svg, {
           nodeDistance: 130,
           stateStyle: {
             shape: 'circle',

@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="nav-prev" content="search.html">
+  <meta name="nav-next" content="index.html">
+  <title>Repeated Games | ECON 510</title>
+
+  <!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <!-- mathjs (for tikz-svg) -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjs@15.1.1/lib/browser/math.js"></script>
+  <script type="importmap">
+  { "imports": { "mathjs": "./tikz-svg/examples-v2/mathjs-shim.js" } }
+  </script>
+
+  <!-- Custom -->
+  <link rel="stylesheet" href="css/beamer-theme.css">
+  <script src="js/katex-macros.js"></script>
+  <script src="js/scroll-animations.js"></script>
+</head>
+<body>
+
+  <!-- Section Header -->
+  <section class="section-header">
+    <div class="section-title-box">
+      <h1>Repeated Games</h1>
+    </div>
+  </section>
+
+  <!-- Frame 1: Repeated Games Definition -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Repeated Games</h2>
+    </div>
+    <div class="frame-content">
+      <p>Consider the (static) game in the strategic (normal) form: $G=(I,A,u)$.</p>
+      <p>The <span class="alert-text">finitely repeated game</span> $(\Gamma,T)$ is the game where agents play $G$ for $T$ periods; at each period they observe all the past choices; and their final payoff is the sum of period payoffs.</p>
+      <p>The <span class="alert-text">infinitely repeated game</span> $(\Gamma,\delta)$: they play $G$ in the first period, at any period if they always played $G$ in the past, they play it again and with probability $\delta$ they move to the next period and with prob. $(1-\delta)$ the game ends.</p>
+    </div>
+  </section>
+
+  <!-- Frame 2: Expected Payoff -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Repeated Games</h2>
+      <p class="frame-subtitle">Expected Payoff</p>
+    </div>
+    <div class="frame-content">
+      <p>In the infinitely repeated game $(\Gamma,\delta)$ the expected payoff is</p>
+      $$U_i(a)=\sum_{t=0}^{+\infty}\delta^t\cdot u_i(a^t)$$
+      <p>where $a^t$ is the action profile played at period $t$ if players follow the strategy profile $s$ and $\delta\in(0,1)$ is the <span class="alert-text">discount factor</span> (inverse of the interest rate) or, alternatively, $\delta$ is the probability the game will continue in the next period.</p>
+    </div>
+  </section>
+
+  <!-- Frame 3: Strategies -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Repeated Games</h2>
+      <p class="frame-subtitle">Strategies</p>
+    </div>
+    <div class="frame-content">
+      <p>What is a strategy for a player? A strategy is a mapping from her information sets into her actions available at the info. set. In a repeated game, they are always playing the same (stage) game, so the exact same set of actions, $A_i$, is available at any information set.</p>
+      <p>What are the information sets of player $i$? He or she observes the past play, so each possible history of the game corresponds to an information set for the player. So the set of all information sets (histories) is $\mathcal{H}=\bigcup_{k=1}A^k\cup\left\{\emptyset\right\}$.</p>
+    </div>
+  </section>
+
+  <!-- Frame 4: Main Results -->
+  <section class="frame overlay-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Repeated Games</h2>
+      <p class="frame-subtitle">Strategies</p>
+    </div>
+    <div class="frame-content">
+      <p>A strategy for player $i$ is a mapping from her information sets into her actions available at the info. set. Players always play the same (stage) game at every period, so the exact same set of actions, $A_i$, is available at player $i$ at any period. The set of all possible combinations of players' actions, $A=A_1\times A_2\times \cdots \times A_n$, is the set of possible <span class="alert-text">outcomes</span> of the stage game.</p>
+      <p>What are the information sets of player $i$? He or she observes the past play, so each possible history of the game, $h_t=(a^0,a^1,\ldots,a^{t-1})$ with $a^k\in A$, corresponds to an information set for the player. So the set of all information sets (histories) is:</p>
+      $$\mathcal{H}=\bigcup\limits_{k=1}^\infty A^k \cup \{\emptyset\}, \text{ where }$$
+      <p>$A^k=\prod\limits_{j=1}^k A$. And a strategy for player $i$ is a function $s_i:\mathcal{H}\rightarrow A_i$. That is, $s_i(h_t)$ returns the action chosen by player $i$ in period $t$ when the history $h_t$ occurs.</p>
+      <p><strong>Main results:</strong></p>
+      <ol>
+        <li class="overlay" data-overlay="1">Any strategy that calls for players playing some Nash eq. of $G$ (possibly distinct) at every period is a SPNE of $\Gamma$.</li>
+        <li class="overlay" data-overlay="2">However $\Gamma$ has <span class="alert-text">other</span> SPNE that are very different from just playing a Nash eq. of $G$.</li>
+        <li class="overlay" data-overlay="3">For example, for high values of $\delta$ it is possible to have cooperation in the repeated prisoners dilemma as a SPNE.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Frame 5: Automata Example (3-period punishment) -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Representing Strategies as Automata</h2>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>For example consider the strategy profile in the Prisoner's Dilemma which prescribes that:</p>
+      <div class="block">
+        <div class="block-body">Start cooperating, and keep cooperating if all cooperate (cooperation phase). If someone did not cooperate, then do not cooperate for three periods. After that resume the cooperation phase. (punishment phase)</div>
+      </div>
+      <p>Its automata representation is:</p>
+      <!-- PLACEHOLDER: 4-state automaton CC → DD → DD → DD → (back to CC) -->
+      <div style="text-align: center; padding: 1rem;">
+        <svg id="automaton-pd" style="width: 500px; height: 200px;"></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 6: Osborne 428.1 -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Representing Strategies as Automata</h2>
+      <p class="frame-subtitle">Example from Osborne's <em>An Introduction to Game Theory</em></p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p><strong>a)</strong></p>
+      <!-- PLACEHOLDER: 3-state automaton C → C → D, transition on (·,D) -->
+      <div style="text-align: center; padding: 0.5rem;">
+        <svg id="automaton-428a" style="width: 400px; height: 120px;"></svg>
+      </div>
+      <p><strong>b)</strong></p>
+      <!-- PLACEHOLDER: 3-state automaton C → C → D, transitions on (·,D) -->
+      <div style="text-align: center; padding: 0.5rem;">
+        <svg id="automaton-428b" style="width: 400px; height: 120px;"></svg>
+      </div>
+      <p><strong>c)</strong></p>
+      <!-- PLACEHOLDER: 2-state automaton CC ↔ DD -->
+      <div style="text-align: center; padding: 0.5rem;">
+        <svg id="automaton-428c" style="width: 350px; height: 150px;"></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 7: Formal Automata Definition -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Representing Strategies as Automata</h2>
+      <p class="frame-subtitle">Formal Definition</p>
+    </div>
+    <div class="frame-content">
+      <p>Formally, an automaton is $(S,\alpha,\tau)$, where:</p>
+      <ul>
+        <li>$S$ is the set of <span class="alert-text">states</span>.</li>
+        <li>$\alpha:S\rightarrow A$ is the <span class="alert-text">outcome function</span>, it maps the set of states to the set of action profiles of the stage game.</li>
+        <li>$\tau: S\times A\rightarrow S$ is the <span class="alert-text">transition function</span>, at each state and given the action profile chosen (not necessarily the one dictated by the strategy), it gives the next state.</li>
+      </ul>
+      <div class="block">
+        <div class="block-title">The Previous Example</div>
+        <div class="block-body">Each one of the four circles denotes a state which we now shall label (from left to right): $s_1$, $s_2$, $s_3$ and $s_4$. The outcome function is $\alpha(s_1)=CC$, and $\alpha(s)=DD$ for any state $s\neq s_1$. The transition function is: $\tau(s_1,CC)=s_1$, $\tau(s_1,a)=s_2$ if $a\neq CC$, $\tau(s_2,a)=s_3$, $\tau(s_3,a)=s_4$, and $\tau(s_4,a)=s_1$ for all $a$. The transition function for states $s_2$, $s_3$, and $s_4$ is a constant function as it does not depend on the action profile chosen.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 8: Value Function -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">The Value Function</h2>
+    </div>
+    <div class="frame-content">
+      <p>The value function $V:S\rightarrow \mathbb{R}$ maps states to their value. What are the players' payoff of reaching a state? Instead of computing an infinite series, the recursive approach allows us to decompose the payoff in two components: the current payoff and the discounted payoff of the future state:</p>
+      <div class="key-equation">
+        <div>
+          $$V(s)= u(\alpha(s))+ \delta \cdot V(\tau(s,\alpha(s)))$$
+        </div>
+      </div>
+      <p>Since the above equation applies to each state, we have a system of equations. Let $\#S$ be the number of states, then we have $\#S$ equations, in which the unknown variables are the values of the states: $V(s_1), V(s_2), \ldots$ Thus, if we have a finite number of states, we can solve this linear system easily.</p>
+    </div>
+  </section>
+
+  <!-- Frame 8b: Value Function — Stochastic Transition -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">The Value Function</h2>
+      <p class="frame-subtitle">Stochastic Transition</p>
+    </div>
+    <div class="frame-content">
+      <p>If the transition function is stochastic, the next state is not determined with certainty. Instead, $q(s_{t+1}|s_t)$ gives the probability of transitioning to state $s_{t+1}$ given the current state $s_t$. The value function becomes:</p>
+      <div class="key-equation">
+        <div>
+          $$V(s)= u(\alpha(s))+ \delta \sum_{s' \in S} V(s') \cdot q(s'|s)$$
+        </div>
+      </div>
+      <p>Since the above equation applies to each state, we again have a system of $\#S$ equations in $\#S$ unknowns: $V(s_1), V(s_2), \ldots$ The system is linear and can be solved in the same way as the deterministic case.</p>
+    </div>
+  </section>
+
+  <!-- Frame 9: Testing SPNE -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Testing whether a strategy is a SPNE</h2>
+    </div>
+    <div class="frame-content">
+      <p>For every state $s$, for every player $i$, and for every action $a_{i}$, it must be the case that:</p>
+      $$V_{i}(s)\ge u_{i}(\alpha_{-i}(s),a_{i})+\delta \cdot V_{i}(\tau(s,\alpha_{-i}(s),a_{i}))$$
+    </div>
+  </section>
+
+  <!-- Frame 10: One-Shot Deviation Principle -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">The One-Shot Deviation Principle</h2>
+    </div>
+    <div class="frame-content">
+      <p><strong>Definition:</strong> A strategy $z_i$ for player $i$ is a <span class="alert-text">one-shot deviation</span> from strategy $s_i$ if there is a subgame in which the strategy $z_i$ plays a different action profile than $s_i$ does but, in all other subgames the two strategies are identical.</p>
+      <div class="block">
+        <div class="block-title">The One-Shot Deviation Principle</div>
+        <div class="block-body">In a finite game or in a repeated game with discounting, a strategy profile is a subgame perfect Nash equilibrium, if and only if, there are no profitable one-shot deviations by any player.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 11: Testing SPNE (with auxiliary game) -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Testing whether a strategy is a SPNE</h2>
+      <p class="frame-subtitle">Auxiliary Static Game</p>
+    </div>
+    <div class="frame-content">
+      <p>For every state $s$, for every player $i$, and for every action $a_{i}$, it must be the case that:</p>
+      $$V_{i}(s)\ge u_{i}(\alpha_{-i}(s),a_{i})+\delta \cdot V_{i}(\tau(s,\alpha_{-i}(s),a_{i}))$$
+      <p>That is, for each state $s$ we construct an auxiliary static game, $\hat\Gamma(s)$, in which players' actions are the stage game actions and payoffs are $\hat u_i(a)=u_{i}(a)+\delta \cdot V_{i}(\tau(s,a))$ and we test if $\alpha(s)$ is a Nash eq. of $\hat\Gamma(s)$.</p>
+    </div>
+  </section>
+
+  <!-- Frame 12: Repeated Cournot -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Repeated Cournot</h2>
+      <p class="frame-subtitle">Testing if grim-trigger is a SPNE</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>Payoffs in the stage game are $u_{i}(q)=(1-q_{1}-q_{2})\cdot q_{i}$.</p>
+      <!-- PLACEHOLDER: 2-state automaton (1/4,1/4) ↔ (1/3,1/3) grim trigger -->
+      <div style="text-align: center; padding: 0.5rem;">
+        <svg id="automaton-cournot" style="width: 450px; height: 160px;"></svg>
+      </div>
+      $$\begin{aligned}
+        &s_{1}\quad\text{state in which they play } q=(1/4,1/4)\\
+        &s_{2}\quad\text{state in which they play } q=(1/3,1/3)\\
+        &V_{1}(s_{1})=\frac{1}{8(1-\delta)}\ge u_{1}\!\left(\mathrm{BR}_{1}\!\left(\tfrac14\right),\tfrac14\right)+\delta\, V(s_{2})\\
+        &V_{1}(s_{2})=\frac{1}{9(1-\delta)}\ge u_{1}\!\left(\mathrm{BR}_{1}\!\left(\tfrac13\right),\tfrac13\right)+\delta\, V(s_{2})
+      \end{aligned}$$
+    </div>
+  </section>
+
+  <!-- Frame 13: Green & Porter Model -->
+  <section class="frame overlay-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Collusion</h2>
+      <p class="frame-subtitle">The Green &amp; Porter Model</p>
+    </div>
+    <div class="frame-content">
+      <ul>
+        <li class="overlay" data-overlay="1">$P= \theta\,(1-q_{1}-q_{2})$ where $\theta\sim\mathrm{U}[0,2]$.</li>
+        <li class="overlay" data-overlay="2">Player $i$ chooses $q_{i}$ at each period $t$.</li>
+        <li class="overlay" data-overlay="3">Player $i$ only observes $P$ (not $q_{-i}$ nor $\theta$).</li>
+        <li class="overlay" data-overlay="4">Period (stage) payoffs are $u_{i}=P\cdot q_{i}$.</li>
+        <li class="overlay" data-overlay="5">$q=(1/3,1/3)$ is a Nash eq. of the <em>static</em> game regardless of the value of the demand shock $\theta$. Why?</li>
+        <li class="overlay" data-overlay="6">$q=(1/4,1/4)$ is the collusive choice, which also does not depend on $\theta$. Why?</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Frame 14: Green & Porter Strategy -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Collusion</h2>
+      <p class="frame-subtitle">The Green &amp; Porter Model</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>Our candidate to subgame perfect eq. is the following strategy:</p>
+      <div class="block">
+        <div class="block-body">Start colluding $q=(1/4,1/4)$, and keep colluding as long as the price is not too low, $P\ge \underline{P}$ (cooperation phase). If the price is too low, then play $q=(1/3,1/3)$ for $k$ periods. After that resume the cooperation phase. (punishment phase)</div>
+      </div>
+      <p>Its automata representation is:</p>
+      <!-- PLACEHOLDER: multi-state automaton (1/4,1/4) → (1/3,1/3) → ... → (1/3,1/3) → back -->
+      <div style="text-align: center; padding: 0.5rem;">
+        <svg id="automaton-gp" style="width: 500px; height: 180px;"></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 15: One-Shot Deviation Examples -->
+  <!--
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Examples of One-Shot Deviations</h2>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>The strategy below is a one-shot deviation from the strategy of the previous example.</p>
+      <div style="text-align: center; padding: 0.5rem;">
+        <svg id="automaton-osd" style="width: 550px; height: 200px;"></svg>
+      </div>
+      <p>Learning-by-doing exercise: Describe a one-shot deviation that occurs in state $s_2$.</p>
+    </div>
+  </section>
+  -->
+
+  <!-- Overlay animation system -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.querySelectorAll('.overlay-frame').forEach(frame => {
+      const overlays = frame.querySelectorAll('.overlay');
+      const count = overlays.length;
+      if (count === 0) return;
+
+      // Reveal first overlay immediately
+      overlays[0].classList.add('revealed');
+
+      // Each additional overlay gets 50vh of scroll space
+      const scrollPerOverlay = window.innerHeight * 0.5;
+      const totalScroll = scrollPerOverlay * (count - 1);
+
+      // Pin the entire frame while overlays reveal
+      ScrollTrigger.create({
+        trigger: frame,
+        start: 'top top',
+        end: `+=${totalScroll}`,
+        pin: true,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          const currentStep = Math.floor(progress * count);
+
+          overlays.forEach((overlay, i) => {
+            const isOnly = overlay.hasAttribute('data-overlay-only');
+            if (isOnly) {
+              if (i === currentStep) {
+                overlay.classList.add('revealed');
+              } else {
+                overlay.classList.remove('revealed');
+              }
+            } else {
+              if (i <= currentStep) {
+                overlay.classList.add('revealed');
+              } else {
+                overlay.classList.remove('revealed');
+              }
+            }
+          });
+        }
+      });
+    });
+  </script>
+
+  <!-- KaTeX auto-render -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      renderMathInElement(document.body, {
+        delimiters: [
+          {left: '$$', right: '$$', display: true},
+          {left: '$', right: '$', display: false}
+        ],
+        macros: katexMacros,
+        throwOnError: false
+      });
+    });
+  </script>
+
+  <!-- Automata diagrams via tikz-svg -->
+  <script type="module">
+    import { render } from './tikz-svg/src-v2/index.js';
+
+    const green = '#2e7d32', red = '#dc322f', gray = '#586e75';
+
+    function style(r = 22) {
+      return {
+        radius: r, fill: green, stroke: 'none', labelColor: '#fff',
+        shadow: { dx: 2, dy: 3, blur: 4, color: 'rgba(0,0,0,0.35)' },
+        fontSize: 14, fontFamily: "'Times New Roman', serif",
+      };
+    }
+    const edge = { stroke: gray, strokeWidth: 1.5, arrow: 'stealth' };
+
+    /* 1 — 3-period punishment (PD) */
+    render(document.getElementById('automaton-pd'), {
+      transformCanvas: { scale: 1.2 }, nodeDistance: 90, stateStyle: style(), edgeStyle: edge,
+      states: {
+        s1: { initial: true, fill: red, label: '$CC$', position: { x: 0, y: 0 } },
+        s2: { position: { right: 's1' }, label: '$DD$' },
+        s3: { position: { right: 's2' }, label: '$DD$' },
+        s4: { position: { right: 's3' }, label: '$DD$' },
+      },
+      edges: [
+        { from: 's1', to: 's1', loop: 'above', label: '$CC$' },
+        { from: 's1', to: 's2', label: '$\\neq CC$' },
+        { from: 's2', to: 's3' },
+        { from: 's3', to: 's4' },
+        { from: 's4', to: 's1', bend: 'left' },
+      ],
+    });
+
+    /* 2 — Osborne 428.1(a) */
+    render(document.getElementById('automaton-428a'), {
+      transformCanvas: { scale: 1.2 }, nodeDistance: 90, stateStyle: style(), edgeStyle: edge,
+      states: {
+        s1: { initial: true, fill: red, label: '$C$', position: { x: 0, y: 0 } },
+        s2: { position: { right: 's1' }, label: '$C$' },
+        s3: { position: { right: 's2' }, label: '$D$' },
+      },
+      edges: [
+        { from: 's1', to: 's2', label: '$(\\cdot,D)$' },
+        { from: 's2', to: 's3' },
+      ],
+    });
+
+    /* 3 — Osborne 428.1(b) */
+    render(document.getElementById('automaton-428b'), {
+      transformCanvas: { scale: 1.2 }, nodeDistance: 90, stateStyle: style(), edgeStyle: edge,
+      states: {
+        s1: { initial: true, fill: red, label: '$C$', position: { x: 0, y: 0 } },
+        s2: { position: { right: 's1' }, label: '$C$' },
+        s3: { position: { right: 's2' }, label: '$D$' },
+      },
+      edges: [
+        { from: 's1', to: 's2', label: '$(\\cdot,D)$' },
+        { from: 's2', to: 's3', label: '$(\\cdot,D)$' },
+      ],
+    });
+
+    /* 4 — Osborne 428.1(c) */
+    render(document.getElementById('automaton-428c'), {
+      transformCanvas: { scale: 1.44 }, nodeDistance: 200, stateStyle: style(30), edgeStyle: edge,
+      states: {
+        s1: { initial: true, fill: red, label: '$CC$', position: { x: 0, y: 0 } },
+        s2: { position: { right: 's1' }, label: '$DD$' },
+      },
+      edges: [
+        { from: 's1', to: 's1', loop: 'above', label: '$CC,DD$' },
+        { from: 's1', to: 's2', label: '$\\neq CC,DD$' },
+        { from: 's2', to: 's2', loop: 'above', label: '$\\neq CC,DD$' },
+        { from: 's2', to: 's1', bend: 'left', label: '$CC,DD$' },
+      ],
+    });
+
+    /* 5 — Grim-trigger Cournot */
+    render(document.getElementById('automaton-cournot'), {
+      transformCanvas: { scale: 1.44 }, nodeDistance: 192, stateStyle: style(34), edgeStyle: edge,
+      states: {
+        s1: { initial: true, fill: red, label: '$\\tfrac{1}{4},\\tfrac{1}{4}$', position: { x: 0, y: 0 } },
+        s2: { position: { right: 's1' }, label: '$\\tfrac{1}{3},\\tfrac{1}{3}$' },
+      },
+      edges: [
+        { from: 's1', to: 's1', loop: 'above', label: '$q=(\\tfrac{1}{4},\\tfrac{1}{4})$' },
+        { from: 's1', to: 's2', label: '$q\\neq(\\tfrac{1}{4},\\tfrac{1}{4})$' },
+        { from: 's2', to: 's2', loop: 'below' },
+      ],
+    });
+
+    /* 6 — Green & Porter */
+    render(document.getElementById('automaton-gp'), {
+      transformCanvas: { scale: 1.2 }, nodeDistance: 140, stateStyle: style(28), edgeStyle: edge,
+      states: {
+        s1: { initial: true, fill: red, label: '$\\tfrac{1}{4},\\tfrac{1}{4}$', position: { x: 0, y: 0 } },
+        s2: { position: { right: 's1' }, label: '$\\tfrac{1}{3},\\tfrac{1}{3}$' },
+        dots: { position: { right: 's2' }, label: '$\\cdots$', fill: 'none', stroke: 'none', shadow: false, labelColor: gray, fontSize: 18 },
+        sk: { position: { right: 'dots' }, label: '$\\tfrac{1}{3},\\tfrac{1}{3}$' },
+      },
+      edges: [
+        { from: 's1', to: 's1', loop: 'above', label: '$P\\ge\\underline{P}$' },
+        { from: 's1', to: 's2', label: '$P\\lt\\underline{P}$' },
+        { from: 's2', to: 'dots' },
+        { from: 'dots', to: 'sk' },
+        { from: 'sk', to: 's1', bend: 'left' },
+      ],
+    });
+
+    /* 7 — One-shot deviation (commented out in HTML) */
+    if (document.getElementById('automaton-osd')) render(document.getElementById('automaton-osd'), {
+      nodeDistance: 80, stateStyle: style(), edgeStyle: edge,
+      states: {
+        s1: { initial: true, fill: red, label: '$DC$', position: { x: 0, y: 0 } },
+        s2: { position: { right: 's1' }, label: '$DD$' },
+        s3: { position: { right: 's2' }, label: '$DD$' },
+        s4: { position: { right: 's3' }, label: '$DD$' },
+        s5: { position: { right: 's4' }, label: '$CC$' },
+      },
+      edges: [
+        { from: 's1', to: 's1', loop: 'above', label: '$CC$' },
+        { from: 's1', to: 's2', label: '$\\neq CC$' },
+        { from: 's2', to: 's3' },
+        { from: 's3', to: 's4' },
+        { from: 's4', to: 's5', bend: 'left' },
+        { from: 's5', to: 's5', loop: 'above', label: '$CC$' },
+        { from: 's5', to: 's2', bend: 'left', label: '$\\neq CC$' },
+      ],
+    });
+  </script>
+
+</body>
+</html>

@@ -20,7 +20,6 @@
     <div class="section-title-box">
       <h1>Recursive Methods</h1>
     </div>
-    <h2>ECON 510: Advanced Microeconomic Theory</h2>
   </section>
 
   <!-- Frame 1: Recursive Methods (source: lines 1673-1691) -->
@@ -118,8 +117,8 @@ V(K)&=\sum_{t=0}^{\infty}\delta^{t}u(c_t^\ast(K))\\
       <p>By the optimality principle we have that:</p>
       $$V(K)\ge u(c_0)+\delta\cdot V(K-c_0)$$
       <p>and since this is true for any $c_0$ such that $0\le c_0\le K$ we have that:</p>
-      <div style="text-align: center;">
-        <div style="display: inline-block; background: #fff8e1; border: 2px solid #f9a825; border-radius: 8px; padding: 0.4rem 1.2rem; font-size: 1.15em;">
+      <div class="key-equation">
+        <div>
           $$V(K)=\max\limits_{0\le c\le K} u(c)+\delta\cdot V(K-c)$$
         </div>
       </div>
@@ -141,8 +140,8 @@ V(K)=&\;u(c^\ast(K))+\delta\cdot u(c^\ast(K-c^\ast(K)))+\\
 &+\delta^{2}\cdot u(c^\ast(K-c^\ast(K)-c^\ast(K-c^\ast(K))))+\cdots
 \end{aligned}$$
       <p>Conversely, if we know the value function we can obtain the policy function as the solution of the following first order condition:</p>
-      <div style="text-align: center;">
-        <div style="display: inline-block; background: #fff8e1; border: 2px solid #f9a825; border-radius: 8px; padding: 0.4rem 1.2rem; font-size: 1.15em;">
+      <div class="key-equation">
+        <div>
           $$u^\prime(c)-\delta\cdot V^\prime(K-c)=0.$$
         </div>
       </div>

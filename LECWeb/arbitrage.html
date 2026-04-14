@@ -20,7 +20,6 @@
     <div class="section-title-box">
       <h1>The Financial Structure</h1>
     </div>
-    <h2>ECON 510: Advanced Microeconomic Theory</h2>
   </section>
 
   <!-- Frame: Financial Assets -->
@@ -62,8 +61,8 @@
       <p>There are three periods and no uncertainty. The states of the economy are just the time periods.</p>
       <svg id="filtration-tree" style="max-width: 420px; width: 100%; display: block; margin: 0.75rem auto 0.75rem 2rem;"></svg>
       <script type="module">
-        import { renderAutomaton } from './tikz-svg/src/automata/automata.js';
-        renderAutomaton(document.getElementById('filtration-tree'), {
+        import { render } from './tikz-svg/src-v2/index.js';
+        render(document.getElementById('filtration-tree'), {
           stateStyle: {
             shape: 'circle', radius: 22, stroke: '#586e75', strokeWidth: 1,
             labelColor: '#ffffff', fontSize: 14, fontFamily: "'Times New Roman', serif",
@@ -88,8 +87,8 @@
       </ol>
       <svg id="assets-tree" style="max-width: 420px; width: 100%; display: block; margin: 0.75rem auto 0.75rem 2rem;"></svg>
       <script type="module">
-        import { renderAutomaton } from './tikz-svg/src/automata/automata.js';
-        renderAutomaton(document.getElementById('assets-tree'), {
+        import { render } from './tikz-svg/src-v2/index.js';
+        render(document.getElementById('assets-tree'), {
           stateStyle: {
             shape: 'circle', radius: 22, stroke: '#586e75', strokeWidth: 1,
             labelColor: '#ffffff', fontSize: 14, fontFamily: "'Times New Roman', serif",
@@ -143,8 +142,8 @@
       <p>There are two periods and uncertainty about the state in period 1. The states of the economy are $t_0$, $s_1$ and $s_2$.</p>
       <svg id="filtration-tree2" style="max-width: 380px; width: 100%; display: block; margin: 0.75rem auto 0.75rem 2rem;"></svg>
       <script type="module">
-        import { renderAutomaton } from './tikz-svg/src/automata/automata.js';
-        renderAutomaton(document.getElementById('filtration-tree2'), {
+        import { render } from './tikz-svg/src-v2/index.js';
+        render(document.getElementById('filtration-tree2'), {
           stateStyle: {
             shape: 'circle', radius: 22, stroke: '#586e75', strokeWidth: 1,
             labelColor: '#ffffff', fontSize: 14, fontFamily: "'Times New Roman', serif",
@@ -169,8 +168,8 @@
       </ol>
       <svg id="assets-tree2" style="max-width: 380px; width: 100%; display: block; margin: 0.75rem auto 0.75rem 2rem;"></svg>
       <script type="module">
-        import { renderAutomaton } from './tikz-svg/src/automata/automata.js';
-        renderAutomaton(document.getElementById('assets-tree2'), {
+        import { render } from './tikz-svg/src-v2/index.js';
+        render(document.getElementById('assets-tree2'), {
           stateStyle: {
             shape: 'circle', radius: 22, stroke: '#586e75', strokeWidth: 1,
             labelColor: '#ffffff', fontSize: 14, fontFamily: "'Times New Roman', serif",
@@ -297,8 +296,8 @@
       <p>Suppose the only available asset is asset 1, the short-term bond from $t_0$ to $t_1$:</p>
       <svg id="incomplete-tree1" style="max-width: 420px; width: 100%; display: block; margin: 0.75rem auto 0.75rem 2rem;"></svg>
       <script type="module">
-        import { renderAutomaton } from './tikz-svg/src/automata/automata.js';
-        renderAutomaton(document.getElementById('incomplete-tree1'), {
+        import { render } from './tikz-svg/src-v2/index.js';
+        render(document.getElementById('incomplete-tree1'), {
           stateStyle: {
             shape: 'circle', radius: 22, stroke: '#586e75', strokeWidth: 1,
             labelColor: '#ffffff', fontSize: 14, fontFamily: "'Times New Roman', serif",
@@ -328,8 +327,8 @@
       <p>Suppose the only available asset is asset 0, the bond:</p>
       <svg id="incomplete-tree2" style="max-width: 380px; width: 100%; display: block; margin: 0.75rem auto 0.75rem 2rem;"></svg>
       <script type="module">
-        import { renderAutomaton } from './tikz-svg/src/automata/automata.js';
-        renderAutomaton(document.getElementById('incomplete-tree2'), {
+        import { render } from './tikz-svg/src-v2/index.js';
+        render(document.getElementById('incomplete-tree2'), {
           stateStyle: {
             shape: 'circle', radius: 22, stroke: '#586e75', strokeWidth: 1,
             labelColor: '#ffffff', fontSize: 14, fontFamily: "'Times New Roman', serif",

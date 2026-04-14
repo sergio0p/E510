@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="nav-prev" content="recursive-methods.html">
-  <meta name="nav-next" content="index.html">
+  <meta name="nav-next" content="repeated-games.html">
   <title>Search | ECON 510</title>
 
   <!-- KaTeX CSS -->
@@ -20,7 +20,6 @@
     <div class="section-title-box">
       <h1>Search</h1>
     </div>
-    <h2>ECON 510: Advanced Microeconomic Theory</h2>
   </section>
 
   <!-- Frame 1: Search -->
@@ -68,10 +67,12 @@
     </div>
     <div class="frame-content" style="position: relative;">
       <p>Notice that the value function will depend only on the current state but NOT on the calendar time. The value function must satisfy the <span class="alert-text">recursive equation</span>:</p>
-      <div id="value-fn-box" style="font-size: 1.2em; border: 2px solid #c17900; border-radius: 6px; padding: 0.3rem 1rem; background: #fff8e1; width: fit-content; margin: 0 auto;">
-      $$V(s_t) = \max\left\{ u(s_t, s), \; u(s_t, c) + \delta \sum_{s_{t+1} \in S} V(s_{t+1}) \cdot q(s_{t+1}|s_t) \right\} \quad\textcolor{#c17900}{(\text{R})}$$
+      <div id="value-fn-box" class="key-equation">
+        <div>
+          $$V(s_t) = \max\left\{ u(s_t, s), \; u(s_t, c) + \delta \sum_{s_{t+1} \in S} V(s_{t+1}) \cdot q(s_{t+1}|s_t) \right\}$$
+        </div>
+        <span class="key-equation-tag">(R)</span>
       </div>
-      <style>#value-fn-box .katex-display { margin: 0.3em 0; }</style>
       <div style="margin-bottom: 1.5rem;"></div>
       <div id="econ-meaning-list" style="display: grid; grid-template-columns: auto auto auto 2rem auto auto auto; gap: 0.5em 0; align-items: baseline;">
         <span>$s_t$</span><span class="econ-meaning" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-meaning" style="opacity: 0;">current state</span><span></span><span>$V(s_t)$</span><span class="econ-right-row" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-right-row" style="opacity: 0;">value of state $s_t$</span>
