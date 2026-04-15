@@ -106,12 +106,12 @@
       <p>Its automata representation is:</p>
       <!-- PLACEHOLDER: 4-state automaton CC → DD → DD → DD → (back to CC) -->
       <div style="text-align: center; padding: 1rem;">
-        <svg id="automaton-pd" style="width: 500px; height: 200px;"></svg>
+        <svg id="automaton-pd" style="max-width: 500px; width: 100%; display: block; margin: 0 auto;"></svg>
       </div>
     </div>
   </section>
 
-  <!-- Frame 6: Osborne 428.1 -->
+  <!-- Frame 6: Osborne 428.1 (commented out — Osborne uses individual strategies, not strategy profiles like Mailath & Samuelson)
   <section class="frame">
     <div class="frame-title-bar">
       <h2 class="frame-title">Representing Strategies as Automata</h2>
@@ -119,22 +119,20 @@
     </div>
     <div class="frame-content fs-10pt">
       <p><strong>a)</strong></p>
-      <!-- PLACEHOLDER: 3-state automaton C → C → D, transition on (·,D) -->
       <div style="text-align: center; padding: 0.5rem;">
-        <svg id="automaton-428a" style="width: 400px; height: 120px;"></svg>
+        <svg id="automaton-428a" style="max-width: 400px; width: 100%; display: block; margin: 0 auto;"></svg>
       </div>
       <p><strong>b)</strong></p>
-      <!-- PLACEHOLDER: 3-state automaton C → C → D, transitions on (·,D) -->
       <div style="text-align: center; padding: 0.5rem;">
-        <svg id="automaton-428b" style="width: 400px; height: 120px;"></svg>
+        <svg id="automaton-428b" style="max-width: 400px; width: 100%; display: block; margin: 0 auto;"></svg>
       </div>
       <p><strong>c)</strong></p>
-      <!-- PLACEHOLDER: 2-state automaton CC ↔ DD -->
       <div style="text-align: center; padding: 0.5rem;">
-        <svg id="automaton-428c" style="width: 350px; height: 150px;"></svg>
+        <svg id="automaton-428c" style="max-width: 420px; width: 100%; display: block; margin: 0 auto;"></svg>
       </div>
     </div>
   </section>
+  -->
 
   <!-- Frame 7: Formal Automata Definition -->
   <section class="frame">
@@ -179,10 +177,10 @@
       <p class="frame-subtitle">Stochastic Transition</p>
     </div>
     <div class="frame-content">
-      <p>If the transition function is stochastic, the next state is not determined with certainty. Instead, $q(s_{t+1}|s_t)$ gives the probability of transitioning to state $s_{t+1}$ given the current state $s_t$. The value function becomes:</p>
+      <p>If the transition function is stochastic, the next state is not determined with certainty. Instead, $\tau(s_{t+1}|s_t,a)$ gives the probability of transitioning to state $s_{t+1}$ given the current state $s_t$ and the outcome of the game in stage $t$, $a$. The value function becomes:</p>
       <div class="key-equation">
         <div>
-          $$V(s)= u(\alpha(s))+ \delta \sum_{s' \in S} V(s') \cdot q(s'|s)$$
+          $$V(s)= u(\alpha(s))+ \delta \sum_{s' \in S} V(s') \cdot \tau(s'|s,\alpha(s))$$
         </div>
       </div>
       <p>Since the above equation applies to each state, we again have a system of $\#S$ equations in $\#S$ unknowns: $V(s_1), V(s_2), \ldots$ The system is linear and can be solved in the same way as the deterministic case.</p>
@@ -237,7 +235,7 @@
       <p>Payoffs in the stage game are $u_{i}(q)=(1-q_{1}-q_{2})\cdot q_{i}$.</p>
       <!-- PLACEHOLDER: 2-state automaton (1/4,1/4) ↔ (1/3,1/3) grim trigger -->
       <div style="text-align: center; padding: 0.5rem;">
-        <svg id="automaton-cournot" style="width: 450px; height: 160px;"></svg>
+        <svg id="automaton-cournot" style="max-width: 450px; width: 100%; display: block; margin: 0 auto;"></svg>
       </div>
       $$\begin{aligned}
         &s_{1}\quad\text{state in which they play } q=(1/4,1/4)\\
@@ -280,7 +278,7 @@
       <p>Its automata representation is:</p>
       <!-- PLACEHOLDER: multi-state automaton (1/4,1/4) → (1/3,1/3) → ... → (1/3,1/3) → back -->
       <div style="text-align: center; padding: 0.5rem;">
-        <svg id="automaton-gp" style="width: 500px; height: 180px;"></svg>
+        <svg id="automaton-gp" style="max-width: 500px; width: 100%; display: block; margin: 0 auto;"></svg>
       </div>
     </div>
   </section>
@@ -396,48 +394,7 @@
       ],
     });
 
-    /* 2 — Osborne 428.1(a) */
-    render(document.getElementById('automaton-428a'), {
-      transformCanvas: { scale: 1.2 }, nodeDistance: 90, stateStyle: style(), edgeStyle: edge,
-      states: {
-        s1: { initial: true, fill: red, label: '$C$', position: { x: 0, y: 0 } },
-        s2: { position: { right: 's1' }, label: '$C$' },
-        s3: { position: { right: 's2' }, label: '$D$' },
-      },
-      edges: [
-        { from: 's1', to: 's2', label: '$(\\cdot,D)$' },
-        { from: 's2', to: 's3' },
-      ],
-    });
-
-    /* 3 — Osborne 428.1(b) */
-    render(document.getElementById('automaton-428b'), {
-      transformCanvas: { scale: 1.2 }, nodeDistance: 90, stateStyle: style(), edgeStyle: edge,
-      states: {
-        s1: { initial: true, fill: red, label: '$C$', position: { x: 0, y: 0 } },
-        s2: { position: { right: 's1' }, label: '$C$' },
-        s3: { position: { right: 's2' }, label: '$D$' },
-      },
-      edges: [
-        { from: 's1', to: 's2', label: '$(\\cdot,D)$' },
-        { from: 's2', to: 's3', label: '$(\\cdot,D)$' },
-      ],
-    });
-
-    /* 4 — Osborne 428.1(c) */
-    render(document.getElementById('automaton-428c'), {
-      transformCanvas: { scale: 1.44 }, nodeDistance: 200, stateStyle: style(30), edgeStyle: edge,
-      states: {
-        s1: { initial: true, fill: red, label: '$CC$', position: { x: 0, y: 0 } },
-        s2: { position: { right: 's1' }, label: '$DD$' },
-      },
-      edges: [
-        { from: 's1', to: 's1', loop: 'above', label: '$CC,DD$' },
-        { from: 's1', to: 's2', label: '$\\neq CC,DD$' },
-        { from: 's2', to: 's2', loop: 'above', label: '$\\neq CC,DD$' },
-        { from: 's2', to: 's1', bend: 'left', label: '$CC,DD$' },
-      ],
-    });
+    /* 2–4: Osborne 428.1 (a)(b)(c) — commented out with Frame 6 */
 
     /* 5 — Grim-trigger Cournot */
     render(document.getElementById('automaton-cournot'), {

@@ -82,6 +82,8 @@
         <span>$q(s_{t+1}|s_t)$</span><span class="econ-meaning" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-meaning" style="opacity: 0;">probability that $s_{t+1}$ is the state tomorrow<br style="margin-bottom: 2px;">given $s_t$ is the state today</span><span></span><span></span><span></span><span></span>
       </div>
 
+      <div style="position: absolute; bottom: 0.5rem; right: 0.75rem; font-size: 0.7rem; color: #93a1a1; opacity: 0.7;">Use <kbd style="background: #eee8d5; padding: 0.1em 0.4em; border-radius: 3px; border: 1px solid #93a1a1;">&#x2190;</kbd> <kbd style="background: #eee8d5; padding: 0.1em 0.4em; border-radius: 3px; border: 1px solid #93a1a1;">&#x2192;</kbd> arrow keys</div>
+
       <script>
       (function() {
         const leftMeanings = document.querySelectorAll('#econ-meaning-list .econ-meaning');
@@ -161,9 +163,9 @@
         <li>If the consumer buys (stops): $u(p_t, s) = v - p_t$</li>
         <li>If the consumer keeps searching (continues): $u(p_t, c) = 0$</li>
       </ul>
-      <p>The price increases by a factor of $\kappa \gt 1$ or decreases by a factor of $1/\kappa$, each with equal probability:</p>
-      $$q(\kappa p \mid p) = q(p/\kappa \mid p) = \tfrac{1}{2}$$
-      <p>Notice that any price is of the form $p_t = \kappa^z \cdot p_0$ where $z$ is an integer. Thus, for simplicity, we use the set of integers $\mathbb{Z}$ as the set of states.</p>
+      <p>The price increases by a factor of $2$ or decreases by a factor of $1/2$, each with equal probability:</p>
+      $$q(2 p \mid p) = q(p/2 \mid p) = \tfrac{1}{2}$$
+      <p>Notice that any price is of the form $p_t = 2^z \cdot p_0$ where $z$ is an integer. Thus, for simplicity, we use the set of integers $\mathbb{Z}$ as the set of states.</p>
     </div>
   </section>
 
@@ -174,11 +176,11 @@
       <p class="frame-subtitle">An Example (continuation)</p>
     </div>
     <div class="frame-content">
-      <p>It can be shown that any optimal strategy will be a threshold strategy. There is a reservation price $p_0 \kappa^z$ such that the consumer buys only if the current price is at or below the reservation price $p_t \leq p_0 \kappa^z$. Using the "state" notation:</p>
+      <p>It can be shown that any optimal strategy will be a threshold strategy. There is a reservation price $p_0 2^z$ such that the consumer buys only if the current price is at or below the reservation price $p_t \leq p_0 2^z$. Using the "state" notation:</p>
       $$a^z(s_t) = \begin{cases} s & \text{if } s_t \leq z \\ c & \text{otherwise} \end{cases}$$
       <p>Our goal is then to find the value of $z$ such that the recursive equation $\textcolor{#c17900}{(\text{R})}$ is satisfied.</p>
       <p>Let $V^z(s_t) = U(s_t, a^z(\cdot))$ be the value of state $s_t$ if the agent follows the strategy $a^z$. Notice that $V^z$ might not be the value function. The function $V^z$ satisfies some recursive equation but it might not satisfy <span class="alert-text">the recursive equation</span> $\textcolor{#c17900}{(\text{R})}$.</p>
-      $$V^z(s) = \begin{cases} v - p_0 \kappa^s & \text{if } s \leq z \\ \frac{\delta}{2} \cdot \left( v - p_0 \cdot \kappa^z + V^z(s+1) \right) & \text{if } s = z+1 \\ \frac{\delta}{2} \cdot \left( V^z(s-1) + V^z(s+1) \right) & \text{if } s \gt z+1 \end{cases} \quad (\text{Z})$$
+      $$V^z(s) = \begin{cases} v - p_0 2^s & \text{if } s \leq z \\ \frac{\delta}{2} \cdot \left( v - p_0 \cdot 2^z + V^z(s+1) \right) & \text{if } s = z+1 \\ \frac{\delta}{2} \cdot \left( V^z(s-1) + V^z(s+1) \right) & \text{if } s \gt z+1 \end{cases} \quad (\text{Z})$$
     </div>
   </section>
 
@@ -189,7 +191,7 @@
       <p class="frame-subtitle">An Example (solution)</p>
     </div>
     <div class="frame-content">
-      $$V^z(s) = \begin{cases} v - p_0 \kappa^s & \text{if } s \leq z \\ (v - p_0 \kappa^z) \cdot r^{s-z} & \text{if } s \gt z \end{cases}$$
+      $$V^z(s) = \begin{cases} v - p_0 2^s & \text{if } s \leq z \\ (v - p_0 2^z) \cdot r^{s-z} & \text{if } s \gt z \end{cases}$$
       <p>where $0 \lt r = \dfrac{1 - \sqrt{1 - \delta^2}}{\delta} \leq 1$.</p>
       <p>We can use Mathematica <code>RSolve</code> to solve the recursive equation $(\text{Z})$.</p>
       <p>Let $z^\ast$ be the optimal $z$, then it must satisfy the <span class="alert-text">One-shot Deviation Principle</span> we shall see next.</p>
@@ -219,6 +221,20 @@
     </div>
   </section>
 
+  <!-- Frame 7b: One-Shot Deviation Principle and The Value Function -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">One-Shot Deviation Principle and The Value Function</h2>
+    </div>
+    <div class="frame-content">
+      <p>In states where the optimal policy prescribes <strong>stopping</strong>, the one-shot deviation principle requires that deviating to continue is not profitable:</p>
+      $$V(s_t) = u(s_t, s) \geq u(s_t, c) + \delta \sum_{s_{t+1} \in S} V(s_{t+1}) \cdot q(s_{t+1}|s_t)$$
+      <p>In states where the optimal policy prescribes <strong>continuing</strong>, the one-shot deviation principle requires that deviating to stop is not profitable:</p>
+      $$V(s_t) = u(s_t, c) + \delta \sum_{s_{t+1} \in S} V(s_{t+1}) \cdot q(s_{t+1}|s_t) \geq u(s_t, s)$$
+      <p>Why can we use the value function to obtain the lifetime payoff of a one-shot deviation? Notice that after the deviation, the agent resumes following the optimal path and therefore the agent's future (continuation) utility can be expressed by means of the value function.</p>
+    </div>
+  </section>
+
   <!-- Frame 8: One-Shot Deviation Principle in Action -->
   <section class="frame">
     <div class="frame-title-bar">
@@ -228,12 +244,53 @@
     <div class="frame-content">
       <p>If the value of $z$ is <strong>optimal</strong>, the One-Shot Deviation Principle requires two conditions at the boundary:</p>
       <p><strong>At $s = z$ (agent stops):</strong> deviating to continue should not be profitable:</p>
-      $$v - p_0\kappa^{z} \geq \frac{\delta}{2}\left(V^{z}(z - 1) + V^{z}(z + 1)\right)$$
+      $$v - p_02^{z} \geq \frac{\delta}{2}\left(V^{z}(z - 1) + V^{z}(z + 1)\right)$$
       <p><strong>At $s = z + 1$ (agent continues):</strong> deviating to stop should not be profitable:</p>
-      $$\frac{\delta}{2}\left(V^{z}(z) + V^{z}(z + 2)\right) \geq v - p_0\kappa^{z+1}$$
-      <p>Define $f(z) = v - p_0 \kappa^z$ and $g(z) = \frac{\delta}{2}\left(V^z(z) + V^z(z+2)\right)$, for the optimal $z$:</p>
+      $$\frac{\delta}{2}\left(V^{z}(z) + V^{z}(z + 2)\right) \geq v - p_02^{z+1}$$
+      <p>Define $f(z) = v - p_0 2^z$ and $g(z) = \frac{\delta}{2}\left(V^z(z) + V^z(z+2)\right)$, for the optimal $z$:</p>
       $$f(z) \geq g(z-1) \geq g(z) \geq f(z+1)$$
       <iframe src="search-osd.html" style="width:100%; height:620px; border:none; margin-top:1rem;"></iframe>
+    </div>
+  </section>
+
+  <!-- Frame 9: Job Search Example -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Job Search</h2>
+      <p class="frame-subtitle">An Example</p>
+    </div>
+    <div class="frame-content">
+      <p>An agent is searching for jobs. For simplicity, we assume that with equal probability the agent receives:</p>
+      <ul>
+        <li>No offers,</li>
+        <li>A low job offer $w=10$, or</li>
+        <li>A high job offer $w=20$.</li>
+      </ul>
+      <p>The agent discounts time at the rate $0 \lt \delta \lt 1$. Also, for simplicity, we assume that if the agent accepts a job offer, the agent receives the corresponding wage in all future periods. We are ruling out that the agent may be fired with some positive probability in the future or that the agent may decide to quit the job in the future.</p>
+    </div>
+  </section>
+
+  <!-- Frame 10: Job Search — Setup -->
+  <section class="frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Job Search</h2>
+      <p class="frame-subtitle">An Example</p>
+    </div>
+    <div class="frame-content">
+      <p>Here, $s$ means accepting the job offer and $c$ means rejecting the job offer. There are three states: $N$ (no offers), $L$ (low offer) and $H$ (high offer). Also, choosing $s$ (stop searching) in state $N$ means that the agent decided to quit the workforce. The utility of stopping is then:</p>
+      $$u(N,s)=0 \lt u(L,s)=\frac{10}{1-\delta} \lt u(H,s)=\frac{20}{1-\delta}$$
+      <p>Since we assume that there are no opportunity costs of searching, the optimal strategy is going to be either to accept any job offer, $\sigma_{LH}$, or to accept only the high wage job offer, $\sigma_{H}$.</p>
+      <p>Let's analyze the $\sigma_H$ strategy:</p>
+      $$\begin{aligned}
+        V^{\sigma_H}(N) &= 0 + \delta\left[\tfrac{1}{3}V^{\sigma_H}(N) + \tfrac{1}{3}V^{\sigma_H}(L) + \tfrac{1}{3}V^{\sigma_H}(H)\right]\\[6pt]
+        V^{\sigma_H}(L) &= 0 + \delta\left[\tfrac{1}{3}V^{\sigma_H}(N) + \tfrac{1}{3}V^{\sigma_H}(L) + \tfrac{1}{3}V^{\sigma_H}(H)\right]\\[6pt]
+        V^{\sigma_H}(H) &= \frac{20}{1-\delta}
+      \end{aligned}$$
+      <p>Solving this linear system of equations we obtain:</p>
+      $$V^{\sigma_H}(N) = V^{\sigma_H}(L) = \frac{20\delta}{(1-\delta)(3-2\delta)} \quad\text{and}\quad V^{\sigma_H}(H) = \frac{20}{1-\delta}$$
+      <p>We only need to check for one-shot deviations at state $L$ (deviating to stop):</p>
+      $$V^{\sigma_H}(L) \geq u(L,s) \quad\Longleftrightarrow\quad \frac{20\delta}{(1-\delta)(3-2\delta)} \geq \frac{10}{1-\delta} \quad\Longleftrightarrow\quad \delta \geq \tfrac{3}{4}$$
+      <p>In sum, more patient agents ($\delta \geq \tfrac{3}{4}$) will only accept the high wage job offer, while more impatient agents ($\delta \lt \tfrac{3}{4}$) will accept any job offer. The expected unemployment duration is longer for patient agents ($2$ periods) than for impatient ones ($\tfrac{1}{2}$ period).</p>
     </div>
   </section>
 
