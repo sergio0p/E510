@@ -102,7 +102,7 @@
           edges: [
             { from: 't0', to: 't1', label: 'r\u2081', bend: 'left',  labelSide: 'right', labelDistance: 12 },
             { from: 't1', to: 't2', label: 'r\u2082', bend: 'left',  labelSide: 'right', labelDistance: 12 },
-            { from: 't0', to: 't2', label: 'r\u2083', bend: 'right', labelSide: 'left',  labelDistance: 12, looseness: 1.5 },
+            { from: 't0', to: 't2', label: 'r\u2083', bend: 'right', labelSide: 'right', labelDistance: 12, looseness: 1.5 },
           ],
         });
       </script>
@@ -155,8 +155,8 @@
             s2: { label: 's\u2082', position: { x: 160, y:  42 }, fill: '#2aa198' },
           },
           edges: [
-            { from: 't0', to: 's1', label: 'p',       labelSide: 'right', labelDistance: 12 },
-            { from: 't0', to: 's2', label: '1\u2212p', labelSide: 'left',  labelDistance: 14 },
+            { from: 't0', to: 's1', label: 'p',       labelSide: 'left',  labelDistance: 12 },
+            { from: 't0', to: 's2', label: '1\u2212p', labelSide: 'right', labelDistance: 14 },
           ],
         });
       </script>
@@ -181,10 +181,10 @@
             s2: { label: 's\u2082', position: { x: 160, y:  42 }, fill: '#2aa198' },
           },
           edges: [
-            { from: 't0', to: 's1', label: 'r\u2080', labelSide: 'right', labelDistance: 12 },
-            { from: 't0', to: 's2', label: 'r\u2080', labelSide: 'left',  labelDistance: 12 },
-            { from: 't0', to: 's1', label: 'r\u2081', bend: 'left',  labelSide: 'right', labelDistance: 14 },
-            { from: 't0', to: 's2', label: 'r\u2082', bend: 'right', labelSide: 'left',  labelDistance: 14 },
+            { from: 't0', to: 's1', label: 'r\u2080', labelSide: 'left', labelDistance: 1 },
+            { from: 't0', to: 's2', label: 'r\u2080', labelSide: 'left', labelDistance: 1 },
+            { from: 't0', to: 's1', label: 'r\u2081', bend: 'left',  labelSide: 'left', labelDistance: 1 },
+            { from: 't0', to: 's2', label: 'r\u2082', bend: 'right', labelSide: 'left', labelDistance: 1 },
           ],
         });
       </script>
@@ -340,8 +340,8 @@
             s2: { label: 's\u2082', position: { x: 160, y:  42 }, fill: '#2aa198' },
           },
           edges: [
-            { from: 't0', to: 's1', label: 'r\u2080', labelSide: 'right', labelDistance: 12 },
-            { from: 't0', to: 's2', label: 'r\u2080', labelSide: 'left',  labelDistance: 12 },
+            { from: 't0', to: 's1', label: 'r\u2080', labelSide: 'left',  labelDistance: 12 },
+            { from: 't0', to: 's2', label: 'r\u2080', labelSide: 'right', labelDistance: 12 },
           ],
         });
       </script>
