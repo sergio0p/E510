@@ -302,6 +302,29 @@ if (window.visualViewport) {
   window.visualViewport.addEventListener('resize', handleViewportChange);
 }
 
+// Auto-update URL hash as sections scroll into view
+(function initHashTracking() {
+  var sections = document.querySelectorAll('section[id]');
+  if (sections.length === 0) return;
+
+  var ticking = false;
+  window.addEventListener('scroll', function() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function() {
+      var current = '';
+      var threshold = window.scrollY + window.innerHeight * 0.25;
+      for (var i = 0; i < sections.length; i++) {
+        if (sections[i].offsetTop <= threshold) current = sections[i].id;
+      }
+      if (current && window.location.hash !== '#' + current) {
+        history.replaceState(null, '', '#' + current);
+      }
+      ticking = false;
+    });
+  }, { passive: true });
+})();
+
 // Scroll to bottom if arriving via Option+Left (#bottom)
 if (window.location.hash === '#bottom') {
   window.addEventListener('load', function() {
