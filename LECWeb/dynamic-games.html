@@ -16,15 +16,27 @@
 <body>
 
   <!-- Section Header -->
-  <section class="section-header">
+  <section class="section-header" id="dynamic-games">
     <div class="section-title-box">
       <h1>Dynamic Games</h1>
     </div>
+
+    <!-- Table of Contents -->
+    <nav style="margin-top: 2rem; text-align: left; background: #eee; padding: 1rem; border-radius: 8px; font-size: 0.9rem;">
+      <a href="#dynamic-games-2" style="margin-left: 1rem;">1. Game Tree</a>
+      <a href="#dynamic-games-3" style="margin-left: 1rem;">2. Notation</a>
+      <a href="#dynamic-games-4" style="margin-left: 1rem;">3. Actions vs Strategies</a>
+      <a href="#strategies-are-not-equivalent-to-actions" style="margin-left: 1rem;">4. Payoff Matrix</a>
+      <br>
+      <a href="#spe-frame" style="margin-left: 1rem;">5. SPE</a>
+      <a href="#backward-induction" style="margin-left: 1rem;">6. Backward Induction</a>
+      <a href="#backward-induction-2" style="margin-left: 1rem;">7. Backward Cont.</a>
+    </nav>
   </section>
 
   <!-- Frame 1: Dynamic Games - game tree (source: lines 363-396)
        NO OVERLAYS, TikZ game tree — PLACEHOLDER -->
-  <section class="frame">
+  <section class="frame" id="dynamic-games-2">
     <div class="frame-title-bar">
       <h2 class="frame-title">Dynamic Games</h2>
       <p class="frame-subtitle">How I stopped to worry and love the bomb</p>
@@ -107,7 +119,7 @@
 
   <!-- Frame 2: Quickstart guide on game trees (source: lines 397-404)
        NO OVERLAYS -->
-  <section class="frame">
+  <section class="frame" id="dynamic-games-3">
     <div class="frame-title-bar">
       <h2 class="frame-title">Dynamic Games</h2>
       <p class="frame-subtitle">quickstart guide on game trees</p>
@@ -128,7 +140,7 @@
 
   <!-- Frame 3: Strategies are not equivalent to actions (source: lines 405-420)
        NO OVERLAYS, \fontsize{9}{11}, \vspace{5mm} -->
-  <section class="frame">
+  <section class="frame" id="dynamic-games-4">
     <div class="frame-title-bar">
       <h2 class="frame-title">Dynamic Games</h2>
       <p class="frame-subtitle">Strategies are not equivalent to actions</p>
@@ -157,7 +169,7 @@
 
   <!-- Frame 4: Payoff Matrix (source: lines 421-438)
        NO OVERLAYS, table + itemize -->
-  <section class="frame">
+  <section class="frame" id="strategies-are-not-equivalent-to-actions">
     <div class="frame-title-bar">
       <h2 class="frame-title">Strategies are not equivalent to actions</h2>
       <p class="frame-subtitle">Payoff Matrix</p>
@@ -448,7 +460,7 @@
 
   <!-- Frame 6: Backward Induction (source: lines 500-507)
        HAS OVERLAYS: \item<1->, <2->, <3->, <4-> -->
-  <section class="frame overlay-frame">
+  <section class="frame overlay-frame" id="backward-induction">
     <div class="frame-title-bar">
       <h2 class="frame-title">Backward Induction</h2>
       <p class="frame-subtitle">A Recursive Method</p>
@@ -466,7 +478,7 @@
 
   <!-- Frame 7: Backward Induction cont. (source: lines 509-515)
        HAS OVERLAYS: \item<1->, <2->, <3-> -->
-  <section class="frame overlay-frame">
+  <section class="frame overlay-frame" id="backward-induction-2">
     <div class="frame-title-bar">
       <h2 class="frame-title">Backward Induction</h2>
       <p class="frame-subtitle">A Recursive Method (cont.)</p>

@@ -30,14 +30,37 @@
 <body>
 
   <!-- Section Header -->
-  <section class="section-header">
+  <section class="section-header" id="repeated-games">
     <div class="section-title-box">
       <h1>Repeated Games</h1>
     </div>
+
+    <!-- Table of Contents -->
+    <nav style="margin-top: 2rem; text-align: left; background: #eee; padding: 1rem; border-radius: 8px; font-size: 0.9rem;">
+      <a href="#repeated-games-2" style="margin-left: 1rem;">1. Definition</a>
+      <a href="#repeated-games-3" style="margin-left: 1rem;">2. Payoff</a>
+      <a href="#repeated-games-4" style="margin-left: 1rem;">3. Strategies</a>
+      <a href="#repeated-games-5" style="margin-left: 1rem;">4. Main Results</a>
+      <br>
+      <a href="#representing-strategies-as-automata" style="margin-left: 1rem;">5. Automata</a>
+      <a href="#representing-strategies-as-automata-2" style="margin-left: 1rem;">6. Example</a>
+      <a href="#representing-strategies-as-automata-3" style="margin-left: 1rem;">7. Formal Def.</a>
+      <a href="#the-value-function" style="margin-left: 1rem;">8. Value Function</a>
+      <br>
+      <a href="#the-value-function-2" style="margin-left: 1rem;">9. VF Stochastic</a>
+      <a href="#testing-whether-a-strategy-is-a-spne" style="margin-left: 1rem;">10. Test SPNE</a>
+      <a href="#the-one-shot-deviation-principle" style="margin-left: 1rem;">11. OSD Principle</a>
+      <a href="#testing-whether-a-strategy-is-a-spne-2" style="margin-left: 1rem;">12. OSD Test</a>
+      <br>
+      <a href="#repeated-cournot" style="margin-left: 1rem;">13. Cournot</a>
+      <a href="#collusion" style="margin-left: 1rem;">14. Collusion GP</a>
+      <a href="#collusion-2" style="margin-left: 1rem;">15. Collusion Cont</a>
+      <a href="#examples-of-one-shot-deviations" style="margin-left: 1rem;">16. OSD Examples</a>
+    </nav>
   </section>
 
   <!-- Frame 1: Repeated Games Definition -->
-  <section class="frame">
+  <section class="frame" id="repeated-games-2">
     <div class="frame-title-bar">
       <h2 class="frame-title">Repeated Games</h2>
     </div>
@@ -49,7 +72,7 @@
   </section>
 
   <!-- Frame 2: Expected Payoff -->
-  <section class="frame">
+  <section class="frame" id="repeated-games-3">
     <div class="frame-title-bar">
       <h2 class="frame-title">Repeated Games</h2>
       <p class="frame-subtitle">Expected Payoff</p>
@@ -62,7 +85,7 @@
   </section>
 
   <!-- Frame 3: Strategies -->
-  <section class="frame">
+  <section class="frame" id="repeated-games-4">
     <div class="frame-title-bar">
       <h2 class="frame-title">Repeated Games</h2>
       <p class="frame-subtitle">Strategies</p>
@@ -74,7 +97,7 @@
   </section>
 
   <!-- Frame 4: Main Results -->
-  <section class="frame overlay-frame">
+  <section class="frame overlay-frame" id="repeated-games-5">
     <div class="frame-title-bar">
       <h2 class="frame-title">Repeated Games</h2>
       <p class="frame-subtitle">Strategies</p>
@@ -94,7 +117,7 @@
   </section>
 
   <!-- Frame 5: Automata Example (3-period punishment) -->
-  <section class="frame">
+  <section class="frame" id="representing-strategies-as-automata">
     <div class="frame-title-bar">
       <h2 class="frame-title">Representing Strategies as Automata</h2>
     </div>
@@ -112,7 +135,7 @@
   </section>
 
   <!-- Frame 6: Osborne 428.1 (commented out — Osborne uses individual strategies, not strategy profiles like Mailath & Samuelson)
-  <section class="frame">
+  <section class="frame" id="representing-strategies-as-automata-2">
     <div class="frame-title-bar">
       <h2 class="frame-title">Representing Strategies as Automata</h2>
       <p class="frame-subtitle">Example from Osborne's <em>An Introduction to Game Theory</em></p>
@@ -135,7 +158,7 @@
   -->
 
   <!-- Frame 7: Formal Automata Definition -->
-  <section class="frame">
+  <section class="frame" id="representing-strategies-as-automata-3">
     <div class="frame-title-bar">
       <h2 class="frame-title">Representing Strategies as Automata</h2>
       <p class="frame-subtitle">Formal Definition</p>
@@ -155,7 +178,7 @@
   </section>
 
   <!-- Frame 8: Value Function -->
-  <section class="frame">
+  <section class="frame" id="the-value-function">
     <div class="frame-title-bar">
       <h2 class="frame-title">The Value Function</h2>
     </div>
@@ -171,7 +194,7 @@
   </section>
 
   <!-- Frame 8b: Value Function — Stochastic Transition -->
-  <section class="frame">
+  <section class="frame" id="the-value-function-2">
     <div class="frame-title-bar">
       <h2 class="frame-title">The Value Function</h2>
       <p class="frame-subtitle">Stochastic Transition</p>
@@ -188,7 +211,7 @@
   </section>
 
   <!-- Frame 9: Testing SPNE -->
-  <section class="frame">
+  <section class="frame" id="testing-whether-a-strategy-is-a-spne">
     <div class="frame-title-bar">
       <h2 class="frame-title">Testing whether a strategy is a SPNE</h2>
     </div>
@@ -199,7 +222,7 @@
   </section>
 
   <!-- Frame 10: One-Shot Deviation Principle -->
-  <section class="frame">
+  <section class="frame" id="the-one-shot-deviation-principle">
     <div class="frame-title-bar">
       <h2 class="frame-title">The One-Shot Deviation Principle</h2>
     </div>
@@ -213,7 +236,7 @@
   </section>
 
   <!-- Frame 11: Testing SPNE (with auxiliary game) -->
-  <section class="frame">
+  <section class="frame" id="testing-whether-a-strategy-is-a-spne-2">
     <div class="frame-title-bar">
       <h2 class="frame-title">Testing whether a strategy is a SPNE</h2>
       <p class="frame-subtitle">Auxiliary Static Game</p>
@@ -226,7 +249,7 @@
   </section>
 
   <!-- Frame 12: Repeated Cournot -->
-  <section class="frame">
+  <section class="frame" id="repeated-cournot">
     <div class="frame-title-bar">
       <h2 class="frame-title">Repeated Cournot</h2>
       <p class="frame-subtitle">Testing if grim-trigger is a SPNE</p>
@@ -247,7 +270,7 @@
   </section>
 
   <!-- Frame 13: Green & Porter Model -->
-  <section class="frame overlay-frame">
+  <section class="frame overlay-frame" id="collusion">
     <div class="frame-title-bar">
       <h2 class="frame-title">Collusion</h2>
       <p class="frame-subtitle">The Green &amp; Porter Model</p>
@@ -265,7 +288,7 @@
   </section>
 
   <!-- Frame 14: Green & Porter Strategy -->
-  <section class="frame">
+  <section class="frame" id="collusion-2">
     <div class="frame-title-bar">
       <h2 class="frame-title">Collusion</h2>
       <p class="frame-subtitle">The Green &amp; Porter Model</p>
@@ -285,7 +308,7 @@
 
   <!-- Frame 15: One-Shot Deviation Examples -->
   <!--
-  <section class="frame">
+  <section class="frame" id="examples-of-one-shot-deviations">
     <div class="frame-title-bar">
       <h2 class="frame-title">Examples of One-Shot Deviations</h2>
     </div>

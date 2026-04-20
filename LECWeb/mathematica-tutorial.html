@@ -290,7 +290,7 @@
 <body>
 
   <!-- Page 1: Cheat Sheet with Bootstrap Accordion -->
-  <section class="cheat-sheet">
+  <section class="cheat-sheet" id="mathematica-cheat-sheet">
     <div class="cheat-sheet-header">Mathematica Cheat Sheet</div>
 
     <div class="accordion" id="cheatSheetAccordion">
@@ -366,7 +366,7 @@
   </section>
 
   <!-- Page 2: Title Slide -->
-  <section class="simple-title-slide">
+  <section class="simple-title-slide" id="mathematica-tutorial">
     <h1>Mathematica Tutorial</h1>
     <h2>Essential Commands for Economics</h2>
     <p class="author">S&eacute;rgio O. Parreiras</p>
@@ -375,7 +375,7 @@
   </section>
 
   <!-- Frame: Computer Algebra Systems (CAS) -->
-  <section class="simple-frame overlay-frame" style="position: relative;">
+  <section class="simple-frame overlay-frame" style="position: relative;" id="computer-algebra-systems-cas">
     <h2 class="simple-frame-title">Computer Algebra Systems (CAS)</h2>
     <div class="simple-frame-content">
       <ul>
@@ -403,7 +403,7 @@
   </section>
 
   <!-- Frame: Navigate Workbook Cells -->
-  <section class="simple-frame overlay-frame">
+  <section class="simple-frame overlay-frame" id="navigate-workbook-cells">
     <h2 class="simple-frame-title">Navigate Workbook Cells</h2>
     <div class="simple-frame-content">
       <ul>
@@ -417,7 +417,7 @@
   </section>
 
   <!-- Frame: Define Functions -->
-  <section class="simple-frame overlay-frame">
+  <section class="simple-frame overlay-frame" id="define-functions">
     <h2 class="simple-frame-title">Define Functions</h2>
     <div class="simple-frame-content">
       <div class="math-display">
@@ -438,7 +438,7 @@
   </section>
 
   <!-- Frame: Define Multi-Variable Functions -->
-  <section class="simple-frame overlay-frame">
+  <section class="simple-frame overlay-frame" id="define-multi-variable-functions">
     <h2 class="simple-frame-title">Define Multi-Variable Functions</h2>
     <div class="simple-frame-content">
       <div class="math-display">
@@ -458,7 +458,7 @@
   </section>
 
   <!-- Frame: Verify Your Definitions -->
-  <section class="simple-frame">
+  <section class="simple-frame" id="verify-your-definitions">
     <h2 class="simple-frame-title">Verify Your Definitions</h2>
     <div class="simple-frame-content">
       <p>Definitions with <span class="code-inline">:=</span> produce no output. To verify, call the function:</p>
@@ -473,7 +473,7 @@
   </section>
 
   <!-- Frame: Lists (vectors) - Extract parts -->
-  <section class="simple-frame overlay-frame">
+  <section class="simple-frame overlay-frame" id="lists-vectors">
     <h2 class="simple-frame-title">Lists (vectors)</h2>
     <p class="simple-frame-subtitle">Extract parts of a list</p>
     <div class="simple-frame-content">
@@ -492,7 +492,7 @@
   </section>
 
   <!-- Frame: Lists - Inner Products -->
-  <section class="simple-frame overlay-frame">
+  <section class="simple-frame overlay-frame" id="lists-vectors-2">
     <h2 class="simple-frame-title">Lists (vectors)</h2>
     <p class="simple-frame-subtitle">Compute Inner Products</p>
     <div class="simple-frame-content">
@@ -509,7 +509,7 @@
   </section>
 
   <!-- Frame: Lists - Vectorization -->
-  <section class="simple-frame">
+  <section class="simple-frame" id="lists-vectors-3">
     <h2 class="simple-frame-title">Lists (vectors)</h2>
     <p class="simple-frame-subtitle">Apply Functions to Lists (Vectorization)</p>
     <div class="simple-frame-content">
@@ -523,7 +523,7 @@
   </section>
 
   <!-- Frame: Write Equations and Systems -->
-  <section class="simple-frame overlay-frame">
+  <section class="simple-frame overlay-frame" id="write-equations-and-systems">
     <h2 class="simple-frame-title">Write Equations and Systems</h2>
     <div class="simple-frame-content">
       <p class="overlay" data-overlay="1">Use <span class="highlight-red">double equals ==</span> for equations (single <span class="code-inline">=</span> is for assignment).</p>
@@ -543,7 +543,7 @@
   </section>
 
   <!-- Frame: Compute Derivatives with D -->
-  <section class="simple-frame overlay-frame">
+  <section class="simple-frame overlay-frame" id="compute-derivatives-with-d">
     <h2 class="simple-frame-title">Compute Derivatives with D</h2>
     <div class="simple-frame-content">
       <p>Use <span class="code-inline">D[f[x], x]</span> for derivatives:</p>
@@ -561,7 +561,7 @@
   </section>
 
   <!-- Frame: Compute the Gradient -->
-  <section class="simple-frame">
+  <section class="simple-frame" id="compute-the-gradient">
     <h2 class="simple-frame-title">Compute the Gradient</h2>
     <div class="simple-frame-content">
       <p>Use <span class="code-inline">Grad</span> to get all partial derivatives at once:</p>
@@ -580,7 +580,7 @@
   </section>
 
   <!-- Frame: Solve Systems of Equations -->
-  <section class="simple-frame overlay-frame">
+  <section class="simple-frame overlay-frame" id="solve-systems-of-equations">
     <h2 class="simple-frame-title">Solve Systems of Equations</h2>
     <div class="simple-frame-content">
       <p><strong>Basic syntax:</strong></p>
@@ -600,7 +600,7 @@
   </section>
 
   <!-- Frame: Solve vs Reduce -->
-  <section class="simple-frame">
+  <section class="simple-frame" id="solve-vs-reduce">
     <h2 class="simple-frame-title">Solve vs Reduce</h2>
     <div class="simple-frame-content">
       <p><span class="highlight">Solve:</span> Simple syntax, general solutions only</p>
@@ -616,7 +616,7 @@
   </section>
 
   <!-- Frame: Plot Curves with ContourPlot -->
-  <section class="simple-frame overlay-frame">
+  <section class="simple-frame overlay-frame" id="plot-curves-with-contourplot">
     <h2 class="simple-frame-title">Plot Curves with ContourPlot</h2>
     <div class="simple-frame-content">
       <p>Plot implicit equations without solving:</p>
@@ -632,7 +632,7 @@
   </section>
 
   <!-- Frame: Plot Regions with RegionPlot -->
-  <section class="simple-frame overlay-frame">
+  <section class="simple-frame overlay-frame" id="plot-regions-with-regionplot">
     <h2 class="simple-frame-title">Plot Regions with RegionPlot</h2>
     <div class="simple-frame-content">
       <p>Shade regions satisfying inequalities:</p>
@@ -651,7 +651,7 @@
   </section>
 
   <!-- Frame: Useful Commands -->
-  <section class="simple-frame">
+  <section class="simple-frame" id="useful-commands-simplify-n-substitution">
     <h2 class="simple-frame-title">Useful Commands: Simplify, N, Substitution</h2>
     <div class="simple-frame-content">
       <table style="margin: 1rem 0; font-size: 1rem;">
@@ -667,7 +667,7 @@
   </section>
 
   <!-- Frame: Create Indexed Variables with Table -->
-  <section class="simple-frame">
+  <section class="simple-frame" id="create-indexed-variables-with-table">
     <h2 class="simple-frame-title">Create Indexed Variables with Table</h2>
     <div class="simple-frame-content">
       <p>For dynamic models, use brackets for indexing: $c_t \to$ <span class="code-inline">c[t]</span></p>
@@ -685,7 +685,7 @@
   </section>
 
   <!-- Frame: Get Help -->
-  <section class="simple-frame overlay-frame">
+  <section class="simple-frame overlay-frame" id="get-help">
     <h2 class="simple-frame-title">Get Help</h2>
     <div class="simple-frame-content">
       <ol>
@@ -704,7 +704,7 @@
   </section>
 
   <!-- Frame: Practice - Cournot Duopoly -->
-  <section class="simple-frame practice-frame">
+  <section class="simple-frame practice-frame" id="practice">
     <h2 class="simple-frame-title">Practice</h2>
     <p class="simple-frame-subtitle" style="color: #2c3e7a;">Cournot Duopoly</p>
     <div class="simple-frame-content">
