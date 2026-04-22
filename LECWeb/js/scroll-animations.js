@@ -257,7 +257,6 @@ function initBlockFlip() {
       if (body) body.classList.toggle('flipped');
     });
     title.addEventListener('click', e => {
-      if (!e.metaKey) return;
       e.preventDefault();
       const body = title.closest('.block').querySelector('.block-body');
       if (body) body.classList.toggle('flipped');
@@ -336,6 +335,15 @@ if (window.location.hash === '#bottom') {
 // Shift+Arrow: go to top of prev/next section
 // Option+Left: go to bottom of previous section
 document.addEventListener('keydown', function(e) {
+  // 'b': toggle all block-body flip states (open/close all)
+  if (!e.shiftKey && !e.ctrlKey && !e.metaKey && !e.altKey && (e.key === 'b' || e.key === 'B')) {
+    const bodies = document.querySelectorAll('.block-body');
+    if (bodies.length === 0) return;
+    const anyUnflipped = Array.from(bodies).some(b => !b.classList.contains('flipped'));
+    bodies.forEach(b => b.classList.toggle('flipped', anyUnflipped));
+    e.preventDefault();
+    return;
+  }
   // Shift+ArrowUp: go to index
   if (e.shiftKey && e.key === 'ArrowUp') {
     e.preventDefault();
