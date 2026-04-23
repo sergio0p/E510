@@ -56,6 +56,11 @@
       <a href="#collusion" style="margin-left: 1rem;">14. Collusion GP</a>
       <a href="#collusion-2" style="margin-left: 1rem;">15. Collusion Cont</a>
       <a href="#examples-of-one-shot-deviations" style="margin-left: 1rem;">16. OSD Examples</a>
+      <a href="#public-goods-510" style="margin-left: 1rem;">17. Common Resource</a>
+      <a href="#conclusion" style="margin-left: 1rem;">18. Real-Life Applications</a>
+      <a href="#common-resource-problem" style="margin-left: 1rem;">19. Common Resource Problem</a>
+      <a href="#memoryless-strategy" style="margin-left: 1rem;">20. Memoryless Strategy</a>
+      <a href="#cooperative-strategy" style="margin-left: 1rem;">21. Cooperative Strategy</a>
     </nav>
   </section>
 
@@ -376,6 +381,7 @@
       renderMathInElement(document.body, {
         delimiters: [
           {left: '$$', right: '$$', display: true},
+          {left: '\\[', right: '\\]', display: true},
           {left: '$', right: '$', display: false}
         ],
         macros: katexMacros,
@@ -472,6 +478,249 @@
       ],
     });
   </script>
+
+  <!-- Frame 17: Common Resource Table -->
+  <section class="frame fs-10pt" id="public-goods-510">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Common Resource</h2>
+    </div>
+    <div class="frame-content">
+      <p>A common resource is simultaneously:</p>
+
+      <div class="block-group">
+        <div class="block">
+          <div class="block-title">Rival</div>
+          <div class="block-body">One person's use reduces the amount available to others.</div>
+        </div>
+        <div class="block">
+          <div class="block-title">Non-excludable</div>
+          <div class="block-body">It is too costly to prevent anyone from using the resource.</div>
+        </div>
+      </div>
+
+      <style>
+        #public-goods-510 table { border-collapse: separate; border-spacing: 6px; margin-top: 2mm; }
+        #public-goods-510 th, #public-goods-510 td { padding: 0.35em 0.6em; text-align: center; }
+        #public-goods-510 .flip-cell {
+          padding: 0; width: 10em; height: 2.6em;
+          perspective: 700px; cursor: pointer;
+        }
+        #public-goods-510 .flip-inner {
+          position: relative; width: 100%; height: 100%;
+          transform-style: preserve-3d;
+          transition: transform 0.55s cubic-bezier(.2,.8,.2,1);
+        }
+        #public-goods-510 .flip-cell.flipped .flip-inner { transform: rotateY(180deg); }
+        #public-goods-510 .flip-front, #public-goods-510 .flip-back {
+          position: absolute; inset: 0;
+          display: flex; align-items: center; justify-content: center;
+          backface-visibility: hidden; -webkit-backface-visibility: hidden;
+          border: 1px solid #000; background: #fff;
+        }
+        #public-goods-510 .flip-front { color: #888; font-size: 1.3em; }
+        #public-goods-510 .flip-back { transform: rotateY(180deg); font-weight: 600; }
+      </style>
+      <table>
+        <tr>
+          <th></th>
+          <th>Rival</th>
+          <th>Non-Rival</th>
+        </tr>
+        <tr>
+          <td><strong>Excludable</strong></td>
+          <td class="flip-cell" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front">?</div>
+              <div class="flip-back">Private Good</div>
+            </div>
+          </td>
+          <td class="flip-cell" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front">?</div>
+              <div class="flip-back">Club Good</div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Non-Excludable</strong></td>
+          <td class="flip-cell" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front">?</div>
+              <div class="flip-back">Common Resource</div>
+            </div>
+          </td>
+          <td class="flip-cell" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front">?</div>
+              <div class="flip-back">Public Good</div>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+      <p>Because no one can be excluded, each user ignores the cost imposed on others, leading to over-utilization and depletion of the resource—the <span class="alert-text">tragedy of the commons</span>.</p>
+    </div>
+  </section>
+
+  <!-- Frame 17: Real-Life Applications — two videos -->
+  <section class="frame" id="conclusion">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Real-Life Applications</h2>
+    </div>
+    <div class="frame-content" style="display: flex; align-items: center;">
+      <div class="columns" style="align-items: center; width: 100%;">
+        <div class="column">
+          <p style="text-align: center; font-weight: 600; margin-bottom: 0.5rem;">Elinor Ostrom, Econ Nobel Prize 2009</p>
+          <video style="width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 6px 24px rgba(0,0,0,0.28); background: #000;"
+                 src="media/elinor-ostrom.mp4"
+                 loop muted playsinline controls></video>
+        </div>
+        <div class="column">
+          <p style="text-align: center; font-weight: 600; margin-bottom: 0.5rem;">The Cod Wars, 1958–1976</p>
+          <video style="width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 6px 24px rgba(0,0,0,0.28); background: #000;"
+                 src="media/cod-wars.webm"
+                 loop muted playsinline controls></video>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 19: Common Resource Problem — stage game setup -->
+  <section class="frame" id="common-resource-problem">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">A Common Resource Problem</h2>
+      <p class="frame-subtitle" style="font-size: 0.5em;">George J. Mailath and Larry Samuelson, <em>Repeated Games and Reputations: Long-Run Relationships</em> (Oxford: Oxford University Press, 2006)</p>
+    </div>
+    <div class="frame-content">
+      <dl class="beamer-description">
+        <dt>Players:</dt>
+        <dd>$i = 1, 2$ draw fish from a common pool each period.</dd>
+        <dt>State:</dt>
+        <dd>Stock of fish $s^t \in \R_+$ at the start of period $t$; initial stock $s^0 \gt 0$.</dd>
+        <dt>Actions:</dt>
+        <dd>Player $i$ extracts $a_i^t \geq 0$ units, with $a_1^t + a_2^t \leq s^t$.</dd>
+        <dt>Payoffs:</dt>
+        <dd>$u_i = \ln(a_i^t)$.</dd>
+        <dt>State evolution:</dt>
+        <dd>The remaining stock doubles before the next period:
+        \[s^{t+1} = 2(s^t - a_1^t - a_2^t).\]</dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- Frame 20: The Memoryless Strategy -->
+  <section class="frame" id="memoryless-strategy">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">The Memoryless Strategy</h2>
+      <p class="frame-subtitle">An Inefficient Outcome</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>Consider the following memoryless strategy:</p>
+      <div class="block" style="margin-left: auto; margin-right: auto;">
+        <div class="block-body">$$a(s) = \frac{1-\delta}{2-\delta}s$$</div>
+      </div>
+      <p>Its automata representation is:</p>
+      <div style="text-align: center; padding: 0.5rem;">
+        <svg id="automaton-memoryless" style="max-width: 560px; width: 100%; display: block; margin: 0 auto;"></svg>
+      </div>
+      <p>The stock grows at rate $\tfrac{2\delta}{2-\delta}$ — it grows without bound if $\delta \gt 2/3$, declines to extinction if $\delta \lt 2/3$.</p>
+      <p>The value function is:</p>
+      $$\begin{aligned}
+      V(s) &= (1-\delta)\sum_{t=0}^{\infty} \delta^t \ln\!\left(\dfrac{1-\delta}{2-\delta}\,s\left(\dfrac{2\delta}{2-\delta}\right)^{\!t}\right)\\
+           &= \ln s + \ln\!\dfrac{1-\delta}{2-\delta} + \dfrac{\delta}{1-\delta}\ln\!\dfrac{2\delta}{2-\delta}.
+      \end{aligned}$$
+      <p>Notice that the value function satisfies the following recursive equation:</p>
+      <div class="block" style="margin-left: auto; margin-right: auto;">
+        <div class="block-body">$$V(s) = u(a(s)) + \delta\cdot V\bigl(2(s-2a(s))\bigr)$$</div>
+      </div>
+      <p>Also notice that this strategy is a subgame-perfect Nash equilibrium since it satisfies the one-shot deviation principle:</p>
+      <div class="block" style="margin-left: auto; margin-right: auto;">
+        <div class="block-body">$$V(s) \geq u(a_1) + \delta\cdot V\bigl(2(s-a_1-a(s))\bigr)$$</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 21: A Cooperative Strategy -->
+  <section class="frame" id="cooperative-strategy">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">A Cooperative Strategy</h2>
+      <p class="frame-subtitle">An Efficient Outcome</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>Consider a strategy with two phases — a <em>cooperative phase</em> ($c$) in which both players extract the efficient amount $a^*(s)$, and a <em>punishment phase</em> ($p$) in which both players revert forever to the memoryless strategy. Any deviation from $a^*$ triggers the switch to the punishment phase.</p>
+      <div class="block" style="margin-left: auto; margin-right: auto;">
+        <div class="block-body">$$a^*(s) = \frac{1-\delta}{2}\,s$$</div>
+      </div>
+      <p>Its automata representation is:</p>
+      <div style="text-align: center; padding: 0.5rem;">
+        <svg id="automaton-cooperative" style="max-width: 560px; width: 100%; display: block; margin: 0 auto;"></svg>
+      </div>
+      <p>Under the cooperative phase the stock grows at rate $2\delta$, so it grows without bound if $\delta \gt 1/2$.</p>
+      <p>The value function in the cooperative phase is:</p>
+      $$\begin{aligned}
+      V(s,c) &= (1-\delta)\sum_{t=0}^{\infty} \delta^t \ln\!\left(\dfrac{1-\delta}{2}\,s\,(2\delta)^{t}\right)\\
+             &= \ln s + \ln\!\dfrac{1-\delta}{2} + \dfrac{\delta}{1-\delta}\ln 2\delta.
+      \end{aligned}$$
+      <p>In the punishment phase, $V(s,p)$ coincides with the value function derived in the previous frame.</p>
+      <p>Notice that the cooperative value function satisfies the recursive equation:</p>
+      <div class="block" style="margin-left: auto; margin-right: auto;">
+        <div class="block-body">$$V(s,c) = u(a^*(s)) + \delta\cdot V(2\delta s,\, c)$$</div>
+      </div>
+      <p>The one-shot deviation principle — checked only in the cooperative phase — requires:</p>
+      <div class="block" style="margin-left: auto; margin-right: auto;">
+        <div class="block-body">$$V(s,c) \geq u(a_1) + \delta\cdot V\bigl(2(s-a_1-a^*(s)),\, p\bigr)$$</div>
+      </div>
+      <p>The $V$ on the right-hand side uses the <em>punishment</em> phase — a deviation triggers the switch. This holds for $\delta$ sufficiently large.</p>
+    </div>
+  </section>
+
+  <script type="module">
+    import { render } from './tikz-svg/src-v2/index.js';
+    const green = '#2e7d32', gray = '#586e75';
+    render(document.getElementById('automaton-memoryless'), {
+      transformCanvas: { scale: 1.1 }, nodeDistance: 231,
+      stateStyle: {
+        radius: 42, fill: green, stroke: 'none', labelColor: '#fff',
+        shadow: { dx: 2, dy: 3, blur: 4, color: 'rgba(0,0,0,0.35)' },
+        fontSize: 18, fontFamily: "'Times New Roman', serif",
+      },
+      edgeStyle: { stroke: gray, strokeWidth: 1.5, arrow: 'stealth' },
+      states: {
+        s1: { initial: true, fill: '#dc322f', position: { x: 0, y: 0 }, label: '$\\tfrac{1-\\delta}{2-\\delta}s$', fontSize: 22 },
+        s2: { position: { right: 's1' }, shape: 'ellipse', rx: 75, ry: 50, label: '$\\dfrac{(2-2\\delta)(s-a_1-a_2)}{2-\\delta}$' },
+        end: { position: { right: 's2' }, label: '', fill: 'none', stroke: 'none', shadow: false },
+      },
+      edges: [
+        { from: 's1', to: 's2', label: '$(a_1^t,a_2^t)$', labelSide: 'left', labelDistance: 10, shortenEnd: 8 },
+        { from: 's2', to: 'end', label: '$(a_1^{t+1},a_2^{t+1})$', arrow: 'to', arrowSize: 5, dashed: true, labelSide: 'left', labelDistance: 10 },
+      ],
+    });
+
+    render(document.getElementById('automaton-cooperative'), {
+      transformCanvas: { scale: 1.1 }, nodeDistance: 231,
+      stateStyle: {
+        radius: 42, fill: green, stroke: 'none', labelColor: '#fff',
+        shadow: { dx: 2, dy: 3, blur: 4, color: 'rgba(0,0,0,0.35)' },
+        fontSize: 18, fontFamily: "'Times New Roman', serif",
+      },
+      edgeStyle: { stroke: gray, strokeWidth: 1.5, arrow: 'stealth' },
+      states: {
+        s1: { initial: true, fill: '#dc322f', position: { x: 0, y: 0 }, label: '$\\tfrac{1-\\delta}{2}s$', fontSize: 22 },
+        s2: { position: { right: 's1' }, label: '$\\tfrac{1-\\delta}{2-\\delta}s$', fontSize: 22 },
+      },
+      edges: [
+        { from: 's1', to: 's1', loop: 'above', label: '$(a_1,a_2)=(a^*,a^*)$' },
+        { from: 's1', to: 's2', label: 'otherwise' },
+        { from: 's2', to: 's2', loop: 'below' },
+      ],
+    });
+  </script>
+
+  <!-- Navigation Links -->
+  <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
+    <a href="search.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Search</a>
+    <a href="index.html" style="color: var(--crane-blue); text-decoration: none;">ECON 510 &rarr;</a>
+  </div>
 
 </body>
 </html>
