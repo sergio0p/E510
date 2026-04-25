@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="nav-prev" content="midterm-02.html">
+  <meta name="nav-next" content="index.html">
+  <title>Review Problems | ECON 510</title>
+
+  <!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <!-- Custom -->
+  <link rel="stylesheet" href="css/beamer-theme.css">
+  <script src="js/katex-macros.js"></script>
+  <script src="js/scroll-animations.js"></script>
+</head>
+<body>
+
+  <!-- Title Slide -->
+  <section class="title-slide" id="review-problems">
+    <div class="title-box">
+      <h1>Review Problems</h1>
+    </div>
+    <ul style="list-style: none; padding: 0; margin: 2rem 0 0; text-align: left; font-size: 0.85rem; line-height: 1.7; color: #444;">
+      <li><strong>Shift + Right Arrow</strong> &mdash; next lecture</li>
+      <li><strong>Shift + Left Arrow</strong> &mdash; previous lecture</li>
+      <li><strong>Shift + Up Arrow</strong> &mdash; return to the index page</li>
+      <li><strong>Click block title</strong> &mdash; flip block body to hide/reveal content</li>
+      <li><strong>b</strong> &mdash; toggle all blocks open/closed at once</li>
+    </ul>
+  </section>
+
+  <!-- Disclaimer -->
+  <section class="frame" id="review-problems-disclaimer">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Disclaimer</h2>
+    </div>
+    <div class="frame-content">
+      <p>These problems give you additional practice on topics that got less attention in the problem sets and quizzes. <strong>Do not treat them as a preview of the final.</strong> The exam will cover material beyond what appears here&mdash;refer to the table of contents above for the full scope.</p>
+      <p>The lack of solutions is deliberate. If you don't get your hands dirty muddling through these problems on your own, you won't discover the weak points you need to address before the final. That said, I welcome any questions or discussion about the efforts you put into attacking these problems&mdash;just drop me a Canvas message and I'll get right back to you.</p>
+    </div>
+  </section>
+
+  <!-- Recursive utility -->
+  <section class="frame" id="review-recursive-utility">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Recursive utility</h2>
+    </div>
+    <div class="frame-content">
+      <p>Consider a similar setting of PS 03. Mark Watney is stranded on Mars with 4 potatoes ($k_0=4$); the unconsumed stock doubles each period, $k_t=2(k_{t-1}-c_{t-1})$, and his period utility from consumption is $u_t=\sqrt{c_t}$. Now there are only three periods, $t=0, 1, 2$, and Mark uses recursive utility with $\delta=0.8$ and $\theta=\frac12$:
+      $$U_t = \left((1-\delta)\, u_t^{\theta} + \delta\, U_{t+1}^{\theta}\right)^{1/\theta} \quad\text{for }t=0,1,2 \quad\text{and}\quad U_3=0.$$</p>
+      <ol>
+        <li>Write the expression for $U_2$ as a function of $c_2$ and $U_3$.</li>
+        <li>Write the expression for $U_1$ as a function of $c_1$ and $U_2$.</li>
+        <li>Write the expression for $U_0$ as a function of $c_0$ and $U_1$.</li>
+        <li>Remember that $c^\ast_2(k_2)=k_2$. Apply Recipe #0 to $U_1$ to find $c^\ast_1(k_1)$.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Recipe #2 -->
+  <section class="frame" id="review-recipe-2">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Recipe #2</h2>
+    </div>
+    <div class="frame-content">
+      <p>The setting is identical to the previous problem. Consider Mark Watney's problem in period $t=2$: choose $c_2$ to maximize $U_2$ subject to $0\le c_2$ and $c_2\le k_2$. Using Recipe #2:</p>
+      <ol>
+        <li>Write the corresponding Lagrangian.</li>
+        <li>Write down the table of all possible cases for $(\lambda_1,\lambda_2)$.</li>
+        <li>For each case: write the corresponding FOCs (not complementary slackness conditions nor constraints).</li>
+        <li>For each case, determine whether the FOCs admit a solution, and if so, solve for it.</li>
+        <li>Verify that the case $\lambda_1=0$, $\lambda_2\gt 0$ satisfies all the remaining Recipe #2 conditions and is therefore the solution.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Nash Equilibrium -->
+  <section class="frame" id="review-nash-equilibrium">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Nash Equilibrium</h2>
+    </div>
+    <div class="frame-content">
+      <p>Read PS 02&mdash;the setting is identical, but with two agents instead of three.</p>
+      <ol>
+        <li>Use Recipe #2 to obtain each agent's best response. <em>Hint:</em> Write $\mathrm{BR}_i$ as a piecewise function: for some values of $g_{-i}$, $\mathrm{BR}_i(g_{-i})$ is the corner solution $g_i=0$.</li>
+        <li>Assuming $w_1\gt w_2$, find the Nash equilibrium of this game. <em>Hint:</em> Watch out for corner solutions again! You must consider two possible scenarios: when $w_1$ and $w_2$ are &ldquo;close&rdquo; or &ldquo;far apart.&rdquo;</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Efficiency -->
+  <section class="frame" id="review-efficiency">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Efficiency</h2>
+    </div>
+    <div class="frame-content">
+      <p>The setting is as in the previous problem. Consider the welfare function $W(\alpha)=\alpha\, u_1+(1-\alpha)\, u_2$ with $0\lt\alpha\lt 1$.</p>
+      <ol>
+        <li>Use Recipe #0 and obtain the corresponding FOCs with respect to $g_1$ and $g_2$.</li>
+        <li>Assuming that the Nash equilibrium in the previous section is interior ($g_1\gt 0$ and $g_2\gt 0$), and using the Nash equilibrium FOCs together with the welfare function FOCs, show that the Nash equilibrium is not efficient.</li>
+        <li>When $w_1=w_2$ and $\alpha=\tfrac12$, what is the Nash equilibrium level of the public good $G$?</li>
+        <li>When $w_1=w_2$ and $\alpha=\tfrac12$, what is the level of the public good $G$ when the welfare function is maximized?</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Recursive Methods -->
+  <section class="frame" id="review-recursive-methods">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Recursive Methods</h2>
+    </div>
+    <div class="frame-content">
+      <p>Same setting as the Mark Watney PS (exponential discounting), but assume an infinite horizon. Mark maximizes
+      $$\sum_{t=0}^{\infty} \delta^t \sqrt{c_t}, \qquad \delta=0.5,$$
+      subject to $k_{t+1}=2(k_t-c_t)$ and $k_0=4$.</p>
+      <ol>
+        <li>Write down the recursive equation that the value function must satisfy.</li>
+        <li>Does the function $V(k)=\sqrt{2k}$ satisfy the recursive equation in (1)?</li>
+        <li>What is the FOC that the optimal policy must satisfy?</li>
+        <li>What is the optimal policy?</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Repeated Games -->
+  <section class="frame" id="review-repeated-games">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Repeated Games</h2>
+    </div>
+    <div class="frame-content">
+      <p>Robinson and Friday are stranded on an island. Both have per-period utility $u(c)=\sqrt{c}$. Each period they go fishing, but with different luck. At each period, the joint catch $(r,f)$ is drawn with equal probability $\tfrac14$ from
+      $$(0,0),\ (1,1),\ (1,0),\ (0,1).$$
+      They follow this social norm: <em>divide the catch equally if everyone has always done that so far or if it is the start of the game; otherwise, each consumes only their own catch.</em></p>
+      <p>At each period, they observe the current catch $(r,f)$ and decide whether to share. If both share, each gets $\sqrt{(r+f)/2}$. If at least one agent does not share, payoffs are $u_R=\sqrt{r}$ and $u_F=\sqrt{f}$.</p>
+      <p>Notice that the state will reflect both the current catch and the status of their relationship&mdash;cooperative or defection phases.</p>
+      <ol>
+        <li>Write the value function equation at each state.</li>
+        <li>Solve this system of equations. <em>Hint:</em> taking expectations over the catch in each phase collapses the system into one equation per phase. That is, use $\bar V_R^{\text{coop}} = \mathbb E[V_R(\cdot;\text{coop})]$ and $\bar V_R^{\text{def}} = \mathbb E[V_R(\cdot;\text{def})]$.</li>
+        <li>At the state $\bigl((1,0),\text{cooperative}\bigr)$, by the one-shot deviation principle, which inequality must be satisfied so that Robinson is willing to share his catch?</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Nav -->
+  <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
+    <a href="midterm-02.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Midterm 2</a>
+    <a href="index.html" style="color: var(--crane-blue); text-decoration: none;">Index &rarr;</a>
+  </div>
+
+  <!-- KaTeX auto-render -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      renderMathInElement(document.body, {
+        delimiters: [
+          {left: '$$', right: '$$', display: true},
+          {left: '$', right: '$', display: false}
+        ],
+        macros: katexMacros,
+        throwOnError: false
+      });
+    });
+  </script>
+
+</body>
+</html>
