@@ -1,0 +1,104 @@
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'STIX Two Text', serif;
+  background: #FAFAFA;
+  margin: 0;
+  padding: 16px;
+}
+
+#grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 8px;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.cell {
+  position: relative;
+  background: white;
+  border: 1px solid #D1D5DB;
+  border-radius: 4px;
+  aspect-ratio: 4 / 3;
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+}
+
+.cell-label {
+  font-weight: bold;
+  font-size: 14px;
+  color: #111827;
+  padding-left: 4px;
+  flex: 0 0 auto;
+}
+
+.cell-svg {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Edge highlight class used by applyHighlight() — duplicated from
+   backward-induction/style.css */
+.edge.optimal {
+  stroke: #DC2626;
+  stroke-width: 3px;
+  pointer-events: none;
+}
+
+/* Instructor area — easily croppable */
+#instructor-area {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: #F3F4F6;
+  border-radius: 4px;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  color: #374151;
+}
+
+#seed-display {
+  display: inline-block;
+  margin-right: 16px;
+}
+
+#reroll {
+  background: #2563EB;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font: inherit;
+}
+
+#reroll:hover { background: #1D4ED8; }
+
+#answer-key {
+  margin-top: 12px;
+}
+
+#answer-key summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+#answer-key-list {
+  margin: 8px 0 0 20px;
+  padding: 0;
+}
+
+@media print {
+  body { padding: 0; background: white; }
+  #instructor-area { display: none; }
+  .cell { border-color: #9CA3AF; }
+  @page { size: landscape; margin: 0.4in; }
+}
