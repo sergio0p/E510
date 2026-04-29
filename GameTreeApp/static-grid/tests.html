@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>static-grid tests</title>
+  <style>
+    body { font-family: monospace; padding: 16px; }
+    .pass { color: #16A34A; }
+    .fail { color: #DC2626; font-weight: bold; }
+  </style>
+</head>
+<body>
+<h1>static-grid tests</h1>
+<ol id="results"></ol>
+<script type="module">
+  import { buildGameTree, NODE_IDS } from './js/tree-builder.js';
+  import { mulberry32, shuffleWithSeed } from './js/shuffle.js';
+  import { VARIATIONS } from './js/highlight-spec.js';
+
+  const results = document.getElementById('results');
+  let passes = 0, fails = 0;
+  function check(name, cond, detail = '') {
+    const li = document.createElement('li');
+    if (cond) {
+      li.className = 'pass';
+      li.textContent = `PASS — ${name}`;
+      passes++;
+    } else {
+      li.className = 'fail';
+      li.textContent = `FAIL — ${name}${detail ? ' — ' + detail : ''}`;
+      fails++;
+    }
+    results.appendChild(li);
+  }
+
+  // --- tree-builder ---
+  {
+    const { root, allNodes, allLeaves } = buildGameTree();
+    check('builder: root is P1 at period 0', root.player === 1 && root.period === 0);
+    check('builder: root has 2 children', root.children.length === 2);
+    check('builder: both root children are P2 at period 1',
+      root.children.every(c => c.player === 2 && c.period === 1));
+    check('builder: 4 leaves at period 2', allLeaves.length === 4 && allLeaves.every(l => l.period === 2));
+    check('builder: total node count is 7', allNodes.length === 7);
+    check('builder: leaf payoffs match design (UU=4,3)',
+      JSON.stringify(allLeaves[0].payoffs) === '[4,3]');
+    check('builder: leaf payoffs match design (UD=1,1)',
+      JSON.stringify(allLeaves[1].payoffs) === '[1,1]');
+    check('builder: leaf payoffs match design (DU=3,4)',
+      JSON.stringify(allLeaves[2].payoffs) === '[3,4]');
+    check('builder: leaf payoffs match design (DD=0,2)',
+      JSON.stringify(allLeaves[3].payoffs) === '[0,2]');
+    check('builder: NODE_IDS.root matches root id', NODE_IDS.root === root.id);
+  }
+
+  // --- prefix namespacing ---
+  {
+    const t1 = buildGameTree('a');
+    const t2 = buildGameTree('b');
+    check('builder: prefix "a" applied to root id', t1.root.id === 'a-n0');
+    check('builder: prefix "b" applied to root id', t2.root.id === 'b-n0');
+    check('builder: prefix-isolated trees have distinct node ids',
+      t1.allNodes.every(n1 => !t2.allNodes.some(n2 => n2.id === n1.id)));
+  }
+
+  // --- shuffle determinism ---
+  {
+    const a1 = shuffleWithSeed([1,2,3,4,5,6,7,8,9,10,11,12], 42);
+    const a2 = shuffleWithSeed([1,2,3,4,5,6,7,8,9,10,11,12], 42);
+    check('shuffle: same seed → identical output',
+      JSON.stringify(a1) === JSON.stringify(a2));
+
+    const a3 = shuffleWithSeed([1,2,3,4,5,6,7,8,9,10,11,12], 43);
+    check('shuffle: different seed → different output',
+      JSON.stringify(a1) !== JSON.stringify(a3));
+
+    check('shuffle: preserves length', a1.length === 12);
+    check('shuffle: preserves elements (multiset)',
+      a1.slice().sort((x,y)=>x-y).join() === '1,2,3,4,5,6,7,8,9,10,11,12');
+
+    const p1 = mulberry32(99); const p2 = mulberry32(99);
+    let prngMatches = true;
+    for (let i = 0; i < 5; i++) { if (p1() !== p2()) prngMatches = false; }
+    check('mulberry32: same seed → same first 5 outputs', prngMatches);
+  }
+
+  // --- highlight specs ---
+  {
+    check('highlight-spec: 12 variations total', VARIATIONS.length === 12);
+    check('highlight-spec: 8 are profiles',
+      VARIATIONS.filter(v => v.kind === 'profile').length === 8);
+    check('highlight-spec: 4 are paths',
+      VARIATIONS.filter(v => v.kind === 'path').length === 4);
+    check('highlight-spec: every profile has 3 red edges',
+      VARIATIONS.filter(v => v.kind === 'profile').every(v => v.redEdges.length === 3));
+    check('highlight-spec: every path has 2 red edges',
+      VARIATIONS.filter(v => v.kind === 'path').every(v => v.redEdges.length === 2));
+    check('highlight-spec: codes are unique',
+      new Set(VARIATIONS.map(v => v.code)).size === 12);
+    const spe = VARIATIONS.find(v => v.code === 'UUU');
+    check('highlight-spec: UUU is labeled SPE', spe && /SPE/.test(spe.label));
+  }
+
+  const summary = document.createElement('p');
+  summary.innerHTML = fails === 0
+    ? `<span class="pass">All ${passes} tests passed.</span>`
+    : `<span class="fail">${fails} of ${passes + fails} tests failed.</span>`;
+  document.body.appendChild(summary);
+  console.log(`Tests: ${passes} pass, ${fails} fail`);
+</script>
+</body>
+</html>
