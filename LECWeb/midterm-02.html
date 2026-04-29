@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="nav-prev" content="repeated-games.html">
+  <meta name="nav-next" content="review-problems.html">
+  <title>Midterm 2 | ECON 510</title>
+
+  <!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <!-- Custom -->
+  <link rel="stylesheet" href="css/beamer-theme.css">
+  <script src="js/katex-macros.js"></script>
+  <script src="js/scroll-animations.js"></script>
+</head>
+<body>
+
+  <!-- Title Slide -->
+  <section class="title-slide" id="midterm-2">
+    <div class="title-box">
+      <h1>Midterm 2</h1>
+      <h2>Answer Key</h2>
+    </div>
+    <ul style="list-style: none; padding: 0; margin: 2rem 0 0; text-align: left; font-size: 0.85rem; line-height: 1.7; color: #444;">
+      <li><strong>Shift + Right Arrow</strong> &mdash; next lecture</li>
+      <li><strong>Shift + Left Arrow</strong> &mdash; previous lecture</li>
+      <li><strong>Shift + Up Arrow</strong> &mdash; return to the index page</li>
+      <li><strong>Click block title</strong> &mdash; flip block body to hide/reveal content</li>
+      <li><strong>b</strong> &mdash; toggle all blocks open/closed at once</li>
+    </ul>
+  </section>
+
+  <!-- ============ PART I ============ -->
+  <section class="section-header" id="midterm-2-part-i">
+    <div class="section-title-box">
+      <h1>Part I &mdash; Public Good Provision</h1>
+    </div>
+  </section>
+
+  <!-- Setup recap -->
+  <section class="frame" id="midterm-2-part-i-setup">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Set-up</h2>
+      <p class="frame-subtitle">Sequential public good provision</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>Three individuals $i=1,2,3$ contribute sequentially to the public good $G=g_1+g_2+g_3$. In the last round, individual $3$ chooses $g_3$ to maximize
+      $$\sqrt{w_3-g_3}+\sqrt{g_1+g_2+g_3}\quad\st\quad 0\leq g_3\leq w_3.$$
+      Here $w_1$, $w_2$, $w_3$, $g_1$, and $g_2$ are taken as given when individual $3$ moves.</p>
+    </div>
+  </section>
+
+  <!-- Q1 -->
+  <section class="frame" id="midterm-2-q1">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Question 1</h2>
+      <p class="frame-subtitle">Economic meaning of $0\leq g_3$</p>
+    </div>
+    <div class="frame-content">
+      <p><strong>Question:</strong> Explain the economic meaning of the constraint $0\leq g_3$.</p>
+      <div class="block">
+        <div class="block-title">Answer</div>
+        <div class="block-body">
+          <p>Individual $3$ can only <em>contribute</em> resources to the public good; they cannot withdraw from it. A negative $g_3$ would mean appropriating part of the public good for private use, which is not allowed. The constraint $g_3\geq 0$ rules out such expropriation and enforces a non-negativity (only-give) restriction on contributions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q2 -->
+  <section class="frame" id="midterm-2-q2">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Question 2</h2>
+      <p class="frame-subtitle">Economic meaning of $g_3\leq w_3$</p>
+    </div>
+    <div class="frame-content">
+      <p><strong>Question:</strong> Explain the economic meaning of the constraint $g_3\leq w_3$.</p>
+      <div class="block">
+        <div class="block-title">Answer</div>
+        <div class="block-body">
+          <p>Individual $3$ cannot contribute more than they own. The endowment $w_3$ is the upper bound on what can be given away, since the private consumption $x_3=w_3-g_3$ must remain non-negative. In short, $g_3\leq w_3$ is the budget feasibility (no-borrowing) constraint.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q4 -->
+  <section class="frame" id="midterm-2-q4">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Question 4</h2>
+      <p class="frame-subtitle">The Lagrangian</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p><strong>Question:</strong> Write the Lagrangian for individual $3$&apos;s problem &mdash; substituting the actual objective and constraints.</p>
+      <div class="block">
+        <div class="block-title">Answer</div>
+        <div class="block-body">
+          <p>Writing both inequality constraints in the form $g_i(x)\leq c_i$:
+          $$-g_3\leq 0\quad\text{and}\quad g_3\leq w_3,$$
+          and using the rule $-\lambda_i\cdot(g_i(x)-c_i)$ for each one:
+          $$\begin{aligned}
+          \mathcal{L}(g_3,\lambda_1,\lambda_2)&=\sqrt{w_3-g_3}+\sqrt{g_1+g_2+g_3}-\lambda_1\cdot(-g_3-0)-\lambda_2\cdot(g_3-w_3)\\
+          &=\sqrt{w_3-g_3}+\sqrt{g_1+g_2+g_3}+\lambda_1\cdot g_3+\lambda_2\cdot(w_3-g_3).
+          \end{aligned}$$</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q5 -->
+  <section class="frame" id="midterm-2-q5">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Question 5</h2>
+      <p class="frame-subtitle">First-order conditions when $\lambda_1\gt 0$, $\lambda_2=0$</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p><strong>Question:</strong> Assume $\lambda_1\gt 0$ and $\lambda_2=0$. Write all first-order conditions and simplify.</p>
+      <div class="block">
+        <div class="block-title">Answer</div>
+        <div class="block-body">
+          <p>Replacing $\lambda_2=0$ in the (simplified) Lagrangian, we apply Recipe #1 to the variables $g_3$ and $\lambda_1$. There are two FOCs.</p>
+          <p><strong>FOC w.r.t. $g_3$:</strong>
+          $$\diff{\mathcal{L}}{g_3}=-\dfrac{1}{2\sqrt{w_3-g_3}}+\dfrac{1}{2\sqrt{g_1+g_2+g_3}}+\lambda_1=0.$$</p>
+          <p><strong>FOC w.r.t. $\lambda_1$:</strong>
+          $$\diff{\mathcal{L}}{\lambda_1}=g_3=0.$$</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q6 -->
+  <section class="frame" id="midterm-2-q6">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Question 6</h2>
+      <p class="frame-subtitle">Solving the FOCs</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p><strong>Question:</strong> Solve the FOCs from Question 5. Your answer may depend on $w_3$, $g_1$, and $g_2$.</p>
+      <div class="block">
+        <div class="block-title">Answer</div>
+        <div class="block-body">
+          <p>The FOC w.r.t. $\lambda_1$ gives $g_3=0$. Substituting $g_3=0$ into the FOC w.r.t. $g_3$ and solving for $\lambda_1$:
+          $$\boxed{g_3=0,\qquad \lambda_1=\dfrac{1}{2\sqrt{w_3}}-\dfrac{1}{2\sqrt{g_1+g_2}}.}$$</p>
+          <p>Economically: at this candidate solution, individual $3$ is a <em>free-rider</em> &mdash; they contribute nothing and consume their entire endowment privately ($x_3=w_3$).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q7 -->
+  <section class="frame" id="midterm-2-q7">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Question 7</h2>
+      <p class="frame-subtitle">When is the candidate a true solution?</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p><strong>Question:</strong> What conditions on $w_3$, $g_1$, $g_2$ ensure that the candidate found in Question 6 is actually a solution to the maximization problem?</p>
+      <div class="block">
+        <div class="block-title">Answer</div>
+        <div class="block-body">
+          <p>We need the multiplier $\lambda_1$ to be (strictly) positive, as assumed in the case:
+          $$\lambda_1=\dfrac{1}{2\sqrt{w_3}}-\dfrac{1}{2\sqrt{g_1+g_2}}\gt 0\;\Longleftrightarrow\;\sqrt{g_1+g_2}\gt\sqrt{w_3}\;\Longleftrightarrow\;\boxed{g_1+g_2\gt w_3.}$$</p>
+          <p>Interpretation: if the public good is already large enough relative to individual $3$&apos;s wealth, the marginal utility of one more unit of $G$ falls below the marginal utility of private consumption, so it is optimal to free-ride ($g_3=0$).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PART II ============ -->
+  <section class="section-header" id="midterm-2-part-ii">
+    <div class="section-title-box">
+      <h1>Part II &mdash; Contingent Markets</h1>
+    </div>
+  </section>
+
+  <section class="frame" id="midterm-2-part-ii-setup">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Set-up</h2>
+      <p class="frame-subtitle">Two-period economy</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>Each individual has utility $u(c_0,c_1)=c_0^{\alpha}+\delta\cdot c_1^{\alpha}$ and budget $c_0+p\cdot c_1=\text{income}$. The individual demands are
+      $$c_0=\dfrac{K\cdot\text{income}}{K+p},\qquad c_1=\dfrac{\text{income}}{K+p},\qquad K=\paren{\delta/p}^{1/(\alpha-1)}.$$
+      Endowments: $e_i=(5i,\,20-5i)$ for $i=1,2,3$.</p>
+    </div>
+  </section>
+
+  <!-- Q8 -->
+  <section class="frame" id="midterm-2-q8">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Question 8</h2>
+      <p class="frame-subtitle">Endowments and incomes</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p><strong>Question:</strong> (1) Write the numerical endowment for each individual. (2) Write each individual&apos;s income as a function of $p$ only.</p>
+      <div class="block">
+        <div class="block-title">Answer</div>
+        <div class="block-body">
+          <p><strong>Endowments:</strong>
+          $$e_1=(5,15),\qquad e_2=(10,10),\qquad e_3=(15,5).$$</p>
+          <p><strong>Incomes</strong> (value of endowment at prices $(1,p)$): $\text{income}_i=5i+p\cdot(20-5i)$, so
+          $$\text{income}_1=5+15p,\quad \text{income}_2=10+10p,\quad \text{income}_3=15+5p.$$</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q10 -->
+  <section class="frame" id="midterm-2-q10">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Question 10</h2>
+      <p class="frame-subtitle">Total demand for $c_0$</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p><strong>Question:</strong> Write the total demand for consumption today, $c_0$, in terms of $p$ and $K$.</p>
+      <div class="block">
+        <div class="block-title">Answer</div>
+        <div class="block-body">
+          <p>Sum the individual demands $c_{0,i}=K\cdot\text{income}_i/(K+p)$:
+          $$C_0=\sum_{i=1}^{3}\dfrac{K\cdot\text{income}_i}{K+p}=\dfrac{K}{K+p}\bracket{(5+15p)+(10+10p)+(15+5p)}.$$
+          The bracket equals $30+30p=30(1+p)$, hence
+          $$\boxed{C_0(p)=\dfrac{30\,K\,(1+p)}{K+p}.}$$</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q11 -->
+  <section class="frame" id="midterm-2-q11">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Question 11</h2>
+      <p class="frame-subtitle">Equilibrium price equation</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p><strong>Question:</strong> Write the equation that must be solved to find the equilibrium $p$.</p>
+      <div class="block">
+        <div class="block-title">Answer</div>
+        <div class="block-body">
+          <p>Total endowment of $c_0$ equals $5+10+15=30$. Market clearing for the period-$0$ good requires total demand equal to total supply:
+          $$\dfrac{30\,K\,(1+p)}{K+p}=30\;\Longleftrightarrow\;K(1+p)=K+p\;\Longleftrightarrow\;K=1.$$
+          Since $K=\paren{\delta/p}^{1/(\alpha-1)}$, the condition $K=1$ gives $\delta/p=1$, i.e.
+          $$\boxed{p^{e}=\delta.}$$
+          (One could equivalently use market clearing for $c_1$ &mdash; since each individual&apos;s budget binds, clearing one market automatically clears the other, so both routes yield the same equation.)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PART III ============ -->
+  <section class="section-header" id="midterm-2-part-iii">
+    <div class="section-title-box">
+      <h1>Part III &mdash; Spot &amp; Financial Markets</h1>
+    </div>
+  </section>
+
+  <section class="frame" id="midterm-2-part-iii-setup">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Set-up</h2>
+      <p class="frame-subtitle">Bond markets replace contingent markets</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>Same preferences and endowments as Part II. There is a single bond issued at $t=0$: each unit costs $1$ in period $0$ and pays $R$ in period $1$. Let $z$ denote the amount of the bond purchased (with $z\lt 0$ meaning the agent borrows).</p>
+    </div>
+  </section>
+
+  <!-- Q12 -->
+  <section class="frame" id="midterm-2-q12">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Question 12</h2>
+      <p class="frame-subtitle">Period-by-period budget for individual 1</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p><strong>Question:</strong> Individual 1 has endowment $e_1=(5,15)$. (1) Write the period-$0$ budget. (2) Write the period-$1$ budget.</p>
+      <div class="block">
+        <div class="block-title">Answer</div>
+        <div class="block-body">
+          <p><strong>Period $t=0$:</strong> spend on consumption today and on bonds, using the period-$0$ endowment:
+          $$c_0+z=5.$$</p>
+          <p><strong>Period $t=1$:</strong> consume the period-$1$ endowment plus the bond payoff:
+          $$c_1=15+R\cdot z.$$</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Q13 -->
+  <section class="frame" id="midterm-2-q13">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Question 13</h2>
+      <p class="frame-subtitle">From period budgets to a single intertemporal constraint</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p><strong>Question:</strong> (1) Solve the period-$1$ budget for $z$. (2) Substitute into the period-$0$ budget and place all consumption on the LHS. (3) Compare with the contingent-markets budget $c_0+p\cdot c_1=5+15p$.</p>
+      <div class="block">
+        <div class="block-title">Answer</div>
+        <div class="block-body">
+          <p><strong>(1)</strong> From $c_1=15+Rz$:
+          $$z=\dfrac{c_1-15}{R}.$$</p>
+          <p><strong>(2)</strong> Substituting into $c_0+z=5$ and rearranging:
+          $$c_0+\dfrac{c_1-15}{R}=5\;\Longrightarrow\;\boxed{c_0+\dfrac{1}{R}\,c_1=5+\dfrac{15}{R}.}$$</p>
+          <p><strong>(3)</strong> Compared with $c_0+p\cdot c_1=5+15p$, the two budgets coincide whenever
+          $$p=\dfrac{1}{R}\quad\paren{\text{equivalently, }R=\dfrac{1}{p}}.$$
+          The bond economy and the contingent-markets economy generate the <em>same</em> set of feasible $(c_0,c_1)$ bundles &mdash; the gross interest rate $R$ is the reciprocal of the contingent price $p$.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Nav -->
+  <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
+    <a href="repeated-games.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Repeated Games</a>
+    <a href="review-problems.html" style="color: var(--crane-blue); text-decoration: none;">Review Problems &rarr;</a>
+  </div>
+
+  <!-- KaTeX auto-render -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      renderMathInElement(document.body, {
+        delimiters: [
+          {left: '$$', right: '$$', display: true},
+          {left: '$', right: '$', display: false}
+        ],
+        macros: katexMacros,
+        throwOnError: false
+      });
+    });
+  </script>
+
+</body>
+</html>
