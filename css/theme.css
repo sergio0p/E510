@@ -1,0 +1,317 @@
+/* ECON 510 site theme — UNC Tar Heels (Navy / Carolina Blue) */
+
+:root {
+    --navy: #13294B;
+    --navy-band: #1E3A63;
+    --carolina: #4B9CD3;
+    --carolina-light: #a9d4ec;
+    --carolina-pale: #eaf4fb;
+    --paper: #ffffff;
+    --page-bg: #eef2f6;
+    --ink: #1f2937;
+    --ink-soft: #4b5563;
+    --line: #d7e0ea;
+    --line-soft: #e8edf3;
+    --amber-highlight: #fef3c7;
+    --amber-highlight-border: #f6d38a;
+    --alert: #c0392b;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.65;
+    background-color: var(--page-bg);
+    color: var(--ink);
+    padding: 32px 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--paper);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 24px rgba(19, 41, 75, 0.10), 0 1px 3px rgba(19, 41, 75, 0.08);
+}
+
+/* Masthead — navy header band bled to the card's edges */
+.masthead {
+    background: var(--navy-band);
+    margin: -30px -30px 24px -30px;
+    padding: 26px 30px 20px;
+    border-radius: 10px 10px 0 0;
+    border-bottom: 3px solid var(--carolina);
+}
+
+.masthead h1 {
+    font-family: 'Source Serif 4', Georgia, serif;
+    color: #ffffff;
+    font-size: 1.55rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    margin-bottom: 0.4rem;
+}
+
+.masthead .subtitle {
+    color: var(--carolina-light);
+    font-family: 'Inter', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+.masthead .btn-outline-light {
+    border-color: rgba(255, 255, 255, 0.55);
+    color: #ffffff;
+}
+
+.masthead .btn-outline-light:hover {
+    background-color: var(--carolina);
+    border-color: var(--carolina);
+    color: #ffffff;
+}
+
+/* Fallback: h1/subtitle used outside a .masthead wrapper */
+h1 {
+    color: var(--navy);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: var(--carolina);
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.instructor-info {
+    background-color: var(--carolina-pale);
+    padding: 20px;
+    border-radius: 6px;
+    margin-bottom: 30px;
+    border-left: 4px solid var(--carolina);
+}
+
+.instructor-info p {
+    margin-bottom: 0.5rem;
+}
+
+/* Accordion */
+.accordion {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.accordion-item {
+    border-bottom: 1px solid var(--line);
+    background: var(--paper);
+}
+
+.accordion-item:last-child {
+    border-bottom: none;
+}
+
+.accordion-button {
+    background-color: var(--carolina-pale);
+    color: var(--navy);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1.15rem;
+    letter-spacing: 0.01em;
+    padding: 1rem 1.25rem;
+    border: none;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: var(--carolina);
+    color: #ffffff;
+    box-shadow: none;
+}
+
+.accordion-button:focus {
+    box-shadow: 0 0 0 3px rgba(75, 156, 211, 0.25);
+    border-color: var(--carolina);
+}
+
+.accordion-button::after {
+    filter: brightness(0.35);
+}
+
+.accordion-button:not(.collapsed)::after {
+    filter: brightness(0) invert(1);
+}
+
+.accordion-body {
+    padding: 1.25rem;
+    background-color: var(--paper);
+    border-top: 1px solid var(--line);
+}
+
+.accordion-body p:last-child,
+.accordion-body ul:last-child,
+.accordion-body ol:last-child {
+    margin-bottom: 0;
+}
+
+/* Nested collapsible sections */
+.nested-collapse {
+    margin: 15px 0;
+}
+
+.nested-header {
+    background-color: var(--line-soft);
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--navy);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.15s ease;
+}
+
+.nested-header:hover {
+    background-color: var(--carolina-pale);
+}
+
+.nested-header.active {
+    background-color: var(--navy);
+    color: #ffffff;
+    border-color: var(--navy);
+}
+
+.nested-header::after {
+    content: "▼";
+    font-size: 0.8rem;
+    transition: transform 0.2s ease;
+}
+
+.nested-header.active::after {
+    transform: rotate(-180deg);
+}
+
+.nested-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+}
+
+.nested-content.show {
+    max-height: 2000px;
+    margin-top: 10px;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+}
+
+table th {
+    background-color: var(--navy);
+    color: #ffffff;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+}
+
+table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+}
+
+table tr:last-child td {
+    border-bottom: none;
+}
+
+table tr:nth-child(even) {
+    background-color: var(--line-soft);
+}
+
+.schedule-table {
+    font-size: 0.95rem;
+}
+
+.schedule-table td {
+    padding: 8px;
+    vertical-align: top;
+}
+
+.schedule-table .week-col {
+    font-weight: 600;
+    background-color: var(--carolina-pale);
+}
+
+/* Links */
+a {
+    color: var(--carolina);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: var(--navy);
+}
+
+/* Lists */
+ul, ol {
+    margin: 10px 0;
+    padding-left: 25px;
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+.highlight {
+    background-color: var(--amber-highlight);
+    border: 1px solid var(--amber-highlight-border);
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.text-red {
+    color: var(--alert);
+    font-weight: bold;
+}
+
+h5 {
+    color: var(--navy);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+h6 {
+    color: var(--navy);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+blockquote {
+    background-color: var(--carolina-pale);
+    padding: 15px 20px;
+    border-left: 4px solid var(--carolina);
+    margin: 15px 0;
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-style: italic;
+    color: var(--ink-soft);
+}
+
+footer {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+}

@@ -18,275 +18,24 @@
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <style>
-        :root {
-            /* Solarized Light */
-            --base03: #002b36;
-            --base02: #073642;
-            --base01: #586e75;
-            --base00: #657b83;
-            --base0: #839496;
-            --base1: #93a1a1;
-            --base2: #eee8d5;
-            --base3: #fdf6e3;
-            --yellow: #b58900;
-            --orange: #cb4b16;
-            --red: #dc322f;
-            --magenta: #d33682;
-            --violet: #6c71c4;
-            --blue: #268bd2;
-            --cyan: #2aa198;
-            --green: #859900;
-        }
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            line-height: 1.6;
-            background-color: var(--base3);
-            color: var(--base00);
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: var(--base3);
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        h1 {
-            color: var(--orange);
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .subtitle {
-            color: var(--blue);
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-        }
-
-        .instructor-info {
-            background-color: var(--base2);
-            padding: 20px;
-            border-radius: 6px;
-            margin-bottom: 30px;
-            border-left: 4px solid var(--cyan);
-        }
-
-        .instructor-info p {
-            margin-bottom: 0.5rem;
-        }
-
-        /* Copenhagen Block Aesthetics */
-        .accordion {
-            border: 1px solid var(--base1);
-            border-radius: 6px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .accordion-item {
-            border-bottom: 1px solid var(--base1);
-            background: var(--base3);
-        }
-
-        .accordion-item:last-child {
-            border-bottom: none;
-        }
-
-        .accordion-button {
-            background-color: var(--base2);
-            color: var(--base01);
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 1rem 1.25rem;
-            border: none;
-        }
-
-        .accordion-button:not(.collapsed) {
-            background-color: var(--blue);
-            color: var(--base3);
-            box-shadow: none;
-        }
-
-        .accordion-button:focus {
-            box-shadow: none;
-            border-color: var(--base1);
-        }
-
-        .accordion-button::after {
-            filter: brightness(0.5);
-        }
-
-        .accordion-button:not(.collapsed)::after {
-            filter: brightness(0) invert(1);
-        }
-
-        .accordion-body {
-            padding: 1.25rem;
-            background-color: var(--base3);
-            border-top: 1px solid var(--base1);
-        }
-
-        /* Nested collapsible sections */
-        .nested-collapse {
-            margin: 15px 0;
-        }
-
-        .nested-header {
-            background-color: var(--base2);
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--base1);
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-            color: var(--base01);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background-color 0.15s ease;
-        }
-
-        .nested-header:hover {
-            background-color: var(--base1);
-            color: var(--base3);
-        }
-
-        .nested-header.active {
-            background-color: var(--cyan);
-            color: var(--base3);
-            border-color: var(--cyan);
-        }
-
-        .nested-header::after {
-            content: "▼";
-            font-size: 0.8rem;
-            transition: transform 0.2s ease;
-        }
-
-        .nested-header.active::after {
-            transform: rotate(-180deg);
-        }
-
-        .nested-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.35s ease;
-        }
-
-        .nested-content.show {
-            max-height: 2000px;
-            margin-top: 10px;
-        }
-
-        /* Table styling */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-        }
-
-        table th {
-            background-color: var(--base01);
-            color: var(--base3);
-            padding: 12px;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        table td {
-            padding: 10px 12px;
-            border-bottom: 1px solid var(--base1);
-        }
-
-        table tr:last-child td {
-            border-bottom: none;
-        }
-
-        table tr:nth-child(even) {
-            background-color: var(--base2);
-        }
-
-        /* Links */
-        a {
-            color: var(--blue);
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-            color: var(--cyan);
-        }
-
-        /* Lists */
-        ul, ol {
-            margin: 10px 0;
-            padding-left: 25px;
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-
-        .highlight {
-            background-color: var(--yellow);
-            color: var(--base3);
-            padding: 2px 6px;
-            border-radius: 3px;
-        }
-
-        .text-red {
-            color: var(--red);
-            font-weight: bold;
-        }
-
-        .schedule-table {
-            font-size: 0.95rem;
-        }
-
-        .schedule-table td {
-            padding: 8px;
-            vertical-align: top;
-        }
-
-        .schedule-table .week-col {
-            font-weight: 600;
-            background-color: var(--base2);
-        }
-
-        h5 {
-            color: var(--magenta);
-            margin-top: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        h6 {
-            color: var(--violet);
-            margin-top: 1rem;
-            font-weight: 600;
-        }
-
-        blockquote {
-            background-color: var(--base2);
-            padding: 15px 20px;
-            border-left: 4px solid var(--violet);
-            margin: 15px 0;
-            font-style: italic;
-        }
-    </style>
+    <!-- Site theme -->
+    <link rel="stylesheet" href="css/theme.css">
 </head>
 <body>
     <div class="container">
-        <h1>ECON 510: Advanced Microeconomic Theory</h1>
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <div class="subtitle" style="margin-bottom: 0;">Fall 2026 - Section 002</div>
-            <div>
-                <button class="btn btn-outline-secondary btn-sm" onclick="expandAll()">Expand All</button>
-                <button class="btn btn-outline-secondary btn-sm" onclick="collapseAll()">Collapse All</button>
+        <div class="masthead">
+            <h1>ECON 510: Advanced Microeconomic Theory</h1>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="subtitle" style="margin-bottom: 0;">Fall 2026 - Section 002</div>
+                <div>
+                    <button class="btn btn-outline-light btn-sm" onclick="expandAll()">Expand All</button>
+                    <button class="btn btn-outline-light btn-sm" onclick="collapseAll()">Collapse All</button>
+                </div>
             </div>
         </div>
 
@@ -644,40 +393,7 @@
                             </div>
                             <div class="nested-content">
                                 <p>The University Compliance Office (UCO) Accommodations Team (<a href="https://compliance.unc.edu/accommodations/" target="_blank">Accommodations</a>) receives requests for accommodations for disability, pregnancy and related conditions, and sincerely held religious beliefs and practices through the University's Policy on Accommodations. It determines eligibility and reasonable accommodations consistent with state and federal laws.</p>
-                                <p>If you are eligible to take exams with accommodations, please schedule your exam using their hub at <a href="https://ars.unc.edu/" target="_blank">https://ars.unc.edu/</a>, and notify me as soon as possible.</p>
-                            </div>
-                        </div>
-
-                        <!-- Counseling Services Collapsible -->
-                        <div class="nested-collapse">
-                            <div class="nested-header" onclick="toggleNested(this)">
-                                Counseling and Psychological Services
-                            </div>
-                            <div class="nested-content">
-                                <p>UNC-Chapel Hill is strongly committed to addressing the mental health needs of a diverse student body. The Heels Care Network website is a place to access the many mental resources at Carolina. CAPS is the primary mental health provider for students, offering timely access to consultation and connection to clinically appropriate services.</p>
-                                <p>Go to their website <a href="https://caps.unc.edu/" target="_blank">https://caps.unc.edu/</a> or visit their facilities on the third floor of the Campus Health building for an initial evaluation to learn more. Students can also call CAPS 24/7 at 919-966-3658 for immediate assistance.</p>
-                            </div>
-                        </div>
-
-                        <!-- Title IX Resources Collapsible -->
-                        <div class="nested-collapse">
-                            <div class="nested-header" onclick="toggleNested(this)">
-                                Title IX Resources
-                            </div>
-                            <div class="nested-content">
-                                <p>Any student who is impacted by discrimination, harassment, interpersonal (relationship) violence, sexual violence, sexual exploitation, or stalking is encouraged to seek resources on campus or in the community. Reports can be made online to the EOC at <a href="https://compliance.unc.edu/reporting/incident/" target="_blank">https://compliance.unc.edu/reporting/incident/</a>.</p>
-                                <p>Please contact the University's Title IX Coordinator (Elizabeth Hall, titleixcoordinator@unc.edu), Report and Response Coordinators in the Equal Opportunity and Compliance Office (reportandresponse@unc.edu), Counseling and Psychological Services (confidential), or the Gender Violence Services Coordinators (gvsc@unc.edu; confidential) to discuss your specific needs. Additional resources are available at <a href="https://safe.unc.edu" target="_blank">safe.unc.edu</a>.</p>
-                            </div>
-                        </div>
-
-                        <!-- Non-Discrimination Policy Collapsible -->
-                        <div class="nested-collapse">
-                            <div class="nested-header" onclick="toggleNested(this)">
-                                Policy on Non-Discrimination
-                            </div>
-                            <div class="nested-content">
-                                <p>The University is committed to providing an inclusive and welcoming environment for all members of our community and to ensuring that educational and employment decisions are based on individuals' abilities and qualifications. UNC offers access to its educational programs and activities as well as employment terms and conditions without respect to race, color, gender, national origin, age, religion, genetic information, disability, veteran's status, sexual orientation, gender identity or gender expression.</p>
-                                <p>If you are experiencing harassment or discrimination, you can seek assistance and file a report through the Report and Response Coordinators (see contact info at <a href="https://safe.unc.edu" target="_blank">safe.unc.edu</a>) or the Equal Opportunity and Compliance Office, or online to the EOC at <a href="https://compliance.unc.edu/reporting/incident/" target="_blank">https://compliance.unc.edu/reporting/incident/</a>.</p>
+                                <p>If you are eligible to take exams with accommodations, please schedule your exam using their hub at <a href="https://compliance.unc.edu/access-and-accommodations/testing-center/" target="_blank">https://compliance.unc.edu/access-and-accommodations/testing-center/</a>, and notify me as soon as possible.</p>
                             </div>
                         </div>
 
@@ -813,7 +529,7 @@
                                     <td>&mdash;</td>
                                 </tr>
                                 <tr>
-                                    <td class="week-col">Finals</td>
+                                    <td class="week-col">Final</td>
                                     <td>&mdash;</td>
                                     <td colspan="2" class="highlight"><span class="text-red">Monday</span> 12/7: 4:00–7:00 pm, Final Exam</td>
                                 </tr>
