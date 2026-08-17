@@ -9,190 +9,56 @@
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+
+    <!-- Site theme (shared with the course home page) -->
+    <link rel="stylesheet" href="../css/theme.css">
+
     <style>
-        :root {
-            /* Solarized Light */
-            --base03: #002b36;
-            --base02: #073642;
-            --base01: #586e75;
-            --base00: #657b83;
-            --base0: #839496;
-            --base1: #93a1a1;
-            --base2: #eee8d5;
-            --base3: #fdf6e3;
-            --yellow: #b58900;
-            --orange: #cb4b16;
-            --red: #dc322f;
-            --magenta: #d33682;
-            --violet: #6c71c4;
-            --blue: #268bd2;
-            --cyan: #2aa198;
-            --green: #859900;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            line-height: 1.6;
-            background-color: var(--base3);
-            color: var(--base00);
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: var(--base3);
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        h1 {
-            color: var(--orange);
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .subtitle {
-            color: var(--blue);
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-        }
-
-        .back-link {
-            color: var(--blue);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .back-link:hover {
-            color: var(--cyan);
-            text-decoration: underline;
-        }
+        /* Apps-specific classes only — everything else (body, .container, h1,
+           .subtitle, .accordion-*, a, li, footer) comes from ../css/theme.css */
 
         .intro-text {
-            background-color: var(--base2);
+            background-color: var(--carolina-pale);
             padding: 20px;
             border-radius: 6px;
             margin-bottom: 30px;
-            border-left: 4px solid var(--cyan);
+            border-left: 4px solid var(--carolina);
         }
 
         .intro-text p {
             margin-bottom: 0;
         }
 
-        /* Copenhagen Block Aesthetics */
-        .accordion {
-            border: 1px solid var(--base1);
-            border-radius: 6px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .accordion-item {
-            border-bottom: 1px solid var(--base1);
-            background: var(--base3);
-        }
-
-        .accordion-item:last-child {
-            border-bottom: none;
-        }
-
-        .accordion-button {
-            background-color: var(--base2);
-            color: var(--base01);
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 1rem 1.25rem;
-            border: none;
-        }
-
-        .accordion-button:not(.collapsed) {
-            background-color: var(--blue);
-            color: var(--base3);
-            box-shadow: none;
-        }
-
-        .accordion-button:focus {
-            box-shadow: none;
-            border-color: var(--base1);
-        }
-
-        .accordion-button::after {
-            filter: brightness(0.5);
-        }
-
-        .accordion-button:not(.collapsed)::after {
-            filter: brightness(0) invert(1);
-        }
-
-        .accordion-body {
-            padding: 1.25rem;
-            background-color: var(--base3);
-            border-top: 1px solid var(--base1);
-        }
-
-        .accordion-body p {
-            margin-bottom: 0.5rem;
-        }
-
-        .accordion-body p:last-child {
-            margin-bottom: 0;
-        }
-
-        /* Links */
-        a {
-            color: var(--blue);
+        .back-link {
+            color: var(--carolina);
             text-decoration: none;
+            font-weight: 500;
         }
 
-        a:hover {
+        .back-link:hover {
+            color: var(--navy);
             text-decoration: underline;
-            color: var(--cyan);
-        }
-
-        /* Lists */
-        ul {
-            margin: 10px 0;
-            padding-left: 25px;
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-
-        h5 {
-            color: var(--magenta);
-            margin-top: 1rem;
-            margin-bottom: 0.75rem;
         }
 
         .app-link {
             display: inline-block;
-            background-color: var(--blue);
-            color: var(--base3);
-            padding: 10px 20px;
-            text-decoration: none;
+            background-color: var(--carolina);
+            color: #ffffff;
+            padding: 8px 16px;
             border-radius: 5px;
-            margin-top: 15px;
-            transition: background-color 0.3s;
+            text-decoration: none;
             font-weight: 500;
+            transition: background-color 0.3s;
         }
 
         .app-link:hover {
-            background-color: var(--cyan);
-            color: var(--base3);
+            background-color: var(--navy);
+            color: #ffffff;
             text-decoration: none;
-        }
-
-        footer {
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px solid var(--base1);
-            text-align: center;
-            color: var(--base1);
         }
     </style>
     <!-- Google Analytics -->
@@ -213,7 +79,7 @@
 
         <div class="intro-text">
             <p><strong>Instructor:</strong> Sérgio O. Parreiras</p>
-            <p>These interactive web applications help you understand key concepts in advanced microeconomic theory through hands-on practice and visualization.</p>
+            <p>These apps will help you understand key concepts through hands-on practice and visualization.</p>
         </div>
 
         <!-- Main Accordion -->
@@ -398,7 +264,6 @@
                     <div class="accordion-body">
                         <p><strong>Please send suggestions or bug reports via Canvas message.</strong></p>
 
-                        <p>These apps are designed to help you practice course concepts:</p>
                         <ul>
                             <li>Run directly in your browser (no installation needed)</li>
                             <li>Generate random practice problems</li>
