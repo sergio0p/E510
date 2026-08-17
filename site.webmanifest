@@ -1,0 +1,12 @@
+{
+  "name": "ECON 510: Advanced Microeconomic Theory",
+  "short_name": "ECON 510",
+  "start_url": "/E510/",
+  "display": "browser",
+  "theme_color": "#4B9CD3",
+  "background_color": "#ffffff",
+  "icons": [
+    { "src": "/E510/icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/E510/icon-512.png", "type": "image/png", "sizes": "512x512" }
+  ]
+}
