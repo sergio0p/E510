@@ -14,6 +14,8 @@
   <link rel="stylesheet" href="css/beamer-theme.css">
 
   <!-- All styles now in css/beamer-theme.css -->
+    <!-- Google Analytics -->
+    <script async src="/E510/js/ga.js"></script>
 </head>
 <body>
 
@@ -27,6 +29,8 @@
     <nav style="margin-top: 2rem; text-align: left; background: #eee; padding: 1rem; border-radius: 8px; font-size: 0.9rem;">
       <a href="#unconstrained-optimization-2" style="margin-left: 1rem;">1. Problem Setup</a>
       <a href="#solving-unconstrained-optimization-problems" style="margin-left: 1rem;">2. Recipe #0</a>
+      <a href="#reducing-constrained-to-unconstrained" style="margin-left: 1rem;">3. Reducing to Unconstrained</a>
+      <a href="#applying-recipe-0" style="margin-left: 1rem;">4. Applying Recipe #0</a>
     </nav>
   </section>
 
@@ -91,6 +95,67 @@
           <li>If there are multiple candidate solutions, evaluate the function at each candidate solution
             and pick those who yield the highest value.</li>
         </ol>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Frame 3: Reducing Constrained Optimization To Unconstrained Optimization -->
+  <section class="frame vspace-neg-9mm" id="reducing-constrained-to-unconstrained">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Reducing Constrained Optimization To Unconstrained Optimization</h2>
+      <p class="frame-subtitle">An Example</p>
+    </div>
+    <div class="frame-content">
+
+      <div class="fs-11pt">
+        <p>Consider the consumer problem,</p>
+      </div>
+
+      <div class="fs-14pt" style="text-align: center; margin: 1.25rem 0;">
+        $$\max\limits_{\substack{x,y\\ \mathrm{subject\, to} \\ \\ p_x x \;+\; p_y y \;=\; i}} u(x,y)$$
+      </div>
+
+      <div class="fs-11pt">
+        <p>A common trick is to use the equality constraints to <strong>eliminate</strong> variables from the problem,</p>
+      </div>
+
+      <div class="fs-14pt" style="text-align: center; margin: 1.25rem 0;">
+        $$\max\limits_{x} u\!\left(x,\frac{i-p_x x}{p_y}\right)$$
+      </div>
+
+      <div class="fs-11pt">
+        <p>converting the constrained maximization problem into an unconstrained problem with fewer variables.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Frame 4: Applying Recipe #0 -->
+  <section class="frame vspace-neg-9mm" id="applying-recipe-0">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Applying Recipe #0</h2>
+      <p class="frame-subtitle">An Example</p>
+    </div>
+    <div class="frame-content">
+
+      <div class="fs-11pt">
+        <p>Let's take a look at the peer-effects model: individuals $1$ and $2$ choose actions $x$ and $y$.
+        Individuals want everyone to choose their favorite actions $a_1$ and $a_2$ respectively, but if the
+        peer chooses some different action, the individual also dislikes choosing actions far away from the
+        peer's choice.</p>
+      </div>
+
+      <div class="fs-14pt" style="text-align: center; margin: 1.25rem 0;">
+        $$\begin{aligned}
+          u_1(x,y) &= 1-(a_1-x)^2-\lambda\,(y-x)^2\\[2pt]
+          u_2(x,y) &= 1-(a_2-y)^2-\lambda\,(x-y)^2
+        \end{aligned}$$
+      </div>
+
+      <div class="fs-11pt">
+        <p>Assume individuals are able to contract on the choice of $x$ and $y$. What choices will then
+        maximize their joint utility $u_1(x,y)+u_2(x,y)$?</p>
       </div>
 
     </div>
