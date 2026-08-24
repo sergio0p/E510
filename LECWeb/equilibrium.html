@@ -28,6 +28,8 @@
       <a href="#equilibrium-analysis-2" style="margin-left: 1rem;">1. Equilibrium</a>
       <a href="#equilibrium-analysis-3" style="margin-left: 1rem;">2. Best Responses</a>
       <a href="#equilibrium-analysis-4" style="margin-left: 1rem;">3. Public Goods</a>
+      <a href="#equilibrium-analysis-5" style="margin-left: 1rem;">4. Peer Effects</a>
+      <a href="#equilibrium-analysis-6" style="margin-left: 1rem;">5. Contests</a>
     </nav>
   </section>
 
@@ -74,14 +76,58 @@
       <p class="frame-subtitle">A Public Good Example</p>
     </div>
     <div class="frame-content fs-10pt">
-      <p>Please refer to article on public goods on Canvas > Modules > Week 2 for the model description and set-up. In our example, we shall assume two individuals $n=2$ whose utility for the public good is given by:
+      <p>Please refer to the article on public goods for the model description and set-up. In our example, we shall assume two individuals $n=2$ whose utility for the public good is given by:
       $$u_i(x_i,G)=x_i\cdot G$$
       As we did in class, we use the budget $x_i+g_i=w_i$ to write the utility as a function of the contribution $g_i$. Thus, individual 1 utility is $u_1=(w_1-g_1)\cdot (g_1+g_2)$ since $G=g_1+g_2$. Ignoring non-negativity constraints, $g_1\geq 0$, the individual 1 maximizes utility when
       $$\diff{}{g_1}u_1=-1\cdot (g_1+g_2)+(w_1-g_1)\cdot 1=w_1-g_2-2g_1=0\Leftrightarrow g_1=\dfrac{w_1-g_2}2$$
       That is, $g_1=\dfrac{w_1-g_2}2$ is individual 1's best-response.</p>
 
-      <p>The best responses of the individuals are consistent only if there is a solution to the system of equations given by the best responses: $g_1=\dfrac{w_1-g_2}2$ and $g_2=\dfrac{w_2-g_1}2$.
-      For the computation of the equilibrium, please refer to the Mathematica notebook on public goods, week 2 module.</p>
+      <p>The best responses of the individuals are consistent only if there is a solution to the system of equations given by the best responses: $g_1=\dfrac{w_1-g_2}2$ and $g_2=\dfrac{w_2-g_1}2$.</p>
+    </div>
+  </section>
+
+
+  <!-- Frame 4: A Peer-Effects Example -->
+  <section class="frame" id="equilibrium-analysis-5">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Equilibrium Analysis</h2>
+      <p class="frame-subtitle">A Peer-Effects Example</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>Please refer to the peer-effects model of the previous section for the model description and set-up. In our example, we shall assume two individuals $n=2$ who choose actions $x$ and $y$. Each individual would like to choose her own favorite action, $a_1$ and $a_2$ respectively, but also dislikes choosing an action far from her peer's, with $\lambda\gt 0$ measuring how heavily that peer pressure weighs:
+      $$\begin{aligned}
+        u_1(x,y) &= 1-(a_1-x)^2-\lambda\,(y-x)^2\\[2pt]
+        u_2(x,y) &= 1-(a_2-y)^2-\lambda\,(x-y)^2
+      \end{aligned}$$</p>
+
+      <p>There we asked what maximizes joint utility, assuming the individuals could contract on $x$ and $y$. Here they cannot—each takes the peer's action as given and chooses her own. Since $\tfrac{\partial^2}{\partial x^2}u_1=-2-2\lambda\lt 0$, utility is concave in one's own action and the first-order condition is necessary and sufficient. Individual 1 maximizes utility when
+      $$\diff{}{x}u_1=2\,(a_1-x)+2\lambda\,(y-x)=0\Leftrightarrow x=\dfrac{a_1+\lambda\,y}{1+\lambda}$$
+      That is, $x=\dfrac{a_1+\lambda\,y}{1+\lambda}$ is individual 1's best-response—a weighted average of her own favorite action and her peer's choice, with the weight on the peer growing in $\lambda$.</p>
+
+      <p>The best responses of the individuals are consistent only if there is a solution to the system of equations given by the best responses: $x=\dfrac{a_1+\lambda\,y}{1+\lambda}$ and $y=\dfrac{a_2+\lambda\,x}{1+\lambda}$. Substituting the second into the first,
+      $$x^e=\dfrac{(1+\lambda)\,a_1+\lambda\,a_2}{1+2\lambda} \quad\text{and}\quad y^e=\dfrac{(1+\lambda)\,a_2+\lambda\,a_1}{1+2\lambda}$$
+      Note that $\lambda=0$ returns $x^e=a_1$ and $y^e=a_2$, each individual ignoring her peer, while as $\lambda$ grows both actions approach the midpoint $\tfrac{a_1+a_2}2$.</p>
+    </div>
+  </section>
+
+  <!-- Frame 5: A Contest Example -->
+  <section class="frame" id="equilibrium-analysis-6">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Equilibrium Analysis</h2>
+      <p class="frame-subtitle">A Contest Example</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p>In a Tullock contest two players expend effort to win a prize worth $\pi\gt 0$. In our example, we shall assume player 1 exerts effort $x$ and player 2 exerts effort $y$, that each player wins with a probability equal to her share of the total effort, and that the cost of effort is quadratic:
+      $$u_1(x,y)=\dfrac{x}{x+y}\cdot\pi-x^2 \quad\text{and}\quad u_2(x,y)=\dfrac{y}{x+y}\cdot\pi-y^2$$
+      Effort is spent whether or not one wins—which is what makes a contest wasteful.</p>
+
+      <p>Since $\tfrac{\partial^2}{\partial x^2}u_1=-\tfrac{2\,y\,\pi}{(x+y)^3}-2\lt 0$ whenever $y\gt 0$, the payoff is concave in one's own effort and the first-order condition is necessary and sufficient. Ignoring the non-negativity constraint, $x\geq 0$, player 1 maximizes her payoff when
+      $$\diff{}{x}u_1=\dfrac{y}{(x+y)^2}\cdot\pi-2x=0\Leftrightarrow 2x\,(x+y)^2=y\,\pi$$
+      That is, $2x\,(x+y)^2=y\,\pi$ defines player 1's best-response implicitly.</p>
+
+      <p>The best responses of the players are consistent only if there is a solution to the system of equations given by the best responses: $2x\,(x+y)^2=y\,\pi$ and $2y\,(x+y)^2=x\,\pi$. Since the two players face the same problem, look for a symmetric equilibrium $x^e=y^e$; the two equations then coincide and give $8\,(x^e)^3=x^e\,\pi$, so that
+      $$x^e=y^e=\sqrt{\dfrac{\pi}8}$$
+      Together the players spend $2\,(x^e)^2=\tfrac{\pi}4$ chasing the prize—a quarter of it is burned in the contest.</p>
     </div>
   </section>
 
