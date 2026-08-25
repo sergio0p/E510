@@ -552,6 +552,34 @@
             document.querySelectorAll('.nested-header').forEach(el => el.classList.add('active'));
         }
 
+        /* Deep links from the landing page arrive as #schedule, #grading, etc.
+           Bootstrap scrolls to the panel but leaves it collapsed, so open the
+           requested one explicitly. data-bs-parent closes the others. */
+        function openFromHash() {
+            const hash = window.location.hash;
+            if (!hash || hash.length < 2) return;
+
+            let target;
+            try {
+                target = document.querySelector('#syllabusAccordion ' + hash);
+            } catch (e) {
+                return;                       // hash is not a valid selector
+            }
+            if (!target || !target.classList.contains('accordion-collapse')) return;
+
+            new bootstrap.Collapse(target, { toggle: false }).show();
+
+            const btn = document.querySelector('[data-bs-target="' + hash + '"]');
+            if (btn) btn.scrollIntoView({
+                block: 'start',
+                behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+                    ? 'auto' : 'smooth'
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', openFromHash);
+        window.addEventListener('hashchange', openFromHash);
+
         function collapseAll() {
             // Collapse main accordion sections
             document.querySelectorAll('#syllabusAccordion .accordion-collapse').forEach(el => {
