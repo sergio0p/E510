@@ -39,6 +39,25 @@
         .section-details p:last-child {
             margin-bottom: 0;
         }
+
+        /* Hidden hotspot: clicking anywhere on the navy band goes straight to
+           the tentative course schedule. No visual change — the pointer cursor
+           is the only hint. */
+        .masthead {
+            position: relative;
+        }
+
+        .masthead-hotspot {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            border-radius: inherit;
+        }
+
+        .masthead-actions {
+            position: relative;
+            z-index: 1;
+        }
     </style>
     <!-- Google Analytics -->
     <script async src="/E510/js/ga.js"></script>
@@ -46,10 +65,15 @@
 <body>
     <div class="container">
         <div class="masthead">
+            <!-- The whole navy band is a hidden shortcut to the tentative course
+                 schedule. It sits below the Expand/Collapse buttons in z-order,
+                 so those keep working. -->
+            <a class="masthead-hotspot" href="syllabus_001.html#schedule"
+               aria-label="Tentative course schedule"></a>
             <h1>ECON 510: Advanced Microeconomic Theory</h1>
             <div class="d-flex justify-content-between align-items-center">
                 <div class="subtitle" style="margin-bottom: 0;">Fall 2026</div>
-                <div>
+                <div class="masthead-actions">
                     <button class="btn btn-outline-light btn-sm" onclick="expandAll()">Expand All</button>
                     <button class="btn btn-outline-light btn-sm" onclick="collapseAll()">Collapse All</button>
                 </div>
