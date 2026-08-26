@@ -314,7 +314,13 @@ if (window.visualViewport) {
       var current = '';
       var threshold = window.scrollY + window.innerHeight * 0.25;
       for (var i = 0; i < sections.length; i++) {
-        if (sections[i].offsetTop <= threshold) current = sections[i].id;
+        // Sections pinned by GSAP ScrollTrigger sit inside a .pin-spacer and
+        // report offsetTop relative to it (always ~0), so the last pinned
+        // section in the DOM would win every time. Measure document position.
+        var el = sections[i];
+        var box = (el.parentElement && el.parentElement.classList.contains('pin-spacer'))
+          ? el.parentElement : el;
+        if (box.getBoundingClientRect().top + window.scrollY <= threshold) current = el.id;
       }
       if (current && window.location.hash !== '#' + current) {
         history.replaceState(null, '', '#' + current);
