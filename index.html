@@ -54,6 +54,10 @@
             border-radius: inherit;
         }
 
+        /* Title, subtitle and buttons sit above the hotspot so their text can
+           be selected and copied; the band around them is still the link. */
+        .masthead h1,
+        .masthead .subtitle,
         .masthead-actions {
             position: relative;
             z-index: 1;
@@ -70,9 +74,9 @@
                  so those keep working. -->
             <a class="masthead-hotspot" href="syllabus_001.html#schedule"
                aria-label="Tentative course schedule"></a>
-            <h1>ECON 510: Advanced Microeconomic Theory</h1>
+            <h1>Advanced Microeconomic Theory</h1>
             <div class="d-flex justify-content-between align-items-center">
-                <div class="subtitle" style="margin-bottom: 0;">Fall 2026</div>
+                <div class="subtitle" style="margin-bottom: 0;">ECON 510 FALL 2026</div>
                 <div class="masthead-actions">
                     <button class="btn btn-outline-light btn-sm" onclick="expandAll()">Expand All</button>
                     <button class="btn btn-outline-light btn-sm" onclick="collapseAll()">Collapse All</button>
