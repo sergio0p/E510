@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="nav-prev" content="constrained-optimization.html">
-  <meta name="nav-next" content="time-preferences.html">
+  <meta name="nav-next" content="index.html">
   <title>Dynamic Games | ECON 510</title>
 
   <!-- KaTeX CSS -->
@@ -12,6 +12,8 @@
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="css/beamer-theme.css">
+    <!-- Google Analytics -->
+    <script async src="/E510/js/ga.js"></script>
 </head>
 <body>
 
@@ -492,10 +494,27 @@
     </div>
   </section>
 
+  <!-- Frame 8: Backward Induction with a continuum of actions -->
+  <section class="frame overlay-frame" id="backward-induction-3">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Backward Induction</h2>
+      <p class="frame-subtitle">Games With A Continuum of Actions</p>
+    </div>
+    <div class="frame-content">
+      <p class="overlay" data-overlay="1">How do we find the subgame perfect equilibrium when players choose from a continuum of actions&mdash;as in the public-good, peer-effects, and tournament games we saw earlier?</p>
+      <ol>
+        <li class="overlay" data-overlay="2">At the final nodes, apply <a href="unconstrained-optimization.html#solving-unconstrained-optimization-problems">Recipe #0</a> or <a href="constrained-optimization.html#constrained-optimization-with-equality-constraints-2">Recipe #1</a> to find the last mover&rsquo;s best response.</li>
+        <li class="overlay" data-overlay="3">Step back to the nodes immediately before them. Substitute the best response you just found into the payoff of the player who moves there. The <strong>new</strong> payoff depends on current and past actions only&mdash;the future actions have been eliminated.</li>
+        <li class="overlay" data-overlay="4">Apply <a href="unconstrained-optimization.html#solving-unconstrained-optimization-problems">Recipe #0</a> or <a href="constrained-optimization.html#constrained-optimization-with-equality-constraints-2">Recipe #1</a> to this new payoff to obtain that player&rsquo;s best response.</li>
+        <li class="overlay" data-overlay="5">Repeat, moving back one stage at a time, until you reach the initial node&mdash;the game is solved.</li>
+      </ol>
+    </div>
+  </section>
+
   <!-- Nav -->
   <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
     <a href="constrained-optimization.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Constrained Optimization</a>
-    <a href="time-preferences.html" style="color: var(--crane-blue); text-decoration: none;">Time Preferences &rarr;</a>
+    <a href="index.html" style="color: var(--crane-blue); text-decoration: none;">ECON 510 &rarr;</a>
   </div>
 
   <!-- KaTeX JS -->
