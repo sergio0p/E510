@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Watercolor integration preview — ECON 510 repeated games</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjs@15.1.1/lib/browser/math.js"></script>
+  <script type="importmap">{ "imports": { "mathjs": "./tikz-svg/examples-v2/mathjs-shim.js" } }</script>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #faf8f4; color: #222; margin: 0; padding: 1.2rem 1.6rem; }
+    h1 { font-size: 1.25rem; margin: 0 0 .2rem; }
+    p.lead { color: #555; margin: 0 0 1rem; max-width: 80ch; font-size: .85rem; }
+    .row { display: grid; grid-template-columns: 150px 1fr 1fr; gap: .6rem; align-items: center;
+           background: #fff; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,.1);
+           padding: .6rem .9rem; margin-bottom: .8rem; }
+    .row h3 { font-size: .82rem; margin: 0; color: #333; }
+    .row h3 small { display:block; color:#999; font-weight:400; font-size:.7rem; margin-top:.2rem; }
+    .cell { text-align:center; }
+    .cell .cap { font-size:.68rem; color:#999; }
+    svg { width: 100%; height: 150px; display: block; }
+    .hdr { display:grid; grid-template-columns: 150px 1fr 1fr; gap:.6rem; padding: 0 .9rem .3rem;
+           font-size:.72rem; color:#777; font-weight:600; }
+  </style>
+    <!-- Google Analytics -->
+    <script async src="/E510/js/ga.js"></script>
+</head>
+<body>
+  <h1>Watercolor wash on the ECON 510 repeated-games automata</h1>
+  <p class="lead">Same library (live <code>tikz-svg/src-v2</code> via the deploy symlink), same node/edge
+  configs as <code>repeated-games-watercolor.html</code>. Left = original crisp fill + drop-shadow;
+  right = watercolor fill wash (edges kept crisp so transition arrows survive). Tests the wash against
+  shadows, KaTeX labels, the initial-state marker, an ellipse state, loop/dashed edges, and canvas scale.</p>
+  <div class="hdr"><div></div><div>crisp (original)</div><div>watercolor</div></div>
+  <div id="rows"></div>
+
+  <script type="module">
+    import { render } from './tikz-svg/src-v2/index.js';
+
+    const green = '#2e7d32', red = '#dc322f', gray = '#586e75';
+    const shadow = { dx: 2, dy: 3, blur: 4, color: 'rgba(0,0,0,0.35)' };
+    const wc = { type: 'watercolor', layers: 12, segmentLength: 12, spread: 0.16, opacity: 0.16, rounds: 4 };
+    const edge = { stroke: gray, strokeWidth: 1.5, arrow: 'stealth' };
+
+    // stateStyle factory: crisp uses shadow; watercolor uses decoration (no shadow).
+    const sstyle = (r, fs, washed) => ({
+      radius: r, fill: green, stroke: 'none', labelColor: '#fff',
+      fontSize: fs, fontFamily: "'Times New Roman', serif",
+      ...(washed ? { decoration: wc } : { shadow }),
+    });
+
+    // Each automaton as a config factory parametrised by washed (bool).
+    const AUTOMATA = [
+      { name: '3-period punishment', sub: 'PD · r=22, scale 1.2', cfg: washed => ({
+        transformCanvas: { scale: 1.2 }, nodeDistance: 90, stateStyle: sstyle(22, 14, washed), edgeStyle: edge,
+        states: {
+          s1: { initial: true, fill: red, label: '$CC$', position: { x: 0, y: 0 } },
+          s2: { position: { right: 's1' }, label: '$DD$' },
+          s3: { position: { right: 's2' }, label: '$DD$' },
+          s4: { position: { right: 's3' }, label: '$DD$' },
+        },
+        edges: [
+          { from: 's1', to: 's1', loop: 'above', label: '$CC$' },
+          { from: 's1', to: 's2', label: '$\\neq CC$' },
+          { from: 's2', to: 's3' },
+          { from: 's3', to: 's4' },
+          { from: 's4', to: 's1', bend: 'left' },
+        ],
+      }) },
+      { name: 'Grim-trigger Cournot', sub: 'r=34, scale 1.44', cfg: washed => ({
+        transformCanvas: { scale: 1.44 }, nodeDistance: 192, stateStyle: sstyle(34, 14, washed), edgeStyle: edge,
+        states: {
+          s1: { initial: true, fill: red, label: '$\\tfrac{1}{4},\\tfrac{1}{4}$', position: { x: 0, y: 0 } },
+          s2: { position: { right: 's1' }, label: '$\\tfrac{1}{3},\\tfrac{1}{3}$' },
+        },
+        edges: [
+          { from: 's1', to: 's1', loop: 'above', label: '$q=(\\tfrac{1}{4},\\tfrac{1}{4})$' },
+          { from: 's1', to: 's2', label: '$q\\neq(\\tfrac{1}{4},\\tfrac{1}{4})$' },
+          { from: 's2', to: 's2', loop: 'below' },
+        ],
+      }) },
+      { name: 'Green & Porter', sub: 'r=28, dots state, scale 1.2', cfg: washed => ({
+        transformCanvas: { scale: 1.2 }, nodeDistance: 140, stateStyle: sstyle(28, 14, washed), edgeStyle: edge,
+        states: {
+          s1: { initial: true, fill: red, label: '$\\tfrac{1}{4},\\tfrac{1}{4}$', position: { x: 0, y: 0 } },
+          s2: { position: { right: 's1' }, label: '$\\tfrac{1}{3},\\tfrac{1}{3}$' },
+          dots: { position: { right: 's2' }, label: '$\\cdots$', fill: 'none', stroke: 'none', shadow: false, labelColor: gray, fontSize: 18 },
+          sk: { position: { right: 'dots' }, label: '$\\tfrac{1}{3},\\tfrac{1}{3}$' },
+        },
+        edges: [
+          { from: 's1', to: 's1', loop: 'above', label: '$P\\ge\\underline{P}$' },
+          { from: 's1', to: 's2', label: '$P\\lt\\underline{P}$' },
+          { from: 's2', to: 'dots' },
+          { from: 'dots', to: 'sk' },
+          { from: 'sk', to: 's1', bend: 'left' },
+        ],
+      }) },
+      { name: 'Memoryless strategy', sub: 'r=42 + ellipse state, dashed edge', cfg: washed => ({
+        transformCanvas: { scale: 1.1 }, nodeDistance: 231, stateStyle: sstyle(42, 18, washed), edgeStyle: edge,
+        states: {
+          s1: { initial: true, fill: red, position: { x: 0, y: 0 }, label: '$\\tfrac{1-\\delta}{2-\\delta}s$', fontSize: 22 },
+          s2: { position: { right: 's1' }, shape: 'ellipse', rx: 75, ry: 50, label: '$\\dfrac{(2-2\\delta)(s-a_1-a_2)}{2-\\delta}$' },
+          end: { position: { right: 's2' }, label: '', fill: 'none', stroke: 'none', shadow: false },
+        },
+        edges: [
+          { from: 's1', to: 's2', label: '$(a_1^t,a_2^t)$', labelSide: 'left', labelDistance: 10, shortenEnd: 8 },
+          { from: 's2', to: 'end', label: '$(a_1^{t+1},a_2^{t+1})$', arrow: 'to', arrowSize: 5, dashed: true, labelSide: 'left', labelDistance: 10 },
+        ],
+      }) },
+      { name: 'Cooperative strategy', sub: 'r=42, loop edges', cfg: washed => ({
+        transformCanvas: { scale: 1.1 }, nodeDistance: 231, stateStyle: sstyle(42, 18, washed), edgeStyle: edge,
+        states: {
+          s1: { initial: true, fill: red, position: { x: 0, y: 0 }, label: '$\\tfrac{1-\\delta}{2}s$', fontSize: 22 },
+          s2: { position: { right: 's1' }, label: '$\\tfrac{1-\\delta}{2-\\delta}s$', fontSize: 22 },
+        },
+        edges: [
+          { from: 's1', to: 's1', loop: 'above', label: '$(a_1,a_2)=(a^*,a^*)$' },
+          { from: 's1', to: 's2', label: 'otherwise' },
+          { from: 's2', to: 's2', loop: 'below' },
+        ],
+      }) },
+    ];
+
+    const rows = document.getElementById('rows');
+    for (const a of AUTOMATA) {
+      const row = document.createElement('div');
+      row.className = 'row';
+      row.innerHTML = `<h3>${a.name}<small>${a.sub}</small></h3>
+        <div class="cell"><svg class="crisp"></svg></div>
+        <div class="cell"><svg class="wash"></svg></div>`;
+      rows.appendChild(row);
+      render(row.querySelector('.crisp'), a.cfg(false));
+      render(row.querySelector('.wash'), a.cfg(true));
+    }
+    window.__ready = true;
+  </script>
+</body>
+</html>

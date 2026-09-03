@@ -285,7 +285,48 @@
     .practice-frame {
       background: #fff8e1;
     }
+
+    /* Navigate Workbook Cells: notebook screenshot + tikz-svg pointer arrow */
+    #navigate-workbook-cells {
+      position: relative;
+    }
+
+    .nwc-shot-wrap {
+      max-width: 640px;
+      margin: 0.5rem auto 0;
+    }
+
+    #nwc-shot {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    #nwc-arrow {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: visible;
+      z-index: 5;
+    }
+
+    /* Practice: question/answer flip cards */
+    .practice-hint {
+      margin: 1.1rem 0 0.4rem;
+      font-size: 0.95rem;
+      font-style: italic;
+      color: #8a6800;
+    }
+
+    #practice-cards {
+      max-width: 600px;
+      margin: 0 auto;
+    }
   </style>
+    <!-- Google Analytics -->
+    <script async src="/E510/js/ga.js"></script>
 </head>
 <body>
 
@@ -404,7 +445,7 @@
 
   <!-- Frame: Navigate Workbook Cells -->
   <section class="simple-frame overlay-frame" id="navigate-workbook-cells">
-    <h2 class="simple-frame-title">Navigate Workbook Cells</h2>
+    <h2 class="simple-frame-title">Navigate Workbook <span id="nwc-cells-word">Cells</span></h2>
     <div class="simple-frame-content">
       <ul>
         <li class="overlay" data-overlay="1">Everything you type goes into cells: brackets on the right delimit them</li>
@@ -413,7 +454,13 @@
         <li class="overlay" data-overlay="4">Use arrow keys to move between cells.</li>
         <li class="overlay" data-overlay="5">Put one command per cell for easier debugging.</li>
       </ul>
+      <div class="nwc-shot-wrap">
+        <img id="nwc-shot" src="svg/cells.png"
+             alt="Mathematica notebook window; the brackets running down the right edge delimit each cell">
+      </div>
     </div>
+    <!-- Arrow from the title word "Cells" to the bracket column; drawn by tikz-svg -->
+    <svg id="nwc-arrow" aria-hidden="true"></svg>
   </section>
 
   <!-- Frame: Define Functions -->
@@ -709,16 +756,8 @@
     <p class="simple-frame-subtitle" style="color: #2c3e7a;">Cournot Duopoly</p>
     <div class="simple-frame-content">
       <p>Define profit functions: $u_1(q_1, q_2) = (3 - q_1 - q_2)q_1$ and $u_2(q_1, q_2) = (2 - q_1 - q_2)q_2$</p>
-      <ol style="margin-top: 1.5rem;">
-        <li style="color: #2c3e7a;">Compute the gradient of $u_1$ and $u_2$ with respect to $(q_1, q_2)$.</li>
-        <li style="color: #2c3e7a;">Solve for the Nash equilibrium using:
-          <div class="math-display" style="text-align: left;">
-            <span class="code-inline">Solve[{D[u1, q1] == 0, D[u2, q2] == 0}, {q1, q2}]</span>
-          </div>
-        </li>
-        <li style="color: #2c3e7a;">Plot the region where firm 1's profit exceeds $u_1(\frac{1}{2}, \frac{1}{2})$.</li>
-        <li style="color: #2c3e7a;">Plot the intersection of regions where both firms improve over $(\frac{1}{2}, \frac{1}{2})$.</li>
-      </ol>
+      <p class="practice-hint">Click a card to reveal the answer.</p>
+      <div id="practice-cards"></div>
     </div>
   </section>
 
@@ -799,6 +838,112 @@
         });
       });
     });
+  </script>
+
+  <!-- Practice: each item is a flip card, question on the front, answer on the back -->
+  <script type="module">
+    import { renderFlip } from './tikz-svg/dist/tikz-svg.min.js';
+
+    const GAP = 152;
+    const ask = (n, text) => ({
+      position: { x: 0, y: n * GAP },
+      label: text,
+    });
+
+    renderFlip(document.getElementById('practice-cards'), {
+      scale: 1,
+      stateStyle: {
+        shape: 'rectangle', fill: '#ffffff', stroke: '#c17900', strokeWidth: 2,
+        labelColor: '#2c3e7a', fontSize: 18.75, textWidth: 470,
+        innerSep: 16, minimumWidth: 560, minimumHeight: 136,
+      },
+      states: {
+        p1: ask(0, '1. Compute the gradient of $u_1$ and $u_2$ with respect to $(q_1, q_2)$.'),
+        p2: ask(1, '2. Solve for the Nash equilibrium.'),
+        p3: ask(2, "3. Plot the region where firm 1's profit exceeds $u_1(1/2, 1/2)$."),
+        p4: ask(3, '4. Plot the intersection of regions where both firms improve over $(1/2, 1/2)$.'),
+      },
+      // Answers, as Mathematica input. Plain-text labels (no $) so they take the
+      // monospace path instead of KaTeX; '\\' starts a new line.
+      flip: Object.fromEntries(['p1', 'p2', 'p3', 'p4'].map((id, i) => [id, {
+        label: [
+          'In[1]:= Grad[u1, {q1, q2}]\\\\Out[1]= {3 - 2 q1 - q2, -q1}\\\\'
+            + 'In[2]:= Grad[u2, {q1, q2}]\\\\Out[2]= {-q2, 2 - q1 - 2 q2}\\\\'
+            + '(* (2) uses only D[u1,q1] and D[u2,q2] --\\\\'
+            + 'each firm sets its own quantity, so the\\\\'
+            + 'cross terms -q1 and -q2 are never used *)',
+          'In[1]:= sol = Solve[{D[u1,q1] == 0, D[u2,q2] == 0}, {q1,q2}]\\\\'
+            + 'Out[1]= {{q1 -> 4/3, q2 -> 1/3}}\\\\'
+            + 'In[2]:= {u1, u2} /. sol\\\\Out[2]= {{16/9, 1/9}}\\\\'
+            + 'In[3]:= N[{u1, u2} /. sol]\\\\Out[3]= {{1.77778, 0.111111}}',
+          'In[1]:= u1 /. {q1 -> 1/2, q2 -> 1/2}\\\\Out[1]= 1\\\\'
+            + 'In[2]:= RegionPlot[u1 > 1, {q1, 0, 3}, {q2, 0, 2}]',
+          'In[1]:= u2 /. {q1 -> 1/2, q2 -> 1/2}\\\\Out[1]= 1/2\\\\'
+            + 'In[2]:= RegionPlot[u1 > 1 && u2 > 1/2, {q1, 0, 3}, {q2, 0, 2}]',
+        ][i],
+        fill: '#f1f8e9', stroke: '#558b2f', labelColor: '#33691e',
+        fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
+        fontSize: 13, align: 'left', textWidth: 505,
+      }])),
+      flipDuration: 650,
+    });
+  </script>
+
+  <!-- Arrow from the title word "Cells" down to the notebook's cell brackets -->
+  <script type="module">
+    import { render } from './tikz-svg/dist/tikz-svg.min.js';
+
+    const section = document.getElementById('navigate-workbook-cells');
+    const svg     = document.getElementById('nwc-arrow');
+    const word    = document.getElementById('nwc-cells-word');
+    const shot    = document.getElementById('nwc-shot');
+
+    // Tip target in cells.png (1400x1009): the bracket stroke at x = 1195,
+    // on the bracket spanning y = 198..256.
+    const TARGET = { fx: 1195 / 1400, fy: 227 / 1009 };
+    const OUT = 0, IN = 60, LOOSENESS = 1.7;
+
+    function drawArrow() {
+      const base = section.getBoundingClientRect();
+      const w    = word.getBoundingClientRect();
+      const s    = shot.getBoundingClientRect();
+      if (!base.width || !s.width) return;
+
+      const from = { x: w.right - base.left + 6, y: w.top - base.top + w.height * 0.4 };
+      const to   = { x: s.left - base.left + s.width  * TARGET.fx,
+                     y: s.top  - base.top  + s.height * TARGET.fy };
+
+      // Bow out into the right margin, but clamp the control-point reach so the
+      // arc stays inside the frame on narrow screens.
+      const rad   = a => a * Math.PI / 180;
+      const dist  = Math.hypot(to.x - from.x, to.y - from.y);
+      const limit = base.width - 10;
+      const reach = (cos, x) => cos > 0.01 ? (limit - x) / cos : Infinity;
+      const cpDist = Math.max(0, Math.min(
+        dist * 0.3928 * LOOSENESS,
+        reach(Math.cos(rad(OUT)), from.x),
+        reach(Math.cos(rad(IN)),  to.x)
+      ));
+
+      render(svg, {
+        scale: 1,
+        viewBox: [0, 0, base.width, base.height],
+        padding: 0,
+        states: {
+          src: { position: from, shape: 'circle', radius: 0, label: '', fill: 'none', stroke: 'none' },
+          dst: { position: to,   shape: 'circle', radius: 0, label: '', fill: 'none', stroke: 'none' },
+        },
+        edges: [
+          { from: 'src', to: 'dst', arrow: '->',
+            out: OUT, in: IN, looseness: cpDist / (dist * 0.3928),
+            stroke: '#000', strokeWidth: 5, arrowSize: 16 },
+        ],
+      });
+    }
+
+    const redraw = () => requestAnimationFrame(drawArrow);
+    if (shot.complete) redraw(); else shot.addEventListener('load', redraw);
+    window.addEventListener('resize', redraw);
   </script>
 
   <!-- Navigation Links -->

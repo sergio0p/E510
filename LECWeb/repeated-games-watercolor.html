@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="nav-prev" content="search.html">
   <meta name="nav-next" content="midterm-02.html">
-  <title>Repeated Games | ECON 510</title>
+  <title>Repeated Games (Watercolor) | ECON 510</title>
 
   <!-- KaTeX -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -397,10 +397,18 @@
 
     const green = '#2e7d32', red = '#dc322f', gray = '#586e75';
 
+    // Watercolor wash for state fills. Tuned for small automaton nodes: a gentle
+    // spread keeps the token shape legible, and a fairly opaque buildup (12 layers
+    // × 0.16) keeps the white labels readable. The wash's own edge-darkening
+    // replaces the hard drop-shadow (a crisp shadow under a wet wash reads wrong).
+    // Edges stay CRISP: a watercolor stroke ribbon drops arrowheads, and the
+    // transition arrows are pedagogically essential here.
+    const wc = { type: 'watercolor', layers: 12, segmentLength: 12, spread: 0.16, opacity: 0.16, rounds: 4 };
+
     function style(r = 22) {
       return {
         radius: r, fill: green, stroke: 'none', labelColor: '#fff',
-        shadow: { dx: 2, dy: 3, blur: 4, color: 'rgba(0,0,0,0.35)' },
+        decoration: wc,
         fontSize: 14, fontFamily: "'Times New Roman', serif",
       };
     }
@@ -678,11 +686,14 @@
   <script type="module">
     import { render } from './tikz-svg/src-v2/index.js';
     const green = '#2e7d32', gray = '#586e75';
+    // Same wash as the first block (see note there). The ellipse state (s2) and
+    // the larger r=42 circles exercise watercolor on bigger nodes.
+    const wc = { type: 'watercolor', layers: 12, segmentLength: 12, spread: 0.16, opacity: 0.16, rounds: 4 };
     render(document.getElementById('automaton-memoryless'), {
       transformCanvas: { scale: 1.1 }, nodeDistance: 231,
       stateStyle: {
         radius: 42, fill: green, stroke: 'none', labelColor: '#fff',
-        shadow: { dx: 2, dy: 3, blur: 4, color: 'rgba(0,0,0,0.35)' },
+        decoration: wc,
         fontSize: 18, fontFamily: "'Times New Roman', serif",
       },
       edgeStyle: { stroke: gray, strokeWidth: 1.5, arrow: 'stealth' },
@@ -701,7 +712,7 @@
       transformCanvas: { scale: 1.1 }, nodeDistance: 231,
       stateStyle: {
         radius: 42, fill: green, stroke: 'none', labelColor: '#fff',
-        shadow: { dx: 2, dy: 3, blur: 4, color: 'rgba(0,0,0,0.35)' },
+        decoration: wc,
         fontSize: 18, fontFamily: "'Times New Roman', serif",
       },
       edgeStyle: { stroke: gray, strokeWidth: 1.5, arrow: 'stealth' },
