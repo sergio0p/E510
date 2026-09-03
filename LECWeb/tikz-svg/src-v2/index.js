@@ -40,11 +40,34 @@ import { estimateTextDimensions } from './core/text-measure.js';
 import { plot as computePlot } from './plotting/index.js';
 import { getMarkFillMode } from './plotting/marks.js';
 import { buildPathGeometry, computePathLabelPosition } from './geometry/paths.js';
-import { registerPendingReRender } from './core/katex-renderer.js';
+import { registerPendingReRender, setKatexMacros, isMathLabel } from './core/katex-renderer.js';
 
 function round4(v) {
   const r = Math.round(v * 10000) / 10000;
   return Object.is(r, -0) ? 0 : r;
+}
+
+/**
+ * True if any label in the config contains $…$ math. Only KaTeX-rendered
+ * labels are measured from live DOM (font-dependent); everything else uses
+ * character-count heuristics, so math-free configs render identically before
+ * and after web fonts load.
+ */
+function configHasMathLabels(config) {
+  const hasMath = (l) =>
+    Array.isArray(l) ? l.some(hasMath) : l != null && isMathLabel(String(l));
+  for (const node of Object.values(config.states ?? {})) {
+    if (node && hasMath(node.label)) return true;
+  }
+  for (const edge of config.edges ?? []) {
+    if (edge && hasMath(edge.label)) return true;
+  }
+  for (const path of config.paths ?? []) {
+    for (const n of path?.nodes ?? []) {
+      if (n && hasMath(n.label)) return true;
+    }
+  }
+  return false;
 }
 
 /**
@@ -86,6 +109,9 @@ function transformPlotPath(path, sx, sy, ox, oy) {
 export function render(svgEl, config) {
   // ── PHASE 1: PARSE ──────────────────────────────────────────────────
   // Validate and normalise the incoming configuration.
+
+  // User-defined KaTeX macros (e.g. { "\\pay": "\\phantom{-}#1,#2" }).
+  setKatexMacros(config.katexMacros);
 
   // Global scale: TikZ [scale=3.5] equivalent.
   // Multiplies all path/plot coordinates. origin shifts the coordinate system.
@@ -602,6 +628,7 @@ export function render(svgEl, config) {
       marks: svgMarks,
       markPath: result.markPath ? result.markPath.toSVGPath() : null,
       markFillMode: style.mark ? getMarkFillMode(style.mark) : 'stroke',
+      id: plotDef.id ?? `plot-${i}`,
     });
   }
 
@@ -680,6 +707,8 @@ export function render(svgEl, config) {
       arrowStartId,
       arrowEndId,
       labelNodes,
+      id: pathDef.id ?? `path-${i}`,
+      useAsBoundingBox: pathDef.useAsBoundingBox === true,
     });
   }
 
@@ -707,6 +736,9 @@ export function render(svgEl, config) {
     layers: config._layers,
     seed: config.seed,
     padding: config.padding,
+    viewBox: config.viewBox,
+    width: config.width,
+    height: config.height,
     globalScaleX,
     globalScaleY,
     transformCanvas,
@@ -725,7 +757,22 @@ export function render(svgEl, config) {
     };
   }
 
+  // Auto-assign edge and label IDs: `edge-<from>-<to>` (unique) or
+  // `edge-<from>-<to>-<n>` (1-indexed) when a from→to pair repeats. Labels
+  // mirror the edge id with the `label-` prefix. User-supplied `id` wins.
+  const pairCounts = {};
+  for (const e of edges) {
+    const key = `${e.from}-${e.to}`;
+    pairCounts[key] = (pairCounts[key] || 0) + 1;
+  }
+  const pairSeen = {};
   for (let i = 0; i < edges.length; i++) {
+    const key = `${edges[i].from}-${edges[i].to}`;
+    pairSeen[key] = (pairSeen[key] || 0) + 1;
+    const suffix = pairCounts[key] > 1 ? `-${pairSeen[key]}` : '';
+    const autoId = `edge-${key}${suffix}`;
+    const autoLabelId = `label-${key}${suffix}`;
+
     model.edges.push({
       index: i,
       from: edges[i].from,
@@ -735,13 +782,19 @@ export function render(svgEl, config) {
       edgeGeometry: edgeGeometries[i],
       labelNode: edgeLabelPositions[i],
       style: resolvedEdgeStyles[i],
+      id: edges[i].id ?? autoId,
+      labelId: edges[i].labelId ?? autoLabelId,
     });
   }
 
   const refs = emitSVG(svgEl, model);
 
-  // Schedule a re-render after fonts load to fix KaTeX measurement
-  registerPendingReRender(svgEl, config, render);
+  // Schedule a re-render after fonts load to fix KaTeX measurement.
+  // Math-free configs measure identically before and after fonts load, so
+  // skip the second render pass (and the viewBox recompute it implies).
+  if (configHasMathLabels(config)) {
+    registerPendingReRender(svgEl, config, render);
+  }
 
   return refs;
 }

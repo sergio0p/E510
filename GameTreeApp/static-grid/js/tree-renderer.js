@@ -21,7 +21,7 @@ export function computeLayout(root, width, height) {
         if (siblingCount === 3) {
           return 2.75;  // Extra spacing for 3-leaf clusters
         }
-        return 2.0;  // Normal spacing for 2-leaf pairs
+        return 3.0;  // Normal spacing for 2-leaf pairs
       }
       if (a.data.isLeaf || b.data.isLeaf) {
         return 1.5;  // Extra spacing if one is a leaf
@@ -39,9 +39,9 @@ export function computeLayout(root, width, height) {
 
 export function redistributeColumns(allNodes) {
   // Pass 3: Redistribute nodes within columns to use available vertical space
-  const MIN_SPACING = 80;   // Minimum acceptable gap between nodes
-  const MAX_SPACING = 250;  // Gap considered "excess" that can be borrowed
-  const TARGET_SPACING = 120; // Ideal spacing
+  const MIN_SPACING = 112;   // Minimum acceptable gap between nodes
+  const MAX_SPACING = 350;   // Gap considered "excess" that can be borrowed
+  const TARGET_SPACING = 168; // Ideal spacing
 
   console.log('🔄 Starting column redistribution...');
 
@@ -159,10 +159,10 @@ function moveSubtreeVertical(node, deltaY, allNodes) {
 
 export function adjustEarlyLeaves(allNodes) {
   // Adjust position of early leaves (periods 1-3) to save vertical space
-  const NODE_RADIUS = 24;
-  const MIN_GAP_FROM_OBSTACLE = 30; // Minimum 30px breathing room from any obstacle
-  const MIN_TOTAL_SPACE = (NODE_RADIUS + MIN_GAP_FROM_OBSTACLE) * 2; // 108px minimum
-  const DEFAULT_OFFSET = 125; // Default perpendicular offset when space is unlimited
+  const NODE_RADIUS = 34;
+  const MIN_GAP_FROM_OBSTACLE = 42; // breathing room from any obstacle
+  const MIN_TOTAL_SPACE = (NODE_RADIUS + MIN_GAP_FROM_OBSTACLE) * 2;
+  const DEFAULT_OFFSET = 220; // perpendicular offset when space is unlimited
 
   console.log('🔄 Starting adaptive perpendicular placement...');
 
@@ -627,7 +627,7 @@ function renderEdge(parent, child, childIndex, svg) {
   hitArea.setAttribute("d", fullPath);
   hitArea.setAttribute("fill", "none");
   hitArea.setAttribute("stroke", "transparent");
-  hitArea.setAttribute("stroke-width", "10");
+  hitArea.setAttribute("stroke-width", "14");
   hitArea.setAttribute("pointer-events", "stroke");
 
   // Create visible main path (first part of edge)
@@ -636,7 +636,7 @@ function renderEdge(parent, child, childIndex, svg) {
   visibleMain.setAttribute("d", mainPath);
   visibleMain.setAttribute("fill", "none");
   visibleMain.setAttribute("stroke", "#374151");
-  visibleMain.setAttribute("stroke-width", "2");
+  visibleMain.setAttribute("stroke-width", "3");
   visibleMain.setAttribute("pointer-events", "none");
 
   // Create visible taper path (last part near arrowhead)
@@ -645,7 +645,7 @@ function renderEdge(parent, child, childIndex, svg) {
   visibleTaper.setAttribute("d", taperPath);
   visibleTaper.setAttribute("fill", "none");
   visibleTaper.setAttribute("stroke", "#374151");
-  visibleTaper.setAttribute("stroke-width", "2");
+  visibleTaper.setAttribute("stroke-width", "3");
   visibleTaper.setAttribute("marker-end", "url(#arrowhead)");
   visibleTaper.setAttribute("pointer-events", "none");
 
@@ -669,7 +669,7 @@ function renderEdgeLabel(parent, child, label, svg) {
   const x2 = child.x;
   const y2 = child.y;
 
-  const NODE_RADIUS = 24;
+  const NODE_RADIUS = 34;
   const GAP = 1;
   const ARROW_EXTENSION = 2;
 
@@ -683,7 +683,7 @@ function renderEdgeLabel(parent, child, label, svg) {
     const startY = y1 + (NODE_RADIUS * direction);
     const endY = y2 - ((NODE_RADIUS + GAP + ARROW_EXTENSION) * direction);
 
-    labelX = x1 - 12; // 12px to the left
+    labelX = x1 - 17; // to the left
     labelY = (startY + endY) / 2; // Midpoint of actual edge (excluding arrow)
   } else {
     // Horizontal curved edge - label above the curve at parametric midpoint
@@ -697,7 +697,7 @@ function renderEdgeLabel(parent, child, label, svg) {
     // x = (startX + endX) / 2
     // y = midY - 0.5 * offset
     labelX = (startX + endX) / 2;
-    labelY = (midY - 0.5 * offset) - 8; // 8px above the curve at its midpoint
+    labelY = (midY - 0.5 * offset) - 11; // above the curve at its midpoint
   }
 
   const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
@@ -705,7 +705,7 @@ function renderEdgeLabel(parent, child, label, svg) {
   text.setAttribute("x", labelX);
   text.setAttribute("y", labelY);
   text.setAttribute("fill", "#374151");
-  text.setAttribute("font-size", "12");
+  text.setAttribute("font-size", "24");
   text.setAttribute("font-weight", "normal");
   text.setAttribute("text-anchor", "middle");
   text.setAttribute("dominant-baseline", "central");
@@ -720,7 +720,7 @@ function getEdgePath(parent, child) {
   const x2 = child.x;
   const y2 = child.y;
 
-  const NODE_RADIUS = 24;
+  const NODE_RADIUS = 34;
   const GAP = 1; // Gap between arrow tip and child node
   const ARROW_EXTENSION = 2; // Arrowhead extends beyond line endpoint
 
@@ -755,13 +755,13 @@ function renderDecisionNode(node, svg) {
   group.setAttribute("transform", `translate(${node.x}, ${node.y})`);
 
   const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-  circle.setAttribute("r", "24");
+  circle.setAttribute("r", "34");
   circle.setAttribute("fill", COLORS[node.player]);
   circle.setAttribute("filter", "url(#drop-shadow)");
 
   const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
   label.setAttribute("fill", "white");
-  label.setAttribute("font-size", "18");
+  label.setAttribute("font-size", "30");
   label.setAttribute("font-weight", "bold");
   label.setAttribute("text-anchor", "middle");
   label.setAttribute("dominant-baseline", "central");
@@ -780,10 +780,10 @@ function renderTerminalNode(node, svg) {
   group.setAttribute("transform", `translate(${node.x}, ${node.y})`);
 
   const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-  circle.setAttribute("r", "24");
+  circle.setAttribute("r", "34");
   circle.setAttribute("fill", "#E5E7EB");
   circle.setAttribute("stroke", "#9CA3AF");
-  circle.setAttribute("stroke-width", "2");
+  circle.setAttribute("stroke-width", "3");
   circle.setAttribute("filter", "url(#drop-shadow)");
   group.appendChild(circle);
 
@@ -793,23 +793,23 @@ function renderTerminalNode(node, svg) {
   if (numPlayers === 2) {
     // Single divider line for 2 players
     const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    line.setAttribute("x1", "-18");
-    line.setAttribute("x2", "18");
+    line.setAttribute("x1", "-25");
+    line.setAttribute("x2", "25");
     line.setAttribute("y1", "0");
     line.setAttribute("y2", "0");
     line.setAttribute("stroke", "#9CA3AF");
-    line.setAttribute("stroke-width", "1");
+    line.setAttribute("stroke-width", "1.4");
     group.appendChild(line);
   } else if (numPlayers === 3) {
     // Two divider lines for 3 players
-    [-8, 8].forEach(yPos => {
+    [-11, 11].forEach(yPos => {
       const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-      line.setAttribute("x1", "-18");
-      line.setAttribute("x2", "18");
+      line.setAttribute("x1", "-25");
+      line.setAttribute("x2", "25");
       line.setAttribute("y1", yPos);
       line.setAttribute("y2", yPos);
       line.setAttribute("stroke", "#9CA3AF");
-      line.setAttribute("stroke-width", "1");
+      line.setAttribute("stroke-width", "1.4");
       group.appendChild(line);
     });
   }
@@ -817,9 +817,9 @@ function renderTerminalNode(node, svg) {
   // Position payoffs based on number of players
   let yPositions;
   if (numPlayers === 2) {
-    yPositions = [-10, 10];
+    yPositions = [-14, 14];
   } else if (numPlayers === 3) {
-    yPositions = [-16, 0, 16];
+    yPositions = [-22, 0, 22];
   } else {
     // Fallback for single player (shouldn't happen, but just in case)
     yPositions = [0];
@@ -829,7 +829,7 @@ function renderTerminalNode(node, svg) {
     const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
     text.setAttribute("y", yPositions[i]);
     text.setAttribute("fill", "#374151");
-    text.setAttribute("font-size", "14");
+    text.setAttribute("font-size", "24");
     text.setAttribute("font-weight", "bold");
     text.setAttribute("text-anchor", "middle");
     text.setAttribute("dominant-baseline", "central");

@@ -4,7 +4,7 @@ import { VARIATIONS } from './highlight-spec.js';
 import { mulberry32, shuffleWithPrng, randomSeed } from './shuffle.js';
 
 const LETTERS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'];
-const CELL_SVG_WIDTH  = 1400;
+const CELL_SVG_WIDTH  = 700;
 const CELL_SVG_HEIGHT = 900;
 
 function getSeed() {
@@ -35,11 +35,6 @@ function renderCell(letter, variation, gridEl) {
   const cell = document.createElement('section');
   cell.className = 'cell';
 
-  const labelDiv = document.createElement('div');
-  labelDiv.className = 'cell-label';
-  labelDiv.textContent = `${letter})`;
-  cell.appendChild(labelDiv);
-
   const { root, allNodes } = buildGameTree(letter);
 
   const svgNS = 'http://www.w3.org/2000/svg';
@@ -52,8 +47,8 @@ function renderCell(letter, variation, gridEl) {
   adjustEarlyLeaves(allNodes);
   redistributeColumns(allNodes);
 
-  const NODE_RADIUS = 24;
-  const PADDING = 100;
+  const NODE_RADIUS = 34;
+  const PADDING = 30;
   let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
   allNodes.forEach(n => {
     minX = Math.min(minX, n.x - NODE_RADIUS);
@@ -66,6 +61,17 @@ function renderCell(letter, variation, gridEl) {
 
   renderTree(root, allNodes, svg);
   applyHighlight(svg, variation.redEdges, letter);
+
+  // In-SVG cell label, offset SE from top-left of viewBox
+  const label = document.createElementNS(svgNS, 'text');
+  label.setAttribute('x', minX + 80);
+  label.setAttribute('y', minY + 80);
+  label.setAttribute('font-size', '44');
+  label.setAttribute('font-weight', 'bold');
+  label.setAttribute('fill', '#111827');
+  label.setAttribute('dominant-baseline', 'hanging');
+  label.textContent = `${letter})`;
+  svg.appendChild(label);
 
   gridEl.appendChild(cell);
 }

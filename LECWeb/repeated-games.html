@@ -391,7 +391,7 @@
 
   <!-- Automata diagrams via tikz-svg -->
   <script type="module">
-    import { render } from './tikz-svg/src-v2/index.js';
+    import { render } from './tikz-svg/dist/tikz-svg.min.js';
 
     const green = '#2e7d32', red = '#dc322f', gray = '#586e75';
 
@@ -674,7 +674,7 @@
   </section>
 
   <script type="module">
-    import { render } from './tikz-svg/src-v2/index.js';
+    import { render } from './tikz-svg/dist/tikz-svg.min.js';
     const green = '#2e7d32', gray = '#586e75';
     render(document.getElementById('automaton-memoryless'), {
       transformCanvas: { scale: 1.1 }, nodeDistance: 231,

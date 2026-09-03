@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>2-period punishment automaton</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+<style>
+  body { margin: 0; padding: 4rem; font-family: 'Times New Roman', serif; background: #fff; }
+  .wrap { display: flex; justify-content: center; align-items: center; }
+  svg { max-width: 500px; width: 100%; }
+</style>
+    <!-- Google Analytics -->
+    <script async src="/E510/js/ga.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <svg id="automaton-pd"></svg>
+  </div>
+
+  <script type="module">
+    import { render } from './tikz-svg/dist/tikz-svg.min.js';
+
+    const green = '#2e7d32', red = '#dc322f', gray = '#586e75';
+
+    function style(r = 22) {
+      return {
+        radius: r, fill: green, stroke: 'none', labelColor: '#fff',
+        shadow: { dx: 2, dy: 3, blur: 4, color: 'rgba(0,0,0,0.35)' },
+        fontSize: 14, fontFamily: "'Times New Roman', serif",
+      };
+    }
+    const edge = { stroke: gray, strokeWidth: 1.5, arrow: 'stealth' };
+
+    /* 2-period punishment (PD): s3 -> s1 */
+    render(document.getElementById('automaton-pd'), {
+      transformCanvas: { scale: 1.4 }, nodeDistance: 90, stateStyle: style(), edgeStyle: edge,
+      states: {
+        s1: { initial: true, fill: red, label: '$CC$', position: { x: 0, y: 0 } },
+        s2: { position: { right: 's1' }, label: '$DD$' },
+        s3: { position: { right: 's2' }, label: '$DD$' },
+      },
+      edges: [
+        { from: 's1', to: 's1', loop: 'above', label: '$CC$' },
+        { from: 's1', to: 's2', label: '$\\neq CC$' },
+        { from: 's2', to: 's3' },
+        { from: 's3', to: 's1', bend: 'left' },
+      ],
+    });
+  </script>
+</body>
+</html>

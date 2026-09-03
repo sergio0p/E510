@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GSAP ScrollTrigger Examples - Rich Interactive Storytelling</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      line-height: 1.6;
+      color: #1d1d1f;
+      background: #f5f5f5;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      padding: 60px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 0.5em;
+      color: #2c3e50;
+      border-bottom: 3px solid #3498db;
+      padding-bottom: 15px;
+    }
+
+    h2 {
+      font-size: 1.8em;
+      margin-top: 2em;
+      margin-bottom: 0.8em;
+      color: #34495e;
+      border-left: 5px solid #3498db;
+      padding-left: 15px;
+    }
+
+    h3 {
+      font-size: 1.3em;
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+      color: #555;
+    }
+
+    p {
+      margin-bottom: 1em;
+      color: #444;
+    }
+
+    .intro {
+      font-size: 1.1em;
+      color: #666;
+      margin-bottom: 2em;
+      padding: 20px;
+      background: #ecf0f1;
+      border-radius: 5px;
+    }
+
+    .example {
+      margin-bottom: 2em;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background: #fafafa;
+    }
+
+    .example h3 {
+      margin-top: 0;
+      color: #2c3e50;
+    }
+
+    .example a {
+      display: inline-block;
+      color: #3498db;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 0.5em;
+      padding: 8px 15px;
+      background: #e8f4f8;
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+
+    .example a:hover {
+      background: #3498db;
+      color: white;
+      transform: translateX(5px);
+    }
+
+    .example ul {
+      margin: 10px 0 10px 25px;
+    }
+
+    .example li {
+      margin-bottom: 0.5em;
+      color: #555;
+    }
+
+    .category {
+      background: #fff;
+      padding: 30px;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      border: 2px solid #ecf0f1;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #3498db;
+      color: white;
+      padding: 3px 10px;
+      border-radius: 3px;
+      font-size: 0.85em;
+      margin-right: 5px;
+      margin-bottom: 5px;
+    }
+
+    .quick-start {
+      background: #fff3cd;
+      border: 2px solid #ffc107;
+      padding: 20px;
+      border-radius: 5px;
+      margin: 30px 0;
+    }
+
+    .quick-start h3 {
+      color: #856404;
+      margin-top: 0;
+    }
+
+    code {
+      background: #f4f4f4;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+
+    .toc {
+      background: #ecf0f1;
+      padding: 20px;
+      border-radius: 5px;
+      margin-bottom: 30px;
+    }
+
+    .toc h3 {
+      margin-top: 0;
+    }
+
+    .toc ul {
+      list-style: none;
+      margin: 10px 0 0 0;
+    }
+
+    .toc li {
+      padding: 5px 0;
+    }
+
+    .toc a {
+      color: #2c3e50;
+      text-decoration: none;
+    }
+
+    .toc a:hover {
+      color: #3498db;
+      text-decoration: underline;
+    }
+  </style>
+    <!-- Google Analytics -->
+    <script async src="/E510/js/ga.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>🎨 GSAP + ScrollTrigger Examples</h1>
+    <p class="intro">
+      A curated collection of award-winning websites and resources showcasing
+      <strong>scroll-based storytelling and rich interactive experiences</strong>
+      using GSAP (GreenSock Animation Platform) and ScrollTrigger.
+    </p>
+
+    <div style="background: #fff3cd; border: 2px solid #ffc107; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+      <strong>⚠️ Note:</strong> Some older links may be broken or changed.
+      The most reliable sources are the <strong>Official GSAP Showcase</strong>
+      and <strong>Official Documentation</strong> below.
+    </div>
+
+    <div class="toc">
+      <h3>📑 Table of Contents</h3>
+      <ul>
+        <li><a href="#award-winning">Award-Winning Sites</a></li>
+        <li><a href="#galleries">Demo Galleries</a></li>
+        <li><a href="#techniques">Specific Techniques</a></li>
+        <li><a href="#portfolios">Portfolio Sites</a></li>
+        <li><a href="#educational">Educational Examples</a></li>
+        <li><a href="#learning">Learning Resources</a></li>
+      </ul>
+    </div>
+
+    <!-- Award-Winning Sites -->
+    <div class="category" id="award-winning">
+      <h2>🏆 Award-Winning Sites Using GSAP + ScrollTrigger</h2>
+
+      <div class="example">
+        <h3>1. Firewatch Game Website</h3>
+        <span class="tag">Classic</span>
+        <span class="tag">Parallax</span>
+        <span class="tag">Storytelling</span>
+        <ul>
+          <li>Parallax scrolling through forest scenes</li>
+          <li>Story unfolds as you scroll</li>
+          <li>Characters and environment animate in</li>
+          <li>Created the "scroll-based narrative" trend</li>
+        </ul>
+        <a href="http://www.firewatchgame.com/" target="_blank">Visit Firewatch Website →</a>
+      </div>
+
+      <div class="example">
+        <h3>2. Apple AirPods Pro Page</h3>
+        <span class="tag">Product</span>
+        <span class="tag">3D</span>
+        <span class="tag">Professional</span>
+        <ul>
+          <li>Product features revealed on scroll</li>
+          <li>3D model rotates and highlights</li>
+          <li>Smooth transitions between sections</li>
+          <li>Industry standard for product storytelling</li>
+        </ul>
+        <a href="https://www.apple.com/airpods-pro/" target="_blank">Visit Apple AirPods Pro →</a>
+      </div>
+
+      <div class="example">
+        <h3>3. Gucci Gift Giving Campaign</h3>
+        <span class="tag">Luxury</span>
+        <span class="tag">Typography</span>
+        <span class="tag">Elegant</span>
+        <ul>
+          <li>Luxury brand storytelling</li>
+          <li>Elegant scroll animations</li>
+          <li>Product reveals with parallax</li>
+          <li>Typography animations</li>
+        </ul>
+        <a href="https://www.gucci.com/us/en/st/stories/gifts" target="_blank">Visit Gucci Campaign →</a>
+      </div>
+
+      <div class="example">
+        <h3>4. The Boat (SBS Documentary)</h3>
+        <span class="tag">Interactive Story</span>
+        <span class="tag">Award Winner</span>
+        <span class="tag">Graphic Novel</span>
+        <ul>
+          <li>Interactive graphic novel</li>
+          <li>Scroll to progress through story</li>
+          <li>Parallax layers create depth</li>
+          <li>Won multiple awards</li>
+        </ul>
+        <a href="http://www.sbs.com.au/theboat/" target="_blank">Visit The Boat →</a>
+      </div>
+
+      <div class="example">
+        <h3>5. Every Last Drop (Water Conservation)</h3>
+        <span class="tag">Educational</span>
+        <span class="tag">Infographic</span>
+        <span class="tag">Data Viz</span>
+        <ul>
+          <li>Educational storytelling</li>
+          <li>Infographics animate on scroll</li>
+          <li>Data visualization reveals</li>
+          <li>Compelling narrative structure</li>
+        </ul>
+        <a href="http://everylastdrop.co.uk/" target="_blank">Visit Every Last Drop →</a>
+      </div>
+    </div>
+
+    <!-- Demo Galleries -->
+    <div class="category" id="galleries">
+      <h2>🎪 GSAP ScrollTrigger Demo Galleries</h2>
+
+      <div class="example">
+        <h3>6. Official GSAP Showcase</h3>
+        <span class="tag">Official</span>
+        <span class="tag">Curated</span>
+        <span class="tag">Source Code</span>
+        <ul>
+          <li>Curated collection of award-winners</li>
+          <li>Filter by "ScrollTrigger"</li>
+          <li>Source code available for many</li>
+          <li>Range from simple to complex</li>
+        </ul>
+        <a href="https://greensock.com/showcase/" target="_blank">Visit GSAP Showcase →</a>
+      </div>
+
+      <div class="example">
+        <h3>7. CodePen ScrollTrigger Examples</h3>
+        <span class="tag">CodePen</span>
+        <span class="tag">Editable</span>
+        <span class="tag">Community</span>
+        <ul>
+          <li>Search for "ScrollTrigger" on CodePen</li>
+          <li>Editable code (live editing)</li>
+          <li>Various techniques demonstrated</li>
+          <li>Good for learning by doing</li>
+        </ul>
+        <a href="https://codepen.io/search/pens?q=scrolltrigger+gsap" target="_blank">Search CodePen →</a>
+      </div>
+    </div>
+
+    <!-- Specific Techniques -->
+    <div class="category" id="techniques">
+      <h2>🔧 Specific Techniques You Can Explore</h2>
+
+      <div class="example">
+        <h3>Official ScrollTrigger Demos Page</h3>
+        <span class="tag">Official</span>
+        <span class="tag">Comprehensive</span>
+        <span class="tag">Guaranteed Working</span>
+        <ul>
+          <li>All official ScrollTrigger demos in one place</li>
+          <li>Horizontal scroll, pin, parallax, scrub, and more</li>
+          <li>Interactive code examples</li>
+          <li>Best starting point for learning</li>
+        </ul>
+        <a href="https://greensock.com/st-demos/" target="_blank">View Official Demos →</a>
+      </div>
+
+      <div class="example">
+        <h3>Horizontal Scrolling</h3>
+        <span class="tag">Popular</span>
+        <span class="tag">Gallery</span>
+        <ul>
+          <li>Scroll vertically, content moves horizontally</li>
+          <li>Gallery/timeline effect</li>
+          <li>Great for project portfolios</li>
+        </ul>
+        <a href="https://codepen.io/GreenSock/pen/eYpGLYL" target="_blank">View Demo →</a>
+      </div>
+
+      <div class="example">
+        <h3>Pin + Reveal</h3>
+        <span class="tag">Classic</span>
+        <span class="tag">Storytelling</span>
+        <ul>
+          <li>Section pins while content animates</li>
+          <li>Text/images fade/scale in</li>
+          <li>Classic storytelling technique</li>
+        </ul>
+        <a href="https://codepen.io/GreenSock/pen/wvwEQZm" target="_blank">View Demo →</a>
+      </div>
+
+      <div class="example">
+        <h3>Parallax Layers</h3>
+        <span class="tag">Depth</span>
+        <span class="tag">Visual</span>
+        <ul>
+          <li>Multiple layers move at different speeds</li>
+          <li>Creates depth illusion</li>
+          <li>Background/foreground separation</li>
+        </ul>
+        <a href="https://codepen.io/GreenSock/pen/qBbZbLy" target="_blank">View Demo →</a>
+      </div>
+    </div>
+
+    <!-- Real Portfolio Sites -->
+    <div class="category" id="portfolios">
+      <h2>💼 Real Portfolio Sites</h2>
+
+      <div class="example">
+        <h3>8. Active Theory</h3>
+        <span class="tag">Agency</span>
+        <span class="tag">Award Winner</span>
+        <span class="tag">Advanced</span>
+        <ul>
+          <li>Award-winning agency portfolio</li>
+          <li>Heavy GSAP usage throughout</li>
+          <li>Case studies with scroll animations</li>
+          <li>Industry leader in interactive experiences</li>
+        </ul>
+        <a href="https://activetheory.net/" target="_blank">Visit Active Theory →</a>
+      </div>
+
+      <div class="example">
+        <h3>9. Lenis Smooth Scroll (Modern Alternative)</h3>
+        <span class="tag">Smooth Scrolling</span>
+        <span class="tag">Library</span>
+        <span class="tag">Modern</span>
+        <ul>
+          <li>Modern smooth scrolling library (works with GSAP)</li>
+          <li>Lightweight and performant</li>
+          <li>Beautiful demos and examples</li>
+          <li>Used by many award-winning sites</li>
+        </ul>
+        <a href="https://lenis.studiofreight.com/" target="_blank">Visit Lenis →</a>
+      </div>
+
+      <div class="example">
+        <h3>10. Awwwards - GSAP Winners</h3>
+        <span class="tag">Inspiration</span>
+        <span class="tag">Top Tier</span>
+        <span class="tag">Gallery</span>
+        <ul>
+          <li>Filter by GSAP animations</li>
+          <li>Top-tier web design</li>
+          <li>Cutting-edge scroll interactions</li>
+          <li>Massive inspiration gallery</li>
+        </ul>
+        <a href="https://www.awwwards.com/websites/gsap-animation/" target="_blank">Visit Awwwards →</a>
+      </div>
+    </div>
+
+    <!-- Educational/Data Viz Examples -->
+    <div class="category" id="educational">
+      <h2>📚 Educational & Data Visualization Examples</h2>
+
+      <div class="example">
+        <h3>11. The Pudding (Data Stories)</h3>
+        <span class="tag">Data Journalism</span>
+        <span class="tag">Educational</span>
+        <span class="tag">Engaging</span>
+        <ul>
+          <li>Data journalism with scroll-based storytelling</li>
+          <li>Educational yet entertaining</li>
+          <li>Great use of reveals and animations</li>
+          <li>Check "The Physical Traits Presidents Share" article</li>
+        </ul>
+        <a href="https://pudding.cool/" target="_blank">Visit The Pudding →</a>
+      </div>
+
+      <div class="example">
+        <h3>12. NASA Perseverance Mars Mission</h3>
+        <span class="tag">3D Viz</span>
+        <span class="tag">Scientific</span>
+        <span class="tag">Timeline</span>
+        <ul>
+          <li>3D visualization of mission</li>
+          <li>Scroll-based mission timeline</li>
+          <li>Educational + beautiful</li>
+          <li>Complex data made accessible</li>
+        </ul>
+        <a href="https://eyes.nasa.gov/apps/mars2020/" target="_blank">Visit NASA Mars Mission →</a>
+      </div>
+    </div>
+
+    <!-- Learning Resources -->
+    <div class="category" id="learning">
+      <h2>📖 Learning Resources</h2>
+
+      <div class="example">
+        <h3>Official GSAP Documentation</h3>
+        <span class="tag">Docs</span>
+        <span class="tag">Reference</span>
+        <ul>
+          <li>Complete ScrollTrigger API reference</li>
+          <li>Examples and explanations</li>
+          <li>Best practices</li>
+        </ul>
+        <a href="https://greensock.com/docs/v3/Plugins/ScrollTrigger" target="_blank">Read Docs →</a>
+      </div>
+
+      <div class="example">
+        <h3>Official Video Tutorial</h3>
+        <span class="tag">Video</span>
+        <span class="tag">Beginner Friendly</span>
+        <ul>
+          <li>Official GSAP YouTube channel</li>
+          <li>Step-by-step walkthrough</li>
+          <li>Clear explanations</li>
+        </ul>
+        <a href="https://www.youtube.com/watch?v=X7IBa7vZjmo" target="_blank">Watch Tutorial →</a>
+      </div>
+
+      <div class="example">
+        <h3>Creative Coding Club</h3>
+        <span class="tag">Course</span>
+        <span class="tag">Community</span>
+        <ul>
+          <li>Structured learning path</li>
+          <li>Projects and exercises</li>
+          <li>Community support</li>
+        </ul>
+        <a href="https://www.creativecodingclub.com/" target="_blank">Visit Creative Coding Club →</a>
+      </div>
+
+      <div class="example">
+        <h3>GSAP Forums</h3>
+        <span class="tag">Community</span>
+        <span class="tag">Support</span>
+        <ul>
+          <li>Active community forum</li>
+          <li>Get help with specific problems</li>
+          <li>Share your work</li>
+        </ul>
+        <a href="https://greensock.com/forums/" target="_blank">Visit Forums →</a>
+      </div>
+    </div>
+
+    <!-- Quick Start -->
+    <div class="quick-start">
+      <h3>⚡ Quick Start Recommendation</h3>
+      <p><strong>Start with these 3:</strong></p>
+      <ol style="margin-left: 25px;">
+        <li><strong>The Boat</strong> - Best example of scroll-based storytelling</li>
+        <li><strong>GSAP Official Demos</strong> - Learn techniques with code</li>
+        <li><strong>The Pudding</strong> - Educational data storytelling</li>
+      </ol>
+      <p style="margin-top: 15px;">
+        Then <strong>build something small:</strong> 3 sections, pin one section,
+        animate text/images on scroll, and see how it feels.
+      </p>
+    </div>
+
+    <!-- Game Theory Applications -->
+    <div class="category">
+      <h2>🎓 Potential Game Theory Applications</h2>
+      <p>
+        For <strong>game theory education</strong>, ScrollTrigger could create:
+      </p>
+      <ul style="margin-left: 25px; color: #555;">
+        <li><strong>Progressive revelation</strong> of concepts (Nash equilibrium builds step by step)</li>
+        <li><strong>Time-based narratives</strong> (evolution of strategies over time)</li>
+        <li><strong>Step-by-step proofs</strong> (scroll = advance one step in backward induction)</li>
+        <li><strong>Comparative analysis</strong> (pin one example, scroll through variations)</li>
+        <li><strong>Prisoner's Dilemma Story</strong> (scroll through setup → payoffs → outcome → applications)</li>
+        <li><strong>Backward Induction Journey</strong> (scroll backward through time, contracting branches)</li>
+        <li><strong>Evolution of Cooperation</strong> (vertical scroll = time progression with animated agents)</li>
+      </ul>
+    </div>
+
+    <!-- Footer -->
+    <div style="margin-top: 60px; padding-top: 30px; border-top: 2px solid #ecf0f1; text-align: center; color: #999;">
+      <p>
+        Created for exploring <strong>GSAP + ScrollTrigger</strong> for rich interactive storytelling.<br>
+        Perfect for educational content, data visualization, and narrative experiences.
+      </p>
+      <p style="margin-top: 15px;">
+        <em>"The best animations are the ones you don't notice—they just make the experience better."</em>
+      </p>
+    </div>
+  </div>
+</body>
+</html>

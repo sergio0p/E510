@@ -490,21 +490,25 @@ Source: `callouts.js` (from `/callout/` directory). See `/callout/USAGE.md` for 
 
 ## File Structure & Deployment
 
-This repo is **E510** (ECON 510 GitHub Pages). Apps live in `Apps/` at the repo root:
-
 ```
-Apps/
-├── index.html                  (app listing page with accordions)
-├── shared-bootstrap-edu.css    (shared Solarized theme)
-├── 510-arbitrage-app-bootstrap.html
+Projects/E101H/Apps/           # ECON 101 (GitHub Pages deploy)
+├── index.html, shared-bootstrap-edu.css
+├── PPF-bootstrap.html, crusoe-friday-trade.html
+├── cost-table-app.html        # B&W (self-contained)
+├── gdp-sorting-game.html      # Carolina Blue (self-contained)
+└── KKT/index.html             # Multi-file apps get a subdirectory
+
+Projects/E510/Apps/            # ECON 510 (GitHub Pages deploy)
+├── index.html, shared-bootstrap-edu.css
 ├── 510discounting-app-dynamic-consistency-bootstrap.html
 ├── 510recursive-utility-app-bootstrap.html
-└── KKT/index.html              (multi-file apps get a subdirectory)
+└── KKT/index.html
 ```
 
-Deployment = commit + push.
+Deployment = commit + push. Additional Dropbox copies at `~/Dropbox/Teaching/[course]/Apps/`.
+**IMPORTANT:** Only copy/deploy when explicitly instructed.
 
-**Naming:** Single-file: `510-[topic]-app-bootstrap.html` or `510[topic]-app-bootstrap.html`. Multi-file: subdirectory with `index.html`. Add `data-app="app-name"` on root container.
+**Naming:** Single-file: `[course][topic]-app-bootstrap.html`. Multi-file: subdirectory with `index.html`. Add `data-app="app-name"` on root container.
 
 ---
 
