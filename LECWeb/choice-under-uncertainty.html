@@ -47,13 +47,15 @@
       <br>
       <a href="#expected-utility" style="margin-left: 1rem;">17. Expected Utility</a>
       <a href="#risk-aversion-frame" style="margin-left: 1rem;">18. Risk Aversion</a>
-      <a href="#expected-utility-theory" style="margin-left: 1rem;">19. EU Attitudes</a>
-      <a href="#measuring-the-degree-of-risk-aversion" style="margin-left: 1rem;">20. Absolute Risk</a>
+      <a href="#risk-aversion-2" style="margin-left: 1rem;">19. Small Risk</a>
+      <a href="#expected-utility-theory" style="margin-left: 1rem;">20. EU Attitudes</a>
       <br>
-      <a href="#measuring-the-degree-of-risk-aversion-2" style="margin-left: 1rem;">21. Relative Risk</a>
-      <a href="#how-to-use-expected-utility" style="margin-left: 1rem;">22. Umbrella</a>
-      <a href="#how-to-use-expected-utility-2" style="margin-left: 1rem;">23. Umbrella Calc</a>
-      <a href="#how-to-use-expected-utility-3" style="margin-left: 1rem;">24. FED Decision</a>
+      <a href="#measuring-the-degree-of-risk-aversion" style="margin-left: 1rem;">21. Absolute Risk</a>
+      <a href="#measuring-the-degree-of-risk-aversion-2" style="margin-left: 1rem;">22. Relative Risk</a>
+      <a href="#how-to-use-expected-utility" style="margin-left: 1rem;">23. Umbrella</a>
+      <br>
+      <a href="#how-to-use-expected-utility-2" style="margin-left: 1rem;">24. Umbrella Calc</a>
+      <a href="#how-to-use-expected-utility-3" style="margin-left: 1rem;">25. FED Decision</a>
     </nav>
   </section>
 
@@ -939,6 +941,19 @@
       </div>
       </div>
       <div style="font-size:0.75rem; color:#93a1a1; text-align:center;">Use &larr; &rarr; arrow keys to change &alpha;</div>
+    </div>
+  </section>
+
+  <!-- Frame 24b: Risk Aversion — Small-Risk Approximation -->
+  <section class="frame" id="risk-aversion-2">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Risk Aversion</h2>
+    </div>
+    <div class="frame-content">
+      <p>Consider two lotteries $A=(x_0,1)$ and $B=\left((x_0+M,x_0-M),\left(\frac{1}{2},\frac{1}{2}\right)\right)$ with $M>0$. That is, $A$ is a sure lottery (no risk) and $B$ is a risky lottery in which you win or lose $M$ with equal probabilities.</p>
+      <p>Notice both lotteries have the identical expected value, $\E[A]=\E[B]=x_0$.</p>
+      <p>The difference in expected utility of these lotteries is approximately,</p>
+      $$U(B)-U(A)=\frac{M}{2}\cdot\left(\MU(x_0+M)-\MU(x_0-M)\right)$$
     </div>
   </section>
 
