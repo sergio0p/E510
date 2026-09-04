@@ -33,6 +33,8 @@
       <a href="#spe-frame" style="margin-left: 1rem;">5. SPE</a>
       <a href="#backward-induction" style="margin-left: 1rem;">6. Backward Induction</a>
       <a href="#backward-induction-2" style="margin-left: 1rem;">7. Backward Cont.</a>
+      <a href="#backward-induction-3" style="margin-left: 1rem;">8. Continuum of Actions</a>
+      <a href="#problem-set-03" style="margin-left: 1rem;">9. Problem Set 03</a>
     </nav>
   </section>
 
@@ -507,6 +509,56 @@
         <li class="overlay" data-overlay="3">Step back to the nodes immediately before them. Substitute the best response you just found into the payoff of the player who moves there. The <strong>new</strong> payoff depends on current and past actions only&mdash;the future actions have been eliminated.</li>
         <li class="overlay" data-overlay="4">Apply <a href="unconstrained-optimization.html#solving-unconstrained-optimization-problems">Recipe #0</a> or <a href="constrained-optimization.html#constrained-optimization-with-equality-constraints-2">Recipe #1</a> to this new payoff to obtain that player&rsquo;s best response.</li>
         <li class="overlay" data-overlay="5">Repeat, moving back one stage at a time, until you reach the initial node&mdash;the game is solved.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Frame 9: Problem Set 03 -->
+  <section class="frame" id="problem-set-03">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Dynamic Games</h2>
+      <p class="frame-subtitle">Problem Set 03</p>
+    </div>
+    <div class="frame-content">
+      <p>The set-up is identical to <strong>Problem Set 02</strong>.</p>
+
+      <p style="margin-top: 0.75rem;">Mark Watney is stranded on Mars but will be rescued after four periods. Time is discrete: $t=0,1,2,3$. He has only 4 potatoes (which we shall assume are infinitely divisible). We use $k_t$ to denote his stock of potatoes at the beginning of period $t$, so the stock starts at $k_0=4$.</p>
+
+      <p style="margin-top: 0.75rem;">At every period he decides how many potatoes to consume, which we denote by $c_t$, and then the stock of potatoes grows according to the rule
+      $$k_t = 2\cdot\paren{k_{t-1}-c_{t-1}}.$$
+      In words, the amount of unconsumed potatoes doubles. Mark&rsquo;s utility in period $t$ is given by $\sqrt{c_t}$ and he discounts future utility according to the discount factor $\delta=0.8$.</p>
+
+      <p style="margin-top: 0.75rem;">In order to solve this problem it will be easier if we write it in terms of the amount of potatoes that are <em>saved</em> (not consumed) in period $t$:
+      $$s_t=k_t-c_t.$$
+      Thus $c_t=k_t-s_t$ and also $k_t=2\cdot s_{t-1}$ (by the growth law of potatoes).</p>
+
+      <p style="margin-top: 0.75rem;">Notice we can solve this by finding the <strong>subgame-perfect Nash equilibrium</strong> of the game with one player. Let the utility of the player in period $t$ be $\mathbf{U[t]}$. For example
+      $$\mathbf{U[3]=0.8^3*Sqrt[c[3]]}$$
+      as the past utility is <em>sunk</em>.</p>
+
+      <p style="margin-top: 0.75rem;"><strong>Before you start:</strong> work through <a href="https://uncch.instructure.com/courses/125271/files/16622076" target="_blank">DynamicGames.nb</a> (also on Canvas under <em>Files</em>). It runs exactly the same procedure&mdash;solve the last period first, substitute the answer back with $\mathbf{/.}$, then optimize&mdash;on the Stackelberg model we did in class, first with two firms and then with three. The steps below are those same moves applied to Mark&rsquo;s potatoes, with periods in place of firms. Pay particular attention there to <em>why the order of the substitutions matters</em>: you will need it in step (1).</p>
+
+      <ol style="margin-top: 1rem;">
+        <li>If we choose $\mathbf{c[3]}$ and $\mathbf{s[3]}$ to max $\mathbf{U[3]}$ subject to $\mathbf{c[3]+s[3]=2*s[2]}$, we know by your reasoning in PS 02 that
+        $$\mathbf{sol[3] = \{\,c[3] \to k[3],\; s[3] \to 0\,\}}.$$
+        The utility in period 2 is $\mathbf{0.8^2*Sqrt[c[2]]+U[3]}$. Use the replacement rule $\mathbf{/.}$ and $\mathbf{sol[3]}$ and the budget equation for period 2
+        $$\mathbf{budget[2] = \{\,c[2] \to 2*s[1] - s[2]\,\}}$$
+        above to write/define $\mathbf{U[2]}$ = an expression that depends on $\mathbf{s[2]}$ and the sunk (at period 2) $\mathbf{s[1]}$. <em>Hint:</em> Use $\mathbf{/.}$ twice.</li>
+
+        <li>Notice that $\mathbf{s[1]}$ is sunk, apply <a href="unconstrained-optimization.html#solving-unconstrained-optimization-problems">Recipe&nbsp;#0</a> to the objective function $\mathbf{U[2]}$ to obtain the optimal $\mathbf{s[2]}$ (as a function of $\mathbf{s[1]}$).</li>
+
+        <li>The utility in period 1 is $\mathbf{0.8*Sqrt[c[1]]+U[2]}$. Proceed as in step (1)&mdash;substitute the optimal $\mathbf{s[2]}$ you found in (2) together with the period-1 budget equation&mdash;to write $\mathbf{U[1]}$ as a function of $\mathbf{s[0]}$ and $\mathbf{s[1]}$ alone.</li>
+
+        <li>Notice that $\mathbf{s[0]}$ is sunk, apply <a href="unconstrained-optimization.html#solving-unconstrained-optimization-problems">Recipe&nbsp;#0</a> to the objective function $\mathbf{U[1]}$ to obtain the optimal $\mathbf{s[1]}$ (as a function of $\mathbf{s[0]}$).</li>
+
+        <li>The utility in period 0 is $\mathbf{Sqrt[c[0]]+U[1]}$. Be careful here: the period-0 budget equation is
+        $$\mathbf{c[0]+s[0]=4},$$
+        <strong>not</strong> $\mathbf{2*s[-1]}$&mdash;there is no period before $0$, and the 4 potatoes are Mark&rsquo;s initial endowment $k_0=4$. So the replacement rule is $\mathbf{budget[0] = \{\,c[0] \to 4 - s[0]\,\}}$.
+          <ul style="margin-top: 0.5rem;">
+            <li>Substitute the optimal $\mathbf{s[1]}$ from (4) and $\mathbf{budget[0]}$ to write $\mathbf{U[0]}$ as a function of $\mathbf{s[0]}$ alone.</li>
+            <li>Nothing is sunk at period 0: apply <a href="unconstrained-optimization.html#solving-unconstrained-optimization-problems">Recipe&nbsp;#0</a> to $\mathbf{U[0]}$ to obtain the optimal $\mathbf{s[0]}$&mdash;this time a number, not a function.</li>
+          </ul>
+        </li>
       </ol>
     </div>
   </section>
