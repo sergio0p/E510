@@ -32,7 +32,7 @@
       <br>
       <a href="#information-partitions" style="margin-left: 1rem;">5. Partitions</a>
       <a href="#information-partition" style="margin-left: 1rem;">6. Weather Example</a>
-      <a href="#cheryl-frame" style="margin-left: 1rem;">7. Cheryl Birthday</a>
+      <a href="#cheryl-story" style="margin-left: 1rem;">7. Cheryl Birthday</a>
       <a href="#uncertainty-and-time" style="margin-left: 1rem;">8. Uncertainty & Time</a>
       <br>
       <a href="#filtrations" style="margin-left: 1rem;">9. Filtrations</a>
@@ -1225,6 +1225,39 @@
 
   <script>
     gsap.registerPlugin(ScrollTrigger);
+
+    // Two things break pin positions on this page if left alone.
+    //
+    // 1. These triggers are created while the script parses, but KaTeX
+    //    typesets on DOMContentLoaded (js/katex-macros.js) and its webfonts
+    //    land later still, both changing frame heights.
+    // 2. A pinned trigger must refresh AFTER every pin above it, because each
+    //    one inserts scroll space that shifts the ones below. GSAP refreshes
+    //    in creation order, and the Cheryl handler below is created before the
+    //    generic .overlay-frame loop -- so Cheryl measured its start 1800px
+    //    too early (the combined pin duration of the two frames above it) and
+    //    pinned over the Cheryl story frame.
+    //
+    // Refreshing in document order once the layout settles fixes both.
+    // Priority comes from DOM order (descending, so earlier frames refresh
+    // first) rather than measured offsets: on a reload the browser restores
+    // the scroll position before this runs, and an already-pinned frame
+    // reports a viewport-relative top, which would scramble the ordering
+    // exactly when it matters most.
+    function refreshInDocumentOrder() {
+      const sections = Array.prototype.slice.call(document.querySelectorAll('body section'));
+      ScrollTrigger.getAll().forEach(st => {
+        if (!st.trigger) return;
+        const sec = st.trigger.closest('section') || st.trigger;
+        st.vars.refreshPriority = -sections.indexOf(sec);
+      });
+      ScrollTrigger.sort();
+      ScrollTrigger.refresh();
+    }
+    window.addEventListener('load', refreshInDocumentOrder);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(refreshInDocumentOrder);
+    }
 
     // === Cheryl's Birthday: 7-step pin animation ===
     (function() {
