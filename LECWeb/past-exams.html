@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="nav-prev" content="problem-sets.html">
+  <meta name="nav-next" content="inequality-constraints.html">
+  <title>Past Exams | ECON 510</title>
+
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/beamer-theme.css">
+    <!-- Google Analytics -->
+    <script async src="/E510/js/ga.js"></script>
+
+  <style>
+    /* Two kinds of artefact live side by side here: a Canvas quiz you can take,
+       and a PDF of the paper as it was handed out. The label says which. */
+    .kind {
+      display: inline-block;
+      font-size: 0.62em;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.15em 0.5em;
+      margin-right: 0.6em;
+      border-radius: 3px;
+      vertical-align: 0.12em;
+    }
+    .kind.quiz { color: #1a4d7a; background: #e3eef8; border: 1px solid #b9d3ea; }
+    .kind.pdf  { color: #7a3b1a; background: #f8ece3; border: 1px solid #eacbb9; }
+    .exam-list li { margin: 0.55rem 0; }
+    .term { color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+  <!-- Section Header -->
+  <section class="section-header" id="past-exams">
+    <div class="section-title-box">
+      <h1>Past Exams</h1>
+    </div>
+    <div style="text-align: center; margin-top: 0.5rem; font-size: 0.6rem;">
+      <a href="#midterm-1" style="margin-left: 1rem;">1. Midterm 1</a>
+      <a href="#midterm-2" style="margin-left: 1rem;">2. Midterm 2</a>
+    </div>
+  </section>
+
+  <!-- Frame 1: Midterm 1 -->
+  <section class="frame" id="midterm-1">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 1</h2>
+    </div>
+    <div class="frame-content">
+      <ul class="exam-list">
+        <li><span class="kind quiz">Quiz</span><a href="https://uncch.instructure.com/courses/125271/quizzes/140019">Midterm 1</a> <span class="term">&mdash; Spring 2026</span></li>
+        <li><span class="kind pdf">PDF</span><a href="https://uncch.instructure.com/courses/125271/files/16788664">Midterm 1</a> <span class="term">&mdash; Fall 2025</span></li>
+        <li><span class="kind pdf">PDF</span><a href="https://uncch.instructure.com/courses/125271/files/16308657">Midterm 1, answer key</a> <span class="term">&mdash; Fall 2025</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Frame 2: Midterm 2 -->
+  <section class="frame" id="midterm-2">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 2</h2>
+    </div>
+    <div class="frame-content">
+      <ul class="exam-list">
+        <li><span class="kind quiz">Quiz</span><a href="https://uncch.instructure.com/courses/125271/quizzes/140020">Midterm 2</a> <span class="term">&mdash; Spring 2026</span></li>
+        <li><span class="kind pdf">PDF</span><a href="https://uncch.instructure.com/courses/125271/files/16791021">Midterm 2</a> <span class="term">&mdash; Fall 2025</span></li>
+        <li><span class="kind pdf">PDF</span><a href="https://uncch.instructure.com/courses/125271/files/16788667">Midterm 2, answer key</a> <span class="term">&mdash; Fall 2025</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Nav -->
+  <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
+    <a href="problem-sets.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Problem Sets</a>
+    <a href="inequality-constraints.html" style="color: var(--crane-blue); text-decoration: none;">Optimization with Inequality Constraints &rarr;</a>
+  </div>
+
+  <!-- KaTeX -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="js/katex-macros.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="js/scroll-animations.js"></script>
+
+  <script>
+    renderMathInElement(document.body, {
+      delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}],
+      macros: katexMacros, throwOnError: false
+    });
+  </script>
+
+</body>
+</html>
