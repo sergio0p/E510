@@ -34,7 +34,10 @@
       <a href="#backward-induction" style="margin-left: 1rem;">6. Backward Induction</a>
       <a href="#backward-induction-2" style="margin-left: 1rem;">7. Backward Cont.</a>
       <a href="#backward-induction-3" style="margin-left: 1rem;">8. Continuum of Actions</a>
-      <a href="#problem-set-03" style="margin-left: 1rem;">9. Problem Set 03</a>
+      <br>
+      <a href="#peer-effects-backward-induction" style="margin-left: 1rem;">9. An Example</a>
+      <a href="#problem-set-05" style="margin-left: 1rem;">10. PS 05</a>
+      <a href="#problem-set-03" style="margin-left: 1rem;">11. Problem Set 03</a>
     </nav>
   </section>
 
@@ -513,6 +516,131 @@
     </div>
   </section>
 
+  <!-- Frame 8.5: Backward induction with a continuum — worked example -->
+  <section class="frame" id="peer-effects-backward-induction">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">An Example</h2>
+      <p class="frame-subtitle">Peer Effects</p>
+    </div>
+    <div class="frame-content">
+
+      <div class="scroll-reveal">
+        <p>Recall the <a href="equilibrium.html#equilibrium-analysis-5">peer-effects model</a>. Individuals $1$ and $2$ choose actions $x$ and $y$. Each would like to choose her own favorite action, $a_1$ and $a_2$ respectively, but also dislikes choosing an action far from her peer&rsquo;s, with $\lambda\gt 0$ measuring how heavily that peer pressure weighs:</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$\begin{aligned}
+          u_1(x,y) &= 1-(a_1-x)^2-\lambda\,(y-x)^2\\[2pt]
+          u_2(x,y) &= 1-(a_2-y)^2-\lambda\,(x-y)^2
+          \end{aligned}$$
+        </div>
+      </div>
+
+      <div class="scroll-reveal">
+        <p style="margin-top: 1rem;"><strong>The simultaneous game, as a reminder.</strong> Each individual takes her peer&rsquo;s action as given, so individual 1 maximizes $u_1$ over $x$ holding $y$ fixed:</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$\diff{}{x}u_1=2\,(a_1-x)+2\lambda\,(y-x)=0
+          \;\Longleftrightarrow\;
+          x=BR_1(y)=\frac{a_1+\lambda\,y}{1+\lambda}$$
+        </div>
+        <p>and symmetrically $y=BR_2(x)=\dfrac{a_2+\lambda\,x}{1+\lambda}$. The Nash equilibrium of the static game is the pair at which both best responses hold at once:</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$x^e=\frac{(1+\lambda)\,a_1+\lambda\,a_2}{1+2\lambda}
+          \qquad\text{and}\qquad
+          y^e=\frac{(1+\lambda)\,a_2+\lambda\,a_1}{1+2\lambda}$$
+        </div>
+      </div>
+
+      <div class="scroll-reveal">
+        <p style="margin-top: 1rem;"><strong>Now change the timing.</strong> Individual 1 chooses $x$ first. Individual 2 observes $x$ and only then chooses $y$. Nothing else changes&mdash;the same two utility functions, the same $\lambda$.</p>
+      </div>
+
+      <div class="scroll-reveal">
+        <p style="margin-top: 1rem;"><strong>Individual 2&rsquo;s strategy.</strong> A strategy must specify an action at every node the player controls. Individual 2 controls one node for each $x$ that individual 1 might pick, and every one of those nodes starts a subgame. Subgame perfection asks 2 to best respond in <em>all</em> of them&mdash;not only at the $x$ that actually gets played. So in any subgame perfect Nash equilibrium, individual 2&rsquo;s strategy is the entire best-response function</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$y=BR_2(x)=\frac{a_2+\lambda\,x}{1+\lambda},$$
+        </div>
+        <p>one action for every $x$. The single number 2 ends up playing is just the value of that function at the $x$ individual 1 chose.</p>
+      </div>
+
+      <div class="scroll-reveal">
+        <p style="margin-top: 1rem;"><strong>Individual 1 knows this.</strong> She is not choosing against a fixed $y$&mdash;she is choosing a point along 2&rsquo;s best-response function. Substituting 2&rsquo;s strategy into her own utility,</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$u_1\paren{x,BR_2(x)}=1-(a_1-x)^2-\lambda\paren{\frac{a_2+\lambda\,x}{1+\lambda}-x}^2$$
+        </div>
+        <p>which is a function of $x$ alone.</p>
+      </div>
+
+      <div class="scroll-reveal">
+        <p style="margin-top: 1rem;"><strong>Apply <a href="unconstrained-optimization.html#solving-unconstrained-optimization-problems">Recipe&nbsp;#0</a>.</strong> Differentiating with respect to $x$ by the chain rule and setting the derivative to zero,</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$\diff{}{x}u_1\paren{x,BR_2(x)}
+          =2\,(a_1-x)-2\lambda\paren{\frac{a_2+\lambda\,x}{1+\lambda}-x}\paren{\frac{\lambda}{1+\lambda}-1}=0$$
+        </div>
+      </div>
+
+      <div class="scroll-reveal">
+        <p style="margin-top: 1rem;"><strong>The solution.</strong> Solving the first-order condition for $x$, and then feeding that $x$ back into 2&rsquo;s strategy,</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$x^\ast=\frac{(1+\lambda)^2a_1+\lambda\,a_2}{1+3\lambda+\lambda^2}
+          \qquad\text{and}\qquad
+          y^\ast=BR_2(x^\ast)=\frac{(1+2\lambda)\,a_2+\lambda(1+\lambda)\,a_1}{1+3\lambda+\lambda^2}$$
+        </div>
+      </div>
+
+      <div class="scroll-reveal">
+        <p style="margin-top: 1rem;"><strong>This is not the static Nash equilibrium.</strong> Subtracting the static solution,</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$x^\ast-x^e=\frac{\lambda^2(1+\lambda)\,(a_1-a_2)}{(1+2\lambda)(1+3\lambda+\lambda^2)}
+          \qquad\text{and}\qquad
+          y^\ast-y^e=\frac{\lambda^3\,(a_1-a_2)}{(1+2\lambda)(1+3\lambda+\lambda^2)}$$
+        </div>
+        <p>Both differences carry the sign of $a_1-a_2$: moving first, individual 1 commits closer to her own favorite action, and individual 2&mdash;who dislikes being far from her peer&mdash;follows her there. Individual 1 moves $\tfrac{1+\lambda}{\lambda}$ times as far as individual 2 does.</p>
+      </div>
+
+      <div class="scroll-reveal">
+        <p style="margin-top: 1rem;">Two limiting cases make the point. At $\lambda=0$ both differences vanish: with no peer pressure there is nothing for individual 1 to exploit, and each simply plays her favorite action. As $\lambda$ grows large the simultaneous game drives both actions to the midpoint $\tfrac{a_1+a_2}{2}$, while the sequential game drives both to $a_1$&mdash;the more the follower cares about conforming, the more completely the leader dictates the outcome.</p>
+      </div>
+
+      <div class="scroll-reveal">
+        <p style="margin-top: 1rem;"><strong>The first-mover advantage.</strong> Individual 1 is better off:</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$u_1(x^\ast,y^\ast)-u_1(x^e,y^e)=\frac{(a_1-a_2)^2\,\lambda^4}{(1+2\lambda)^2(1+3\lambda+\lambda^2)}\ge 0$$
+        </div>
+        <p>and you can see why without computing anything. The static Nash pair $(x^e,y^e)$ also lies on 2&rsquo;s best-response function, since $y^e=BR_2(x^e)$. So it was one of the points individual 1 could have chosen when she maximized along that function&mdash;and she did not choose it.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Frame 8.6: Problem Set 05 -->
+  <section class="frame" id="problem-set-05">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">PS 05</h2>
+      <p class="frame-subtitle">Peer Effects</p>
+    </div>
+    <div class="frame-content">
+      <p>Instead of substituting $BR_2(x)$ into $u_1$, there is a second way to find individual 1&rsquo;s choice: keep both $x$ and $y$ as choice variables and impose individual 2&rsquo;s strategy as a constraint. That is a maximization problem with one equality constraint&mdash;so it is <a href="constrained-optimization.html#constrained-optimization-with-equality-constraints-2">Recipe&nbsp;#1</a>.</p>
+
+      <div style="font-size: 1.45em; line-height: 1.3; text-align: center; margin: 1.5rem 0;">
+        $$\max\limits_{\substack{x,y\\ \mathrm{subject\, to} \\ \\ y \;=\; BR_2(x)}} u_1(x,y)$$
+      </div>
+
+      <p><strong>A note on notation.</strong> Recipe&nbsp;#1 writes the Lagrange multiplier as $\lambda$, but here $\lambda$ is already taken&mdash;it is the weight of the peer pressure in $u_1$ and $u_2$. To avoid the collision we call the multiplier $l$, as you did in PS 02, and it is quicker to type.</p>
+
+      <ol style="margin-top: 1rem;">
+        <li>Write the Lagrangian $\mathcal{L}$ corresponding to the problem.</li>
+        <li>Obtain the gradient of the Lagrangian.</li>
+        <li>Set the first-order conditions.</li>
+        <li>Show the solution of the first-order conditions&mdash;the values of $x$, $y$ and $l$.</li>
+      </ol>
+
+      <p style="margin-top: 0.75rem;"><strong>Hints.</strong> Make sure to use the actual expression for $BR_2(x)$, not the symbol. And notice that you have three variables&mdash;$x$, $y$ and $l$&mdash;when you compute the gradient and solve the first-order conditions.</p>
+
+      <p style="margin-top: 0.75rem;">Notice that $y$ is the action individual 2 <em>plays</em> in equilibrium&mdash;not individual 2&rsquo;s strategy, which is the whole function $BR_2(x)$.</p>
+
+      <p style="margin-top: 1rem;"><strong>Submit on Canvas:</strong> <a href="https://uncch.instructure.com/courses/125271/assignments/989903" target="_blank">PS 05</a>. Download the template <em>510PS05FA26.nb</em> there, type your answers into the cells provided and upload the notebook. Use the template exactly as in the previous problem sets and do not rename the variables. One submission per group, due Friday 25 September at 11:59&nbsp;PM.</p>
+    </div>
+  </section>
+
   <!-- Frame 9: Problem Set 03 -->
   <section class="frame" id="problem-set-03">
     <div class="frame-title-bar">
@@ -654,6 +782,14 @@
             }
           });
         }
+      });
+    });
+    gsap.utils.toArray('.scroll-reveal').forEach(el => {
+      gsap.set(el, { opacity: 0, y: 15 });
+      ScrollTrigger.create({
+        trigger: el, start: 'top 80%', end: 'top 80%',
+        onEnter:     () => gsap.to(el, { opacity: 1, y: 0,  duration: 0.6, ease: 'power2.out' }),
+        onLeaveBack: () => gsap.to(el, { opacity: 0, y: 15, duration: 0.4, ease: 'power2.in' }),
       });
     });
   </script>
