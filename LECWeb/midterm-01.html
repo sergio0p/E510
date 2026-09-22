@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="nav-prev" content="constrained-optimization.html">
+  <meta name="nav-next" content="dynamic-games.html">
+  <title>Midterm 1 | ECON 510</title>
+
+  <!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <!-- Custom -->
+  <link rel="stylesheet" href="css/beamer-theme.css">
+  <script src="js/katex-macros.js"></script>
+  <script src="js/scroll-animations.js"></script>
+    <!-- Google Analytics -->
+    <script async src="/E510/js/ga.js"></script>
+</head>
+<body>
+
+  <!-- Title Slide -->
+  <section class="title-slide" id="midterm-1">
+    <div class="title-box">
+      <h1>Midterm 1</h1>
+    </div>
+    <ul style="list-style: none; padding: 0; margin: 2rem 0 0; text-align: left; font-size: 0.85rem; line-height: 1.7; color: #444;">
+      <li><strong>Shift + Right Arrow</strong> &mdash; next lecture</li>
+      <li><strong>Shift + Left Arrow</strong> &mdash; previous lecture</li>
+      <li><strong>Shift + Up Arrow</strong> &mdash; return to the index page</li>
+      <li><strong>Click block title</strong> &mdash; flip block body to hide/reveal content</li>
+      <li><strong>b</strong> &mdash; toggle all blocks open/closed at once</li>
+    </ul>
+  </section>
+
+  <!-- Coverage -->
+  <section class="frame" id="midterm-1-coverage">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Coverage</h2>
+    </div>
+    <div class="frame-content">
+      <ol>
+        <li><a href="mathematica-tutorial.html#mathematica-cheat-sheet">Basic Mathematica Commands (Cheat Sheet)</a></li>
+        <li><a href="unconstrained-optimization.html#solving-unconstrained-optimization-problems">Unconstrained Optimization (Recipe #0)</a></li>
+        <li><a href="constrained-optimization.html#constrained-optimization-with-equality-constraints-2">Optimization with Equality Constraints (Recipe #1)</a></li>
+        <li><a href="equilibrium.html#equilibrium-analysis-3">Nash Equilibrium of Static Games</a></li>
+        <li><a href="dynamic-games.html#spe-frame">Subgame Perfect Nash Equilibrium</a></li>
+        <li><a href="time-preferences.html#time-preferences">Discount Factors</a></li>
+        <li><a href="time-preferences.html#time-preferences-7">Recursive Utility</a></li>
+        <li><a href="inequality-constraints.html#optimization-with-inequality-constraints-3">Optimization with Inequality Constraints (Recipe #2)</a></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Nav -->
+  <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
+    <a href="constrained-optimization.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Optimization with Equality Constraints</a>
+    <a href="dynamic-games.html" style="color: var(--crane-blue); text-decoration: none;">Dynamic Games &rarr;</a>
+  </div>
+
+  <!-- KaTeX auto-render -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      renderMathInElement(document.body, {
+        delimiters: [
+          {left: '$$', right: '$$', display: true},
+          {left: '$', right: '$', display: false}
+        ],
+        macros: katexMacros,
+        throwOnError: false
+      });
+    });
+  </script>
+
+</body>
+</html>
