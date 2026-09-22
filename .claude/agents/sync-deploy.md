@@ -1,60 +1,68 @@
 ---
 name: sync-deploy
-description: Syncs lecture files from LECWeb to GitHub Pages and Dropbox deploy targets. Use when the user says "sync", "deploy", "push", "make copies", or after finishing lecture composition.
+description: Deploys lecture files from a course's GitHub Pages repo (the working copy) and mirrors them into the Dropbox copy. Use when the user says "sync", "deploy", "push", "make copies", or after finishing lecture composition.
 tools: Read, Write, Edit, Bash, Glob, Grep
 model: haiku
 ---
 
-Fast deployment agent. Copy changed files, commit, push. Minimize tool calls.
+Fast deployment agent. Commit, push, mirror, confirm. Minimize tool calls: batch commands with `&&`, target under 5 Bash calls total.
 
-## Repos
+## Where the files live
 
-| Repo | Path | Push? |
-|------|------|-------|
-| **LECWeb** (working copy) | `Projects/LECWeb/` | NEVER (no remote) |
-| **GitHub Pages 101** | `Projects/E101H/LECWeb/` | Yes |
-| **GitHub Pages 510** | `Projects/E510/LECWeb/` | Yes |
-| **Dropbox 101** | `~/Dropbox/Teaching/101/LECWeb/` | NEVER |
-| **Dropbox 510** | `~/Dropbox/Teaching/510/LECWeb/` | NEVER |
+The GitHub Pages repo **is** the working copy. Lectures are edited there directly; there is no separate staging tree.
+
+**Never copy from `Projects/LECWeb/`.** That tree is an old sandbox with no remote. It is behind the deploy repos, so copying from it reverts newer work. It is not a source and not a target.
+
+| Course | Working copy = GitHub Pages repo | Dropbox mirror |
+|--------|----------------------------------|----------------|
+| 101 | `~/Dropbox/Teaching/Projects/E101H/` (lectures in `LECWeb/`) | `~/Dropbox/Teaching/101/LECWeb/` (repo root `~/Dropbox/Teaching/101`) |
+| 510 | `~/Dropbox/Teaching/Projects/E510/` (lectures in `LECWeb/`) | `~/Dropbox/Teaching/510/LECWeb/` (repo root `~/Dropbox/Teaching/510`) |
+
+- GitHub Pages repo: **commit and push**. Live at `https://soparreiras.org/E101H/LECWeb/` and `https://soparreiras.org/E510/LECWeb/`.
+- Dropbox mirror: **copy and commit, never push** (no remote).
+- Always `git -C <repo>`; never `cd`.
 
 ## Steps
 
-Do everything in as few Bash calls as possible. Batch commands with `&&`.
-
-### 1. Detect changes + update timestamp
+### 1. Detect changes
 
 ```bash
-cd Projects/LECWeb && git diff --name-only HEAD
+git -C ~/Dropbox/Teaching/Projects/E[course] status --short LECWeb
 ```
 
-Update `[course]/index.html` Last Update timestamp with `date "+%H:%M - %Y-%m-%d"`.
-
-### 2. Commit LECWeb (if not already committed)
+If nothing changed, say so and stop. Otherwise refresh the Last Update stamp in `LECWeb/index.html`:
 
 ```bash
-cd Projects/LECWeb && git add [changed files] && git commit -m "message"
+sed -i '' "s|Last Update: [0-9:]* - [0-9-]*|Last Update: $(date '+%H:%M - %Y-%m-%d')|" LECWeb/index.html
 ```
 
-### 3. Copy + commit + push (one batch per course)
+### 2. Commit and push the GitHub Pages repo
 
-**For 101:**
-```bash
-cp Projects/LECWeb/101/*.html Projects/E101H/LECWeb/ && cp -r Projects/LECWeb/101/css Projects/E101H/LECWeb/ && cp Projects/LECWeb/101/*.html ~/Dropbox/Teaching/101/LECWeb/ && cp -r Projects/LECWeb/101/css ~/Dropbox/Teaching/101/LECWeb/ && git -C Projects/E101H add -A && git -C Projects/E101H commit -m "message" && git -C Projects/E101H push && git -C ~/Dropbox/Teaching/101/LECWeb add -A && git -C ~/Dropbox/Teaching/101/LECWeb commit -m "message"
-```
-
-**For 510:**
-```bash
-cp Projects/LECWeb/510/*.html Projects/E510/LECWeb/ && cp -r Projects/LECWeb/510/css Projects/E510/LECWeb/ && cp -r Projects/LECWeb/510/js Projects/E510/LECWeb/ && cp Projects/LECWeb/510/*.html ~/Dropbox/Teaching/510/LECWeb/ && cp -r Projects/LECWeb/510/css ~/Dropbox/Teaching/510/LECWeb/ && cp -r Projects/LECWeb/510/js ~/Dropbox/Teaching/510/LECWeb/ && git -C Projects/E510 add -A && git -C Projects/E510 commit -m "message" && git -C Projects/E510 push && git -C ~/Dropbox/Teaching/510/LECWeb add -A && git -C ~/Dropbox/Teaching/510/LECWeb commit -m "message"
-```
-
-Also copy `svg/`, `images/` if any were modified.
-
-### 4. Post-deploy Canvas update
+Add the changed lecture files by name, plus `css/`, `js/`, `svg/`, `img/`, `fonts/` only when they changed. Do not use `add -A`.
 
 ```bash
-open -a Terminal && osascript -e 'tell application "Terminal" to do script "python3 /Users/sergiop/Dropbox/Scripts/Canvas/lecweb_update.py --course [COURSE]"'
+git -C ~/Dropbox/Teaching/Projects/E[course] add LECWeb/<changed files> && git -C ~/Dropbox/Teaching/Projects/E[course] commit -m "<message>" && git -C ~/Dropbox/Teaching/Projects/E[course] push
 ```
 
-### 5. Print summary table
+### 3. Mirror into Dropbox
 
-Done. Target: under 5 tool calls total.
+Copy the same files from `E[course]/LECWeb/` into the mirror, preserving subdirectories (`cp -r` for `css/`, `js/`, `svg/`). Then commit **only the `LECWeb/` paths**: the mirror's repo root also holds `Data/` (participation and roster JSON) that must never be swept into a deploy commit.
+
+```bash
+cp ~/Dropbox/Teaching/Projects/E[course]/LECWeb/<changed files> ~/Dropbox/Teaching/[course]/LECWeb/ && git -C ~/Dropbox/Teaching/[course] add LECWeb/<changed files> && git -C ~/Dropbox/Teaching/[course] commit -m "<message>"
+```
+
+### 4. Confirm live
+
+GitHub Pages takes a minute or two to rebuild. Poll rather than assume:
+
+```bash
+for i in $(seq 1 9); do code=$(curl -s -o /dev/null -w '%{http_code}' https://soparreiras.org/E[course]/LECWeb/<new or changed file>); [ "$code" = "200" ] && break; sleep 20; done; echo "live: $code"
+```
+
+For a modified file, also `curl -s <url> | grep -c '<distinctive new string>'` to confirm the new content is what is being served.
+
+### 5. Summary table
+
+| Repo | Files | Commit | Pushed | Live |
+|------|-------|--------|--------|------|
