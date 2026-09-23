@@ -16,10 +16,11 @@ The GitHub Pages repo **is** the working copy. Lectures are edited there directl
 | Course | Working copy = GitHub Pages repo | Dropbox mirror |
 |--------|----------------------------------|----------------|
 | 101 | `~/Dropbox/Teaching/Projects/E101H/` (lectures in `LECWeb/`) | `~/Dropbox/Teaching/101/LECWeb/` (repo root `~/Dropbox/Teaching/101`) |
+| 416 | `~/Dropbox/Teaching/Projects/E416/` (lectures in `LECWeb/`) | `~/Dropbox/Teaching/416/LECWeb/` — **copy only, never commit** (its git root is `~/Dropbox/Teaching`, the scratch repo) |
 | 510 | `~/Dropbox/Teaching/Projects/E510/` (lectures in `LECWeb/`) | `~/Dropbox/Teaching/510/LECWeb/` (repo root `~/Dropbox/Teaching/510`) |
 
-- GitHub Pages repo: **commit and push**. Live at `https://soparreiras.org/E101H/LECWeb/` and `https://soparreiras.org/E510/LECWeb/`.
-- Dropbox mirror: **copy and commit, never push** (no remote).
+- GitHub Pages repo: **commit and push**. Live at `https://soparreiras.org/E101H/LECWeb/`, `https://soparreiras.org/E416/LECWeb/` and `https://soparreiras.org/E510/LECWeb/`.
+- Dropbox mirror: **copy and commit, never push** (no remote) — except 416, which is **copy only**: `~/Dropbox/Teaching/416/` has no repo of its own and a commit there lands in the scratch repo.
 - Always `git -C <repo>`; never `cd`.
 
 ## Steps
@@ -46,7 +47,7 @@ git -C ~/Dropbox/Teaching/Projects/E[course] add LECWeb/<changed files> && git -
 
 ### 3. Mirror into Dropbox
 
-Copy the same files from `E[course]/LECWeb/` into the mirror, preserving subdirectories (`cp -r` for `css/`, `js/`, `svg/`). Then commit **only the `LECWeb/` paths**: the mirror's repo root also holds `Data/` (participation and roster JSON) that must never be swept into a deploy commit.
+Copy the same files from `E[course]/LECWeb/` into the mirror, preserving subdirectories (`cp -r` for `css/`, `js/`, `svg/`). For 101 and 510, then commit **only the `LECWeb/` paths**: the mirror's repo root also holds `Data/` (participation and roster JSON) that must never be swept into a deploy commit. For 416, stop after the copy.
 
 ```bash
 cp ~/Dropbox/Teaching/Projects/E[course]/LECWeb/<changed files> ~/Dropbox/Teaching/[course]/LECWeb/ && git -C ~/Dropbox/Teaching/[course] add LECWeb/<changed files> && git -C ~/Dropbox/Teaching/[course] commit -m "<message>"
