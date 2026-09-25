@@ -31,7 +31,7 @@ The GitHub Pages repo **is** the working copy. Lectures are edited there directl
 git -C ~/Dropbox/Teaching/Projects/E[course] status --short LECWeb
 ```
 
-If nothing changed, say so and stop. Otherwise refresh the Last Update stamp in `LECWeb/index.html`:
+If nothing changed, skip to step 3: the mirror may still be behind. Otherwise refresh the Last Update stamp in `LECWeb/index.html`:
 
 ```bash
 sed -i '' "s|Last Update: [0-9:]* - [0-9-]*|Last Update: $(date '+%H:%M - %Y-%m-%d')|" LECWeb/index.html
@@ -47,10 +47,20 @@ git -C ~/Dropbox/Teaching/Projects/E[course] add LECWeb/<changed files> && git -
 
 ### 3. Mirror into Dropbox
 
-Copy the same files from `E[course]/LECWeb/` into the mirror, preserving subdirectories (`cp -r` for `css/`, `js/`, `svg/`). For 101 and 510, then commit **only the `LECWeb/` paths**: the mirror's repo root also holds `Data/` (participation and roster JSON) that must never be swept into a deploy commit. For 416, stop after the copy.
+Bring the mirror level with **every file the deploy repo tracks** under `LECWeb/`, not only the files in this push. Copying only the changed files let the mirrors drift far behind: on 2026-09-24 the 510 mirror lacked 140 files, including live pages, and the 416 mirror had 9 of 156 files and no `css/` or `js/`.
 
 ```bash
-cp ~/Dropbox/Teaching/Projects/E[course]/LECWeb/<changed files> ~/Dropbox/Teaching/[course]/LECWeb/ && git -C ~/Dropbox/Teaching/[course] add LECWeb/<changed files> && git -C ~/Dropbox/Teaching/[course] commit -m "<message>"
+L="${TMPDIR:-/tmp}/sync-deploy-[course].txt" && git -C ~/Dropbox/Teaching/Projects/E[course] ls-files LECWeb > "$L" && rsync -a --files-from="$L" ~/Dropbox/Teaching/Projects/E[course]/ ~/Dropbox/Teaching/[course]/ && while read p; do cmp -s ~/Dropbox/Teaching/Projects/E[course]/"$p" ~/Dropbox/Teaching/[course]/"$p" || echo "MISMATCH $p"; done < "$L"
+```
+
+- No `--delete`: files that exist only in the mirror stay.
+- The deploy repo is the newer copy. If a differing mirror file has content the deploy repo lacks (not just an older version of the same page), stop and report instead of overwriting.
+- Any `MISMATCH` line means the copy failed. Report it.
+
+For 101 and 510, commit exactly the tracked list, never a blanket `add`: the mirror's repo root also holds `Data/` (participation and roster JSON) that must never be swept into a deploy commit. For 416, stop after the copy.
+
+```bash
+L="${TMPDIR:-/tmp}/sync-deploy-[course].txt" && git -C ~/Dropbox/Teaching/[course] add --pathspec-from-file="$L" && { git -C ~/Dropbox/Teaching/[course] diff --cached --quiet || git -C ~/Dropbox/Teaching/[course] commit -m "<message>"; }
 ```
 
 ### 4. Confirm live
@@ -61,7 +71,7 @@ GitHub Pages takes a minute or two to rebuild. Poll rather than assume:
 for i in $(seq 1 9); do code=$(curl -s -o /dev/null -w '%{http_code}' https://soparreiras.org/E[course]/LECWeb/<new or changed file>); [ "$code" = "200" ] && break; sleep 20; done; echo "live: $code"
 ```
 
-For a modified file, also `curl -s <url> | grep -c '<distinctive new string>'` to confirm the new content is what is being served.
+For a modified file, also `curl -s <url> | grep -cF '<distinctive new string>'` to confirm the new content is what is being served. Use `-F`: lecture text is full of `$` and `\\`, which plain `grep` reads as pattern syntax and then misses.
 
 ### 5. Summary table
 
