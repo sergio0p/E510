@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="nav-prev" content="midterm-01.html">
+  <meta name="nav-next" content="index.html">
+  <title>Midterm Practice | ECON 510</title>
+
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/beamer-theme.css">
+    <!-- Google Analytics -->
+    <script async src="/E510/js/ga.js"></script>
+  <style>
+    /* Answer cards: clicking a problem's subtitle ("Problem N") turns the whole
+       frame over to its answers; clicking it again turns it back. The card look
+       of .frame moves onto the two faces so it rotates with them, and the card's
+       height follows whichever face is showing (set in the script below). */
+    .flip-frame { background: transparent; box-shadow: none; overflow: visible; perspective: 1600px; }
+    .flip-frame-inner { position: relative; transform-style: preserve-3d; transition: transform 0.7s ease, height 0.4s ease; }
+    .flip-frame.flipped .flip-frame-inner { transform: rotateY(180deg); }
+    .flip-face {
+      background: var(--frame-bg); border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      overflow: hidden; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    }
+    .flip-front { position: relative; }
+    .flip-back { position: absolute; top: 0; left: 0; width: 100%; transform: rotateY(180deg); }
+    .flip-toggle { cursor: pointer; user-select: none; }
+  </style>
+</head>
+<body>
+
+  <!-- Section Header -->
+  <section class="section-header" id="midterm-practice">
+    <div class="section-title-box">
+      <h1>Midterm Practice</h1>
+      <h2>Click on the subtitle to reveal answers.</h2>
+    </div>
+
+    <!-- Table of Contents -->
+    <nav style="margin-top: 2rem; text-align: left; background: #eee; padding: 1rem; border-radius: 8px; font-size: 0.9rem;">
+      <a href="#practice-setting" style="margin-left: 1rem;">0. The Setting</a>
+      <a href="#practice-mathematica" style="margin-left: 1rem;">1. Mathematica</a>
+      <a href="#practice-recipe-0" style="margin-left: 1rem;">2. Recipe #0</a>
+      <a href="#practice-recipe-1" style="margin-left: 1rem;">3. Recipe #1</a>
+      <br>
+      <a href="#practice-nash" style="margin-left: 1rem;">4. Nash Equilibrium</a>
+      <a href="#practice-spne" style="margin-left: 1rem;">5. SPNE</a>
+      <a href="#practice-discounting" style="margin-left: 1rem;">6. Discount Factors</a>
+      <a href="#practice-recipe-2" style="margin-left: 1rem;">7. Recipe #2</a>
+    </nav>
+  </section>
+
+  <!-- Frame 0: The setting shared by every problem -->
+  <section class="frame" id="practice-setting">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">The Public Good Game</h2>
+      <p class="frame-subtitle">The setting for every problem</p>
+    </div>
+    <div class="frame-content">
+      <p>All problems below use the <a href="equilibrium.html#equilibrium-analysis-4">public good game</a>
+      of the lecture notes, with one change: the utility function. Two individuals $i=1,2$ have
+      incomes $w_1,w_2\gt 0$. Individual $i$ contributes $g_i$ to a public good and consumes the
+      rest privately:
+      $$x_i=w_i-g_i,\qquad G=g_1+g_2.$$
+      Each individual's utility is
+      $$u_i(x_i,G)=\sqrt{x_i}+\sqrt{G}.$$</p>
+      <p>This is <strong>not</strong> the utility of the lecture-notes example, where
+      $u_i(x_i,G)=x_i\cdot G$. We write $G_{-i}$ for the total contribution of everyone other
+      than $i$; with two individuals, $G_{-1}=g_2$ and $G_{-2}=g_1$.</p>
+    </div>
+  </section>
+
+  <!-- Problem 1: Basic Mathematica commands -->
+  <section class="frame flip-frame" id="practice-mathematica">
+    <div class="flip-frame-inner">
+      <div class="flip-face flip-front">
+        <div class="frame-title-bar">
+          <h2 class="frame-title">Basic Mathematica Commands</h2>
+          <p class="frame-subtitle flip-toggle" role="button" tabindex="0">Problem 1</p>
+        </div>
+        <div class="frame-content">
+          <p>Substituting the budget, individual 1's utility as a function of the two contributions is
+          $$u_1(g_1,g_2)=\sqrt{w_1-g_1}+\sqrt{g_1+g_2}.$$
+          Answer in Mathematica syntax, using the commands on the
+          <a href="mathematica-tutorial.html#mathematica-cheat-sheet">cheat sheet</a>.</p>
+          <ol>
+            <li>Define the function <code>u1[g1_, g2_]</code>, keeping <code>w1</code> as a symbol.</li>
+            <li>Use <code>Grad</code> to write individual 1's first-order condition with respect to <code>g1</code>, and store it in <code>foc</code>.</li>
+            <li>Solve <code>foc</code> for <code>g1</code>.</li>
+            <li>Use a replacement rule to evaluate your solution at $w_1=13$ and $g_2=5$.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="flip-face flip-back" aria-hidden="true">
+        <div class="frame-title-bar">
+          <h2 class="frame-title">Basic Mathematica Commands</h2>
+          <p class="frame-subtitle flip-toggle" role="button" tabindex="0">Problem 1 &mdash; Answers</p>
+        </div>
+        <div class="frame-content">
+              <ol>
+                <li><code>u1[g1_, g2_] := Sqrt[w1 - g1] + Sqrt[g1 + g2]</code></li>
+                <li><code>foc = Grad[u1[g1, g2], {g1}] == 0</code></li>
+                <li><code>Solve[foc, g1]</code> returns <code>{{g1 -&gt; (w1 - g2)/2}}</code>.</li>
+                <li><code>(w1 - g2)/2 /. {w1 -&gt; 13, g2 -&gt; 5}</code> returns $4$.</li>
+              </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem 2: Unconstrained optimization (Recipe #0) -->
+  <section class="frame flip-frame" id="practice-recipe-0">
+    <div class="flip-frame-inner">
+      <div class="flip-face flip-front">
+        <div class="frame-title-bar">
+          <h2 class="frame-title">Unconstrained Optimization</h2>
+          <p class="frame-subtitle flip-toggle" role="button" tabindex="0">Problem 2</p>
+        </div>
+        <div class="frame-content">
+          <p>Take the total contribution of the others, $G_{-i}$, as given, and ignore the constraint
+          $0\le g_i\le w_i$. Use <a href="unconstrained-optimization.html#solving-unconstrained-optimization-problems">Recipe #0</a>.</p>
+          <ol>
+            <li>Write individual $i$'s utility as a function of $g_i$ alone.</li>
+            <li>Write the first-order condition.</li>
+            <li>Find individual $i$'s best response $\mathrm{BR}_i(G_{-i})$.</li>
+            <li>Compare $\mathrm{BR}_i$ with the best response in the lecture-notes example, where $u_i=x_i\cdot G$. What do the two utilities have in common at the optimum?</li>
+          </ol>
+        </div>
+      </div>
+      <div class="flip-face flip-back" aria-hidden="true">
+        <div class="frame-title-bar">
+          <h2 class="frame-title">Unconstrained Optimization</h2>
+          <p class="frame-subtitle flip-toggle" role="button" tabindex="0">Problem 2 &mdash; Answers</p>
+        </div>
+        <div class="frame-content">
+              <ol>
+                <li>$u_i(g_i)=\sqrt{w_i-g_i}+\sqrt{g_i+G_{-i}}$.</li>
+                <li>First-order condition:
+                  $$\begin{aligned}\frac{d u_i}{d g_i}&=-\frac{1}{2\sqrt{w_i-g_i}}+\frac{1}{2\sqrt{g_i+G_{-i}}}\\ &=0.\end{aligned}$$</li>
+                <li>Move the negative term to the right-hand side and flip both fractions, then square both sides and solve for $g_i$:
+                  $$\begin{aligned}\sqrt{w_i-g_i}&=\sqrt{g_i+G_{-i}}\\ w_i-g_i&=g_i+G_{-i}\\ g_i&=\frac{w_i-G_{-i}}{2}.\end{aligned}$$
+                  So $\mathrm{BR}_i(G_{-i})=\dfrac{w_i-G_{-i}}{2}$.</li>
+                <li>It is the same best response as in the lecture-notes example, $g_1=\frac{w_1-g_2}{2}$.
+                  In both cases the individual stops where the marginal utility of the private good equals
+                  the marginal utility of the public good: the marginal loss from less private consumption is
+                  perfectly offset by the marginal gain from more public good. This happens when $x_i=G$ for
+                  both of these utility functions.</li>
+              </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem 3: Equality constraints (Recipe #1), sequential contributions -->
+  <section class="frame flip-frame" id="practice-recipe-1">
+    <div class="flip-frame-inner">
+      <div class="flip-face flip-front">
+        <div class="frame-title-bar">
+          <h2 class="frame-title">Optimization with Equality Constraints</h2>
+          <p class="frame-subtitle flip-toggle" role="button" tabindex="0">Problem 3</p>
+        </div>
+        <div class="frame-content">
+          <p>Now the individuals contribute sequentially: individual 1 chooses $g_1$ first; individual 2
+          observes $g_1$ and then chooses $g_2$. The public good is not a flow&mdash;individual 1's
+          contribution is still there when individual 2 contributes&mdash;so $G=g_1+g_2$. As in
+          Problem 2, write payoffs as functions of the contributions only,
+          $$u_i(g_1,g_2)=\sqrt{w_i-g_i}+\sqrt{g_1+g_2},$$
+          and ignore $0\le g_i\le w_i$.</p>
+          <ol>
+            <li>Individual 2 moves last, so it best-responds to $g_1$. Use Problem 2 to write $g_2=\mathrm{BR}_2(g_1)$.</li>
+            <li>Individual 1 anticipates this. Write individual 1's problem,
+              $$\max_{g_1,g_2}\;u_1(g_1,g_2)\quad\st\quad g_2=\mathrm{BR}_2(g_1),$$
+              and its Lagrangian.</li>
+            <li>Use <a href="constrained-optimization.html#constrained-optimization-with-equality-constraints-2">Recipe #1</a> to find $g_1$, $g_2$, and the Lagrange multiplier $\lambda$. These are the actions played in the subgame perfect Nash equilibrium.</li>
+            <li>Let $w_1=13$ and $w_2=5$. Compute $g_1$, $g_2$, $G$, and $\lambda$.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="flip-face flip-back" aria-hidden="true">
+        <div class="frame-title-bar">
+          <h2 class="frame-title">Optimization with Equality Constraints</h2>
+          <p class="frame-subtitle flip-toggle" role="button" tabindex="0">Problem 3 &mdash; Answers</p>
+        </div>
+        <div class="frame-content">
+              <ol>
+                <li>$g_2=\mathrm{BR}_2(g_1)=\dfrac{w_2-g_1}{2}$.</li>
+                <li>Individual 1's problem and its Lagrangian:
+          $$\begin{aligned}&\max_{g_1,g_2}\;\sqrt{w_1-g_1}+\sqrt{g_1+g_2}\\ &\st\quad g_2=\frac{w_2-g_1}{2},\end{aligned}$$
+                  $$\begin{aligned}\mathcal{L}&=\sqrt{w_1-g_1}+\sqrt{g_1+g_2}\\ &\quad-\lambda\paren{g_2-\frac{w_2-g_1}{2}}.\end{aligned}$$</li>
+                <li>Writing $G=g_1+g_2$, the first-order conditions are
+                  $$\begin{aligned}
+                    \diff{\mathcal{L}}{g_1}&=-\frac{1}{2\sqrt{w_1-g_1}}+\frac{1}{2\sqrt{G}}-\frac{\lambda}{2}=0,\\
+                    \diff{\mathcal{L}}{g_2}&=\frac{1}{2\sqrt{G}}-\lambda=0,\\
+                    \diff{\mathcal{L}}{\lambda}&=-\paren{g_2-\frac{w_2-g_1}{2}}=0.
+                  \end{aligned}$$
+                  The second gives $\lambda=\frac{1}{2\sqrt{G}}$; substituted into the first,
+                  $w_1-g_1=4G$. The constraint gives $G=\frac{g_1+w_2}{2}$, so
+                  $$g_1=\frac{w_1-2w_2}{3},\qquad g_2=\frac{5w_2-w_1}{6},$$
+          $$G=\frac{w_1+w_2}{6},\qquad \lambda=\frac{1}{2\sqrt{G}}.$$</li>
+                <li>$g_1=1$, $g_2=2$, $G=3$, and $\lambda=\frac{1}{2\sqrt3}\approx 0.289$.</li>
+              </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem 4: Nash equilibrium of the static game -->
+  <section class="frame flip-frame" id="practice-nash">
+    <div class="flip-frame-inner">
+      <div class="flip-face flip-front">
+        <div class="frame-title-bar">
+          <h2 class="frame-title">Nash Equilibrium of Static Games</h2>
+          <p class="frame-subtitle flip-toggle" role="button" tabindex="0">Problem 4</p>
+        </div>
+        <div class="frame-content">
+          <p>Back to simultaneous contributions: both individuals choose at the same time. Use the best
+          responses from Problem 2, and ignore $0\le g_i\le w_i$.</p>
+          <ol>
+            <li>Write the system of best responses and solve it for the Nash equilibrium contributions $(g_1^e,g_2^e)$ and the public good $G^e$.</li>
+            <li>Let $w_1=w_2=w$. Find $g_1^e$, $g_2^e$, and $G^e$.</li>
+            <li>Let $w_1=13$ and $w_2=5$. Compute $g_2^e$. Why is this not an acceptable answer? (Problem 7 fixes it.)</li>
+          </ol>
+        </div>
+      </div>
+      <div class="flip-face flip-back" aria-hidden="true">
+        <div class="frame-title-bar">
+          <h2 class="frame-title">Nash Equilibrium of Static Games</h2>
+          <p class="frame-subtitle flip-toggle" role="button" tabindex="0">Problem 4 &mdash; Answers</p>
+        </div>
+        <div class="frame-content">
+              <ol>
+                <li>The best responses are
+          $$g_1=\frac{w_1-g_2}{2},\qquad g_2=\frac{w_2-g_1}{2}.$$
+          Substitute $g_2$ into individual 1's best response, multiply both sides by $4$, and collect the $g_1$ terms:
+          $$\begin{aligned}g_1&=\frac{1}{2}\left(w_1-\frac{w_2-g_1}{2}\right)\\ 4g_1&=2w_1-w_2+g_1\\ 3g_1&=2w_1-w_2\\ g_1^e&=\frac{2w_1-w_2}{3}.\end{aligned}$$
+          Plug $g_1^e$ into individual 2's best response:
+          $$\begin{aligned}g_2^e&=\frac{1}{2}\left(w_2-\frac{2w_1-w_2}{3}\right)\\ &=\frac{3w_2-2w_1+w_2}{6}\\ &=\frac{2w_2-w_1}{3}.\end{aligned}$$
+          There is no system to solve for $G^e$: just add the two equilibrium contributions.
+          $$\begin{aligned}G^e&=g_1^e+g_2^e\\ &=\frac{(2w_1-w_2)+(2w_2-w_1)}{3}\\ &=\frac{w_1+w_2}{3}.\end{aligned}$$</li>
+                <li>$g_1^e=g_2^e=\frac{w}{3}$ and $G^e=\frac{2w}{3}$.</li>
+                <li>$g_2^e=\frac{10-13}{3}=-1$. A negative contribution would mean individual 2 takes resources
+                  out of the public good, which the model rules out ($g_2\ge 0$). The formula assumed an
+                  interior solution; when $w_1$ is large relative to $w_2$, the constraint $g_2\ge 0$ binds.</li>
+              </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem 5: Subgame perfect Nash equilibrium of the sequential game -->
+  <section class="frame flip-frame" id="practice-spne">
+    <div class="flip-frame-inner">
+      <div class="flip-face flip-front">
+        <div class="frame-title-bar">
+          <h2 class="frame-title">Subgame Perfect Nash Equilibrium</h2>
+          <p class="frame-subtitle flip-toggle" role="button" tabindex="0">Problem 5</p>
+        </div>
+        <div class="frame-content">
+          <p>Return to the sequential game of Problem 3.</p>
+          <ol>
+            <li>Write the subgame perfect Nash equilibrium as a strategy profile. Why is individual 2's strategy a function rather than a number?</li>
+            <li>Let $u_1$ be any differentiable payoff, and assume only that individual 2's best response $\mathrm{BR}_2(g_1)$ is decreasing in $g_1$. Use the chain rule to compare
+              $$\frac{\partial}{\partial g_1}\,u_1(g_1,g_2)$$
+              with
+              $$\frac{d}{d g_1}\,u_1\big(g_1,\mathrm{BR}_2(g_1)\big).$$
+              When is the second smaller than the first? What does that mean for how much a first mover contributes?</li>
+            <li>With $w_1=13$ and $w_2=5$, individual 1 is richer but contributes less than individual 2. Explain why.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="flip-face flip-back" aria-hidden="true">
+        <div class="frame-title-bar">
+          <h2 class="frame-title">Subgame Perfect Nash Equilibrium</h2>
+          <p class="frame-subtitle flip-toggle" role="button" tabindex="0">Problem 5 &mdash; Answers</p>
+        </div>
+        <div class="frame-content">
+              <ol>
+                <li>The SPNE is the profile $\paren{g_1^*,\ \mathrm{BR}_2(\cdot)}$ with
+                  $g_1^*=\frac{w_1-2w_2}{3}$ and $\mathrm{BR}_2(g_1)=\frac{w_2-g_1}{2}$ for <em>every</em> $g_1$.
+                  Individual 2's strategy must say what it does after every possible $g_1$, including those
+                  never played, because subgame perfection requires optimal play in every subgame. The number
+                  $\frac{5w_2-w_1}{6}$ is only the action on the equilibrium path.</li>
+                <li>By the chain rule,
+                  $$\begin{aligned}\frac{d}{d g_1}\,u_1\big(g_1,\mathrm{BR}_2(g_1)\big)&=\frac{\partial u_1}{\partial g_1}\\ &\quad+\frac{\partial u_1}{\partial g_2}\cdot\mathrm{BR}_2'(g_1).\end{aligned}$$
+                  Since $\mathrm{BR}_2'\lt 0$, the second derivative is smaller than the first exactly when
+                  $\frac{\partial u_1}{\partial g_2}\gt 0$&mdash;individual 1 gains from individual 2's
+                  contribution, as with any public good. Each unit the first mover contributes crowds out part
+                  of the follower's contribution, so the first mover gains less from contributing and gives less
+                  than it would if it took $g_2$ as fixed.
+                  <p>In our particular example we can see the same thing without the chain rule for
+                  $\mathrm{BR}_2$. There,
+                  $$u_1(g_1,g_2)=\sqrt{w_1-g_1}+\sqrt{g_1+g_2},$$
+                  $$\mathrm{BR}_2(g_1)=\frac{w_2-g_1}{2}.$$</p>
+                  <p><em>Holding $g_2$ fixed.</em> Differentiate with respect to <span style="white-space: nowrap;">$g_1$:</span>
+                  $$\frac{\partial u_1}{\partial g_1}=-\frac{1}{2\sqrt{w_1-g_1}}+\frac{1}{2\sqrt{g_1+g_2}}.$$</p>
+                  <p><em>Letting $g_2$ respond.</em> Replace $g_2$ by $\mathrm{BR}_2(g_1)$ first. The public good becomes
+                  $$\begin{aligned}g_1+\mathrm{BR}_2(g_1)&=g_1+\frac{w_2-g_1}{2}\\ &=\frac{g_1+w_2}{2},\end{aligned}$$
+                  so individual 1's payoff depends on $g_1$ alone:
+                  $$\begin{aligned}u_1\big(g_1,\mathrm{BR}_2(g_1)\big)&=\sqrt{w_1-g_1}\\ &\quad+\sqrt{\frac{g_1+w_2}{2}}.\end{aligned}$$
+                  Differentiate. The expression inside the second square root has slope $\frac12$:
+                  $$\begin{aligned}\frac{d}{dg_1}\,u_1\big(g_1,\mathrm{BR}_2(g_1)\big)&=-\frac{1}{2\sqrt{w_1-g_1}}\\ &\quad+\frac12\cdot\frac{1}{2\sqrt{\frac{g_1+w_2}{2}}}.\end{aligned}$$</p>
+                  <p><em>The difference.</em> Evaluate both derivatives at the same point, $g_2=\mathrm{BR}_2(g_1)$,
+                  and write $G=g_1+g_2=\frac{g_1+w_2}{2}$. The first terms cancel:
+                  $$\begin{aligned}&\frac{\partial u_1}{\partial g_1}-\frac{d}{dg_1}\,u_1\big(g_1,\mathrm{BR}_2(g_1)\big)\\ &\qquad=\frac{1}{2\sqrt G}-\frac12\cdot\frac{1}{2\sqrt G}\\ &\qquad=\frac{1}{4\sqrt G}\gt 0.\end{aligned}$$</p>
+                  <p>With $g_2$ fixed, one more unit of $g_1$ adds a full unit to $G$. When individual 2 responds,
+                  it cuts its contribution by half a unit, so $G$ rises by only $\frac12$ and individual 1's
+                  marginal gain from the public good is cut in half. The missing half is exactly the
+                  chain-rule term:
+                  $$\begin{aligned}\frac{\partial u_1}{\partial g_2}\cdot\mathrm{BR}_2'(g_1)&=\frac{1}{2\sqrt G}\cdot\paren{-\frac12}\\ &=-\frac{1}{4\sqrt G}.\end{aligned}$$</p></li>
+                <li>Here $\mathrm{BR}_2'=-\frac12$: each unit individual 1 gives lowers individual 2's contribution
+                  by half a unit, so it raises $G$ by only $\frac12$ while costing a full unit of private
+                  consumption. Individual 1 commits to a small contribution ($g_1=1$) and lets individual 2
+                  make up the difference ($g_2=2$)&mdash;the first mover free-rides on the follower.</li>
+              </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem 6: Discount factors, one agent, flow public good -->
+  <section class="frame flip-frame" id="practice-discounting">
+    <div class="flip-frame-inner">
+      <div class="flip-face flip-front">
+        <div class="frame-title-bar">
+          <h2 class="frame-title">Discount Factors</h2>
+          <p class="frame-subtitle flip-toggle" role="button" tabindex="0">Problem 6</p>
+        </div>
+        <div class="frame-content">
+          <p>Now the agent receives the same income $w$ in every period and must choose a donation $g_t$
+          in every period. Assume there is only one agent and two periods, $t=0,1$. The agent cares about
+          the stock of the public good: $G_0=g_0$ in period $0$ and $G_1=g_0+g_1$ in period $1$. The
+          agent's utility in period $t$ is
+          $$u_t=\sqrt{G_t}+\sqrt{x_t},\qquad x_t=w-g_t.$$
+          This is a different utility from the lecture-notes example, where $u_i=x_i\cdot G$. The agent
+          discounts period-1 utility by the <a href="time-preferences.html#time-preferences">discount factor</a>
+          $\delta\in(0,1)$.</p>
+          <ol>
+            <li>Write the agent's discounted utility as a function of $(g_0,g_1)$. Notice that $0$ and $1$ are time indexes, not individuals.</li>
+            <li>Use the first-order condition for $g_1$ to write $g_1$ as a function of $g_0$. Does $\delta$ appear?</li>
+            <li>Substitute your answer and write the first-order condition for $g_0$. Use it to show that $g_0\gt\tfrac{w}{2}$.</li>
+            <li>How does $\delta$ affect $g_0$? What happens to $g_0$ and $g_1$ as $\delta\to 0$? Explain.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="flip-face flip-back" aria-hidden="true">
+        <div class="frame-title-bar">
+          <h2 class="frame-title">Discount Factors</h2>
+          <p class="frame-subtitle flip-toggle" role="button" tabindex="0">Problem 6 &mdash; Answers</p>
+        </div>
+        <div class="frame-content">
+              <ol>
+                <li>The discounted utility is
+          $$\begin{aligned}U(g_0,g_1)&=\sqrt{g_0}+\sqrt{w-g_0}\\ &\quad+\delta\left[\sqrt{g_0+g_1}+\sqrt{w-g_1}\right].\end{aligned}$$</li>
+                <li>The first-order condition for $g_1$ is
+          $$\begin{aligned}\diff{U}{g_1}&=\delta\left[\frac{1}{2\sqrt{g_0+g_1}}-\frac{1}{2\sqrt{w-g_1}}\right]=0\\ &\iff g_1=\frac{w-g_0}{2}.\end{aligned}$$
+                  $\delta$ multiplies the whole condition, so it cancels: the period-1 donation does not depend on $\delta$.</li>
+                <li>Substituting, $G_1=x_1=\frac{w+g_0}{2}$, so
+                  $$U=\sqrt{g_0}+\sqrt{w-g_0}+\delta\sqrt{2\,(w+g_0)},$$
+                  $$\frac{1}{2\sqrt{g_0}}-\frac{1}{2\sqrt{w-g_0}}+\frac{\delta}{\sqrt{2\,(w+g_0)}}=0.$$
+                  The last term is positive, so $\frac{1}{\sqrt{g_0}}\lt\frac{1}{\sqrt{w-g_0}}$, that is,
+                  $g_0\gt w-g_0$, or $g_0\gt\frac{w}{2}$.</li>
+                <li>The left side of the first-order condition is decreasing in $g_0$ and increasing in $\delta$,
+                  so a higher $\delta$ raises $g_0$ (and lowers $g_1=\frac{w-g_0}{2}$): a donation made at $t=0$
+                  is still in the stock at $t=1$, so a more patient agent gives earlier. With $w=1$, for example,
+                  $g_0\approx 0.68$ at $\delta=0.5$ and $g_0\approx 0.75$ at $\delta=0.8$. As $\delta\to 0$ the
+                  future stops mattering and $g_0\to\frac{w}{2}$, $g_1\to\frac{w}{4}$.</li>
+              </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem 7: Inequality constraints (Recipe #2), static game with corners -->
+  <section class="frame flip-frame" id="practice-recipe-2">
+    <div class="flip-frame-inner">
+      <div class="flip-face flip-front">
+        <div class="frame-title-bar">
+          <h2 class="frame-title">Optimization with Inequality Constraints</h2>
+          <p class="frame-subtitle flip-toggle" role="button" tabindex="0">Problem 7</p>
+        </div>
+        <div class="frame-content">
+          <p>Return to the simultaneous game of Problem 4, now with the constraints $0\le g_i\le w_i$.
+          Use <a href="inequality-constraints.html#optimization-with-inequality-constraints-3">Recipe #2</a>.</p>
+          <ol>
+            <li>Write each constraint in the form $h_j(g_i)\le c_j$, and write individual $i$'s Lagrangian with multipliers $\lambda_1$ (for $g_i\ge 0$) and $\lambda_2$ (for $g_i\le w_i$).</li>
+            <li>Find $\mathrm{BR}_i(G_{-i})$. <em>Hint:</em> write $\mathrm{BR}_i$ as a piecewise function.</li>
+            <li>Explain why the constraint $g_i\le w_i$ never binds.</li>
+            <li>Let $w_1=13$ and $w_2=5$. Find the Nash equilibrium and the value of the multiplier on individual 2's constraint $g_2\ge 0$.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="flip-face flip-back" aria-hidden="true">
+        <div class="frame-title-bar">
+          <h2 class="frame-title">Optimization with Inequality Constraints</h2>
+          <p class="frame-subtitle flip-toggle" role="button" tabindex="0">Problem 7 &mdash; Answers</p>
+        </div>
+        <div class="frame-content">
+              <ol>
+                <li>The constraints are $-g_i\le 0$ and $g_i\le w_i$:
+                  $$\begin{aligned}\mathcal{L}&=\sqrt{w_i-g_i}+\sqrt{g_i+G_{-i}}\\ &\quad-\lambda_1\,(-g_i-0)-\lambda_2\,(g_i-w_i).\end{aligned}$$</li>
+                <li>The first-order condition is
+                  $$-\frac{1}{2\sqrt{w_i-g_i}}+\frac{1}{2\sqrt{g_i+G_{-i}}}+\lambda_1-\lambda_2=0.$$
+                  With $\lambda_1=\lambda_2=0$: $g_i=\frac{w_i-G_{-i}}{2}$, valid when $G_{-i}\le w_i$.
+                  With $\lambda_1\gt 0$, $\lambda_2=0$: $g_i=0$ and $\lambda_1=\frac{1}{2\sqrt{w_i}}-\frac{1}{2\sqrt{G_{-i}}}$,
+                  positive when $G_{-i}\gt w_i$. The cases with $\lambda_2\gt 0$ have no solution (see 3). So
+                  $$\mathrm{BR}_i(G_{-i})=\begin{cases}\dfrac{w_i-G_{-i}}{2}&\text{if } G_{-i}\le w_i,\\[6pt] 0&\text{if } G_{-i}\gt w_i.\end{cases}$$</li>
+                <li>At $g_i=w_i$ private consumption is zero and its marginal utility
+                  $\frac{1}{2\sqrt{w_i-g_i}}$ is infinite, so giving everything away is never optimal. Indeed,
+                  the interior best response is at most $\frac{w_i}{2}\lt w_i$.</li>
+                <li>Try $g_2=0$: then $g_1=\mathrm{BR}_1(0)=\frac{13}{2}$, and since $\frac{13}{2}\gt w_2=5$,
+                  $\mathrm{BR}_2\big(\tfrac{13}{2}\big)=0$. The Nash equilibrium is
+                  $g_1^e=\frac{13}{2}$, $g_2^e=0$, $G^e=\frac{13}{2}$, and the multiplier on $g_2\ge 0$ is
+                  $$\lambda_1=\frac{1}{2\sqrt5}-\frac{1}{\sqrt{26}}\approx 0.027\gt 0.$$</li>
+              </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Nav -->
+  <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
+    <a href="midterm-01.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Midterm 1</a>
+    <a href="index.html" style="color: var(--crane-blue); text-decoration: none;">ECON 510 &rarr;</a>
+  </div>
+
+  <!-- KaTeX -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="js/katex-macros.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="js/scroll-animations.js"></script>
+
+  <script>
+    renderMathInElement(document.body, {
+      delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}],
+      macros: katexMacros, throwOnError: false
+    });
+  </script>
+
+  <script>
+    // Answer cards: toggle .flipped on the frame when its subtitle is clicked
+    // (or activated from the keyboard), and size the card to the visible face.
+    document.querySelectorAll('.flip-frame').forEach(frame => {
+      const inner = frame.querySelector('.flip-frame-inner');
+      const front = frame.querySelector('.flip-front');
+      const back = frame.querySelector('.flip-back');
+      const fit = () => {
+        const face = frame.classList.contains('flipped') ? back : front;
+        inner.style.height = face.offsetHeight + 'px';
+      };
+      const flip = () => {
+        const flipped = frame.classList.toggle('flipped');
+        front.setAttribute('aria-hidden', flipped ? 'true' : 'false');
+        back.setAttribute('aria-hidden', flipped ? 'false' : 'true');
+        fit();
+      };
+      frame.querySelectorAll('.flip-toggle').forEach(el => {
+        el.addEventListener('click', flip);
+        el.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); }
+        });
+      });
+      new ResizeObserver(fit).observe(front);
+      new ResizeObserver(fit).observe(back);
+      fit();
+    });
+  </script>
+
+</body>
+</html>
