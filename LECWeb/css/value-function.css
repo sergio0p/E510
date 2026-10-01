@@ -1,0 +1,56 @@
+/* The Value Function and the Envelope Trick — Examples frame.
+
+   A callout stage, ported from 416 probabilities-and-beliefs.html: the
+   examples fill the frame; clicking an example's ▸ bullet widens the canvas
+   and pans it left, so the graph of that problem slides in from the right,
+   joined to the example by a long amber tail. Clicking the graph pans back.
+   Widths are set by js/value-function.js. */
+
+.callout-stage {
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
+}
+.callout-canvas {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--stage-w, 100%) var(--box-w, 560px);
+  column-gap: var(--stem-gap, 160px);
+  align-items: start;
+}
+.callout-list { grid-column: 1; min-width: 0; position: relative; z-index: 1; }   /* text stays readable over a crossing tail */
+.callout-list li::before { cursor: pointer; }   /* the ▸ bullet is the button; the text stays plain */
+.callout-item:focus-visible { outline: none; }
+.callout-box { grid-column: 2; grid-row: 1; min-width: 0; position: relative; z-index: 1; cursor: pointer; }
+.callout-box[hidden] { display: none; }
+.callout-box:focus-visible { outline: none; }
+.callout-box .block { width: 100%; margin: 0; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18); }
+/* Styled like .block-body but is not one, so the theme's block-flip script
+   (a click on a block title shows a "?" back) leaves the graph alone. */
+.callout-body { background: #fff8e1; color: #000000; padding: 0.5rem; border-radius: 0 0 6px 6px; }
+.callout-tails {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  display: none;
+}
+
+/* The graphs scale with the balloon; tikz-svg sets the viewBox */
+.vf-fig { display: block; width: 100%; height: auto; }
+
+/* Safari/WebKit does not paint `position: relative` content inside
+   <foreignObject>, so KaTeX labels in tikz-svg figures lay out correctly but
+   never appear. KaTeX also emits a MathML twin, which WebKit renders natively,
+   so on WebKit show the twin and hide the HTML. Guarded by
+   -webkit-backdrop-filter, true only in WebKit. Same fix as the 416 pages. */
+@supports (-webkit-backdrop-filter: blur(1px)) {
+  svg foreignObject .katex .katex-html { display: none; }
+  svg foreignObject .katex .katex-mathml {
+    position: static; clip: auto; clip-path: none; height: auto; width: auto;
+    overflow: visible; padding: 0; border: 0; opacity: 1; font-size: 1em;
+  }
+}

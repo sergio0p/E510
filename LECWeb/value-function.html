@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="nav-prev" content="midterm-practice.html">
+  <meta name="nav-next" content="index.html">
+  <title>The Value Function and the Envelope Trick | ECON 510</title>
+
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/beamer-theme.css">
+  <link rel="stylesheet" href="css/value-function.css">
+
+  <!-- tikz-svg: the bundle's bare 'mathjs' import must resolve; the shim
+       degrades to null stubs when window.math is absent (diagrams-only page). -->
+  <script type="importmap">
+  { "imports": { "mathjs": "./tikz-svg/examples-v2/mathjs-shim.js" } }
+  </script>
+    <!-- Google Analytics -->
+    <script async src="/E510/js/ga.js"></script>
+</head>
+<body>
+
+  <!-- Section Header -->
+  <section class="section-header" id="the-value-function-and-the-envelope-trick">
+    <div class="section-title-box">
+      <h1>The Value Function and the Envelope Trick</h1>
+    </div>
+
+    <!-- Table of Contents -->
+    <nav style="margin-top: 2rem; text-align: left; background: #eee; padding: 1rem; border-radius: 8px; font-size: 0.9rem;">
+      <a href="#the-value-function" style="margin-left: 1rem;">1. Value Function</a>
+      <a href="#the-value-function-2" style="margin-left: 1rem;">2. VF Examples</a>
+      <a href="#the-envelope-theorem" style="margin-left: 1rem;">3. Envelope</a>
+      <a href="#the-economic-meaning-of-the-lagrangian-multipliers" style="margin-left: 1rem;">4. Shadow Prices</a>
+    </nav>
+  </section>
+
+  <!-- Frame 1: The Value Function (source: lines 1189-1194)
+       NO OVERLAYS -->
+  <section class="frame" id="the-value-function">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">The Value Function</h2>
+    </div>
+    <div class="frame-content">
+      <div class="block">
+        <div class="block-title">Definition: Value Function</div>
+        <div class="block-body">
+          The value function of a maximization (or minimization) problem is the value of the objective function evaluated at the solution as a function of the <strong>exogenous variables</strong>.
+          $$V(\mathbf c,\boldsymbol\theta) =\max\limits_{\substack{\mathbf x\\ \mathrm{subject\, to} \\ \\g_1(\mathbf x)\le c_1\\ \vdots \\ g_k(\mathbf x)\le c_k }} f(\mathbf x,\boldsymbol\theta)$$
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 2: Value Function Examples (source: lines 1195-1201)
+       NO OVERLAYS, \fontsize{10pt}{12pt} -->
+  <section class="frame" id="the-value-function-2">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">The Value Function</h2>
+      <p class="frame-subtitle">Examples</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <!-- Callout stage (js/value-function.js): click an example's ▸ bullet and the
+           frame pans right to a tikz-svg graph of that problem, joined to the example
+           by an amber tail; click the graph to pan back. Same stage as 416
+           probabilities-and-beliefs. -->
+      <div class="callout-stage">
+        <div class="callout-canvas">
+          <div class="callout-list">
+            <ul>
+              <li><span class="callout-item" role="button" tabindex="0" data-callout="callout-utility">Maximize the utility $u(x,y)=xy$ subject to the budget constraint $2x+3y\leq i$ where $i$ is the given income level. The solution is $x=i/4$ and $y=i/6$ so the value function is $V(i)=u(i/4,i/6)=i^{2}/24$. For these type of problems the value function is also called the <em>indirect utility</em>.</span></li>
+              <li><span class="callout-item" role="button" tabindex="0" data-callout="callout-cost">Minimize the cost of inputs $7k+2l$ subject to the quantity constraint $F(k,l)=\sqrt{kl}=Q$ where $Q$ is the given target quantity level. The solution is $k=\sqrt{2/7}Q$ and $l=\sqrt{7/2}Q$ so the value function is $V(i)=7\sqrt{2/7}Q+2\sqrt{7/2}Q=2\sqrt{14}Q$. For these type of problems the value function is also called the <em>cost function</em>.</span></li>
+            </ul>
+            <p style="font-size: 0.85em; color: var(--text-muted);">You should be able to solve these problems using our recipe (and Mathematica if needed) for optimization with equality constraints. Try it and check if your solution coincides with the solution presented here.</p>
+          </div>
+
+          <!-- The tail, redrawn for whichever graph is open -->
+          <svg class="callout-tails" aria-hidden="true"></svg>
+
+          <div class="callout-box" id="callout-utility" role="button" tabindex="0" aria-label="Back to the examples" hidden>
+            <div class="block">
+              <div class="block-title">Utility Maximization</div>
+              <div class="callout-body"><svg class="vf-fig" id="fig-utility" role="img" aria-label="Budget line 2x+3y=i tangent to the indifference curve u=V(i) at x=i/4, y=i/6"></svg></div>
+            </div>
+          </div>
+          <div class="callout-box" id="callout-cost" role="button" tabindex="0" aria-label="Back to the examples" hidden>
+            <div class="block">
+              <div class="block-title">Cost Minimization</div>
+              <div class="callout-body"><svg class="vf-fig" id="fig-cost" role="img" aria-label="Isocost line 7k+2l=V(Q) tangent to the isoquant sqrt(kl)=Q at l=sqrt(7/2)Q, k=sqrt(2/7)Q"></svg></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 3: The Envelope Theorem (source: lines 1202-1205)
+       NO OVERLAYS -->
+  <section class="frame" id="the-envelope-theorem">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">The Envelope Trick</h2>
+    </div>
+    <div class="frame-content">
+      <p>Consider a maximization problem with inequality constraints where the objective function depends on some exogenous variables $\mathbf c$ and $\boldsymbol\theta$.
+      $$V(\mathbf c,\boldsymbol\theta)=\max\limits_{\substack{\mathbf x\\ \mathrm{subject\, to} \\ \\g_1(\mathbf x)\le c_1\\ \vdots \\ g_k(\mathbf x)\le c_k }} f(\mathbf x,\boldsymbol\theta).$$
+      Let $V(\mathbf c,\boldsymbol\theta)$ be the corresponding value function of the optimization problem and let $x^\ast$ be the solution (notice that the solution also depends on the $\boldsymbol\theta$ parameter). The envelope theorem states that:</p>
+      <div style="text-align: center; margin: 1rem 0;">
+        <div style="padding: 0.8rem; border: 2px solid #000; display: inline-block;">
+          $$\nabla_{\boldsymbol\theta}V(\mathbf c,\boldsymbol\theta)= \nabla_{\boldsymbol\theta}f(\mathbf x^\ast,\boldsymbol\theta)$$
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 4: Optimal value of a multiplier (source: lines 1207-1209)
+       OVERLAYS: frame pins, then the proof reveals in two scroll steps -->
+  <section class="frame overlay-frame" id="the-economic-meaning-of-the-lagrangian-multipliers">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">The Economic Meaning of The Lagrangian Multipliers</h2>
+      <p class="frame-subtitle">Shadow Prices</p>
+    </div>
+    <div class="frame-content">
+      <div class="overlay" data-overlay="1">
+        <p>The value of a Lagrangian multiplier $\lambda_j^\ast$ (at the solution) is the marginal value of relaxing the constraints:</p>
+        $$\diff{}{c_{j}}V(\mathbf c,\boldsymbol\theta)=\lambda_{j}^\ast$$
+        <p>Instead. The value of the objective function at the optimal will increase by $\approx \Delta c_j\times \lambda_j^\ast$ if we increase $c_j$ by $\Delta c_j$.</p>
+      </div>
+      <p class="overlay" data-overlay="2"><strong>Proof:</strong> Consider the Lagrangian $\mathcal L(\mathbf x,\boldsymbol\lambda)$. Let $\mathbf x^\ast(\mathbf c,\boldsymbol\theta)$ and $\boldsymbol\lambda^\ast(\mathbf c,\boldsymbol\theta)$ be the solutions of the max. problem. Then $\mathcal L(\mathbf x^\ast(\mathbf c,\boldsymbol\theta),\boldsymbol\lambda^\ast(\mathbf c,\boldsymbol\theta))$ is the <em>value function</em>. Why?</p>
+      <div class="overlay" data-overlay="3">
+        <p>Applying the envelope trick,</p>
+        $$\diff{}{c_j}\mathcal L(\mathbf x,\boldsymbol\lambda)=\lambda_j.$$
+      </div>
+    </div>
+  </section>
+
+  <!-- Nav -->
+  <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
+    <a href="midterm-practice.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Midterm Practice</a>
+    <a href="index.html" style="color: var(--crane-blue); text-decoration: none;">ECON 510 &rarr;</a>
+  </div>
+
+  <!-- Scroll runway: the last frame is a pinned overlay frame; without room below it
+       the page runs out of scroll before the final overlay step is reached. -->
+  <div aria-hidden="true" style="height: 70vh;"></div>
+
+  <!-- KaTeX JS -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="js/katex-macros.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="js/scroll-animations.js"></script>
+
+  <!-- Examples frame: callout stage + the two tikz-svg graphs -->
+  <script type="module" src="js/value-function.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.querySelectorAll('.overlay-frame').forEach(frame => {
+      const overlays = frame.querySelectorAll('.overlay');
+      const count = overlays.length;
+      if (count === 0) return;
+      overlays[0].classList.add('revealed');
+      const scrollPerOverlay = window.innerHeight * 0.5;
+      const totalScroll = scrollPerOverlay * (count - 1);
+      ScrollTrigger.create({
+        trigger: frame,
+        start: 'top top',
+        end: `+=${totalScroll}`,
+        pin: true,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          const currentStep = Math.floor(progress * count);
+          overlays.forEach((overlay, i) => {
+            const isOnly = overlay.hasAttribute('data-overlay-only');
+            if (isOnly) {
+              overlay.classList.toggle('revealed', i === currentStep);
+            } else {
+              overlay.classList.toggle('revealed', i <= currentStep);
+            }
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

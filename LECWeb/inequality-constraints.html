@@ -31,11 +31,6 @@
       <a href="#optimization-with-inequality-constraints-2" style="margin-left: 1rem;">4. KKT Conditions</a>
       <br>
       <a href="#optimization-with-inequality-constraints-3" style="margin-left: 1rem;">5. Recipe #2</a>
-      <a href="#the-value-function" style="margin-left: 1rem;">6. Value Function</a>
-      <a href="#the-value-function-2" style="margin-left: 1rem;">7. VF Examples</a>
-      <a href="#the-envelope-theorem" style="margin-left: 1rem;">8. Envelope</a>
-      <br>
-      <a href="#the-economic-meaning-of-the-lagrangian-multipliers" style="margin-left: 1rem;">9. Shadow Prices</a>
     </nav>
   </section>
 
@@ -154,71 +149,6 @@
         <li>If the answers to the two previous questions are yes then we found a solution. If no, consider other cases.</li>
       </ol>
       <p style="margin-top: 1rem;"><a href="https://sergio0p.github.io/E510/Apps/KKT/index.html" target="_blank">Click here to learn the steps of Recipe #2.</a></p>
-    </div>
-  </section>
-
-  <!-- Frame 6: The Value Function (source: lines 1189-1194)
-       NO OVERLAYS -->
-  <section class="frame" id="the-value-function">
-    <div class="frame-title-bar">
-      <h2 class="frame-title">The Value Function</h2>
-    </div>
-    <div class="frame-content">
-      <div class="block">
-        <div class="block-title">Definition</div>
-        <div class="block-body">
-          The value function of a maximization (or minimization) problem is the value of the objective function evaluated at the solution.
-          $$V(c_{1},c_{2},\ldots, c_{k}) =\max\limits_{\substack{\mathbf x\\ \mathrm{subject\, to} \\ \\g_1(\mathbf x)\le c_1\\ \vdots \\ g_k(\mathbf x)\le c_k }} f(\mathbf x)$$
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Frame 7: Value Function Examples (source: lines 1195-1201)
-       NO OVERLAYS, \fontsize{10pt}{12pt} -->
-  <section class="frame" id="the-value-function-2">
-    <div class="frame-title-bar">
-      <h2 class="frame-title">The Value Function</h2>
-      <p class="frame-subtitle">Examples</p>
-    </div>
-    <div class="frame-content fs-10pt">
-      <ul>
-        <li>Maximize the utility $u(x,y)=xy$ subject to the budget constraint $2x+3y\leq i$ where $i$ is the given income level. The solution is $x=i/4$ and $y=i/6$ so the value function is $V(i)=u(i/4,i/6)=i^{2}/24$. For these type of problems the value function is also called the <em>indirect utility</em>.</li>
-        <li>Minimize the cost of inputs $7k+2l$ subject to the quantity constraint $F(k,l)=\sqrt{kl}=Q$ where $Q$ is the given target quantity level. The solution is $k=\sqrt{2/7}Q$ and $l=\sqrt{7/2}Q$ so the value function is $V(i)=7\sqrt{2/7}Q+2\sqrt{7/2}Q=2\sqrt{14}Q$. For these type of problems the value function is also called the <em>cost function</em>.</li>
-      </ul>
-      <p style="font-size: 0.85em; color: var(--text-muted);">You should be able to solve these problems using our recipe (and Mathematica if needed) for optimization with equality constraints. Try it and check if your solution coincides with the solution presented here.</p>
-    </div>
-  </section>
-
-  <!-- Frame 8: The Envelope Theorem (source: lines 1202-1205)
-       NO OVERLAYS -->
-  <section class="frame" id="the-envelope-theorem">
-    <div class="frame-title-bar">
-      <h2 class="frame-title">The Envelope Theorem</h2>
-    </div>
-    <div class="frame-content">
-      <p>Consider a maximization problem with inequality constraints where the objective function depends on some parameter $\theta$.
-      $$V(\theta)=\max\limits_{\substack{\mathbf x\\ \mathrm{subject\, to} \\ \\g_1(\mathbf x)\le c_1\\ \vdots \\ g_k(\mathbf x)\le c_k }} f(\mathbf x,\theta).$$
-      Let $V(\theta)$ be the corresponding value function of the optimization problem and let $x^\ast$ be the solution (notice that the solution also depends on the $\theta$ parameter). The envelope theorem states that:</p>
-      <div style="text-align: center; margin: 1rem 0;">
-        <div style="padding: 0.8rem; border: 2px solid #000; display: inline-block;">
-          $$\diff{}{\theta}V(\theta)= \diff{}{\theta}f(\mathbf x^\ast,\theta)$$
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Frame 9: Optimal value of a multiplier (source: lines 1207-1209)
-       NO OVERLAYS -->
-  <section class="frame" id="the-economic-meaning-of-the-lagrangian-multipliers">
-    <div class="frame-title-bar">
-      <h2 class="frame-title">The Economic Meaning of The Lagrangian Multipliers</h2>
-      <p class="frame-subtitle">Shadow Prices</p>
-    </div>
-    <div class="frame-content">
-      <p>The value of a multiplier Lagrangian multiplier $\lambda_j^\ast$ (at the solution) is the marginal value of relaxing the constraints:</p>
-      $$\diff{}{c_{j}}V(c_{1},c_{2},\ldots, c_{k})=\lambda_{j}^\ast$$
-      <p>Instead. The value of the objective function at the optimal will increase by $\approx \Delta c_j\times \lambda_j^\ast$ if we increase $c_j$ by $\Delta c_j$.</p>
     </div>
   </section>
 
