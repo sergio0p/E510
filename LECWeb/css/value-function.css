@@ -54,3 +54,19 @@
     overflow: visible; padding: 0; border: 0; opacity: 1; font-size: 1em;
   }
 }
+
+/* Envelope Trick frame: Figure 1, a greyscale pencil plate drawn by
+   js/value-function.js. Capped so its lettering stays near the drawn size;
+   the caption is set like a 1970s book's: spaced caps, then an italic gloss. */
+.plate-figure { max-width: 680px; margin: 1.5rem auto 0; }
+.plate-figure figcaption {
+  margin-top: 0.6rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #bcbcbc;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 0.85em;
+  line-height: 1.45;
+  color: #666666;
+}
+.plate-figure .fig-num { margin-right: 0.8em; font-size: 0.85em; letter-spacing: 0.2em; text-transform: uppercase; }
+.plate-figure .fig-title { color: #3d3d3d; }

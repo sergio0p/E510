@@ -50,7 +50,7 @@
         <div class="block-title">Definition: Value Function</div>
         <div class="block-body">
           The value function of a maximization (or minimization) problem is the value of the objective function evaluated at the solution as a function of the <strong>exogenous variables</strong>.
-          $$V(\mathbf c,\boldsymbol\theta) =\max\limits_{\substack{\mathbf x\\ \mathrm{subject\, to} \\ \\g_1(\mathbf x)\le c_1\\ \vdots \\ g_k(\mathbf x)\le c_k }} f(\mathbf x,\boldsymbol\theta)$$
+          $$V(\mathbf c,\boldsymbol\theta) =\max\limits_{\substack{\mathbf x\\ \mathrm{subject\, to} \\ \\g_1(\mathbf x)\le c_1\\[-6pt] \vdots \\[1.5pt] g_k(\mathbf x)\le c_k }} f(\mathbf x,\boldsymbol\theta)$$
         </div>
       </div>
     </div>
@@ -106,13 +106,20 @@
     </div>
     <div class="frame-content">
       <p>Consider a maximization problem with inequality constraints where the objective function depends on some exogenous variables $\mathbf c$ and $\boldsymbol\theta$.
-      $$V(\mathbf c,\boldsymbol\theta)=\max\limits_{\substack{\mathbf x\\ \mathrm{subject\, to} \\ \\g_1(\mathbf x)\le c_1\\ \vdots \\ g_k(\mathbf x)\le c_k }} f(\mathbf x,\boldsymbol\theta).$$
+      $$V(\mathbf c,\boldsymbol\theta)=\max\limits_{\substack{\mathbf x\\ \mathrm{subject\, to} \\ \\g_1(\mathbf x)\le c_1\\[-6pt] \vdots \\[1.5pt] g_k(\mathbf x)\le c_k }} f(\mathbf x,\boldsymbol\theta).$$
       Let $V(\mathbf c,\boldsymbol\theta)$ be the corresponding value function of the optimization problem and let $x^\ast$ be the solution (notice that the solution also depends on the $\boldsymbol\theta$ parameter). The envelope theorem states that:</p>
       <div style="text-align: center; margin: 1rem 0;">
         <div style="padding: 0.8rem; border: 2px solid #000; display: inline-block;">
           $$\nabla_{\boldsymbol\theta}V(\mathbf c,\boldsymbol\theta)= \nabla_{\boldsymbol\theta}f(\mathbf x^\ast,\boldsymbol\theta)$$
         </div>
       </div>
+      <!-- Figure 1: a pencil plate, drawn live by js/value-function.js -->
+      <figure class="plate-figure">
+        <svg class="vf-fig" id="fig-envelope" role="img" aria-label="The value function V(c, theta) lies above the frozen objective f(x*(theta bar), theta) and touches it at theta bar, where both have the same slope: dV/dtheta equals partial f over partial theta."></svg>
+        <figcaption><span class="fig-num">Figure 1</span><span class="fig-title">The envelope trick</span><br>
+          <em>Freeze the choice at $x^\ast(\overline{\theta})$ and let $\theta$ move. The frozen objective can never beat the re-optimized value $V$, and the two meet at $\overline{\theta}$—so there they share a tangent.</em></figcaption>
+      </figure>
+      <p style="margin-top: 0.8em;"><a href="https://uncch.instructure.com/courses/125271/files/17017152" target="_blank">Mathematica example (.nb file)</a></p>
     </div>
   </section>
 
@@ -157,7 +164,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="js/scroll-animations.js"></script>
 
-  <!-- Examples frame: callout stage + the two tikz-svg graphs -->
+  <!-- Examples frame: callout stage + the two tikz-svg graphs; Envelope frame: Figure 1 -->
   <script type="module" src="js/value-function.js"></script>
 
   <script>

@@ -1,4 +1,5 @@
-// The Value Function and the Envelope Trick — Examples frame.
+// The Value Function and the Envelope Trick — Examples frame, and Figure 1
+// of the Envelope Trick frame (its block sits above the callout stage).
 //
 // Callout stage, ported from 416 probabilities-and-beliefs.html: click an
 // example's ▸ bullet and the canvas widens and pans left, so the graph of
@@ -121,6 +122,78 @@ const hyperbola = (c, x0, x1, extra) => {
       f.label('l-int', C / 2, -0.1, '$V(Q)/2$', 'north'),
       f.label('k-int', -0.1, C / 7, '$V(Q)/7$', 'east'),
       f.label('isoquant', Q * Q / TOP + 0.12, TOP, '$\\sqrt{kl}=Q$', 'west', { labelColor: GREEN }),
+    ],
+  });
+}
+
+// ── Envelope Trick frame: Figure 1 ────────────────────────────────────
+// U against θ, drawn as a circa-1970 pencil plate: greyscale only, a fixed
+// ladder of graphite weights, every line with a small seeded hand wobble, the
+// gap V − f toned with a grey watercolor wash. V re-optimizes at every θ; the
+// frozen objective f(x*(θ̄), θ) keeps the choice made at θ̄. So V ≥ f, the two
+// touch at θ̄, and touching from below forces a common tangent — the envelope
+// theorem. Neither curve is a worked example: V is a convex quadratic, f is
+// its tangent at θ̄ bent down by a concave quadratic.
+{
+  const e = figure('env');
+  const INK = { heavy: '#242424', object: '#3d3d3d', mid: '#666666', thin: '#8e8e8e', wash: '#8a8a8a' };
+  const RULED = { type: 'random steps', segmentLength: 26, amplitude: 0.3 };  // a pencil on a straightedge
+  const SX = 380, SY = 300;                 // px per unit of θ, of U
+  const tb = 0.5, fa = 0.10, fb = 0.96;     // θ̄; where f is drawn
+  const V = t => 0.22 + 0.18 * t + 0.5 * t * t;
+  const Vp = t => 0.18 + t;
+  const f = t => V(tb) + Vp(tb) * (t - tb) - 0.6 * (t - tb) ** 2;
+  const tan = t => V(tb) + Vp(tb) * (t - tb);
+  const sample = (g, a, b, n = 90) => Array.from({ length: n + 1 }, (_, i) => {
+    const t = a + (b - a) * (i / n);
+    return [t, g(t)];
+  });
+
+  // The wash outline: V out to fb, f back to fa. The wash may bleed only across
+  // the two open ends, so the tone stops hard on both curves; weight(t) takes
+  // arc length round the outline as a fraction, so locate the ends in px.
+  const top = sample(V, fa, fb), ring = [...top, ...sample(f, fa, fb).reverse()];
+  const len = pts => pts.slice(1).reduce((s, [x, y], i) =>
+    s + Math.hypot((x - pts[i][0]) * SX, (y - pts[i][1]) * SY), 0);
+  const total = len([...ring, ring[0]]);
+  const right = [len(top) / total, (len(top) + (V(fb) - f(fb)) * SY) / total];
+  const left = 1 - (V(fa) - f(fa)) * SY / total;
+  const bleed = t => ((t >= right[0] && t <= right[1]) || t >= left ? 1 : 0);
+
+  const tex = (id, x, y, s, anchor, extra = {}) =>
+    e.label(id, x, y, s, anchor, { fontSize: 16, labelColor: INK.object, ...extra });
+
+  draw(document.getElementById('fig-envelope'), {
+    scaleX: SX, scaleY: SY, padding: 8, seed: 23, katexMacros: MACROS,
+    draw: [
+      e.line(ring, {
+        cycle: true, fill: INK.wash, stroke: 'none',
+        decoration: { type: 'watercolor', layers: 8, opacity: 0.05, spread: 0.2, segmentLength: 18, rounds: 3, grain: true, weight: bleed },
+      }),
+      e.line([[-0.02, 0], [1.12, 0]], { arrow: '->', stroke: INK.mid, strokeWidth: 1.2, decoration: RULED }),
+      e.line([[0, -0.02], [0, 1]], { arrow: '->', stroke: INK.mid, strokeWidth: 1.2, decoration: RULED }),
+      e.line([[tb, 0], [tb, V(tb)]], { dashed: '2 4', stroke: INK.thin, strokeWidth: 0.9 }),
+      // the common tangent, ruled long enough to part from both curves
+      e.line([[0.16, tan(0.16)], [0.80, tan(0.80)]], { stroke: INK.mid, strokeWidth: 0.9, decoration: RULED }),
+      e.line(sample(f, fa, fb), { stroke: INK.object, strokeWidth: 1.7, decoration: RULED }),
+      e.line(sample(V, 0.04, 0.98), { stroke: INK.heavy, strokeWidth: 2.4, decoration: RULED }),
+      {
+        type: 'node', id: 'env-touch', position: { x: tb, y: -V(tb) }, label: '', shape: 'circle',
+        radius: 3.4, innerSep: 0, fill: INK.heavy, stroke: 'none',
+      },
+      // leader from the equation down to the touch
+      e.line([[0.39, 0.75], [tb - 4 / SX, V(tb) + 8 / SY]], { stroke: INK.thin, strokeWidth: 0.8 }),
+      tex('theta', 1.125, 0, '$\\theta$', 'west'),
+      tex('U', -0.015, 0.99, '$U$', 'east'),
+      tex('tbar', tb, -0.015, '$\\overline{\\theta}$', 'north', { labelColor: INK.heavy }),
+      tex('V', 0.995, V(0.98), '$V(c,\\theta)$', 'west', { labelColor: INK.heavy }),
+      tex('f', fb + 0.015, f(fb), '$f(x^\\ast(\\overline{\\theta}),\\theta)$', 'west'),
+      // clear of V above and f below across its whole width, not just at its centre
+      tex('gap', 0.895, 0.668, '$V\\ge f$', 'center', { fontSize: 13 }),
+      tex('eq', 0.05, 0.84,
+        '$\\dfrac{dV}{d\\theta}=\\dfrac{\\partial f}{\\partial\\theta}\\quad'
+        + '\\textcolor{#666666}{\\small\\text{at }\\theta=\\overline{\\theta}}$',
+        'west', { fontSize: 17, labelColor: INK.heavy }),
     ],
   });
 }
