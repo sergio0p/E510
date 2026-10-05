@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="nav-prev" content="mathematica-notes.html">
+  <meta name="nav-next" content="past-exams.html">
+  <title>Answer Keys | ECON 510</title>
+
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/beamer-theme.css">
+  <style>
+    /* Frames clip their overflow, so a display equation wider than a phone
+       would lose its right end. Let it scroll sideways instead. */
+    .katex-display { overflow-x: auto; overflow-y: hidden; padding-bottom: 2px; }
+  </style>
+    <!-- Google Analytics -->
+    <script async src="/E510/js/ga.js"></script>
+</head>
+<body>
+
+  <!-- Section Header -->
+  <section class="section-header" id="answer-keys">
+    <div class="section-title-box">
+      <h1>Answer Keys</h1>
+    </div>
+
+    <!-- Table of Contents: in-page anchors to each frame's id (blue = default link color) -->
+    <nav style="margin-top: 2rem; text-align: left; background: #eee; padding: 1rem; border-radius: 8px; font-size: 0.9rem;">
+      <a href="#problem-sets" style="margin-left: 1rem;">1. Problem Sets</a>
+      <a href="#midterm-1-q1" style="margin-left: 1rem;">2. MT1 Q1</a>
+      <a href="#midterm-1-q2" style="margin-left: 1rem;">3. MT1 Q2</a>
+      <a href="#midterm-1-q3" style="margin-left: 1rem;">4. MT1 Q3</a>
+      <br>
+      <a href="#midterm-1-q4" style="margin-left: 1rem;">5. MT1 Q4</a>
+      <a href="#midterm-1-q5" style="margin-left: 1rem;">6. MT1 Q5</a>
+      <a href="#midterm-1-q6" style="margin-left: 1rem;">7. MT1 Q6</a>
+      <a href="#midterm-1-q7" style="margin-left: 1rem;">8. MT1 Q7</a>
+      <br>
+      <a href="#midterm-1-q8" style="margin-left: 1rem;">9. MT1 Q8</a>
+      <a href="#midterm-1-q9" style="margin-left: 1rem;">10. MT1 Q9</a>
+      <a href="#midterm-1-q10" style="margin-left: 1rem;">11. MT1 Q10</a>
+      <a href="#midterm-1-q11" style="margin-left: 1rem;">12. MT1 Q11</a>
+    </nav>
+  </section>
+
+  <!-- Frame 1: Problem Set Answer Keys -->
+  <section class="frame" id="problem-sets">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Problem Set Answer Keys</h2>
+    </div>
+    <div class="frame-content">
+      <ol>
+        <li><a href="https://uncch.instructure.com/courses/125271/files/16764635">Problem Set 02</a>&mdash;Mark Watney on Mars, solved with the Lagrangian</li>
+        <li><a href="https://uncch.instructure.com/courses/125271/files/16764636">Problem Set 03</a>&mdash;the same problem, solved by backward induction</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Midterm 1 Answer Key: one frame per exam item, numbered by exam position.
+       Questions 1, 5 and 8 are ungraded setup items and are shown as on the exam. -->
+  <section class="frame" id="midterm-1-q1">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 1 Answer Key</h2>
+      <p class="frame-subtitle">Question 1</p>
+    </div>
+    <div class="frame-content">
+      <p>The next several questions use the following public good setting.</p>
+      <p>There are two individuals, $i=1,2$. Individual $i$ has income $w_i$, contributes $g_i$ to a public good, and consumes the rest privately:</p>
+      $$\begin{align*}x_i=w_i-g_i,\qquad G=g_1+g_2.\end{align*}$$
+      <p>Individual $i$&rsquo;s preferences are given by</p>
+      $$\begin{align*}u_i(x_i,G)=x_i+G\left(4-\frac{G}{2}\right).\end{align*}$$
+      <p>Substituting $x_i$ and $G$, we can write each individual&rsquo;s utility as a function of the two contributions:</p>
+      $$\begin{align*}u_i(g_1,g_2)=w_i-g_i+(g_1+g_2)\left(4-\frac{g_1+g_2}{2}\right).\end{align*}$$
+      <p>Expanded:</p>
+      $$\begin{align*}
+        u_1(g_1,g_2)&=w_1+3g_1+4g_2-\frac{g_1^2}{2}-g_1g_2-\frac{g_2^2}{2}\\
+        u_2(g_1,g_2)&=w_2+4g_1+3g_2-\frac{g_1^2}{2}-g_1g_2-\frac{g_2^2}{2}
+      \end{align*}$$
+      <p><strong>Note:</strong> a superscript is a power exponent and a subscript identifies the individual. In $g_1^2$, the subscript 1 means individual 1 and the superscript 2 means squared.</p>
+    </div>
+  </section>
+
+  <section class="frame" id="midterm-1-q2">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 1 Answer Key</h2>
+      <p class="frame-subtitle">Question 2</p>
+    </div>
+    <div class="frame-content">
+      <p>Using Mathematica syntax, which of the following correctly defines the payoff function $u_1(x_1,G)=x_1+G\cdot\left(4-\frac{G}{2}\right)$?</p>
+      <p><span class="structure">Answer.</span> <code>u1[x1_, G_] := x1 + G*(4 - G/2)</code></p>
+      <p>The arguments of a Mathematica function go in square brackets, and on the left-hand side each argument carries an underscore (<code>x1_</code>, <code>G_</code>) so that it stands for any value. The right-hand side uses the plain names, without underscores. Terms are grouped with parentheses, never square brackets, and <code>G*(4 - G/2)</code> keeps the division by 2 inside the parentheses, as in $G\left(4-\frac{G}{2}\right)$. Each of the other options breaks at least one of these rules.</p>
+    </div>
+  </section>
+
+  <section class="frame" id="midterm-1-q3">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 1 Answer Key</h2>
+      <p class="frame-subtitle">Question 3</p>
+    </div>
+    <div class="frame-content">
+      <p>Ignoring the constraints $0\le g_1\le w_1$, use Recipe #0 and write down player 1&rsquo;s best response to $g_2$. Please write only player 1&rsquo;s best response; do not include your reasoning or work.</p>
+      <p><span class="structure">Answer.</span> $BR_1(g_2)=3-g_2$.</p>
+      <p>Recipe #0 sets the derivative of $u_1$ with respect to player 1&rsquo;s choice equal to zero, and the second derivative confirms a maximum:</p>
+      $$\begin{align*}
+        \frac{\partial u_1}{\partial g_1}&=3-g_1-g_2=0,\\
+        g_1&=3-g_2,\\
+        \frac{\partial^2 u_1}{\partial g_1^2}&=-1\lt 0.
+      \end{align*}$$
+    </div>
+  </section>
+
+  <section class="frame" id="midterm-1-q4">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 1 Answer Key</h2>
+      <p class="frame-subtitle">Question 4</p>
+    </div>
+    <div class="frame-content">
+      <p>Assume wealth levels are $w_1=5$ and $w_2=7$. In any Nash equilibrium, what is the total level of public good?</p>
+      <p><strong>Hint:</strong> unlike the classroom examples, we may have many Nash equilibria here.</p>
+      <p><span class="structure">Answer.</span> $G=3$.</p>
+      <p>Player 2&rsquo;s best response comes from the same recipe:</p>
+      $$\begin{align*}
+        \frac{\partial u_2}{\partial g_2}&=3-g_1-g_2=0,\\
+        BR_2(g_1)&=3-g_1.
+      \end{align*}$$
+      <p>Both best responses describe the same line,</p>
+      $$\begin{align*}g_1+g_2=3,\end{align*}$$
+      <p>so every pair $(g_1,g_2)$ on this line with $0\le g_1\le 3$ is a Nash equilibrium, and in each of them $G=g_1+g_2=3$. The wealth bounds never bind, because no contribution exceeds $3$, which is less than both $w_1=5$ and $w_2=7$.</p>
+    </div>
+  </section>
+
+  <section class="frame" id="midterm-1-q5">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 1 Answer Key</h2>
+      <p class="frame-subtitle">Question 5</p>
+    </div>
+    <div class="frame-content">
+      <p>Now assume there is only one individual, so $g_2=0$, but there are two periods, $t=0$ and $t=1$. Let $(g_0,g_1)$ be the individual&rsquo;s contributions in periods 0 and 1.</p>
+      <p>The public good is a flow: it does not carry over to the next period, so $G_t=g_t$. In each period $t$, the individual consumes $x_t=w_t-g_t$ privately and has utility $x_t+G_t\left(4-\frac{G_t}{2}\right)$.</p>
+      <p>Wealth can be transferred costlessly over time, and total wealth is 9:</p>
+      $$\begin{align*}w_0+w_1=9.\end{align*}$$
+      <p>The individual chooses $(g_0,g_1,w_0,w_1)$ to maximize discounted utility subject to the total wealth constraint.</p>
+    </div>
+  </section>
+
+  <section class="frame" id="midterm-1-q6">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 1 Answer Key</h2>
+      <p class="frame-subtitle">Question 6</p>
+    </div>
+    <div class="frame-content">
+      <p>Write explicitly the agent&rsquo;s discounted utility for this problem as a function of the choice variables and the discount factor. Use $d$ to denote the discount factor.</p>
+      <p><strong>Notice:</strong> &ldquo;explicitly&rdquo; means the expression may contain only $g_0$, $g_1$, $w_0$, $w_1$, $d$, and numbers. Do not leave any function or shorthand symbols such as $u(\cdot)$, $x_t$, or $G_t$ in your answer.</p>
+      <p><span class="structure">Answer.</span></p>
+      $$\begin{align*}
+        U&=w_0-g_0+g_0\left(4-\frac{g_0}{2}\right)\\
+        &\quad+d\left[w_1-g_1+g_1\left(4-\frac{g_1}{2}\right)\right]\\
+        &=w_0+3g_0-\frac{g_0^2}{2}\\
+        &\quad+d\left(w_1+3g_1-\frac{g_1^2}{2}\right).
+      \end{align*}$$
+      <p>Either form is correct.</p>
+    </div>
+  </section>
+
+  <section class="frame" id="midterm-1-q7">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 1 Answer Key</h2>
+      <p class="frame-subtitle">Question 7</p>
+    </div>
+    <div class="frame-content">
+      <p>Consider the Lagrangian for the above problem. Obtain the first-order condition of the Lagrangian with respect to $\lambda$.</p>
+      <p><strong>Hint:</strong> remember that a first-order condition entails a bit more than just computing a derivative.</p>
+      <p><span class="structure">Answer.</span> With $U$ the discounted utility of Question 6 and the constraint $w_0+w_1=9$, the Lagrangian is</p>
+      $$\begin{align*}\mathcal{L}=U(g_0,g_1,w_0,w_1)-\lambda\,(w_0+w_1-9),\end{align*}$$
+      <p>and its first-order condition with respect to $\lambda$ sets the derivative equal to zero:</p>
+      $$\begin{align*}
+        \frac{\partial\mathcal{L}}{\partial\lambda}&=-(w_0+w_1-9)=0,\\
+        \text{that is,}\quad w_0+w_1&=9.
+      \end{align*}$$
+      <p>The first-order condition with respect to the multiplier recovers the constraint.</p>
+    </div>
+  </section>
+
+  <section class="frame" id="midterm-1-q8">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 1 Answer Key</h2>
+      <p class="frame-subtitle">Question 8</p>
+    </div>
+    <div class="frame-content">
+      <p>We are back to the static setting of Question 1, with two players. Player 1 chooses $g_1$ to maximize $u_1(g_1,g_2)$ subject to two constraints:</p>
+      $$\begin{align*}
+        \max_{g_1}\;&w_1+3g_1+4g_2-\frac{g_1^2}{2}-g_1g_2-\frac{g_2^2}{2}\\
+        \text{subject to}\;&0\le g_1\quad\text{(first constraint)}\\
+        &g_1\le w_1\quad\text{(second constraint)}
+      \end{align*}$$
+    </div>
+  </section>
+
+  <section class="frame" id="midterm-1-q9">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 1 Answer Key</h2>
+      <p class="frame-subtitle">Question 9</p>
+    </div>
+    <div class="frame-content">
+      <p>Which constraint should we rewrite in order to apply Recipe #2?</p>
+      <p><span class="structure">Answer.</span> The first constraint.</p>
+      <p>Recipe #2 needs every constraint written as a function of the choice variables less than or equal to a constant. The second constraint, $g_1\le w_1$, already has that form. The first, $0\le g_1$, does not, and is rewritten as</p>
+      $$\begin{align*}-g_1\le 0.\end{align*}$$
+    </div>
+  </section>
+
+  <section class="frame" id="midterm-1-q10">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 1 Answer Key</h2>
+      <p class="frame-subtitle">Question 10</p>
+    </div>
+    <div class="frame-content">
+      <p>In the case $\lambda_1=0$ and $\lambda_2\gt 0$, write down the corresponding first-order conditions that we must consider.</p>
+      <p><span class="structure">Answer.</span> With the constraints written as $-g_1\le 0$ and $g_1\le w_1$, the Lagrangian is</p>
+      $$\begin{align*}\mathcal{L}=u_1(g_1,g_2)-\lambda_1\,(-g_1)-\lambda_2\,(g_1-w_1).\end{align*}$$
+      <p>In this case $\lambda_1=0$ drops out, and Recipe #1 is applied with the variables $g_1$ and $\lambda_2$:</p>
+      $$\begin{align*}
+        \frac{\partial\mathcal{L}}{\partial g_1}&=3-g_1-g_2-\lambda_2=0,\\
+        \frac{\partial\mathcal{L}}{\partial\lambda_2}&=-(g_1-w_1)=0,\quad\text{that is,}\quad g_1=w_1.
+      \end{align*}$$
+      <p>A solution in this case must also satisfy $\lambda_2\gt 0$ and the first constraint, $-g_1\le 0$.</p>
+    </div>
+  </section>
+
+  <section class="frame" id="midterm-1-q11">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 1 Answer Key</h2>
+      <p class="frame-subtitle">Question 11</p>
+    </div>
+    <div class="frame-content">
+      <p>If $g_2=2$ and $w_1=2$, does the case $\lambda_1=0$ and $\lambda_2\gt 0$ correspond to a solution? Why or why not?</p>
+      <p><span class="structure">Answer.</span> No. The first-order conditions of Question 10 give</p>
+      $$\begin{align*}
+        g_1&=w_1=2,\\
+        \lambda_2&=3-g_1-g_2=3-2-2=-1\lt 0,
+      \end{align*}$$
+      <p>which contradicts $\lambda_2\gt 0$. The solution is interior instead: $g_1=3-g_2=1$, which lies between $0$ and $w_1=2$.</p>
+    </div>
+  </section>
+
+  <!-- Nav -->
+  <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
+    <a href="mathematica-notes.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Mathematica Notes</a>
+    <a href="past-exams.html" style="color: var(--crane-blue); text-decoration: none;">Past Exams &rarr;</a>
+  </div>
+
+  <!-- KaTeX -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="js/katex-macros.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="js/scroll-animations.js"></script>
+
+  <script>
+    renderMathInElement(document.body, {
+      delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}],
+      macros: katexMacros, throwOnError: false
+    });
+  </script>
+
+</body>
+</html>
