@@ -44,6 +44,14 @@
       <a href="#midterm-1-q9" style="margin-left: 1rem;">10. MT1 Q9</a>
       <a href="#midterm-1-q10" style="margin-left: 1rem;">11. MT1 Q10</a>
       <a href="#midterm-1-q11" style="margin-left: 1rem;">12. MT1 Q11</a>
+      <br>
+      <a href="#ps-06-q1" style="margin-left: 1rem;">13. PS06 Q1</a>
+      <a href="#ps-06-q2" style="margin-left: 1rem;">14. PS06 Q2</a>
+      <a href="#ps-06-q3" style="margin-left: 1rem;">15. PS06 Q3</a>
+      <a href="#ps-06-q4" style="margin-left: 1rem;">16. PS06 Q4</a>
+      <br>
+      <a href="#ps-06-q5" style="margin-left: 1rem;">17. PS06 Q5</a>
+      <a href="#ps-06-q6" style="margin-left: 1rem;">18. PS06 Q6</a>
     </nav>
   </section>
 
@@ -56,6 +64,7 @@
       <ol>
         <li><a href="https://uncch.instructure.com/courses/125271/files/16764635">Problem Set 02</a>&mdash;Mark Watney on Mars, solved with the Lagrangian</li>
         <li><a href="https://uncch.instructure.com/courses/125271/files/16764636">Problem Set 03</a>&mdash;the same problem, solved by backward induction</li>
+        <li><a href="#ps-06-q1">Problem Set 06</a>&mdash;contests and tournaments: golf and football</li>
       </ol>
     </div>
   </section>
@@ -239,6 +248,87 @@
         \lambda_2&=3-g_1-g_2=3-2-2=-1\lt 0,
       \end{align*}$$
       <p>which contradicts $\lambda_2\gt 0$. The solution is interior instead: $g_1=3-g_2=1$, which lies between $0$ and $w_1=2$.</p>
+    </div>
+  </section>
+
+  <!-- Problem Set 06 Answer Key: one frame per question. -->
+  <section class="frame" id="ps-06-q1">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Problem Set 06 Answer Key</h2>
+      <p class="frame-subtitle">Question 1</p>
+    </div>
+    <div class="frame-content">
+      <p>Does Ehrenberg &amp; Bognanno&rsquo;s article have a theoretical model?</p>
+      <p><span class="structure">Answer.</span> No. The paper has only an empirical model, their equation (1):</p>
+      $$s_{ji}=a_0+a_1\,\text{TPRIZE}_i+a_2\,\mathbf{x}_i+a_3\,\mathbf{y}_j+a_4\,\mathbf{z}_i+v_{ij}$$
+      <p>where $s_{ji}$ is the final score of player $j$ in tournament $i$, $\text{TPRIZE}_i$ is the total prize money awarded in the tournament, $\mathbf{x}_i$ controls for the difficulty of the course and the weather, $\mathbf{y}_j$ proxies for player $j$&rsquo;s ability, $\mathbf{z}_i$ controls for the quality of the other players in the field, and $v_{ij}$ is a random error term.</p>
+    </div>
+  </section>
+
+  <section class="frame" id="ps-06-q2">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Problem Set 06 Answer Key</h2>
+      <p class="frame-subtitle">Question 2</p>
+    </div>
+    <div class="frame-content">
+      <p>What is the main hypothesis that Ehrenberg &amp; Bognanno&rsquo;s article is trying to test?</p>
+      <p><span class="structure">Answer.</span> Does the incentive structure (prizes) affect individual output (players&rsquo; scores)?</p>
+    </div>
+  </section>
+
+  <section class="frame" id="ps-06-q3">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Problem Set 06 Answer Key</h2>
+      <p class="frame-subtitle">Question 3</p>
+    </div>
+    <div class="frame-content">
+      <p>Does Dobson, Goddard &amp; St&auml;hler&rsquo;s article have a theoretical model?</p>
+      <p><span class="structure">Answer.</span> Yes. Dobson et al. use a contest model similar to the one in the <a href="equilibrium.html#equilibrium-analysis-6">lecture notes</a>. The home team (team 1) and the away team (team 2) choose efforts $e_1$ and $e_2$:</p>
+      $$r=p(0,0)=\frac{\beta_1+h}{\beta_1+\beta_2+h}\tag{1}$$
+      $$p(e_1,e_2)=\frac{e_1\,r}{e_1\,r+e_2\,(1-r)}\tag{2}$$
+      $$\pi_1=p\,U_1-c_1e_1,\qquad \pi_2=(1-p)\,U_2-c_2e_2\tag{3}$$
+      <p>where $\beta_i$ is the quality of team $i$, $h$ is the home-field advantage, $r$ is the home team&rsquo;s success probability when neither team exerts effort, $\pi_i$ is team $i$&rsquo;s expected payoff, $U_i$ is team $i$&rsquo;s payoff from winning, and $c_i$ is team $i$&rsquo;s marginal cost of effort.</p>
+      <p>The main differences: the lecture notes assume $r=\tfrac12$ (no home-team advantage and teams of equal quality) and $c_1=c_2=1$ (the cost of effort is the same for both teams). Also, the lecture notes assume a quadratic cost of effort, while the article, like some other examples in the course, assumes a linear cost.</p>
+    </div>
+  </section>
+
+  <section class="frame" id="ps-06-q4">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Problem Set 06 Answer Key</h2>
+      <p class="frame-subtitle">Question 4</p>
+    </div>
+    <div class="frame-content">
+      <p>What is the main prediction that Dobson, Goddard &amp; St&auml;hler&rsquo;s article is trying to test?</p>
+      <p><span class="structure">Answer.</span> The main prediction is the paper&rsquo;s Result 2: when the two teams have the same cost of effort and the same payoff from a win, both exert the most effort in an evenly balanced game, that is, when $r=\tfrac12$ after allowing for home-field advantage. Asymmetries between the teams lower effort. The equilibrium efforts are</p>
+      $$\begin{aligned}
+        e_1^*&=\frac{r(1-r)\,c_2U_1^2U_2}{\left(r\,c_2U_1+(1-r)\,c_1U_2\right)^2}\\[4pt]
+        e_2^*&=\frac{r(1-r)\,c_1U_1U_2^2}{\left(r\,c_2U_1+(1-r)\,c_1U_2\right)^2}
+      \end{aligned}\tag{4}$$
+      <p>With $c_1=c_2=c$ and $U_1=U_2=U$, both reduce to $e^*=r(1-r)\,U/c$, which is largest at $r=\tfrac12$. This is why the empirical model includes $\text{UNCERT}=\text{HPROB}\cdot(1-\text{HPROB})$, where HPROB is their measure of $r$: the prediction is a positive coefficient on UNCERT.</p>
+      <p>The paper also tests Result 1: a team exerts more effort when its own payoff from a win, $U_i$, is larger. A game that still matters for a team&rsquo;s championship, European qualification, promotion or relegation chances has a larger $U_i$. The empirical model captures this with the dummies HSIG (home team) and ASIG (away team).</p>
+      <p>The coefficients on UNCERT are positive in every equation, as Result 2 predicts. Result 1 holds for away teams, whose fouls and cards rise when the game matters to them. The home team&rsquo;s effort does not respond significantly to its own stakes.</p>
+    </div>
+  </section>
+
+  <section class="frame" id="ps-06-q5">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Problem Set 06 Answer Key</h2>
+      <p class="frame-subtitle">Question 5</p>
+    </div>
+    <div class="frame-content">
+      <p>How is &ldquo;effort&rdquo; measured in Dobson, Goddard &amp; St&auml;hler&rsquo;s article?</p>
+      <p><span class="structure">Answer.</span> By fouls and cards. In the authors&rsquo; words (Section 5, p.&nbsp;75): &ldquo;In the empirical model the effort of the teams is reflected in the numbers of fouls committed and the numbers of yellow and red cards awarded.&rdquo;</p>
+    </div>
+  </section>
+
+  <section class="frame" id="ps-06-q6">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Problem Set 06 Answer Key</h2>
+      <p class="frame-subtitle">Question 6</p>
+    </div>
+    <div class="frame-content">
+      <p>Do you think this is a good measure of effort? Why or why not?</p>
+      <p><span class="structure">Answer.</span> There is no single correct answer, but any answer must acknowledge that red cards are a problematic measure of effort: a red card leaves the team with one player fewer, which most likely lowers its probability of winning.</p>
     </div>
   </section>
 
