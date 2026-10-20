@@ -48,7 +48,7 @@
       <a href="#complete-markets-equilibrium" style="margin-left: 1rem;">8. Equilibrium</a>
       <br>
       <a href="#example-frame" style="margin-left: 1rem;">9. Example</a>
-      <a href="#finding-a-market-equilibrium" style="margin-left: 1rem;">10. Summary</a>
+      <a href="#finding-a-market-equilibrium" style="margin-left: 1rem;">10. Example 1</a>
     </nav>
   </section>
 
@@ -167,7 +167,7 @@
       <div class="block">
         <div class="block-title">Consumers' Preferences</div>
         <div class="block-body">
-          There are $N$ consumers and each consumer $i$ has an utility function $u_i$ for the consumption good and maximizes the expected discounted utility $U_i = \sum_{t=0}^T \delta^t \, \mathbb{E}[u_i(c_{s_t})]$ for $i=1,\ldots,N$.
+          There are $J$ consumers and each consumer $j$ has a utility function $u^j$ for the consumption good and maximizes the expected discounted utility $U^j = \sum_{t=0}^T \delta^t \, \mathbb{E}[u^j(c_{s_t})]$ for $j=1,\ldots,J$.
         </div>
       </div>
 
@@ -226,7 +226,7 @@
       <div class="block">
         <div class="block-title">Definition</div>
         <div class="block-body">
-          An individual's <em>endowment</em>, $\mathbf{e}_i=(e^i_{s_t})$, is the basket of (contingent) goods that individual $i$ possesses prior to any trade or consumption takes place.
+          An individual's <em>endowment</em>, $\mathbf{e}_j=(e^j_{s_t})$, is the basket of (contingent) goods that individual $j$ possesses prior to any trade or consumption takes place.
         </div>
       </div>
 
@@ -243,12 +243,23 @@
       <h2 class="frame-title">Complete Markets Equilibrium</h2>
     </div>
     <div class="frame-content">
-      <p>Assume there are $N$ consumers and $J$ contingent goods. A market equilibrium is a list of prices (the price of each contingent good) $\mathbf{p}=(p_{1},p_{2},\ldots,p_{J})$ and a basket of goods $\mathbf{x}_i=(x^i_{1},x^i_{2},\ldots,x^i_{J})$ for each consumer $i$ so that:</p>
+      <p>Assume there are $J$ consumers and $K$ contingent goods.</p>
 
-      <ul>
-        <li>Given the prices $\mathbf{p}$, consumer $i$ chooses $\mathbf{x}_i$ to maximize his/her discounted expected utility, $U^i$, subject to the budget constraint, $\mathbf{p}\cdot \mathbf{x}_i \leq \mathbf{p}\cdot \mathbf{e}_i$.</li>
-        <li>Given the consumer decisions $\mathbf{x} = (\mathbf{x}_i)$, the market of each contingent good $j$ clears (supply equals demand), $\sum_{i=1}^{N} e^i_{j}=\sum_{i=1}^{N} x^i_{j}$.</li>
-      </ul>
+      <div class="block">
+        <div class="block-title">Definition: Market Equilibrium</div>
+        <div class="block-body">
+          <p>An equilibrium is a list of prices (the price of each contingent good) $\mathbf{p}=(p_{1},p_{2},\ldots,p_{K})$ and a basket of goods $\mathbf{x}_j=(x^j_{1},x^j_{2},\ldots,x^j_{K})$ for each consumer $j$ so that:</p>
+
+          <ol>
+            <li>Given the prices $\mathbf{p}$, consumer $j$ chooses $\mathbf{x}_j$ to maximize his/her discounted expected utility, $U^j$, subject to the budget constraint, $\mathbf{p}\cdot \mathbf{x}_j \leq \mathbf{p}\cdot \mathbf{e}_j$.</li>
+            <li>Given the consumer decisions $\mathbf{x} = (\mathbf{x}_j)$, the market of each contingent good $k$ clears (supply equals demand), $\sum_{j=1}^{J} e^j_{k}=\sum_{j=1}^{J} x^j_{k}$.</li>
+          </ol>
+        </div>
+      </div>
+
+      <p class="scroll-reveal">To solve the consumer's maximization problem in (1), we use Recipe #1 and the fact that the consumer's income is the value of her endowment, $i=\mathbf{p}\cdot\mathbf{e}$.</p>
+
+      <p class="scroll-reveal">Notice that we have $K$ markets and $K-1$ (relative) prices to find. So we solve the system of market-clearing equations, demand of good $k$ = supply of good $k$, in $K-1$ markets of our choosing.</p>
     </div>
   </section>
 
@@ -256,11 +267,11 @@
   <section class="frame" id="example-frame">
     <div class="frame-title-bar">
       <h2 class="frame-title">Finding a market equilibrium</h2>
-      <p class="frame-subtitle">An example</p>
+      <p class="frame-subtitle">A dynamic example without uncertainty</p>
     </div>
     <div class="frame-content">
       <div class="scroll-reveal">
-        <p>We consider an economy with Adam and Eve whose endowments are $\mathbf{e}_A=(100,4)$ and $\mathbf{e}_E=(9,25)$, and utilities</p>
+        <p>We consider an economy with two periods, no uncertainty, and two consumers, Adam and Eve, whose endowments are $\mathbf{e}_A=(100,4)$ and $\mathbf{e}_E=(9,25)$, and utilities</p>
         <div style="text-align: center; margin: 0.75rem 0;">
           $$u^A(c_0,c_1)=\sqrt{c_0}+\delta\sqrt{c_1}
           \qquad\text{and}\qquad
@@ -271,20 +282,20 @@
 
       <div class="scroll-reveal">
         <p style="margin-top: 1rem;"><strong>Individual demands.</strong></p>
-        <p>Each consumer solves $\max\sqrt{c_0}+\delta\sqrt{c_1}$ s.t. $c_0+p_1 c_1=I$.
+        <p>Each consumer solves $\max\sqrt{c_0}+\delta\sqrt{c_1}$ s.t. $c_0+p_1 c_1=i$.
         The FOCs give $\frac{1}{2\sqrt{c_0}}=\lambda$ and $\frac{\delta}{2\sqrt{c_1}}=\lambda p_1$,
         so $\sqrt{c_0}=\frac{1}{2\lambda}$ and $\sqrt{c_1}=\frac{\delta}{2\lambda p_1}$.
         So, $\sqrt{c_1}=\frac{\delta}{p_1}\,\sqrt{c_0}$ and $c_1=\frac{\delta^2}{p_1^2}\,c_0$.
         Substituting $c_1=\frac{\delta^2}{p_1^2}\,c_0$ into the budget constraint and solving for $c_0$ yields,</p>
         <div style="text-align: center; margin: 0.75rem 0;">
-          $$c_0^*(p_1,I)=\frac{p_1\, I}{p_1+\delta^2}.$$
+          $$c_0^*(p_1,i)=\frac{p_1\, i}{p_1+\delta^2}.$$
         </div>
         <p>And substituting back the optimal $c_0$ into $c_1=\frac{\delta^2}{p_1^2}\,c_0$ we obtain</p>
         <div style="text-align: center; margin: 0.75rem 0;">
-          $$c_1^*(p_1,I)=\frac{\delta^2\, I}{p_1(p_1+\delta^2)}.$$
+          $$c_1^*(p_1,i)=\frac{\delta^2\, i}{p_1(p_1+\delta^2)}.$$
         </div>
-        <p>Since $I^A=100+4p_1$, Adam's demand for current consumption is $c_0^A(p_1)=\dfrac{p_1}{p_1+\delta^2}(100+4p_1)$.</p>
-        <p style="margin-top: 0.3rem;">Since $I^E=9+25p_1$, Eve's demand for current consumption is $c_0^E(p_1)=\dfrac{p_1}{p_1+\delta^2}(9+25p_1)$.</p>
+        <p>Since the income of Adam is $i^A=100+4p_1$, Adam's demand for current consumption is $c_0^A(p_1)=\dfrac{p_1}{p_1+\delta^2}(100+4p_1)$.</p>
+        <p style="margin-top: 0.3rem;">Since the income of Eve is $i^E=9+25p_1$, Eve's demand for current consumption is $c_0^E(p_1)=\dfrac{p_1}{p_1+\delta^2}(9+25p_1)$.</p>
       </div>
 
       <div class="scroll-reveal">
@@ -343,7 +354,7 @@
             <td style="padding: 0.6rem 0.48rem;">$29$</td>
           </tr>
           <tr style="background: #f8f9fa; border-bottom: 1px solid #dee2e6;">
-            <td style="padding: 0.6rem 0.48rem; text-align: left; font-weight: 600;">$I$</td>
+            <td style="padding: 0.6rem 0.48rem; text-align: left; font-weight: 600;">$i$</td>
             <td style="padding: 0.6rem 0.48rem;">$100 + 7.755\,\delta$</td>
             <td style="padding: 0.6rem 0.48rem;">$9 + 48.468\,\delta$</td>
             <td style="padding: 0.6rem 0.48rem;">$109 + 56.223\,\delta$</td>
@@ -364,6 +375,119 @@
       </table>
     </div>
   </section>
+  <!-- Frame: Finding a market equilibrium - Example 2 -->
+  <section class="frame" id="example-2-frame">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Finding a market equilibrium</h2>
+      <p class="frame-subtitle">A static example with uncertainty</p>
+    </div>
+    <div class="frame-content">
+      <div class="scroll-reveal">
+        <p>We consider an economy with one period, two-state uncertainty, and two consumers, Adam and Eve, whose endowments are $\mathbf{e}_A=(100,4)$ and $\mathbf{e}_E=(9,25)$. State 1 happens with probability $q$ and state 2 happens with probability $1-q$, so the expected utilities are</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$\begin{align*}
+          U^A(c_1,c_2)&=q\sqrt{c_1}+(1-q)\sqrt{c_2}\quad\text{and}\\
+          U^E(c_1,c_2)&=q\sqrt{c_1}+(1-q)\sqrt{c_2}.
+          \end{align*}$$
+        </div>
+        <p>For simplicity, set $p_1=1$ (<span style="color: #dc322f;">Answer: Why can we do this normalization?</span>).</p>
+      </div>
+
+      <div class="scroll-reveal">
+        <p style="margin-top: 1rem;"><strong>Individual demands.</strong></p>
+        <p>Each consumer solves $\max q\sqrt{c_1}+(1-q)\sqrt{c_2}$ s.t. $c_1+p_2 c_2=i$.
+        The FOCs give $\frac{q}{2\sqrt{c_1}}=\lambda$ and $\frac{1-q}{2\sqrt{c_2}}=\lambda p_2$,
+        so $\sqrt{c_1}=\frac{q}{2\lambda}$ and $\sqrt{c_2}=\frac{1-q}{2\lambda p_2}$.
+        So, $\sqrt{c_2}=\frac{1-q}{q\,p_2}\,\sqrt{c_1}$ and $c_2=\frac{(1-q)^2}{q^2p_2^2}\,c_1$.
+        Substituting $c_2=\frac{(1-q)^2}{q^2p_2^2}\,c_1$ into the budget constraint and solving for $c_1$ yields,</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$c_1^*(p_2,i)=\frac{q^2p_2\, i}{q^2p_2+(1-q)^2}.$$
+        </div>
+        <p>And substituting back the optimal $c_1$ into $c_2=\frac{(1-q)^2}{q^2p_2^2}\,c_1$ we obtain</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$c_2^*(p_2,i)=\frac{(1-q)^2\, i}{p_2\left(q^2p_2+(1-q)^2\right)}.$$
+        </div>
+        <p>Since the income of Adam is $i^A=100+4p_2$, Adam's demand for consumption in state 1 is $c_1^A(p_2)=\dfrac{q^2p_2}{q^2p_2+(1-q)^2}(100+4p_2)$.</p>
+        <p style="margin-top: 0.3rem;">Since the income of Eve is $i^E=9+25p_2$, Eve's demand for consumption in state 1 is $c_1^E(p_2)=\dfrac{q^2p_2}{q^2p_2+(1-q)^2}(9+25p_2)$.</p>
+      </div>
+
+      <div class="scroll-reveal">
+        <p style="margin-top: 1rem;"><strong>Market equilibrium price.</strong></p>
+        <p>The market demand for good 1 is</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$D_1(p_2)=\frac{q^2p_2}{q^2p_2+(1-q)^2}(109+29p_2).$$
+        </div>
+        <p>Equating with total supply $S_1=100+9=109$:</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$\begin{align*}
+          \frac{q^2p_2}{q^2p_2+(1-q)^2}(109+29p_2)&=109\\
+          \Rightarrow\; 109q^2p_2+29q^2p_2^2&=109q^2p_2+109(1-q)^2\\
+          \Rightarrow\; 29q^2p_2^2&=109(1-q)^2\\
+          \Rightarrow\; p_2^*&=\frac{1-q}{q}\sqrt{\frac{109}{29}} = 1.93872\,\frac{1-q}{q}.
+          \end{align*}$$
+        </div>
+      </div>
+
+      <div class="scroll-reveal">
+        <p style="margin-top: 1rem;"><strong>Market equilibrium quantities.</strong></p>
+        <p>To obtain the actual equilibrium quantities, we plug the market equilibrium price $p_2^* = 1.93872\,\frac{1-q}{q}$ back into Adam and Eve's respective individual demands.</p>
+        <p style="margin-top: 0.5rem;">Notice that in equilibrium Adam sells good 1 since $e_1^A \gt x_1^A$ and buys good 2 since $x_2^A \gt e_2^A$, while Eve does the opposite.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame: Finding a market equilibrium - Example 2 Summary -->
+  <section class="frame vspace-neg-3mm" id="finding-a-market-equilibrium-2">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Finding a market equilibrium</h2>
+      <p class="frame-subtitle">An Example: Summary</p>
+    </div>
+    <div class="frame-content fs-10pt">
+      <p style="margin-bottom: 0.75rem;">Equilibrium price: $p_2^*=1.93872\,\frac{1-q}{q}$</p>
+      <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: 0.95em;">
+        <thead>
+          <tr style="background: #f9a825; color: #000;">
+            <th style="padding: 0.6rem 0.48rem; text-align: left; border-top-left-radius: 6px;"></th>
+            <th style="padding: 0.6rem 0.48rem;">Adam</th>
+            <th style="padding: 0.6rem 0.48rem;">Eve</th>
+            <th style="padding: 0.6rem 0.48rem; border-top-right-radius: 6px;">Economy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background: #f8f9fa; border-bottom: 1px solid #dee2e6;">
+            <td style="padding: 0.6rem 0.48rem; text-align: left; font-weight: 600;">$e_1$</td>
+            <td style="padding: 0.6rem 0.48rem;">$100$</td>
+            <td style="padding: 0.6rem 0.48rem;">$9$</td>
+            <td style="padding: 0.6rem 0.48rem;">$109$</td>
+          </tr>
+          <tr style="background: #fff; border-bottom: 1px solid #dee2e6;">
+            <td style="padding: 0.6rem 0.48rem; text-align: left; font-weight: 600;">$e_2$</td>
+            <td style="padding: 0.6rem 0.48rem;">$4$</td>
+            <td style="padding: 0.6rem 0.48rem;">$25$</td>
+            <td style="padding: 0.6rem 0.48rem;">$29$</td>
+          </tr>
+          <tr style="background: #f8f9fa; border-bottom: 1px solid #dee2e6;">
+            <td style="padding: 0.6rem 0.48rem; text-align: left; font-weight: 600;">$i$</td>
+            <td style="padding: 0.6rem 0.48rem;">$100 + 7.755\,\frac{1-q}{q}$</td>
+            <td style="padding: 0.6rem 0.48rem;">$9 + 48.468\,\frac{1-q}{q}$</td>
+            <td style="padding: 0.6rem 0.48rem;">$109 + 56.223\,\frac{1-q}{q}$</td>
+          </tr>
+          <tr style="background: #fff; border-bottom: 1px solid #dee2e6;">
+            <td style="padding: 0.6rem 0.48rem; text-align: left; font-weight: 600;">$c_1^*$</td>
+            <td style="padding: 0.6rem 0.48rem;">$\dfrac{15.034 + 178.837\,q}{1 + 0.939\,q}$</td>
+            <td style="padding: 0.6rem 0.48rem;">$\dfrac{93.966 - 76.517\,q}{1 + 0.939\,q}$</td>
+            <td style="padding: 0.6rem 0.48rem;">$109$</td>
+          </tr>
+          <tr style="background: #f8f9fa;">
+            <td style="padding: 0.6rem 0.48rem; text-align: left; font-weight: 600; border-bottom-left-radius: 6px;">$c_2^*$</td>
+            <td style="padding: 0.6rem 0.48rem;">$\dfrac{4 + 47.581\,q}{1 + 0.939\,q}$</td>
+            <td style="padding: 0.6rem 0.48rem;">$\dfrac{25 - 20.358\,q}{1 + 0.939\,q}$</td>
+            <td style="padding: 0.6rem 0.48rem; border-bottom-right-radius: 6px;">$29$</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
   <!-- COMMENTED OUT: Market Equilibrium (may re-use or delete later)
   <section class="frame" id="market-equilibrium">
@@ -371,15 +495,15 @@
       <h2 class="frame-title">Market Equilibrium</h2>
     </div>
     <div class="frame-content fs-10pt">
-      <p>By solving the consumer choice problem for each individual, we obtain his/her individual demand for each good, $x^i_j(\mathbf{p},I^i)$ (demand of consumer $i$ for good $j$).
-      The market (aggregate) demand is the sum of the individual demands $D_j(\mathbf{p})=x^1_j(\mathbf{p},I^1)+\ldots +x^N_j(\mathbf{p},I^N)$.</p>
-      <p><span class="augie">Remember: income of consumer $i$ is the value of $i$'s endowment:</span> $I^i=p_0\,e^i_0+\ldots+p_J\, e^i_J$.</p>
-      <p>The market supply of a given good in an exchange economy (without production) is simply the aggregate endowment of that good, $S_j(\mathbf{p})=e^1_j+\ldots +e^N_j$.</p>
+      <p>By solving the consumer choice problem for each individual, we obtain his/her individual demand for each good, $x^j_k(\mathbf{p},i^j)$ (demand of consumer $j$ for good $k$).
+      The market (aggregate) demand is the sum of the individual demands $D_k(\mathbf{p})=x^1_k(\mathbf{p},i^1)+\ldots +x^J_k(\mathbf{p},i^J)$.</p>
+      <p><span class="augie">Remember: income of consumer $j$ is the value of $j$'s endowment:</span> $i^j=p_1\,e^j_1+\ldots+p_K\, e^j_K$.</p>
+      <p>The market supply of a given good in an exchange economy (without production) is simply the aggregate endowment of that good, $S_k(\mathbf{p})=e^1_k+\ldots +e^J_k$.</p>
       <div class="block">
         <div class="block-title">Definition</div>
         <div class="block-body">
           A market equilibrium is a vector of prices $\mathbf{p}$ such that:
-          If $p_j\gt 0$ then $D_j(\mathbf{p})=S_j$ and if $p_j=0$ then $D_j(\mathbf{p})\le S_j$.
+          If $p_k\gt 0$ then $D_k(\mathbf{p})=S_k$ and if $p_k=0$ then $D_k(\mathbf{p})\le S_k$.
         </div>
       </div>
     </div>
@@ -392,11 +516,11 @@
       <h2 class="frame-title">Consumer Choice with Endowments</h2>
     </div>
     <div class="frame-content">
-      <p>Let $x^{i}=(x_{0}^{i},x_{1}^{i},x_{2}^{i},\ldots,x_{J}^{i})$ be the optimal (basket) choice of individual $i$ and $\mathbf{e} = (e_{0},e_1,e_2,\ldots,e_J)$ be her endowment. For any given good $j$:</p>
+      <p>Let $\mathbf{x}_j=(x^j_{1},x^j_{2},\ldots,x^j_{K})$ be the optimal (basket) choice of individual $j$ and $\mathbf{e}_j=(e^j_{1},e^j_{2},\ldots,e^j_{K})$ be her endowment. For any given good $k$:</p>
       <ul>
-        <li>if $e_j\gt x_j$, we say that $e_j-x_j$ is the net supply of good $j$ by the individual.</li>
-        <li>if $e_j\lt x_j$, we say that $x_j-e_j$ is the net demand of good $j$ by the individual.</li>
-        <li>if $e_j=x_j$, we say that the individual does not trade good $j$.</li>
+        <li>if $e^j_k\gt x^j_k$, we say that $e^j_k-x^j_k$ is the net supply of good $k$ by the individual.</li>
+        <li>if $e^j_k\lt x^j_k$, we say that $x^j_k-e^j_k$ is the net demand of good $k$ by the individual.</li>
+        <li>if $e^j_k=x^j_k$, we say that the individual does not trade good $k$.</li>
       </ul>
     </div>
   </section>
@@ -452,7 +576,7 @@
 
     // Scroll-reveal: fade in on scroll down, hide on scroll up (no pinning)
     gsap.utils.toArray('.scroll-reveal').forEach(el => {
-      const slow = el.closest('#example-frame') !== null;
+      const slow = el.closest('#example-frame, #example-2-frame') !== null;
       const triggerPoint = slow ? 'top 75%' : 'top 85%';
       gsap.set(el, { opacity: 0, y: 15 });
       ScrollTrigger.create({
