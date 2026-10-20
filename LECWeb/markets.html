@@ -38,6 +38,11 @@
     .flip-card .block { width: 100%; margin: 0; }
     .flip-body { background: #fff8e1; color: #000000; padding: 1rem; }
     .flip-body > :last-child { margin-bottom: 0; }
+
+    /* Parameter slider above a summary table (values filled in by the script) */
+    .param-slider { display: flex; align-items: center; gap: 0.6rem; max-width: 28rem; margin: 0 0 0.75rem; }
+    .param-slider input[type=range] { flex: 1; min-width: 0; accent-color: #c17900; cursor: pointer; }
+    .param-slider .param-value { min-width: 2.4em; }
   </style>
     <!-- Google Analytics -->
     <script async src="/E510/js/ga.js"></script>
@@ -367,7 +372,12 @@
       <p class="frame-subtitle">An Example: Summary</p>
     </div>
     <div class="frame-content fs-10pt">
-      <p style="margin-bottom: 0.75rem;">Equilibrium price: $p_1^*=1.93872\,\delta$</p>
+      <div class="param-slider">
+        <label for="slider-delta">$\delta$</label>
+        <input type="range" id="slider-delta" min="0" max="1" step="0.01" value="0.90">
+        <span class="param-value" data-out="param"></span>
+      </div>
+      <p style="margin-bottom: 0.75rem;">Equilibrium price: $p_1^*=1.93872\,\delta={}$<span data-out="price"></span></p>
       <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: 0.95em;">
         <thead>
           <tr style="background: #f9a825; color: #000;">
@@ -392,20 +402,20 @@
           </tr>
           <tr style="background: #f8f9fa; border-bottom: 1px solid #dee2e6;">
             <td style="padding: 0.6rem 0.48rem; text-align: left; font-weight: 600;">$i$</td>
-            <td style="padding: 0.6rem 0.48rem;">$100 + 7.755\,\delta$</td>
-            <td style="padding: 0.6rem 0.48rem;">$9 + 48.468\,\delta$</td>
-            <td style="padding: 0.6rem 0.48rem;">$109 + 56.223\,\delta$</td>
+            <td style="padding: 0.6rem 0.48rem;" data-out="iA"></td>
+            <td style="padding: 0.6rem 0.48rem;" data-out="iE"></td>
+            <td style="padding: 0.6rem 0.48rem;" data-out="i"></td>
           </tr>
           <tr style="background: #fff; border-bottom: 1px solid #dee2e6;">
             <td style="padding: 0.6rem 0.48rem; text-align: left; font-weight: 600;">$c_0^*$</td>
-            <td style="padding: 0.6rem 0.48rem;">$\dfrac{193.872 + 15.035\,\delta}{1.939 + \delta}$</td>
-            <td style="padding: 0.6rem 0.48rem;">$\dfrac{17.449 + 93.966\,\delta}{1.939 + \delta}$</td>
+            <td style="padding: 0.6rem 0.48rem;" data-out="c0A"></td>
+            <td style="padding: 0.6rem 0.48rem;" data-out="c0E"></td>
             <td style="padding: 0.6rem 0.48rem;">$109$</td>
           </tr>
           <tr style="background: #f8f9fa;">
             <td style="padding: 0.6rem 0.48rem; text-align: left; font-weight: 600; border-bottom-left-radius: 6px;">$c_1^*$</td>
-            <td style="padding: 0.6rem 0.48rem;">$\dfrac{51.581 + 4\,\delta}{1.939 + \delta}$</td>
-            <td style="padding: 0.6rem 0.48rem;">$\dfrac{4.642 + 25\,\delta}{1.939 + \delta}$</td>
+            <td style="padding: 0.6rem 0.48rem;" data-out="c1A"></td>
+            <td style="padding: 0.6rem 0.48rem;" data-out="c1E"></td>
             <td style="padding: 0.6rem 0.48rem; border-bottom-right-radius: 6px;">$29$</td>
           </tr>
         </tbody>
@@ -502,7 +512,12 @@
       <p class="frame-subtitle">An Example: Summary</p>
     </div>
     <div class="frame-content fs-10pt">
-      <p style="margin-bottom: 0.75rem;">Equilibrium price: $p_2^*=1.93872\,\frac{1-q}{q}$</p>
+      <div class="param-slider">
+        <label for="slider-q">$q$</label>
+        <input type="range" id="slider-q" min="0.01" max="1" step="0.01" value="0.50">
+        <span class="param-value" data-out="param"></span>
+      </div>
+      <p style="margin-bottom: 0.75rem;">Equilibrium price: $p_2^*=1.93872\,\frac{1-q}{q}={}$<span data-out="price"></span></p>
       <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: 0.95em;">
         <thead>
           <tr style="background: #f9a825; color: #000;">
@@ -527,20 +542,20 @@
           </tr>
           <tr style="background: #f8f9fa; border-bottom: 1px solid #dee2e6;">
             <td style="padding: 0.6rem 0.48rem; text-align: left; font-weight: 600;">$i$</td>
-            <td style="padding: 0.6rem 0.48rem;">$100 + 7.755\,\frac{1-q}{q}$</td>
-            <td style="padding: 0.6rem 0.48rem;">$9 + 48.468\,\frac{1-q}{q}$</td>
-            <td style="padding: 0.6rem 0.48rem;">$109 + 56.223\,\frac{1-q}{q}$</td>
+            <td style="padding: 0.6rem 0.48rem;" data-out="iA"></td>
+            <td style="padding: 0.6rem 0.48rem;" data-out="iE"></td>
+            <td style="padding: 0.6rem 0.48rem;" data-out="i"></td>
           </tr>
           <tr style="background: #fff; border-bottom: 1px solid #dee2e6;">
             <td style="padding: 0.6rem 0.48rem; text-align: left; font-weight: 600;">$c_1^*$</td>
-            <td style="padding: 0.6rem 0.48rem;">$\dfrac{15.034 + 178.837\,q}{1 + 0.939\,q}$</td>
-            <td style="padding: 0.6rem 0.48rem;">$\dfrac{93.966 - 76.517\,q}{1 + 0.939\,q}$</td>
+            <td style="padding: 0.6rem 0.48rem;" data-out="c1A"></td>
+            <td style="padding: 0.6rem 0.48rem;" data-out="c1E"></td>
             <td style="padding: 0.6rem 0.48rem;">$109$</td>
           </tr>
           <tr style="background: #f8f9fa;">
             <td style="padding: 0.6rem 0.48rem; text-align: left; font-weight: 600; border-bottom-left-radius: 6px;">$c_2^*$</td>
-            <td style="padding: 0.6rem 0.48rem;">$\dfrac{4 + 47.581\,q}{1 + 0.939\,q}$</td>
-            <td style="padding: 0.6rem 0.48rem;">$\dfrac{25 - 20.358\,q}{1 + 0.939\,q}$</td>
+            <td style="padding: 0.6rem 0.48rem;" data-out="c2A"></td>
+            <td style="padding: 0.6rem 0.48rem;" data-out="c2E"></td>
             <td style="padding: 0.6rem 0.48rem; border-bottom-right-radius: 6px;">$29$</td>
           </tr>
         </tbody>
@@ -677,6 +692,44 @@
       new ResizeObserver(fit).observe(back);
       fit();
     });
+  </script>
+
+  <script>
+    // Summary tables: recompute the equilibrium whenever the slider moves.
+    // Closed forms with p* substituted in, r = sqrt(109/29), so the price-free
+    // limits stay finite at the slider's ends.
+    (() => {
+      const r = Math.sqrt(109 / 29);
+      const widget = (id, solve) => {
+        const frame = document.getElementById(id);
+        const slider = frame.querySelector('.param-slider input');
+        const cells = frame.querySelectorAll('[data-out]');
+        const update = () => {
+          const out = solve(parseFloat(slider.value));
+          cells.forEach(el => katex.render(out[el.dataset.out].toFixed(2), el));
+        };
+        slider.addEventListener('input', update);
+        update();
+      };
+      // Example 1: p1* = r·delta
+      widget('finding-a-market-equilibrium', d => {
+        const p = r * d, iA = 100 + 4 * p, iE = 9 + 25 * p;
+        return {
+          param: d, price: p, iA, iE, i: iA + iE,
+          c0A: r * iA / (r + d), c0E: r * iE / (r + d),
+          c1A: iA / (r * (r + d)), c1E: iE / (r * (r + d)),
+        };
+      });
+      // Example 2: p2* = r·(1-q)/q
+      widget('finding-a-market-equilibrium-2', q => {
+        const p = r * (1 - q) / q, iA = 100 + 4 * p, iE = 9 + 25 * p, den = r * q + 1 - q;
+        return {
+          param: q, price: p, iA, iE, i: iA + iE,
+          c1A: r * q * iA / den, c1E: r * q * iE / den,
+          c2A: q * iA / (r * den), c2E: q * iE / (r * den),
+        };
+      });
+    })();
   </script>
 
 </body>
