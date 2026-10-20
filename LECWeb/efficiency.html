@@ -23,7 +23,55 @@
       font-family: 'Augie', cursive;
       font-size: 1.1em;
     }
+
+    /* Flip card: a block whose back carries different text. Clicking the card turns
+       it over, and its height follows whichever face is showing (set in the script
+       at the bottom). The body uses .flip-body, not .block-body, so the "?" flip
+       of js/scroll-animations.js leaves these blocks alone. */
+    .flip-card { perspective: 1200px; cursor: pointer; margin: 0.75rem 0 1rem; }
+    .flip-card:focus:not(:focus-visible) { outline: none; }
+    .flip-inner { position: relative; transform-style: preserve-3d; transition: transform 0.6s ease, height 0.4s ease; }
+    .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+    .flip-front, .flip-back { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+    .flip-front { position: relative; }
+    .flip-back { position: absolute; top: 0; left: 0; width: 100%; transform: rotateY(180deg); }
+    .flip-card .block { width: 100%; margin: 0; }
+    .flip-body { background: #fff8e1; color: #000000; padding: 1rem; }
+    .flip-body > :last-child { margin-bottom: 0; }
+
+    /* Utility possibility set widget; tikz-svg sets the viewBox. The controls keep
+       their space while hidden, so revealing them moves nothing on the page. */
+    .u-fig { display: block; width: 100%; max-width: 420px; height: auto; margin: 0.5rem auto; cursor: crosshair; }
+    .u-status { min-height: 2.8em; margin: 0; }
+    .u-status.is-error { color: #dc322f; }
+    .u-status.is-ok { color: #2e7d32; }
+    .u-controls { visibility: hidden; }
+    .u-controls.on { visibility: visible; }
+    .u-note { margin: 0 0 0.5rem; }
+    .param-slider { display: flex; align-items: center; gap: 0.6rem; max-width: 28rem; margin: 0 0 0.5rem; }
+    .param-slider input[type=range] { flex: 1; min-width: 0; accent-color: #c17900; cursor: pointer; }
+    .param-slider .param-value { min-width: 2.6em; }
+    .u-reset { font: inherit; font-size: 0.85em; padding: 0.2rem 0.8rem; border: 1px solid #c17900; border-radius: 4px; background: #fff8e1; color: #000; cursor: pointer; }
+
+    /* Safari/WebKit does not paint `position: relative` content inside
+       <foreignObject>, so KaTeX labels in tikz-svg figures lay out correctly but
+       never appear. KaTeX also emits a MathML twin, which WebKit renders natively,
+       so on WebKit show the twin and hide the HTML. Guarded by
+       -webkit-backdrop-filter, true only in WebKit. Same fix as value-function.css. */
+    @supports (-webkit-backdrop-filter: blur(1px)) {
+      svg foreignObject .katex .katex-html { display: none; }
+      svg foreignObject .katex .katex-mathml {
+        position: static; clip: auto; clip-path: none; height: auto; width: auto;
+        overflow: visible; padding: 0; border: 0; opacity: 1; font-size: 1em;
+      }
+    }
   </style>
+
+  <!-- tikz-svg: the bundle's bare 'mathjs' import must resolve; the shim
+       degrades to null stubs when window.math is absent (diagrams-only page). -->
+  <script type="importmap">
+  { "imports": { "mathjs": "./tikz-svg/examples-v2/mathjs-shim.js" } }
+  </script>
     <!-- Google Analytics -->
     <script async src="/E510/js/ga.js"></script>
 </head>
@@ -47,15 +95,23 @@
   </section>
 
   <!-- Frame 1: Pareto Efficiency Definition (source: lines 1424-1427)
-       NO OVERLAYS -->
-  <section class="frame" id="pareto-efficiency-2">
+       HAS OVERLAYS: examples uncover one at a time (enumerate[<+->]) -->
+  <section class="frame overlay-frame" id="pareto-efficiency-2">
     <div class="frame-title-bar">
       <h2 class="frame-title">Pareto Efficiency</h2>
       <p class="frame-subtitle">Definition</p>
     </div>
-    <div class="frame-content">
-      <p><strong>Definition:</strong> In an economy with $n$ agents, a utility profile
-      $u^\ast=\left(u_{1}^\ast,\ldots,u_{n}^\ast\right)$ in the set of feasible utilities $\mathcal U$ is said to be <span style="color: #dc322f;">efficient</span>, if and only if, when $u_{i}^\ast\lt \tilde u_{i}$ for some agent $i$ and some alternative utility profile $\tilde u$ in $\mathcal U$ then there exists another agent $j$ such that $u_{j}^\ast\gt \tilde u_{j}$.</p>
+    <div class="frame-content fs-10pt">
+      <div class="overlay" data-overlay="1">
+        <p><strong>Definition:</strong> In an economy with $n$ agents, a utility profile
+        $u^\ast=\left(u_{1}^\ast,\ldots,u_{n}^\ast\right)$ in the set of feasible utilities $\mathcal U$ is said to be <span style="color: #dc322f;">efficient</span>, if and only if, when $u_{i}^\ast\lt \tilde u_{i}$ for some agent $i$ and some alternative utility profile $\tilde u$ in $\mathcal U$ then there exists another agent $j$ such that $u_{j}^\ast\gt \tilde u_{j}$.</p>
+        <p style="margin-top: 1rem;">Examples of inefficient outcomes: the Nash equilibria of our <a href="equilibrium.html">Equilibrium</a> examples.</p>
+      </div>
+      <ol>
+        <li class="overlay" data-overlay="2"><strong>Public good.</strong> In the <a href="equilibrium.html#equilibrium-analysis-4">public good example</a> with equal wealth, $w_1=w_2=w$, the Nash equilibrium is $g_1^e=g_2^e=\frac w3$, so $G^e=\frac{2w}3$ and $u_i^e=\frac{2w}3\cdot\frac{2w}3=\frac{4w^2}9$. If instead each contributes half her wealth, $g_1=g_2=\frac w2$, then $G=w$ and $u_i=\frac w2\cdot w=\frac{w^2}2\gt\frac{4w^2}9$: both are better off.</li>
+        <li class="overlay" data-overlay="3"><strong>Peer effects.</strong> In the <a href="equilibrium.html#equilibrium-analysis-5">peer-effects example</a> with $a_1=0$, $a_2=1$ and $\lambda=1$, the Nash equilibrium is $x^e=\frac13$ and $y^e=\frac23$, so $u_1^e=u_2^e=1-\frac19-\frac19=\frac79$. If instead both move closer to each other, $x=\frac25$ and $y=\frac35$, then $u_1=u_2=1-\frac4{25}-\frac1{25}=\frac45\gt\frac79$: both are better off.</li>
+        <li class="overlay" data-overlay="4"><strong>Contest.</strong> In the <a href="equilibrium.html#equilibrium-analysis-6">contest example</a>, the Nash equilibrium is $x^e=y^e=\sqrt{\pi/8}$, so each player wins with probability $\frac12$ and $u_i^e=\frac\pi2-\frac\pi8=\frac{3\pi}8$. If instead both halve their effort, $x=y=\frac12\sqrt{\pi/8}$, each still wins with probability $\frac12$ but pays only $\frac\pi{32}$, so $u_i=\frac\pi2-\frac\pi{32}=\frac{15\pi}{32}\gt\frac{3\pi}8$: both are better off.</li>
+      </ol>
     </div>
   </section>
 
@@ -90,10 +146,26 @@
       <h2 class="frame-title">Welfare Functions and Pareto Efficiency</h2>
     </div>
     <div class="frame-content">
-      <div class="block">
-        <div class="block-title">Proposition Efficiency 1</div>
-        <div class="block-body">
-          If $u^\ast$ in $\mathcal U$ maximizes $W(\mathbf u)$ then $u^\ast$ is Pareto efficient.
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Proposition Efficiency 1</div>
+              <div class="flip-body">
+                If $\mathbf u^\ast$ in $\mathcal U$ maximizes $W(\mathbf u)$ then $\mathbf u^\ast$ is Pareto efficient.
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Proof (by contradiction)</div>
+              <div class="flip-body">
+                <p>Suppose that $\mathbf u^\ast$ maximizes $W$ over $\mathcal U$ but is not Pareto efficient. Then there are an alternative profile $\tilde{\mathbf u}$ in $\mathcal U$ and an agent $i$ with $u_i^\ast\lt\tilde u_i$ such that no agent $j$ has $u_j^\ast\gt\tilde u_j$, that is,</p>
+                $$\tilde u_i\gt u_i^\ast\quad\text{and}\quad\tilde u_j\ge u_j^\ast\ \text{ for every agent } j.$$
+                <p>Since $W$ is strictly increasing in each player's payoff, raising $u_i$ without lowering any other payoff raises welfare: $W(\tilde{\mathbf u})\gt W(\mathbf u^\ast)$. But $\tilde{\mathbf u}$ is in $\mathcal U$, so $\mathbf u^\ast$ does not maximize $W$ over $\mathcal U$, a contradiction. Hence $\mathbf u^\ast$ is Pareto efficient. $\blacksquare$</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -107,6 +179,31 @@
       </div>
 
       <p class="fs-10pt" style="margin-top: 1rem;">Definition: A set $A$ is convex, if for any two points $x$ and $y$ in $A$, we have that the line connecting these points is also in $A$, $\alpha x +(1-\alpha)y$ is in $A$ for any $0\lt\alpha\lt 1$.</p>
+    </div>
+  </section>
+
+  <!-- Frame: the utility possibility set U = {u1, u2 >= 0 : u1^2 + 2 u2^2 <= 100} -->
+  <section class="frame" id="utility-possibility-set">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Welfare Functions and Pareto Efficiency</h2>
+    </div>
+    <div class="frame-content">
+      <p class="u-status" id="u-status" aria-live="polite">Click on an efficient point.</p>
+      <svg class="u-fig" id="fig-u-set" role="img" aria-label="The set of feasible utilities: the quarter ellipse u1 squared plus 2 u2 squared at most 100, with u1 and u2 non-negative. Click on an efficient point."></svg>
+      <div class="u-controls" id="u-controls">
+        <p class="u-note">$a$ changes the welfare function $W=a\,u_1+(1-a)\,u_2$, and $c$ changes the iso-welfare curve $W=c$.</p>
+        <div class="param-slider">
+          <label for="slider-a">$a$</label>
+          <input type="range" id="slider-a" min="0" max="1" step="0.01" value="0.50">
+          <span class="param-value" id="value-a"></span>
+        </div>
+        <div class="param-slider">
+          <label for="slider-c">$c$</label>
+          <input type="range" id="slider-c" min="0" max="10.5" step="0.05" value="4">
+          <span class="param-value" id="value-c"></span>
+        </div>
+        <button type="button" class="u-reset" id="u-reset">Start over</button>
+      </div>
     </div>
   </section>
 
@@ -187,6 +284,197 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="js/scroll-animations.js"></script>
 
+  <script type="module">
+    // Utility possibility set widget, U = {(u1, u2) >= 0 : u1^2 + 2 u2^2 <= 100},
+    // a quarter ellipse with intercepts 10 and 5√2.
+    //   Step 1: the student clicks an efficient point. Clicks within NEAR of the
+    //           frontier lock onto the nearest frontier point; others get an error.
+    //   Step 2: sliders a and c move the iso-welfare line a·u1 + (1−a)·u2 = c.
+    //           Close to the tangent at the point, it snaps to the exact (a*, c*)
+    //           and locks; 5 s later the other lines W = c of the same a appear.
+    // The figure is redrawn whole on every change: its KaTeX labels make tikz-svg
+    // re-render it once the webfonts load, which rebuilds every child, so all
+    // listeners sit on the persistent <svg>. Data coordinates are y-up; tikz-svg
+    // paths and nodes are y-down, so y is negated here. Everything dynamic stays
+    // inside the axes, so the auto-generated viewBox never moves.
+    import { render } from './tikz-svg/dist/tikz-svg.min.js';
+
+    const MACROS = (typeof katexMacros !== 'undefined' ? katexMacros : undefined);
+    const GREEN = '#859900', GREEN_FILL = 'rgba(133,153,0,0.22)';
+    const RED = '#dc322f', RED_LIGHT = '#eb9593';
+    const SCALE = 30;
+    const A = 10, B = 5 * Math.SQRT2;     // u1- and u2-intercepts of the frontier
+    const XM = 12, YM = 9;                // axis ends
+    const XB = 11.6, YB = 8.6;            // lines are clipped to [0, XB] × [0, YB]
+    const NEAR = 0.8;                     // click tolerance around the frontier
+    const A_TOL = 0.05, LINE_TOL = 0.4;   // snap tolerances for the welfare line
+    const FAMILY = [0.35, 0.6, 0.85, 1.15];   // other lines W = k·c*, after the lock
+
+    const svg = document.getElementById('fig-u-set');
+    const status = document.getElementById('u-status');
+    const controls = document.getElementById('u-controls');
+    const sa = document.getElementById('slider-a'), sc = document.getElementById('slider-c');
+    const va = document.getElementById('value-a'), vc = document.getElementById('value-c');
+
+    let state;   // { point: [u1, u2] | null, aStar, cStar, a, c, locked, family }
+    let familyTimer = null;
+
+    const pts = xy => xy.map(([x, y]) => ({ x, y: -y }));
+    const line = (xy, extra) => ({ type: 'path', points: pts(xy), ...extra });
+    const label = (id, x, y, tex, anchor, extra = {}) => ({
+      type: 'node', id, position: { x, y: -y }, label: tex, anchor,
+      shape: 'rectangle', innerSep: 2, fill: 'none', stroke: 'none', fontSize: 16, ...extra,
+    });
+    const arc = Array.from({ length: 61 }, (_, j) => {
+      const t = (Math.PI / 2) * j / 60;
+      return [A * Math.cos(t), B * Math.sin(t)];
+    });
+    const tex = s => katex.renderToString(s, { throwOnError: false, macros: MACROS });
+    const say = (html, kind) => { status.innerHTML = html; status.className = 'u-status' + (kind ? ` is-${kind}` : ''); };
+
+    // The segment of a·u1 + (1−a)·u2 = c inside the clipping box, or null.
+    const clipLine = (a, c) => {
+      const b = 1 - a, out = [];
+      const add = (x, y) => {
+        if (x < -1e-9 || x > XB + 1e-9 || y < -1e-9 || y > YB + 1e-9) return;
+        if (!out.some(([px, py]) => Math.hypot(px - x, py - y) < 1e-6)) out.push([x, y]);
+      };
+      if (b > 1e-9) { add(0, c / b); add(XB, (c - a * XB) / b); }
+      if (a > 1e-9) { add(c / a, 0); add((c - b * YB) / a, YB); }
+      return out.length >= 2 ? out.slice(0, 2) : null;
+    };
+
+    // The frontier point nearest to (x, y), and its distance.
+    const nearestOnFrontier = (x, y) => {
+      let best = null, dBest = Infinity;
+      for (let j = 0; j <= 2000; j++) {
+        const t = (Math.PI / 2) * j / 2000, px = A * Math.cos(t), py = B * Math.sin(t);
+        const d = Math.hypot(px - x, py - y);
+        if (d < dBest) { dBest = d; best = [px, py]; }
+      }
+      return { point: best, dist: dBest };
+    };
+
+    // A line whose lower end is cut off by the right edge (its u1-intercept is out
+    // of view) gets a small W = c label at that end; one that reaches the u1-axis
+    // does not. The label is kept clear of the u1 axis label.
+    const endLabel = (id, seg, c) => {
+      if (seg.some(([, y]) => y < 1e-6)) return [];
+      const [x, y] = seg[0][0] > seg[1][0] ? seg[0] : seg[1];
+      return [label(id, x + 0.1, Math.max(y, 0.5), `$W=${c.toFixed(2)}$`, 'west', { fontSize: 11, labelColor: RED })];
+    };
+
+    const draw = () => {
+      const items = [
+        line([[0, 0], ...arc], { cycle: true, fill: GREEN_FILL, stroke: 'none' }),
+      ];
+      const tags = [];
+      if (state.family) {
+        FAMILY.forEach((k, j) => {
+          const seg = clipLine(state.aStar, k * state.cStar);
+          if (!seg) return;
+          items.push(line(seg, { stroke: RED_LIGHT, strokeWidth: 2, dashed: '6 4' }));
+          tags.push(...endLabel(`w${j}`, seg, k * state.cStar));
+        });
+      }
+      items.push(line(arc, { stroke: GREEN, strokeWidth: 3 }));
+      if (state.point && controls.classList.contains('on')) {
+        const seg = clipLine(state.a, state.c);
+        if (seg) {
+          items.push(line(seg, { stroke: RED, strokeWidth: 3 }));
+          tags.push(...endLabel('w', seg, state.c));
+        }
+      }
+      items.push(
+        // invisible: reserves room right of the axis for the W = c labels, so the
+        // auto-generated viewBox is the same whether or not any is showing
+        line([[XM, 0], [XM + 2, 0]], { stroke: 'none' }),
+        line([[0, 0], [XM, 0]], { arrow: '->', stroke: '#000', strokeWidth: 1.6 }),
+        line([[0, 0], [0, YM]], { arrow: '->', stroke: '#000', strokeWidth: 1.6 }),
+      );
+      if (state.point) {
+        const [x, y] = state.point;
+        items.push({
+          type: 'node', id: 'pt', position: { x, y: -y }, label: '', shape: 'circle',
+          radius: 4.5, innerSep: 0, fill: '#000', stroke: 'none',
+        });
+      }
+      items.push(
+        label('u1', XM, 0, '$u_1$', 'west'),
+        label('u2', 0, YM, '$u_2$', 'south'),
+        label('a', A, -0.15, '$10$', 'north'),
+        label('b', -0.15, B, '$5\\sqrt2$', 'east'),
+        label('U', 3.6, 2.6, '$\\mathcal U$', 'center'),
+        ...tags,
+      );
+      try { render(svg, { scale: SCALE, padding: 8, katexMacros: MACROS, draw: items }); }
+      catch (e) { console.error('fig-u-set render failed', e); }
+    };
+
+    const showValues = () => {
+      katex.render(state.a.toFixed(2), va, { throwOnError: false });
+      katex.render(state.c.toFixed(2), vc, { throwOnError: false });
+    };
+
+    const reset = () => {
+      clearTimeout(familyTimer);
+      state = { point: null, aStar: 0, cStar: 0, a: 0.5, c: 4, locked: false, family: false };
+      sa.value = state.a; sc.value = state.c;
+      sa.disabled = sc.disabled = false;
+      controls.classList.remove('on');
+      showValues();
+      say('Click on an efficient point.');
+      draw();
+    };
+
+    // Step 1: pick an efficient point.
+    svg.addEventListener('click', e => {
+      if (state.point) return;
+      const m = svg.getScreenCTM();
+      if (!m) return;
+      const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse());
+      const x = p.x / SCALE, y = -p.y / SCALE;
+      const { point, dist } = nearestOnFrontier(x, y);
+      const feasible = x >= 0 && y >= 0 && x * x + 2 * y * y <= 100;
+      if (dist > NEAR) {
+        say(feasible
+          ? `This point is feasible, but it is not efficient: both ${tex('u_1')} and ${tex('u_2')} can be raised without leaving ${tex('\\mathcal U')}.`
+          : `This is not a feasible point: it is outside ${tex('\\mathcal U')}.`, 'error');
+        return;
+      }
+      const [u1, u2] = point;
+      state.point = point;
+      state.aStar = u1 / (u1 + 2 * u2);
+      state.cStar = state.aStar * u1 + (1 - state.aStar) * u2;
+      controls.classList.add('on');
+      say(`Efficient point ${tex(`\\mathbf u^\\ast=(${u1.toFixed(2)},\\,${u2.toFixed(2)})`)}. Now move the sliders to find a welfare function that it maximizes.`, 'ok');
+      draw();
+    });
+
+    // Step 2: move the iso-welfare line; snap and lock near the tangent at u*.
+    const onSlide = () => {
+      if (state.locked) return;
+      state.a = parseFloat(sa.value);
+      state.c = parseFloat(sc.value);
+      const [u1, u2] = state.point;
+      const gap = Math.abs(state.a * u1 + (1 - state.a) * u2 - state.c) / Math.hypot(state.a, 1 - state.a);
+      if (Math.abs(state.a - state.aStar) <= A_TOL && gap <= LINE_TOL) {
+        state.a = state.aStar; state.c = state.cStar; state.locked = true;
+        sa.value = state.a; sc.value = state.c;
+        sa.disabled = sc.disabled = true;
+        say(`Locked: ${tex('\\mathbf u^\\ast')} maximizes ${tex(`W=${state.a.toFixed(2)}\\,u_1+${(1 - state.a).toFixed(2)}\\,u_2`)} over ${tex('\\mathcal U')}, and ${tex(`W(\\mathbf u^\\ast)=${state.c.toFixed(2)}`)}.`, 'ok');
+        familyTimer = setTimeout(() => { state.family = true; draw(); }, 5000);
+      }
+      showValues();
+      draw();
+    };
+    sa.addEventListener('input', onSlide);
+    sc.addEventListener('input', onSlide);
+    document.getElementById('u-reset').addEventListener('click', reset);
+
+    reset();
+  </script>
+
   <!-- Overlay animation system -->
   <script>
     gsap.registerPlugin(ScrollTrigger);
@@ -217,6 +505,37 @@
           });
         }
       });
+    });
+  </script>
+
+  <script>
+    // Flip cards: toggle .flipped on click (or Enter/Space), and size the card to
+    // the visible face; refresh ScrollTrigger once the height has settled, since
+    // everything below the card moves.
+    document.querySelectorAll('.flip-card').forEach(card => {
+      const inner = card.querySelector('.flip-inner');
+      const front = card.querySelector('.flip-front');
+      const back = card.querySelector('.flip-back');
+      const fit = () => {
+        const face = card.classList.contains('flipped') ? back : front;
+        inner.style.height = face.offsetHeight + 'px';
+      };
+      const flip = () => {
+        const flipped = card.classList.toggle('flipped');
+        front.setAttribute('aria-hidden', flipped ? 'true' : 'false');
+        back.setAttribute('aria-hidden', flipped ? 'false' : 'true');
+        fit();
+      };
+      card.addEventListener('click', flip);
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); }
+      });
+      inner.addEventListener('transitionend', e => {
+        if (e.propertyName === 'height') ScrollTrigger.refresh();
+      });
+      new ResizeObserver(fit).observe(front);
+      new ResizeObserver(fit).observe(back);
+      fit();
     });
   </script>
 
