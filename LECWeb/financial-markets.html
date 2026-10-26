@@ -63,10 +63,11 @@
       <a href="#contingent-markets-vs-financial-markets" style="margin-left: 1rem;">5. vs Contingent</a>
       <a href="#equilibrium-in-the-financial-markets-economy" style="margin-left: 1rem;">6. Equilibrium</a>
       <a href="#fm-example-frame" style="margin-left: 1rem;">7. FM Example</a>
-      <a href="#finding-a-financial-markets-equilibrium" style="margin-left: 1rem;">8. FM Summary</a>
+      <a href="#fm-example-comparison" style="margin-left: 1rem;">8. FM vs Contingent</a>
       <br>
-      <a href="#finding-the-equilibrium" style="margin-left: 1rem;">9. Numeric Example</a>
-      <a href="#the-two-period-with-uncertainty-example" style="margin-left: 1rem;">10. Log Utility</a>
+      <a href="#finding-a-financial-markets-equilibrium" style="margin-left: 1rem;">9. FM Summary</a>
+      <a href="#finding-the-equilibrium" style="margin-left: 1rem;">10. Numeric Example</a>
+      <a href="#the-two-period-with-uncertainty-example" style="margin-left: 1rem;">11. Log Utility</a>
     </nav>
   </section>
 
@@ -317,14 +318,57 @@
           $$r^* = \frac{1}{\delta}\sqrt{\frac{29}{109}} = \frac{0.51581}{\delta}.$$
         </div>
       </div>
+    </div>
+  </section>
 
+  <!-- Frame: Finding a Financial Markets Equilibrium - Comparison -->
+  <section class="frame" id="fm-example-comparison">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Finding a Financial Markets Equilibrium</h2>
+      <p class="frame-subtitle">Adam and Eve's Example (continuation)</p>
+    </div>
+    <div class="frame-content">
       <div class="scroll-reveal">
-        <p style="margin-top: 1rem;"><strong>Comparison with contingent markets.</strong></p>
+        <p><strong>Comparison with contingent markets.</strong></p>
         <p>In the <a href="markets.html#example-frame" style="color: #268bd2; text-decoration: none; border-bottom: 1px solid #268bd2;">contingent markets equilibrium</a>, the price of tomorrow's consumption was $p_1^*=\delta\sqrt{109/29}$. Notice that</p>
         <div style="text-align: center; margin: 0.75rem 0;">
           $$\frac{1}{r^*}=\delta\sqrt{\frac{109}{29}}=p_1^*.$$
         </div>
-        <p>The bond return is the reciprocal of the contingent price. With the bond, consumers can replicate the same trades as in the contingent market — the financial markets equilibrium allocation coincides with the contingent markets allocation.</p>
+        <p>The bond return is the reciprocal of the contingent price. With the bond, consumers can replicate the same trades as in the contingent market—the financial markets equilibrium allocation coincides with the contingent markets allocation.</p>
+      </div>
+
+      <div class="scroll-reveal">
+        <p style="margin-top: 1rem;"><strong>Another way to see it.</strong></p>
+        <p>Each consumer faces two spot budget constraints, one for each period:</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$c_0 = e_0 - z \qquad\text{and}\qquad c_1 = e_1 + r\cdot z.$$
+        </div>
+        <p>Solve the period 0 budget constraint for the bond investment:</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$z = e_0 - c_0.$$
+        </div>
+        <p>Substitute it into the period 1 budget constraint to eliminate $z$:</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$c_1 = e_1 + r\cdot(e_0 - c_0).$$
+        </div>
+        <p>Move the consumption terms to the left-hand side:</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$r\cdot c_0 + c_1 = r\cdot e_0 + e_1.$$
+        </div>
+        <p>Divide both sides by $r\gt 0$:</p>
+        <div style="text-align: center; margin: 0.75rem 0;">
+          $$c_0 + \frac{1}{r}\cdot c_1 = e_0 + \frac{1}{r}\cdot e_1.$$
+        </div>
+      </div>
+
+      <div class="scroll-reveal">
+        <p style="margin-top: 1rem;"><strong>Interpretation.</strong></p>
+        <p>The two spot budget constraints collapse into a single budget constraint: the present value of consumption equals the present value of the endowment. Tomorrow's consumption is priced at $1/r$ in units of today's consumption, because investing $1/r$ in the bond today pays $r\cdot\frac{1}{r}=1$ tomorrow. The bond investment $z$ drops out; it is only the vehicle that moves resources between the two periods.</p>
+        <p style="margin-top: 0.5rem;">This single budget constraint is the <a href="markets.html#example-frame" style="color: #268bd2; text-decoration: none; border-bottom: 1px solid #268bd2;">contingent markets budget constraint</a> $c_0+p_1 c_1=e_0+p_1 e_1$, with $p_0=1$ and $p_1=1/r$.</p>
+      </div>
+
+      <div class="scroll-reveal">
+        <p style="margin-top: 1rem;">In the next session, <a href="arbitrage.html#complete-markets" style="color: #268bd2; text-decoration: none; border-bottom: 1px solid #268bd2;">The Financial Structure</a>, we will see when the financial markets and the contingent markets consumption allocations are identical.</p>
       </div>
     </div>
   </section>
@@ -395,12 +439,13 @@
         &+\;\delta\cdot\bigl(p\cdot u(e_1^i + z_a^i r_a^1 + z_b^i r_b^1)+(1-p)\cdot u(e_2^i + z_a^i r_a^2 + z_b^i r_b^2)\bigr)\end{align*}$$
       </div>
 
-      <svg id="economy-tree" style="max-width: 420px; width: 100%; display: block; margin: 0.75rem auto 0.75rem 2rem;"></svg>
+      <svg id="economy-tree" style="max-width: 600px; width: 100%; display: block; margin: 0.75rem auto 0.75rem 2rem;"></svg>
       <script type="module">
         import { render } from './tikz-svg/src-v2/index.js';
         const svg = document.getElementById('economy-tree');
         render(svg, {
           nodeDistance: 130,
+          padding: 10,
           stateStyle: {
             shape: 'circle',
             radius: 22,
@@ -418,18 +463,18 @@
           },
           states: {
             t0: { label: 'c\u2080', position: { x: -40, y: 0 } },
-            s1: { label: 'c\u2081', position: { x: 200, y: -42 } },
-            s2: { label: 'c\u2082', position: { x: 200, y: 42 } },
-            lbl0: { label: 't\u2009=\u20090', position: { x: -40, y: 108 }, fill: 'none', stroke: 'none', labelColor: '#000000', radius: 12, fontSize: 15 },
-            lbl1: { label: 't\u2009=\u20091', position: { x: 200, y: 108 }, fill: 'none', stroke: 'none', labelColor: '#000000', radius: 12, fontSize: 15 },
-            cap: { label: 'A two period economy with uncertainty regarding the state in period 1.', position: { x: 80, y: 132 }, fill: 'none', stroke: 'none', labelColor: '#586e75', radius: 1, fontSize: 11 },
+            s1: { label: 'c\u2081', position: { x: 320, y: -60 } },
+            s2: { label: 'c\u2082', position: { x: 320, y: 60 } },
+            lbl0: { label: 't\u2009=\u20090', position: { x: -40, y: 120 }, fill: 'none', stroke: 'none', labelColor: '#000000', radius: 12, fontSize: 15 },
+            lbl1: { label: 't\u2009=\u20091', position: { x: 320, y: 120 }, fill: 'none', stroke: 'none', labelColor: '#000000', radius: 12, fontSize: 15 },
+            cap: { label: 'A two period economy with uncertainty regarding the state in period 1.', position: { x: 140, y: 146 }, shape: 'rectangle', fill: 'none', stroke: 'none', labelColor: '#586e75', radius: 1, fontSize: 11 },
           },
           edges: [
             { from: 'lbl0', to: 't0', dashed: '4 2', arrow: 'none' },
             { from: 's1', to: 's2', dashed: '4 2', arrow: 'none' },
             { from: 's2', to: 'lbl1', dashed: '4 2', arrow: 'none' },
-            { from: 't0', to: 's1', label: 'p', labelDistance: 12, labelSide: 'right' },
-            { from: 't0', to: 's2', label: '1\u2212p', labelDistance: 14, labelSide: 'left' },
+            { from: 't0', to: 's1', label: 'p', labelDistance: 12, labelSide: 'left' },
+            { from: 't0', to: 's2', label: '1\u2212p', labelDistance: 14, labelSide: 'right' },
           ],
         });
       </script>
