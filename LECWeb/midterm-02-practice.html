@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="nav-prev" content="midterm-02.html">
+  <meta name="nav-next" content="index.html">
+  <title>Midterm 2 Practice | ECON 510</title>
+
+  <!-- KaTeX CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/beamer-theme.css?v=20261028">
+    <!-- Google Analytics -->
+    <script async src="/E510/js/ga.js"></script>
+  <style>
+    /* Flip card (as in markets.html): each question is a block whose back carries
+       its answer. Clicking the card turns it over, and its height follows whichever
+       face is showing (set in the script at the bottom). The body uses .flip-body,
+       not .block-body, so the "?" flip of js/scroll-animations.js leaves these
+       blocks alone. */
+    .flip-card { perspective: 1200px; cursor: pointer; margin: 0.75rem 0 1rem; }
+    .flip-card:focus:not(:focus-visible) { outline: none; }
+    .flip-inner { position: relative; transform-style: preserve-3d; transition: transform 0.6s ease, height 0.4s ease; }
+    .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+    .flip-front, .flip-back { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+    .flip-front { position: relative; }
+    .flip-back { position: absolute; top: 0; left: 0; width: 100%; transform: rotateY(180deg); }
+    .flip-card .block { width: 100%; margin: 0; }
+    .flip-body { background: #fff8e1; color: #000000; padding: 1rem; }
+    .flip-body > :last-child { margin-bottom: 0; }
+  </style>
+</head>
+<body>
+
+  <!-- Section Header -->
+  <section class="section-header" id="midterm-2-practice">
+    <div class="section-title-box">
+      <h1>Midterm 2 Practice</h1>
+      <h2>Click on a question to reveal its answer.</h2>
+    </div>
+
+    <!-- Table of Contents -->
+    <nav style="margin-top: 2rem; text-align: left; background: #eee; padding: 1rem; border-radius: 8px; font-size: 0.9rem;">
+      <a href="#practice-setting" style="margin-left: 1rem;">0. The Setting</a>
+      <a href="#practice-mathematica" style="margin-left: 1rem;">1. Mathematica</a>
+      <a href="#practice-recipe-0" style="margin-left: 1rem;">2. Recipe #0</a>
+      <a href="#practice-recipe-1" style="margin-left: 1rem;">3. Recipe #1</a>
+      <a href="#practice-recipe-2" style="margin-left: 1rem;">4. Recipe #2</a>
+      <br>
+      <a href="#practice-value-function" style="margin-left: 1rem;">5. Value Function</a>
+      <a href="#practice-contingent-markets" style="margin-left: 1rem;">6. Contingent Markets</a>
+      <a href="#practice-efficiency" style="margin-left: 1rem;">7. Efficiency</a>
+      <br>
+      <a href="#practice-financial-markets" style="margin-left: 1rem;">8. Financial Markets</a>
+      <a href="#practice-financial-structure" style="margin-left: 1rem;">9. Financial Structure</a>
+    </nav>
+  </section>
+
+  <!-- Frame 0: The setting shared by every problem -->
+  <section class="frame" id="practice-setting">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Abel and Bella</h2>
+      <p class="frame-subtitle">The setting for every problem</p>
+    </div>
+    <div class="frame-content">
+      <p>Two consumers, Abel and Bella, live for three periods. There is no uncertainty. Each
+      consumer has an endowment and a logarithmic utility.</p>
+    </div>
+  </section>
+
+  <!-- Problem 1: Basic Mathematica commands -->
+  <section class="frame" id="practice-mathematica">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Basic Mathematica Commands</h2>
+      <p class="frame-subtitle">Problem 1</p>
+    </div>
+    <div class="frame-content">
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question</div>
+              <div class="flip-body">
+                  <p>Abel&apos;s discounted utility function in Mathematica is (mark all that apply):</p>
+                  <ol type="a">
+                  <li><code>U[c0_, c1_, c2_] := Ln[c0] + d*Ln[c1] + d^2*Ln[c2]</code></li>
+                  <li><code>U[c0_, c1_, c2_] := Log[{c0, c1, c2}] . {1, d, d^2}</code></li>
+                  <li><code>U[c0_, c1_, c2_] := Log[{c0, c1, c2} . {1, d, d^2}]</code></li>
+                  <li><code>U[c0_, c1_, c2_] := Log(c0) + d*Log(c1) + d^2*Log(c2)</code></li>
+                  <li><code>U[c0_, c1_, c2_] := Log[{c0, c1, c2}] . {d^2, d, 1}</code></li>
+                  <li><code>U = Sum[Log[c[t]]*d^t, {t, 0, 2}]</code></li>
+                  <li><code>U = Sum[Log[c[t]*d^t], {t, 0, 2}]</code></li>
+                  <li><code>U[c_] := Log[c[1]] + d*Log[c[2]] + d^2*Log[c[3]]</code></li>
+                  <li><code>U[c0_, c1_, c2_] := Log[{c0, c1, c2}] . {1, d, 2 d}</code></li>
+                  <li><code>U[c_] := Log[c[[1]]] + d*Log[c[[2]]] + d^2*Log[c[[3]]]</code></li>
+                  <li><code>U = Sum[Log[c[t]]*d^t, {t, 0, 3}]</code></li>
+                  <li><code>U[c_] := Log[c[[0]]] + d*Log[c[[1]]] + d^2*Log[c[[2]]]</code></li>
+                  </ol>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer</div>
+              <div class="flip-body">
+                  <p>Correct:</p>
+                  <ul>
+                  <li>(b) <code>U[c0_, c1_, c2_] := Log[{c0, c1, c2}] . {1, d, d^2}</code></li>
+                  <li>(f) <code>U = Sum[Log[c[t]]*d^t, {t, 0, 2}]</code></li>
+                  <li>(j) <code>U[c_] := Log[c[[1]]] + d*Log[c[[2]]] + d^2*Log[c[[3]]]</code></li>
+                  </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem 2: Unconstrained optimization (Recipe #0). The endowment is drawn at
+       random on page load (see the script at the bottom): \eZero, \eOne, \eTwo are the
+       endowment and \income is its value at prices (1, p_1, p_2). -->
+  <section class="frame" id="practice-recipe-0">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Unconstrained Optimization</h2>
+      <p class="frame-subtitle">Problem 2</p>
+    </div>
+    <div class="frame-content">
+      <p>Assume contingent markets and normalize the price of present consumption to $p_0=1$.
+          A consumer has endowment $e=(e_0,e_1,e_2)=(\eZero,\eOne,\eTwo)$.</p>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 1</div>
+              <div class="flip-body">
+                  Write the budget constraint that a consumer with this endowment faces.
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 1</div>
+              <div class="flip-body">
+                  The value of consumption equals the value of the endowment:
+                  $$c_0+p_1c_1+p_2c_2=e_0+p_1e_1+p_2e_2=\income.$$
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 2</div>
+              <div class="flip-body">
+                  The discounted utility is
+                  $$\ln c_0+\delta\ln c_1+\delta^2\ln c_2.$$
+                  Use the budget constraint to solve for $c_0$ in terms of $c_1$, $c_2$, $p_1$, and $p_2$, and write the discounted utility as a function of $c_1$, $c_2$, $p_1$, and $p_2$ only (that is, eliminate $c_0$).
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 2</div>
+              <div class="flip-body">
+                  Solving the budget constraint for $c_0$,
+                  $$c_0=\income-p_1c_1-p_2c_2,$$
+                  so the discounted utility is
+                  $$U(c_1,c_2)=\ln\paren{\income-p_1c_1-p_2c_2}+\delta\ln c_1+\delta^2\ln c_2.$$
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 3</div>
+              <div class="flip-body">
+                  Apply <a href="unconstrained-optimization.html#solving-unconstrained-optimization-problems">Recipe #0</a>: what are the first-order conditions for $c_1$ and $c_2$?
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 3</div>
+              <div class="flip-body">
+                  The first-order conditions are
+                  $$\begin{aligned}
+                  \diff{U}{c_1}&=-\frac{p_1}{\income-p_1c_1-p_2c_2}+\frac{\delta}{c_1}=0,\\
+                  \diff{U}{c_2}&=-\frac{p_2}{\income-p_1c_1-p_2c_2}+\frac{\delta^2}{c_2}=0.
+                  \end{aligned}$$
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 4</div>
+              <div class="flip-body">
+                  Apply Recipe #0: what are the optimal choices of $c_1$ and $c_2$?
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 4</div>
+              <div class="flip-body">
+                  The common denominator is $c_0$, so the first-order conditions say $p_1c_1=\delta\,c_0$
+                  and $p_2c_2=\delta^2c_0$. Substituting into the budget constraint,
+                  $(1+\delta+\delta^2)\,c_0=\income$, so
+                  $$c_1=\frac{\delta\,\paren{\income}}{(1+\delta+\delta^2)\,p_1},\qquad c_2=\frac{\delta^2\paren{\income}}{(1+\delta+\delta^2)\,p_2}.$$
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem 3: Equality constraints (Recipe #1), same consumer as Problem 2 -->
+  <section class="frame" id="practice-recipe-1">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Optimization with Equality Constraints</h2>
+      <p class="frame-subtitle">Problem 3</p>
+    </div>
+    <div class="frame-content">
+      <p>Same problem as in Problem 2, with endowment $e=(\eZero,\eOne,\eTwo)$. Apply <a href="constrained-optimization.html#constrained-optimization-with-equality-constraints-2">Recipe #1</a>.</p>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 1</div>
+              <div class="flip-body">
+                  Write the corresponding Lagrangian.
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 1</div>
+              <div class="flip-body">
+                  $$\mathcal{L}=\ln c_0+\delta\ln c_1+\delta^2\ln c_2-\lambda\paren{c_0+p_1c_1+p_2c_2-\paren{\income}}.$$
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 2</div>
+              <div class="flip-body">
+                  Obtain the first-order conditions for $c_0$, $c_1$, $c_2$, and $\lambda$.
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 2</div>
+              <div class="flip-body">
+                  The first-order conditions are
+                  $$\begin{aligned}
+                  \diff{\mathcal{L}}{c_0}&=\frac{1}{c_0}-\lambda=0,\\
+                  \diff{\mathcal{L}}{c_1}&=\frac{\delta}{c_1}-\lambda p_1=0,\\
+                  \diff{\mathcal{L}}{c_2}&=\frac{\delta^2}{c_2}-\lambda p_2=0,\\
+                  \diff{\mathcal{L}}{\lambda}&=-\paren{c_0+p_1c_1+p_2c_2-\paren{\income}}=0.
+                  \end{aligned}$$
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 3</div>
+              <div class="flip-body">
+                  If you substitute the values of $c_1$ and $c_2$ you obtained in Problem 2, what values do you obtain for $c_0$ and $\lambda$?
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 3</div>
+              <div class="flip-body">
+                  The first-order condition for $c_1$ gives $\lambda=\dfrac{\delta}{p_1c_1}$. Substituting
+                  $c_1=\dfrac{\delta\,\paren{\income}}{(1+\delta+\delta^2)\,p_1}$ and then using the first-order condition for $c_0$, $c_0=\dfrac{1}{\lambda}$:
+                  $$\lambda=\frac{1+\delta+\delta^2}{\income},\qquad c_0=\frac{\income}{1+\delta+\delta^2}.$$
+                  The value of $c_2$ gives the same $\lambda$, and the budget constraint holds:
+                  $p_1c_1+p_2c_2=(\delta+\delta^2)\,c_0$, so $c_0+p_1c_1+p_2c_2=(1+\delta+\delta^2)\,c_0=\income$.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem 4: Inequality constraints (Recipe #2), Problem 3 with the budget as an inequality -->
+  <section class="frame" id="practice-recipe-2">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Optimization with Inequality Constraints</h2>
+      <p class="frame-subtitle">Problem 4</p>
+    </div>
+    <div class="frame-content">
+      <p>Same as Problem 3, with endowment $e=(\eZero,\eOne,\eTwo)$, but now we do not assume that the budget constraint holds with equality:
+          $$c_0+p_1c_1+p_2c_2\le\income.$$</p>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 1</div>
+              <div class="flip-body">
+                  If, in a utility maximization problem, the solution is such that the budget constraint is slack, $c_0+p_1c_1+p_2c_2\lt\income$, what can we say about $\lambda$?
+                  <ol type="a">
+                  <li>$\lambda=0$</li>
+                  <li>$\lambda\lt 0$</li>
+                  <li>$\lambda\gt 0$</li>
+                  </ol>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 1</div>
+              <div class="flip-body">
+                  (a) $\lambda=0$.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 2</div>
+              <div class="flip-body">
+                  Applying <a href="inequality-constraints.html#optimization-with-inequality-constraints-3">Recipe #2</a> and assuming $\lambda=0$, what are the corresponding first-order conditions?
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 2</div>
+              <div class="flip-body">
+                  Setting $\lambda=0$ in the Lagrangian leaves the discounted utility, and the variables are $c_0$, $c_1$, and $c_2$:
+                  $$\begin{aligned}
+                  \diff{\mathcal{L}}{c_0}&=\frac{1}{c_0}=0,\\
+                  \diff{\mathcal{L}}{c_1}&=\frac{\delta}{c_1}=0,\\
+                  \diff{\mathcal{L}}{c_2}&=\frac{\delta^2}{c_2}=0.
+                  \end{aligned}$$
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 3</div>
+              <div class="flip-body">
+                  Applying Recipe #2, why will $\lambda=0$ never correspond to a solution of this problem? Please use the first-order conditions in your argument.
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 3</div>
+              <div class="flip-body">
+                  For every $c_0\gt 0$, $\frac{1}{c_0}\gt 0$, so the first condition never holds (and neither
+                  do the other two, since $\frac{\delta}{c_1}\gt 0$ and $\frac{\delta^2}{c_2}\gt 0$). The case
+                  $\lambda=0$ has no solution, so by Recipe #2 we must consider $\lambda\gt 0$: the budget
+                  constraint binds. The marginal utility of consumption is always positive, so the consumer
+                  never leaves income unspent.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem 5: The value function and the envelope trick -->
+  <section class="frame" id="practice-value-function">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">The Value Function and the Envelope Trick</h2>
+      <p class="frame-subtitle">Problem 5</p>
+    </div>
+    <div class="frame-content">
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 1</div>
+              <div class="flip-body">
+                  What is the <a href="value-function.html#the-value-function">value function</a> of the consumer&apos;s maximization problem with the same endowment as before, $e=(\eZero,\eOne,\eTwo)$? Notice that it should be a function of $p_1$ and $p_2$.
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 1</div>
+              <div class="flip-body">
+                  Substitute the optimal choices from Problems 2 and 3 into the discounted utility:
+                  $$V(p_1,p_2)=\ln\frac{\income}{1+\delta+\delta^2}+\delta\ln\frac{\delta\,\paren{\income}}{(1+\delta+\delta^2)\,p_1}+\delta^2\ln\frac{\delta^2\paren{\income}}{(1+\delta+\delta^2)\,p_2}.$$
+                  Collecting the logarithms of income,
+                  $$V(p_1,p_2)=(1+\delta+\delta^2)\ln\frac{\income}{1+\delta+\delta^2}+(\delta+2\delta^2)\ln\delta-\delta\ln p_1-\delta^2\ln p_2.$$
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 2</div>
+              <div class="flip-body">
+                  Using the Lagrangian you wrote in Problem 3, what is $\diff{\mathcal{L}(c_0,c_1,c_2,\lambda,p_1,p_2)}{p_1}$?
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 2</div>
+              <div class="flip-body">
+                  The price $p_1$ enters the Lagrangian twice: in the cost of $c_1$ and in the value of the endowment $e_1=\eOne$. So
+                  $$\diff{\mathcal{L}}{p_1}=-\lambda\paren{c_1-\eOne}=\lambda\paren{\eOne-c_1}.$$
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 3</div>
+              <div class="flip-body">
+                  The expression $e_1-c_1$ is the individual net supply of good $c_1$, while $c_1-e_1$ is the net demand. Using the values of $\lambda$ and $c_1$ that we obtained in the previous questions and the given value of $e_1$, what is $\lambda\paren{e_1-c_1}$? Now compare this value with $\diff{V}{p_1}$, where $V$ is the value function you obtained in question 1.
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 3</div>
+              <div class="flip-body">
+                  With $\lambda=\frac{1+\delta+\delta^2}{\income}$ and $c_1=\frac{\delta\,\paren{\income}}{(1+\delta+\delta^2)\,p_1}$,
+                  $$\lambda\paren{e_1-c_1}=\frac{1+\delta+\delta^2}{\income}\paren{\eOne-\frac{\delta\,\paren{\income}}{(1+\delta+\delta^2)\,p_1}}=\frac{(1+\delta+\delta^2)\,\eOne}{\income}-\frac{\delta}{p_1}.$$
+                  Differentiating the value function of question 1,
+                  $$\diff{V}{p_1}=(1+\delta+\delta^2)\,\frac{\eOne}{\income}-\frac{\delta}{p_1}.$$
+                  The two are equal. This is the <a href="value-function.html#the-envelope-theorem">envelope trick</a>: the derivative of the value function with respect to $p_1$ equals the partial derivative of the Lagrangian, evaluated at the solution.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 4</div>
+              <div class="flip-body">
+                  Remember that $\lambda$ is the marginal value of income and $\diff{V}{p_1}$ is the marginal effect on utility of an increase in the price $p_1$ of good $c_1$. Relate this to whether the individual is a net supplier of good $c_1$, $e_1-c_1\gt 0$, or a net demander of good $c_1$, $c_1-e_1\gt 0$.
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 4</div>
+              <div class="flip-body">
+                  By the envelope trick, $\diff{V}{p_1}=\lambda\paren{e_1-c_1}$, and $\lambda\gt 0$ (Problem 4). A rise $dp_1$ in the
+                  price changes the value of what the individual sells or buys of good $c_1$ by $\paren{e_1-c_1}dp_1$, and $\lambda$ converts
+                  that change in income into utility. So:
+                  <ul>
+                  <li>A net supplier ($e_1-c_1\gt 0$) gains from a higher $p_1$: $\diff{V}{p_1}\gt 0$. The units it sells are worth more.</li>
+                  <li>A net demander ($c_1-e_1\gt 0$) loses from a higher $p_1$: $\diff{V}{p_1}\lt 0$. The units it buys cost more.</li>
+                  <li>If $c_1=e_1$, a small change in $p_1$ has no first-order effect on utility.</li>
+                  </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem 6: Contingent markets. Bella's endowment is drawn at random too:
+       \bZero, \bOne, \bTwo, with value \incomeB; \tot* and \incomeTot are the totals. -->
+  <section class="frame" id="practice-contingent-markets">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Contingent Markets</h2>
+      <p class="frame-subtitle">Problem 6</p>
+    </div>
+    <div class="frame-content">
+      <p>Abel has the same endowment as before, $e^A=(\eZero,\eOne,\eTwo)$, and Bella has endowment
+      $e^B=(\bZero,\bOne,\bTwo)$. Both have discounted utility $\ln c_0+\delta\ln c_1+\delta^2\ln c_2$.
+      With prices $(1,p_1,p_2)$, their demands are
+      $$\begin{aligned}
+        c_0^A&=\frac{\income}{1+\delta+\delta^2}, & c_1^A&=\frac{\delta\paren{\income}}{(1+\delta+\delta^2)\,p_1}, & c_2^A&=\frac{\delta^2\paren{\income}}{(1+\delta+\delta^2)\,p_2},\\
+        c_0^B&=\frac{\incomeB}{1+\delta+\delta^2}, & c_1^B&=\frac{\delta\paren{\incomeB}}{(1+\delta+\delta^2)\,p_1}, & c_2^B&=\frac{\delta^2\paren{\incomeB}}{(1+\delta+\delta^2)\,p_2}.
+      \end{aligned}$$</p>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 1</div>
+              <div class="flip-body">
+                  Write the market clearing conditions for the markets for $c_0$ and for $c_1$.
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 1</div>
+              <div class="flip-body">
+                  Market for $c_0$, $c_0^A+c_0^B=e_0^A+e_0^B$:
+                  $$\frac{\income}{1+\delta+\delta^2}+\frac{\incomeB}{1+\delta+\delta^2}=\eZero+\bZero\iff\frac{\incomeTot}{1+\delta+\delta^2}=\totZero.$$
+                  Market for $c_1$, $c_1^A+c_1^B=e_1^A+e_1^B$:
+                  $$\frac{\delta\paren{\incomeTot}}{(1+\delta+\delta^2)\,p_1}=\totOne.$$
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 2</div>
+              <div class="flip-body">
+                  What are the equilibrium values of $p_1$ and $p_2$?
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 2</div>
+              <div class="flip-body">
+                  The market for $c_0$ gives $\incomeTot=\totZero\,(1+\delta+\delta^2)$. Substituting into the market for $c_1$,
+                  $$\frac{\totZero\,\delta}{p_1}=\totOne\iff p_1=\frac{\totZero\,\delta}{\totOne}=\pOneEq.$$
+                  Back in the market for $c_0$, $\totTwo\,p_2=\totZero\,(\delta+\delta^2)-\totOne\,p_1=\totZero\,\delta^2$, so
+                  $$p_2=\frac{\totZero\,\delta^2}{\totTwo}=\pTwoEq.$$
+                  The market for $c_2$ then clears by Walras&apos; law.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem 7: Efficiency. Two periods, mirror-image endowments drawn at random:
+       Abel (\effX, \effY), Bella (\effY, \effX), total \effT in both periods. -->
+  <section class="frame" id="practice-efficiency">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Efficiency</h2>
+      <p class="frame-subtitle">Problem 7</p>
+    </div>
+    <div class="frame-content">
+      <p>Now there are only two periods, $t=0,1$. Abel&apos;s endowment is $e^A=(\effX,\effY)$ and Bella&apos;s
+      is $e^B=(\effY,\effX)$: the endowments are symmetric, and the total endowment is $\effT$ in both
+      periods. Both have discounted utility $\ln c_0+\delta\ln c_1$.</p>
+      <p>To simplify things, we write Bella&apos;s consumption as the residual of the total endowment minus
+      Abel&apos;s consumption:
+      $$c_0^B=\effT-c_0^A,\qquad c_1^B=\effT-c_1^A.$$</p>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 1</div>
+              <div class="flip-body">
+                  Let $u^A=\ln c_0^A+\delta\ln c_1^A$ and $u^B=\ln c_0^B+\delta\ln c_1^B$ be Abel&apos;s and Bella&apos;s discounted utilities. Which of the following can be considered <a href="efficiency.html#welfare-functions">welfare functions</a>? (Mark all that apply.)
+                  <ol type="a">
+                    <li>$W(u^A,u^B)=u^A-u^B$</li>
+                    <li>$W(u^A,u^B)=u^A+u^B$</li>
+                    <li>$W(u^A,u^B)=\min\set{u^A,u^B}$</li>
+                    <li>$W(u^A,u^B)=u^A\cdot u^B$</li>
+                    <li>$W(u^A,u^B)=\tfrac13\,u^A+\tfrac23\,u^B$</li>
+                    <li>$W(u^A,u^B)=u^A$</li>
+                  </ol>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 1</div>
+              <div class="flip-body">
+                  Correct: (b) and (e). A welfare function must be strictly increasing in every player&apos;s utility, $\diff{W}{u^A}\gt 0$ and $\diff{W}{u^B}\gt 0$, and both sums are.
+                  <ul>
+                    <li>(a) decreases with Bella&apos;s utility: $\diff{W}{u^B}=-1$.</li>
+                    <li>(c) does not change with the larger of the two utilities.</li>
+                    <li>(d) has $\diff{W}{u^A}=u^B$, which is negative whenever Bella&apos;s utility is negative, as it is when her consumption is below $1$ in both periods.</li>
+                    <li>(f) ignores Bella: $\diff{W}{u^B}=0$.</li>
+                  </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 2</div>
+              <div class="flip-body">
+                  Take the welfare function $W=\tfrac12\,u^A+\tfrac12\,u^B$. Since Bella&apos;s consumption is the residual, everything is a function of Abel&apos;s consumption $\paren{c_0^A,c_1^A}$. Use <a href="unconstrained-optimization.html#solving-unconstrained-optimization-problems">Recipe #0</a> to maximize $W$ by choosing Abel&apos;s consumption.
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 2</div>
+              <div class="flip-body">
+                  Substituting $c_t^B=\effT-c_t^A$,
+                  $$W\paren{c_0^A,c_1^A}=\tfrac12\paren{\ln c_0^A+\delta\ln c_1^A}+\tfrac12\paren{\ln\paren{\effT-c_0^A}+\delta\ln\paren{\effT-c_1^A}}.$$
+                  The first-order conditions are
+                  $$\begin{aligned}
+                    \diff{W}{c_0^A}&=\tfrac12\paren{\frac{1}{c_0^A}-\frac{1}{\effT-c_0^A}}=0,\\
+                    \diff{W}{c_1^A}&=\tfrac12\,\delta\paren{\frac{1}{c_1^A}-\frac{1}{\effT-c_1^A}}=0.
+                  \end{aligned}$$
+                  Each condition says $c_t^A=\effT-c_t^A$, and $\delta$ cancels from the second. So
+                  $$c_0^A=c_1^A=\effHalf,\qquad c_0^B=c_1^B=\effHalf:$$
+                  Abel and Bella consume the same amount, half of the total endowment, in each period.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 3</div>
+              <div class="flip-body">
+                  What is the value of the players&apos; utility at this symmetric efficient point?
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 3</div>
+              <div class="flip-body">
+                  Both consume $\effHalf$ in each period, so
+                  $$u^A=u^B=\ln\paren{\effHalf}+\delta\ln\paren{\effHalf}=(1+\delta)\ln\paren{\effHalf}.$$
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 4</div>
+              <div class="flip-body">
+                  Maximize Abel&apos;s utility subject to Bella&apos;s utility being greater than or equal to its level at the symmetric efficient point:
+                  $$\max_{c_0^A,c_1^A}\;\ln c_0^A+\delta\ln c_1^A\quad\st\quad\ln\paren{\effT-c_0^A}+\delta\ln\paren{\effT-c_1^A}\ge(1+\delta)\ln\paren{\effHalf}.$$
+                  Before you write the Lagrangian, write the constraint in the form that <a href="inequality-constraints.html#optimization-with-inequality-constraints-3">Recipe #2</a> requires: a function less than or equal to a constant. Then write the Lagrangian and the first-order conditions.
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 4</div>
+              <div class="flip-body">
+                  Multiplying the constraint by $-1$ turns it into a function less than or equal to a constant:
+                  $$-\ln\paren{\effT-c_0^A}-\delta\ln\paren{\effT-c_1^A}\le-(1+\delta)\ln\paren{\effHalf}.$$
+                  The Lagrangian is
+                  $$\begin{aligned}
+                    \mathcal{L}&=\ln c_0^A+\delta\ln c_1^A-\lambda\paren{-\ln\paren{\effT-c_0^A}-\delta\ln\paren{\effT-c_1^A}+(1+\delta)\ln\paren{\effHalf}}\\
+                    &=\ln c_0^A+\delta\ln c_1^A+\lambda\paren{\ln\paren{\effT-c_0^A}+\delta\ln\paren{\effT-c_1^A}-(1+\delta)\ln\paren{\effHalf}}.
+                  \end{aligned}$$
+                  The first-order conditions are
+                  $$\begin{aligned}
+                    \diff{\mathcal{L}}{c_0^A}&=\frac{1}{c_0^A}-\frac{\lambda}{\effT-c_0^A}=0,\\
+                    \diff{\mathcal{L}}{c_1^A}&=\frac{\delta}{c_1^A}-\frac{\lambda\,\delta}{\effT-c_1^A}=0,
+                  \end{aligned}$$
+                  and, in the case $\lambda\gt 0$,
+                  $$\diff{\mathcal{L}}{\lambda}=\ln\paren{\effT-c_0^A}+\delta\ln\paren{\effT-c_1^A}-(1+\delta)\ln\paren{\effHalf}=0.$$
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 5</div>
+              <div class="flip-body">
+                  Argue verbally that the solution of the maximization problem in question 4 has to be an <a href="efficiency.html#pareto-efficiency-2">efficient</a> allocation. Use the maximization problem, but also the fact that the utility functions have positive marginal utilities, so more is always better.
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 5</div>
+              <div class="flip-body">
+                  Suppose the solution were not efficient. Then some other feasible allocation makes one consumer better off without making the other worse off. There are two cases.
+                  <ul>
+                    <li><em>Abel is better off and Bella is not worse off.</em> Bella&apos;s utility is still at least $(1+\delta)\ln\paren{\effHalf}$, so this allocation satisfies the constraint and gives Abel more utility. That contradicts the allocation being the solution of the maximization problem.</li>
+                    <li><em>Bella is better off and Abel is not worse off.</em> Bella&apos;s utility is then strictly above the constraint level, so we can take a little consumption from Bella and give it to Abel while keeping her above that level. Since marginal utilities are positive, more is better and Abel&apos;s utility rises. Again Abel gets more utility within the constraint, a contradiction.</li>
+                  </ul>
+                  Either way we contradict the maximization, so the solution is efficient.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 6</div>
+              <div class="flip-body">
+                  Compare the first-order conditions of the two problems: the maximization of the welfare function $W=\tfrac12\,u^A+\tfrac12\,u^B$ with Recipe #0 (question 2), and the constrained maximization of Abel&apos;s utility (question 4).
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 6</div>
+              <div class="flip-body">
+                  Multiplied by $2$, the first-order conditions of question 2 are
+                  $$\frac{1}{c_0^A}-\frac{1}{\effT-c_0^A}=0,\qquad \frac{\delta}{c_1^A}-\frac{\delta}{\effT-c_1^A}=0.$$
+                  Those of question 4 are the same, except that $\lambda$ multiplies Bella&apos;s marginal utilities:
+                  $$\frac{1}{c_0^A}-\frac{\lambda}{\effT-c_0^A}=0,\qquad \frac{\delta}{c_1^A}-\frac{\lambda\,\delta}{\effT-c_1^A}=0.$$
+                  So the first-order conditions of question 4 are those of maximizing the welfare function $u^A+\lambda\,u^B$: the multiplier plays the role of Bella&apos;s welfare weight relative to Abel&apos;s. In both problems, the ratio of Abel&apos;s to Bella&apos;s marginal utility is the same in both periods.
+                  With $\lambda=1$ the two systems coincide. The symmetric point $c_0^A=c_1^A=\effHalf$ solves them and satisfies Bella&apos;s constraint with equality, so it is also the solution of question 4, with $\lambda=1$.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem 8: Financial markets. Back to three periods and Abel's endowment;
+       \incomeFin is the endowment's value discounted at the bonds' returns. -->
+  <section class="frame" id="practice-financial-markets">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Financial Markets</h2>
+      <p class="frame-subtitle">Problem 8</p>
+    </div>
+    <div class="frame-content">
+      <p>Back to the three-period story, $t=0,1,2$, with Abel&apos;s endowment $e=(\eZero,\eOne,\eTwo)$. There are
+      two financial assets:</p>
+      <ul>
+        <li>Short-term bond $X$: pays $r_X$ per dollar invested from $t=0$ to $t=1$.</li>
+        <li>Long-term (zero-coupon) bond $Y$: pays $r_Y$ per dollar invested from $t=0$ to $t=2$.</li>
+      </ul>
+      <p>Here $r_X$ and $r_Y$ are the gross rates of return of the two bonds. Let $z_X$ and $z_Y$ be the dollar
+      amounts that Abel invests in each bond: $z\gt 0$ means Abel buys the bond, and $z\lt 0$ means Abel sells it.</p>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 1</div>
+              <div class="flip-body">
+                  Write the three spot budget constraints, using $1$ as the price of consumption and $r_X$ and $r_Y$ as the returns of the bonds.
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 1</div>
+              <div class="flip-body">
+                  $$\begin{aligned}
+                    t=0:&\quad c_0+z_X+z_Y=\eZero,\\
+                    t=1:&\quad c_1=\eOne+r_X\,z_X,\\
+                    t=2:&\quad c_2=\eTwo+r_Y\,z_Y.
+                  \end{aligned}$$
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 2</div>
+              <div class="flip-body">
+                  Use the spot budget constraints to write the discounted utility as a function of $z_X$ and $z_Y$ (eliminate $c_0$, $c_1$, and $c_2$).
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 2</div>
+              <div class="flip-body">
+                  $$U(z_X,z_Y)=\ln\paren{\eZero-z_X-z_Y}+\delta\ln\paren{\eOne+r_X\,z_X}+\delta^2\ln\paren{\eTwo+r_Y\,z_Y}.$$
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 3</div>
+              <div class="flip-body">
+                  Use <a href="unconstrained-optimization.html#solving-unconstrained-optimization-problems">Recipe #0</a> and obtain the first-order conditions with respect to $z_X$ and $z_Y$.
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 3</div>
+              <div class="flip-body">
+                  $$\begin{aligned}
+                    \diff{U}{z_X}&=-\frac{1}{\eZero-z_X-z_Y}+\frac{\delta\,r_X}{\eOne+r_X\,z_X}=0,\\
+                    \diff{U}{z_Y}&=-\frac{1}{\eZero-z_X-z_Y}+\frac{\delta^2\,r_Y}{\eTwo+r_Y\,z_Y}=0.
+                  \end{aligned}$$
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 4</div>
+              <div class="flip-body">
+                  Solve the first-order conditions and obtain the asset demands $z_X$ and $z_Y$.
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 4</div>
+              <div class="flip-body">
+                  Write $c_0=\eZero-z_X-z_Y$, $c_1=\eOne+r_X\,z_X$, and $c_2=\eTwo+r_Y\,z_Y$. The first-order conditions say $c_1=\delta\,r_X\,c_0$ and $c_2=\delta^2\,r_Y\,c_0$, so
+                  $$z_X=\delta\,c_0-\frac{\eOne}{r_X},\qquad z_Y=\delta^2\,c_0-\frac{\eTwo}{r_Y}.$$
+                  Substituting into $c_0=\eZero-z_X-z_Y$ gives $(1+\delta+\delta^2)\,c_0=\incomeFin$, so the asset demands are
+                  $$z_X=\frac{\delta\paren{\incomeFin}}{1+\delta+\delta^2}-\frac{\eOne}{r_X},\qquad z_Y=\frac{\delta^2\paren{\incomeFin}}{1+\delta+\delta^2}-\frac{\eTwo}{r_Y}.$$
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 5</div>
+              <div class="flip-body">
+                  Now Abel and Bella trade the two bonds, with their endowments from Problem 6, $e^A=(\eZero,\eOne,\eTwo)$ and $e^B=(\bZero,\bOne,\bTwo)$. If the equilibrium return rate for asset $X$ is $r_X=\rXEq$, what must the equilibrium return rate for asset $Y$ be?
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 5</div>
+              <div class="flip-body">
+                  The two bonds replicate the contingent markets of Problem 6: a dollar invested in bond $X$ at $t=0$ buys $r_X$ units of $c_1$, so the price of $c_1$ in units of $c_0$ is $p_1=\frac{1}{r_X}$, and likewise $p_2=\frac{1}{r_Y}$. The equilibrium prices of Problem 6, $p_1=\pOneEq$ and $p_2=\pTwoEq$, give $r_X=\frac{1}{p_1}=\rXEq$, as stated, and
+                  $$r_Y=\frac{1}{p_2}=\rYEq.$$
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem 9: The financial structure (arbitrage). Problem 8 plus bond H from t=1 to t=2. -->
+  <section class="frame" id="practice-financial-structure">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">The Financial Structure</h2>
+      <p class="frame-subtitle">Problem 9</p>
+    </div>
+    <div class="frame-content">
+      <p>Same economy as in Problem 8, with a third financial asset, bond $H$, traded at $t=1$:</p>
+      <ul>
+        <li>Short-term bond $X$: pays $r_X$ per dollar invested from $t=0$ to $t=1$.</li>
+        <li>Short-term bond $H$: pays $r_H$ per dollar invested from $t=1$ to $t=2$.</li>
+        <li>Long-term (zero-coupon) bond $Y$: pays $r_Y$ per dollar invested from $t=0$ to $t=2$.</li>
+      </ul>
+      <p>The returns are $r_X=\retX$, $r_Y=\retY$, and $r_H=\retH$.</p>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 1</div>
+              <div class="flip-body">
+                  Let $w=(w_X,w_Y,w_H)$ be a portfolio. What is the payoff of the portfolio at $t=0$? At $t=1$? At $t=2$?
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 1</div>
+              <div class="flip-body">
+                  The returns of the assets are $\mathbf r_X=(-1,\retX,0)$, $\mathbf r_Y=(-1,0,\retY)$, and $\mathbf r_H=(0,-1,\retH)$, so the payoffs are
+                  $$\begin{aligned}
+                    t=0:&\quad -w_X-w_Y,\\
+                    t=1:&\quad \retX\,w_X-w_H,\\
+                    t=2:&\quad \retY\,w_Y+\retH\,w_H.
+                  \end{aligned}$$
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 2</div>
+              <div class="flip-body">
+                  Can you find values of $w_X$, $w_Y$, and $w_H$ such that the payoff at $t=0$ is zero but the payoffs at $t=1$ and $t=2$ are positive?
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 2</div>
+              <div class="flip-body">
+                  Yes, because $r_X\,r_H=\prodXH\cmpXH\retY=r_Y$. For example, take $w=(w_X,w_Y,w_H)=(\wX,\wY,\wH)$. Its payoffs are
+                  $$\begin{aligned}
+                    t=0:&\quad \payZeroExpr,\\
+                    t=1:&\quad \payOneExpr,\\
+                    t=2:&\quad \payTwoExpr.
+                  \end{aligned}$$
+                  <span class="arb-pos">Buy bond $X$ and sell bond $Y$ in equal dollar amounts, so nothing is paid at $t=0$; at $t=1$, reinvest most of bond $X$&apos;s payoff in bond $H$. Since $r_X\,r_H\gt r_Y$, rolling over the two short-term bonds pays more than the long-term bond.</span><span class="arb-neg">Sell bond $X$ and buy bond $Y$ in equal dollar amounts, so nothing is paid at $t=0$; at $t=1$, sell bond $H$ to cover more than what bond $X$ costs. Since $r_X\,r_H\lt r_Y$, the long-term bond pays more than rolling over the two short-term bonds.</span>
+                  Such a portfolio is an <a href="arbitrage.html#arbitrage-2">arbitrage opportunity</a>.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Nav -->
+  <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
+    <a href="midterm-02.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Midterm 2</a>
+    <a href="index.html" style="color: var(--crane-blue); text-decoration: none;">ECON 510 &rarr;</a>
+  </div>
+
+  <!-- KaTeX -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="js/katex-macros.js"></script>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="js/scroll-animations.js"></script>
+
+  <script>
+    // Random endowment e = (e0, e1, e2), integers 1 to 9, redrawn on every page load.
+    // The math uses the macros below, so the questions and answers show the same numbers.
+    const draw = () => 1 + Math.floor(Math.random() * 9);
+    const e = [draw(), draw(), draw()];
+    const term = (n, p) => (n === 1 ? '' : n) + p;
+    katexMacros['\\eZero'] = String(e[0]);
+    katexMacros['\\eOne'] = String(e[1]);
+    katexMacros['\\eTwo'] = String(e[2]);
+    katexMacros['\\income'] = e[0] + '+' + term(e[1], 'p_1') + '+' + term(e[2], 'p_2');
+
+    // Bella's endowment (Problem 6): also 1 to 9, redrawn if it equals Abel's.
+    let b;
+    do { b = [draw(), draw(), draw()]; } while (b.every((x, i) => x === e[i]));
+    const tot = e.map((x, i) => x + b[i]);
+    katexMacros['\\bZero'] = String(b[0]);
+    katexMacros['\\bOne'] = String(b[1]);
+    katexMacros['\\bTwo'] = String(b[2]);
+    katexMacros['\\incomeB'] = b[0] + '+' + term(b[1], 'p_1') + '+' + term(b[2], 'p_2');
+    katexMacros['\\totZero'] = String(tot[0]);
+    katexMacros['\\totOne'] = String(tot[1]);
+    katexMacros['\\totTwo'] = String(tot[2]);
+    katexMacros['\\incomeTot'] = tot[0] + '+' + tot[1] + 'p_1+' + tot[2] + 'p_2';
+    // Equilibrium prices p1 = tot0*delta/tot1 and p2 = tot0*delta^2/tot2, in lowest terms
+    const gcd = (x, y) => (y ? gcd(y, x % y) : x);
+    const priceTeX = (n, d, dl) => {
+      const g = gcd(n, d), num = (n / g === 1 ? '' : n / g) + dl;
+      return d / g === 1 ? num : '\\frac{' + num + '}{' + d / g + '}';
+    };
+    katexMacros['\\pOneEq'] = priceTeX(tot[0], tot[1], '\\delta');
+    katexMacros['\\pTwoEq'] = priceTeX(tot[0], tot[2], '\\delta^2');
+    // Equilibrium gross returns r_X = 1/p1 = tot1/(tot0*delta), r_Y = 1/p2 = tot2/(tot0*delta^2)
+    const returnTeX = (n, d, dl) => {
+      const g = gcd(n, d), den = (d / g === 1 ? '' : d / g) + dl;
+      return '\\frac{' + n / g + '}{' + den + '}';
+    };
+    katexMacros['\\rXEq'] = returnTeX(tot[1], tot[0], '\\delta');
+    katexMacros['\\rYEq'] = returnTeX(tot[2], tot[0], '\\delta^2');
+
+    // Problem 7: two periods, mirror-image endowments (x, y) and (y, x) with x != y,
+    // so the total endowment x + y is the same in both periods.
+    let x, y;
+    do { x = draw(); y = draw(); } while (x === y);
+    katexMacros['\\effX'] = String(x);
+    katexMacros['\\effY'] = String(y);
+    katexMacros['\\effT'] = String(x + y);
+    katexMacros['\\effHalf'] = (x + y) % 2 === 0 ? String((x + y) / 2) : '\\tfrac{' + (x + y) + '}{2}';
+
+    // Problem 8: Abel's endowment valued with the bonds' gross returns r_X and r_Y.
+    katexMacros['\\incomeFin'] = e[0] + '+\\frac{' + e[1] + '}{r_X}+\\frac{' + e[2] + '}{r_Y}';
+
+    // Problem 9: returns drawn from 2 to 9, redrawn while rX*rH = rY, so there is always
+    // an arbitrage. The example portfolio w = (2s*rH, -2s*rH, 2s*rY + 1), s = sign(rX*rH - rY),
+    // pays 0 at t=0, 2|rX*rH - rY| - 1 at t=1, and rH at t=2.
+    const draw2 = () => 2 + Math.floor(Math.random() * 8);
+    let rX, rY, rH;
+    do { rX = draw2(); rY = draw2(); rH = draw2(); } while (rX * rH === rY);
+    const sgn = rX * rH > rY ? 1 : -1;
+    const w = [2 * sgn * rH, -2 * sgn * rH, 2 * sgn * rY + 1];
+    const pw = n => (n < 0 ? '(' + n + ')' : String(n));
+    katexMacros['\\retX'] = String(rX);
+    katexMacros['\\retY'] = String(rY);
+    katexMacros['\\retH'] = String(rH);
+    katexMacros['\\prodXH'] = String(rX * rH);
+    katexMacros['\\cmpXH'] = sgn > 0 ? '\\gt' : '\\lt';
+    katexMacros['\\wX'] = String(w[0]);
+    katexMacros['\\wY'] = String(w[1]);
+    katexMacros['\\wH'] = String(w[2]);
+    katexMacros['\\payZeroExpr'] = '-' + pw(w[0]) + '-' + pw(w[1]) + '=0';
+    katexMacros['\\payOneExpr'] = rX + '\\cdot' + pw(w[0]) + '-' + pw(w[2]) + '=' + (rX * w[0] - w[2]);
+    katexMacros['\\payTwoExpr'] = rY + '\\cdot' + pw(w[1]) + '+' + rH + '\\cdot' + pw(w[2]) + '=' + (rY * w[1] + rH * w[2]);
+    document.querySelectorAll(sgn > 0 ? '.arb-neg' : '.arb-pos').forEach(el => { el.style.display = 'none'; });
+
+    renderMathInElement(document.body, {
+      delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}],
+      macros: katexMacros, throwOnError: false
+    });
+  </script>
+
+  <script>
+    // Flip cards: toggle .flipped on click (or Enter/Space), and size the card to
+    // the visible face; refresh ScrollTrigger once the height has settled, since
+    // everything below the card moves. Links inside a card navigate without flipping it.
+    document.querySelectorAll('.flip-card').forEach(card => {
+      const inner = card.querySelector('.flip-inner');
+      const front = card.querySelector('.flip-front');
+      const back = card.querySelector('.flip-back');
+      const fit = () => {
+        const face = card.classList.contains('flipped') ? back : front;
+        inner.style.height = face.offsetHeight + 'px';
+      };
+      const flip = () => {
+        const flipped = card.classList.toggle('flipped');
+        front.setAttribute('aria-hidden', flipped ? 'true' : 'false');
+        back.setAttribute('aria-hidden', flipped ? 'false' : 'true');
+        fit();
+      };
+      card.addEventListener('click', e => { if (!e.target.closest('a')) flip(); });
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); }
+      });
+      inner.addEventListener('transitionend', e => {
+        if (e.propertyName === 'height') ScrollTrigger.refresh();
+      });
+      new ResizeObserver(fit).observe(front);
+      new ResizeObserver(fit).observe(back);
+      fit();
+    });
+  </script>
+
+</body>
+</html>
