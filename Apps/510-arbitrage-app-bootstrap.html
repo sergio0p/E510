@@ -288,7 +288,9 @@
                 r2c = (lambda + e) * r2a + (1 - lambda) * r2b;
                 arbitrageExists = true;
 
-                if (lambda + e > 0) {
+                // Portfolio (−(λ+e), −(1−λ), 1) pays e at s_0 and zero elsewhere,
+                // so the sign of e decides which side is the arbitrage.
+                if (e > 0) {
                     arbitragePortfolio = {
                         za: -(lambda + e),
                         zb: -(1 - lambda),
