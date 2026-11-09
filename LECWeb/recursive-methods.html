@@ -153,6 +153,18 @@ V(K)&=\sum_{t=0}^{\infty}\delta^{t}u(c_t^\ast(K))\\
 V(K)=&\;u(c^\ast(K))+\delta\cdot u(c^\ast(K-c^\ast(K)))+\\
 &+\delta^{2}\cdot u(c^\ast(K-c^\ast(K)-c^\ast(K-c^\ast(K))))+\cdots
 \end{aligned}$$
+      <p>Why? Observe that:</p>
+      <ul>
+        <li>the stock of rations in the next period is what remains of the current stock after current consumption: $K_{t+1}=K_t-c_t$;</li>
+        <li>consumption in every period is chosen by the policy function, evaluated at that period's stock: $c_t=c^\ast(K_t)$.</li>
+      </ul>
+      <p>Using $K_0=K$, we obtain:</p>
+      $$\begin{aligned}
+c_0&=c^\ast(K_0)=c^\ast(K)\\
+c_1&=c^\ast(K_1)=c^\ast(K_0-c_0)=c^\ast(K-c^\ast(K))\\
+c_2&=c^\ast(K_2)=c^\ast(K_1-c_1)=c^\ast(K-c^\ast(K)-c^\ast(K-c^\ast(K)))
+\end{aligned}$$
+      <p>and so on.</p>
       <p>Conversely, if we know the value function we can obtain the policy function as the solution of the following first order condition:</p>
       <div class="key-equation">
         <div>
