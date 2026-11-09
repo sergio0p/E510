@@ -12,6 +12,31 @@
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="css/beamer-theme.css">
+
+  <style>
+    /* Square-root-example flowchart; tikz-svg sets the viewBox. */
+    .flow-fig { display: block; width: 100%; max-width: 630px; height: auto; margin: 1rem auto 0.25rem; }
+    .flow-caption { text-align: center; font-size: 0.85em; margin-top: 0; }
+
+    /* Safari/WebKit does not paint `position: relative` content inside
+       <foreignObject>, so KaTeX labels in tikz-svg figures lay out correctly but
+       never appear. KaTeX also emits a MathML twin, which WebKit renders natively,
+       so on WebKit show the twin and hide the HTML. Guarded by
+       -webkit-backdrop-filter, true only in WebKit. Same fix as efficiency.html. */
+    @supports (-webkit-backdrop-filter: blur(1px)) {
+      svg foreignObject .katex .katex-html { display: none; }
+      svg foreignObject .katex .katex-mathml {
+        position: static; clip: auto; clip-path: none; height: auto; width: auto;
+        overflow: visible; padding: 0; border: 0; opacity: 1; font-size: 1em;
+      }
+    }
+  </style>
+
+  <!-- tikz-svg: the bundle's bare 'mathjs' import must resolve; the shim
+       degrades to null stubs when window.math is absent (diagrams-only page). -->
+  <script type="importmap">
+  { "imports": { "mathjs": "./tikz-svg/examples-v2/mathjs-shim.js" } }
+  </script>
     <!-- Google Analytics -->
     <script async src="/E510/js/ga.js"></script>
 </head>
@@ -33,6 +58,7 @@
       <a href="#recursive-methods-example-3" style="margin-left: 1rem;">5. Recursive Eq.</a>
       <a href="#the-optimal-consumption-policy" style="margin-left: 1rem;">6. Optimal Policy</a>
       <a href="#solving-the-recursive-equation" style="margin-left: 1rem;">7. Solving</a>
+      <a href="#square-root-example" style="margin-left: 1rem;">8. Square Root Example</a>
     </nav>
   </section>
 
@@ -191,6 +217,33 @@ c_2&=c^\ast(K_2)=c^\ast(K_1-c_1)=c^\ast(K-c^\ast(K)-c^\ast(K-c^\ast(K)))
     </div>
   </section>
 
+  <!-- Frame 8: A Square Root Example -->
+  <section class="frame" id="square-root-example">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">A Square Root Example</h2>
+    </div>
+    <div class="frame-content">
+      <p>Now let's assume that Chuck's utility from consumption is $u(c)=\sqrt{c}$.</p>
+      <div id="sqrt-flowchart" class="flow-fig"></div>
+      <p class="flow-caption"><span id="sqrt-flow-t"></span> &nbsp;Press &rarr; for one more pass, &larr; to go back. Click the diamond to flip it.</p>
+    </div>
+  </section>
+
+  <!-- Frame 9: A Square Root Example cont. -->
+  <section class="frame" id="square-root-example-2">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">A Square Root Example</h2>
+      <p class="frame-subtitle">cont.</p>
+    </div>
+    <div class="frame-content">
+      <p>In the example above, we used the following relationships:</p>
+      <ul>
+        <li>$\displaystyle\sum_{t=0}^{\infty}\delta^{2t}=\frac{1}{1-\delta^2}$;</li>
+        <li>if $A\gt B\gt 0$, then $\sqrt{A}-\sqrt{B}\lt\sqrt{A-B}$.</li>
+      </ul>
+    </div>
+  </section>
+
   <!-- Nav -->
   <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
     <a href="midterm-02-practice.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Midterm 2 Practice</a>
@@ -295,6 +348,139 @@ c_2&=c^\ast(K_2)=c^\ast(K_1-c_1)=c^\ast(K-c^\ast(K)-c^\ast(K-c^\ast(K)))
         }
       });
     });
+  </script>
+
+  <script type="module">
+    // Value function iteration for u(c) = √c, drawn as a flowchart: terminals
+    // are stadiums, steps are rectangles, the test is a diamond. Colors follow
+    // the .key-equation boxes (cream fill, amber border, black text).
+    //
+    // Every iterate is V_t(K) = a_t·√K with a_t² = 1 + δ² + ⋯ + δ^{2t}, and
+    // the policy is g_t(K) = K / a_{t+1}². Plain ← / → step t while the figure
+    // is on screen; Shift/Alt+arrows stay with the chapter navigation in
+    // scroll-animations.js.
+    //
+    // Each step re-renders the whole figure. Node sizes are fixed floors, and
+    // the No branch is routed through two invisible corner nodes, so the
+    // layout does not move as the labels change.
+    //
+    // The decision diamond is a flip card (renderFlip): its back shows the gap
+    // |V_{t+1} − V_t| ≤ δ^{t+1}·√K, which is 0 at t = ∞. The card keeps its side
+    // across steps, so with the back up → shows the gap shrinking.
+    import { renderFlip } from './tikz-svg/dist/tikz-svg.min.js';
+
+    const MACROS = (typeof katexMacros !== 'undefined' ? katexMacros : undefined);
+    const CREAM = '#fff8e1', AMBER = '#f9a825', AMBER_DARK = '#c17900';
+    const host = document.getElementById('sqrt-flowchart');
+    const tLabel = document.getElementById('sqrt-flow-t');
+
+    // Passes run t = 0, …, T_MAX; one more → shows the limit, t = ∞ (INF).
+    // There V_∞ is a fixed point, so V_{∞+1} = V_∞ and the test answers Yes.
+    // INF must not be a reachable t + 1, hence Infinity rather than T_MAX + 1.
+    const T_MAX = 100, INF = Infinity;
+
+    // a_n² = 1 + δ² + ⋯ + δ^{2n} → 1/(1 − δ²); V_n(K) = a_n·√K
+    const S = n => n === 0 ? '1'
+      : n === 1 ? '1+\\delta^2'
+      : n === 2 ? '1+\\delta^2+\\delta^4'
+      : n === 3 ? '1+\\delta^2+\\delta^4+\\delta^6'
+      : `1+\\delta^2+\\cdots+\\delta^{${2 * n}}`;
+    const LIMIT = '\\sqrt{\\dfrac{1}{1-\\delta^2}}\\,';
+    const coef = n => (n === INF ? LIMIT : n === 0 ? '' : `\\sqrt{${S(n)}}\\,`);
+    const V = n => `${coef(n)}\\sqrt{K}`;
+    const gathered = (...lines) => `$\\begin{gathered}${lines.join('\\\\ ')}\\end{gathered}$`;
+
+    // Layout in px: one column of steps, Yes to the right, No up the left side.
+    const W = 175;                                // half-width of the step boxes
+    const Y = { start: 0, s1: 95, s2: 263, s3: 431, s4: 559 };
+    const XL = -W - 140;                          // x of the loop-back line
+    const corner = { label: ' ', fontSize: 0.01, fill: 'none', stroke: 'none',
+                     halfWidth: 0.01, halfHeight: 0.01, innerSep: 0, outerSep: 0 };
+    const terminal = { halfWidth: 36, halfHeight: 14, roundedCorners: 14 };
+
+    function draw(t) {
+      const lim = t === INF;
+      const n = lim ? INF : t + 1;                   // the next iterate's coefficient
+      const ti = lim ? '\\infty' : String(t);        // subscripts as shown
+      const ni = lim ? '\\infty+1' : String(t + 1);
+      const g = lim ? '(1-\\delta^2)\\,K' : `\\frac{K}{${S(t + 1)}}`;
+      // |V_{t+1} − V_t| = (a_{t+1} − a_t)·√K ≤ √(a_{t+1}² − a_t²)·√K = δ^{t+1}·√K
+      const gap = lim
+        ? ['\\lvert V_{\\infty+1}-V_{\\infty}\\rvert=0']
+        : [`\\lvert V_{${ni}}-V_{${ti}}\\rvert\\le\\sqrt{\\delta^{${2 * (t + 1)}}}\\,\\sqrt{K}`,
+           `=${t === 0 ? '\\delta' : `\\delta^{${t + 1}}`}\\,\\sqrt{K}`];
+      const wasFlipped = api?.cards.s4?.isFlipped() ?? false;
+      api = renderFlip(host, {
+        katexMacros: MACROS,
+        padding: 8,
+        stateStyle: {
+          shape: 'rectangle', fill: CREAM, stroke: AMBER, strokeWidth: 2,
+          labelColor: '#000', fontSize: 16, innerSep: 8,
+          fontFamily: "'Times New Roman', serif",
+        },
+        edgeStyle: { stroke: AMBER_DARK, strokeWidth: 1.5, arrow: 'stealth' },
+        states: {
+          start: { ...terminal, position: { x: 0, y: Y.start }, label: 'Start' },
+          s1: { position: { x: 0, y: Y.s1 }, halfWidth: W, halfHeight: 52,
+                label: t === 0
+                  ? gathered('\\text{Guess: Chuck consumes the entire stock}', 'V_0(K)=\\sqrt{K}')
+                  : gathered('\\text{Guess}', `V_{${ti}}(K)=${V(t)}`) },
+          s2: { position: { x: 0, y: Y.s2 }, halfWidth: W, halfHeight: 86,
+                label: gathered(
+                  `\\max_{0\\le c\\le K}\\ \\sqrt{c}+\\delta\\cdot V_{${ti}}(K-c)`,
+                  `\\text{FOC: }\\frac{1}{2\\sqrt{c}}=\\frac{\\delta\\,${coef(t)}}{2\\sqrt{K-c}}`,
+                  `g_{${ti}}(K)=${g}`) },
+          s3: { position: { x: 0, y: Y.s3 }, halfWidth: W, halfHeight: 52,
+                label: gathered(
+                  `V_{${ni}}(K)=u(g_{${ti}}(K))+\\delta\\cdot V_{${ti}}(K-g_{${ti}}(K))`,
+                  `=${V(n)}`) },
+          s4: { position: { x: 0, y: Y.s4 }, shape: 'diamond', shapeAspect: 2.5,
+                minimumWidth: 230, minimumHeight: 92,
+                label: `$V_{${ni}}=V_{${ti}}\\,?$` },
+          stop: { ...terminal, position: { x: W + 60, y: Y.s4 }, label: 'Stop' },
+          c1: { ...corner, position: { x: XL, y: Y.s4 } },
+          c2: { ...corner, position: { x: XL, y: Y.s1 } },
+        },
+        edges: [
+          { from: 'start', to: 's1' },
+          { from: 's1', to: 's2' },
+          { from: 's2', to: 's3' },
+          { from: 's3', to: 's4' },
+          { from: 's4', to: 'stop', label: 'Yes' },
+          // "No" above the edge; an invisible twin carries the second label below it.
+          { from: 's4', to: 'c1', arrow: 'none', label: 'No', labelSide: 'right' },
+          { from: 's4', to: 'c1', arrow: 'none', stroke: 'none', labelSide: 'left',
+            label: `$\\text{replace } V_{${ti}} \\text{ with } V_{${ni}}$` },
+          { from: 'c1', to: 'c2', arrow: 'none' },
+          { from: 'c2', to: 's1' },
+        ],
+        // Back of the decision card, in the .key-equation box style. Its width
+        // floor matches the widest diamond (at t = ∞), so the Yes and No edges
+        // always run under the card instead of stopping short of it.
+        flip: {
+          s4: { shape: 'rectangle', roundedCorners: 8, halfWidth: 130,
+                label: gathered(`V_{${ni}}=V_{${ti}}\\,?`, ...gap) },
+        },
+      });
+      if (wasFlipped) api.cards.s4.flip(true);
+      katex.render(`t=${ti}`, tLabel, { throwOnError: false });
+    }
+
+    let t = 0, onScreen = false, api = null;
+    new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; }, { threshold: 0.3 })
+      .observe(host);
+    document.addEventListener('keydown', e => {
+      if (!onScreen || e.shiftKey || e.altKey || e.ctrlKey || e.metaKey) return;
+      if (e.key === 'ArrowRight' && t !== INF) t = t === T_MAX ? INF : t + 1;
+      else if (e.key === 'ArrowLeft' && t > 0) t = t === INF ? T_MAX : t - 1;
+      else return;
+      e.preventDefault();
+      draw(t);
+    });
+    draw(t);
+    // The cards are sized from their faces' first render; redraw once the KaTeX
+    // webfonts are in so the faces and the base diagram agree.
+    document.fonts?.ready.then(() => draw(t));
   </script>
 
 </body>
