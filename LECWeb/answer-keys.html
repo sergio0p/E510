@@ -16,6 +16,27 @@
     /* Frames clip their overflow, so a display equation wider than a phone
        would lose its right end. Let it scroll sideways instead. */
     .katex-display { overflow-x: auto; overflow-y: hidden; padding-bottom: 2px; }
+    /* Flip card (as in midterm-02-practice.html), used by the Midterm 2 key: each
+       question is a block whose back carries its answer. Clicking the card turns it
+       over, and its height follows whichever face is showing (set in the script at
+       the bottom). The body uses .flip-body, not .block-body, so the "?" flip of
+       js/scroll-animations.js leaves these blocks alone. */
+    .flip-card { perspective: 1200px; cursor: pointer; margin: 0.75rem 0 1rem; }
+    .flip-card:focus:not(:focus-visible) { outline: none; }
+    .flip-inner { position: relative; transform-style: preserve-3d; transition: transform 0.6s ease, height 0.4s ease; }
+    .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+    .flip-front, .flip-back { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+    .flip-front { position: relative; }
+    .flip-back { position: absolute; top: 0; left: 0; width: 100%; transform: rotateY(180deg); }
+    .flip-card .block { width: 100%; margin: 0; }
+    .flip-body { background: #fff8e1; color: #000000; padding: 1rem; }
+    .flip-body > :last-child { margin-bottom: 0; }
+    /* Quoted passages and their source line. */
+    .flip-body blockquote { margin: 0.5rem 0 0.75rem 1rem; padding-left: 0.75rem; border-left: 3px solid #cccccc; }
+    .mt-cite { text-align: right; color: var(--text-muted); font-size: 0.85em; }
+    /* Returns table (Midterm 2, Question 13). */
+    .mt-table { border-collapse: collapse; margin: 0.5rem auto; }
+    .mt-table th, .mt-table td { border: 1px solid #999999; padding: 0.2rem 0.75rem; text-align: center; }
   </style>
     <!-- Google Analytics -->
     <script async src="/E510/js/ga.js"></script>
@@ -45,13 +66,27 @@
       <a href="#midterm-1-q10" style="margin-left: 1rem;">11. MT1 Q10</a>
       <a href="#midterm-1-q11" style="margin-left: 1rem;">12. MT1 Q11</a>
       <br>
-      <a href="#ps-06-q1" style="margin-left: 1rem;">13. PS06 Q1</a>
-      <a href="#ps-06-q2" style="margin-left: 1rem;">14. PS06 Q2</a>
-      <a href="#ps-06-q3" style="margin-left: 1rem;">15. PS06 Q3</a>
-      <a href="#ps-06-q4" style="margin-left: 1rem;">16. PS06 Q4</a>
+      <a href="#midterm-2-q1" style="margin-left: 1rem;">13. MT2 Q1</a>
+      <a href="#midterm-2-q3" style="margin-left: 1rem;">14. MT2 Q3</a>
+      <a href="#midterm-2-q4" style="margin-left: 1rem;">15. MT2 Q4</a>
+      <a href="#midterm-2-q5" style="margin-left: 1rem;">16. MT2 Q5</a>
       <br>
-      <a href="#ps-06-q5" style="margin-left: 1rem;">17. PS06 Q5</a>
-      <a href="#ps-06-q6" style="margin-left: 1rem;">18. PS06 Q6</a>
+      <a href="#midterm-2-q6" style="margin-left: 1rem;">17. MT2 Q6</a>
+      <a href="#midterm-2-q8" style="margin-left: 1rem;">18. MT2 Q8</a>
+      <a href="#midterm-2-q10" style="margin-left: 1rem;">19. MT2 Q10</a>
+      <a href="#midterm-2-q11" style="margin-left: 1rem;">20. MT2 Q11</a>
+      <br>
+      <a href="#midterm-2-q12" style="margin-left: 1rem;">21. MT2 Q12</a>
+      <a href="#midterm-2-q13" style="margin-left: 1rem;">22. MT2 Q13</a>
+      <a href="#midterm-2-q14" style="margin-left: 1rem;">23. MT2 Q14</a>
+      <a href="#ps-06-q1" style="margin-left: 1rem;">24. PS06 Q1</a>
+      <br>
+      <a href="#ps-06-q2" style="margin-left: 1rem;">25. PS06 Q2</a>
+      <a href="#ps-06-q3" style="margin-left: 1rem;">26. PS06 Q3</a>
+      <a href="#ps-06-q4" style="margin-left: 1rem;">27. PS06 Q4</a>
+      <a href="#ps-06-q5" style="margin-left: 1rem;">28. PS06 Q5</a>
+      <br>
+      <a href="#ps-06-q6" style="margin-left: 1rem;">29. PS06 Q6</a>
     </nav>
   </section>
 
@@ -251,6 +286,480 @@
     </div>
   </section>
 
+  <!-- Midterm 2 Answer Key: numbered by exam position (Canvas quiz 141521). Question 3
+       is the setting, shown as on the exam; the 0-point optional items (Questions 2, 7
+       and 9) are left out. Each graded question is a flip card: the question on the
+       front, the answer on the back. Canvas shuffled the answer choices per student, so
+       the key never refers to a choice by its position. -->
+  <section class="frame" id="midterm-2-q1">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 2 Answer Key</h2>
+      <p class="frame-subtitle">Question 1</p>
+    </div>
+    <div class="frame-content">
+      <p>Click on a question to reveal its answer.</p>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 1</div>
+              <div class="flip-body">
+                <p>The residents of a small oil town depend on a well that a company is drilling nearby. There are three states of the world: the well is empty ($e$), the oil field is modest ($m$), or the oil field is large ($l$). The three states are equally likely: $\Pr(e)=\Pr(m)=\Pr(l)=\frac13$. In period zero, drilling has just started, and the residents have no information about the state. In period one, the drill reaches the reservoir, and the residents learn whether the well is empty or not. In period two, no further news arrives: whether the field is modest or large will be known only once production starts, after period two. The residents discount the future with discount factor $\delta=0.9$.</p>
+                <p>Notation: $c_{ts}$ is consumption in period $t$ when the information set $s$ has been reached.</p>
+                <p>Which of the following is the residents&rsquo; discounted expected utility?</p>
+                <ul>
+                  <li>$u(c_0)+0.9\,u(c_1)+0.81\,u(c_2)$</li>
+                  <li>$u(c_0)+0.9\paren{\tfrac13u(c_{1e})+\tfrac23u(c_{1ml})}+0.81\paren{\tfrac13u(c_{2e})+\tfrac13u(c_{2m})+\tfrac13u(c_{2l})}$</li>
+                  <li>$u(c_0)+0.9\paren{\tfrac13u(c_{1e})+\tfrac23u(c_{1ml})}+0.9\paren{\tfrac13u(c_{2e})+\tfrac23u(c_{2ml})}$</li>
+                  <li>$u(c_0)+0.9\paren{\tfrac13u(c_{1e})+\tfrac23u(c_{1ml})}+0.81\paren{\tfrac13u(c_{2e})+\tfrac23u(c_{2ml})}$</li>
+                  <li>$u(c_0)+0.9\paren{\tfrac13u(c_{1l})+\tfrac23u(c_{1em})}+0.81\paren{\tfrac13u(c_{2l})+\tfrac23u(c_{2em})}$</li>
+                  <li>$u(c_0)+0.9\paren{\tfrac13u(c_{1e})+\tfrac23u(c_{1ml})}$</li>
+                  <li>$u(c_0)+0.9\paren{u(c_{1e})+u(c_{1ml})}+0.81\paren{u(c_{2e})+u(c_{2ml})}$</li>
+                  <li>$u(c_0)+0.9\paren{\tfrac13u(c_{1e})+\tfrac23u(c_{1ml})}+0.81\paren{\tfrac23u(c_{2em})+\tfrac13u(c_{2l})}$</li>
+                  <li>$u(c_0)+0.9\paren{\tfrac23u(c_{1e})+\tfrac13u(c_{1ml})}+0.81\paren{\tfrac23u(c_{2e})+\tfrac13u(c_{2ml})}$</li>
+                  <li>$u(c_0)+0.9\,u(c_1)+0.81\paren{\tfrac13u(c_{2e})+\tfrac23u(c_{2ml})}$</li>
+                  <li>$u(c_0)+0.9\paren{\tfrac13u(c_{1e})+\tfrac23u(c_{1ml})}+0.81\,u(c_2)$</li>
+                  <li>$0.9\,u(c_0)+0.81\paren{\tfrac13u(c_{1e})+\tfrac23u(c_{1ml})}+0.729\paren{\tfrac13u(c_{2e})+\tfrac23u(c_{2ml})}$</li>
+                  <li>$u(c_0)+0.9\paren{\tfrac13u(c_{1e})+\tfrac23u(c_{1ml})}+0.81\paren{\tfrac23u(c_{2el})+\tfrac13u(c_{2m})}$</li>
+                  <li>$u(c_0)+0.9\paren{\tfrac13u(c_{1e})+\tfrac13u(c_{1m})+\tfrac13u(c_{1l})}+0.81\paren{\tfrac13u(c_{2e})+\tfrac13u(c_{2m})+\tfrac13u(c_{2l})}$</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 1</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> $u(c_0)+0.9\paren{\tfrac13u(c_{1e})+\tfrac23u(c_{1ml})}+0.81\paren{\tfrac13u(c_{2e})+\tfrac23u(c_{2ml})}$.</p>
+                <p>The <a href="choice-under-uncertainty.html#uncertainty-and-time-2">information partitions</a> are $\mathcal P_0=\set{\set{e,m,l}}$, $\mathcal P_1=\set{\set{e},\set{m,l}}$, and $\mathcal P_2=\set{\set{e},\set{m,l}}$: in period one the residents learn whether the well is empty, and in period two they learn nothing new. Each information set gets its probability, $\Pr(\set{e})=\frac13$ and $\Pr(\set{m,l})=\frac23$, and period $t$ is discounted by $\delta^t$: $1$, $0.9$, and $0.81$. The <a href="information-partition-app.html">Information Partitions</a> app builds this sum step by step.</p>
+                <ul>
+                  <li><em>$u(c_0)+0.9\,u(c_1)+0.81\,u(c_2)$.</em> <strong>Incorrect.</strong> Consumption never depends on the news: it ignores that the residents learn in period one whether the well is empty.</li>
+                  <li><em>$\ldots+0.81\paren{\tfrac13u(c_{2e})+\tfrac13u(c_{2m})+\tfrac13u(c_{2l})}$.</em> <strong>Incorrect.</strong> It has the residents tell $m$ from $l$ in period two, but no news arrives in period two.</li>
+                  <li><em>$\ldots+0.9\paren{\tfrac13u(c_{2e})+\tfrac23u(c_{2ml})}$.</em> <strong>Incorrect.</strong> Period two is discounted by $\delta^2=0.81$, not by $\delta=0.9$.</li>
+                  <li><em>$u(c_0)+0.9\paren{\tfrac13u(c_{1e})+\tfrac23u(c_{1ml})}+0.81\paren{\tfrac13u(c_{2e})+\tfrac23u(c_{2ml})}$.</em> <strong>Correct.</strong> The right information sets in each period, weighted by their probabilities and discounted by $1$, $\delta$, and $\delta^2$.</li>
+                  <li><em>$u(c_0)+0.9\paren{\tfrac13u(c_{1l})+\tfrac23u(c_{1em})}+\ldots$</em> <strong>Incorrect.</strong> The residents learn whether the well is empty, not whether the field is large: the information sets are $\set{e}$ and $\set{m,l}$, not $\set{l}$ and $\set{e,m}$.</li>
+                  <li><em>$u(c_0)+0.9\paren{\tfrac13u(c_{1e})+\tfrac23u(c_{1ml})}$.</em> <strong>Incorrect.</strong> Period two is missing.</li>
+                  <li><em>$u(c_0)+0.9\paren{u(c_{1e})+u(c_{1ml})}+\ldots$</em> <strong>Incorrect.</strong> The probabilities are missing: in each period the weights add up to $2$ instead of $1$.</li>
+                  <li><em>$\ldots+0.81\paren{\tfrac23u(c_{2em})+\tfrac13u(c_{2l})}$.</em> <strong>Incorrect.</strong> In period two the residents still know whether the well is empty, so $e$ cannot share an information set with $m$.</li>
+                  <li><em>$u(c_0)+0.9\paren{\tfrac23u(c_{1e})+\tfrac13u(c_{1ml})}+\ldots$</em> <strong>Incorrect.</strong> The probabilities are swapped: $\Pr(\set{e})=\frac13$ and $\Pr(\set{m,l})=\frac23$.</li>
+                  <li><em>$u(c_0)+0.9\,u(c_1)+0.81\paren{\tfrac13u(c_{2e})+\tfrac23u(c_{2ml})}$.</em> <strong>Incorrect.</strong> The news arrives in period one, so period-one consumption can already depend on it.</li>
+                  <li><em>$\ldots+0.81\,u(c_2)$.</em> <strong>Incorrect.</strong> Information is never forgotten: in period two the residents still know whether the well is empty.</li>
+                  <li><em>$0.9\,u(c_0)+0.81\paren{\ldots}+0.729\paren{\ldots}$.</em> <strong>Incorrect.</strong> Period zero is today and is not discounted: the discount factors are $1$, $\delta$, and $\delta^2$.</li>
+                  <li><em>$\ldots+0.81\paren{\tfrac23u(c_{2el})+\tfrac13u(c_{2m})}$.</em> <strong>Incorrect.</strong> In period two the residents still know whether the well is empty, so $e$ cannot share an information set with $l$.</li>
+                  <li><em>$u(c_0)+0.9\paren{\tfrac13u(c_{1e})+\tfrac13u(c_{1m})+\tfrac13u(c_{1l})}+\ldots$</em> <strong>Incorrect.</strong> In period one the residents learn only whether the well is empty; they cannot tell $m$ from $l$ in either period.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="frame" id="midterm-2-q3">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 2 Answer Key</h2>
+      <p class="frame-subtitle">Question 3</p>
+    </div>
+    <div class="frame-content">
+      <p>The next questions use the following setting.</p>
+      <p>Consider an economy with one period and two states of the world, $s_1$ and $s_2$, with probabilities $\Pr(s_1)=\frac13$ and $\Pr(s_2)=\frac23$. There is one consumption good. Contingent goods are traded in period zero, before the agents learn which state the economy is in; consumption takes place after they learn the state. Alice&rsquo;s endowment is $e^A=(2,6)$ and Ben&rsquo;s endowment is $e^B=(8,2)$, where the first entry is the endowment in state $s_1$ and the second is the endowment in state $s_2$. Both consumers have utility $u(c)=\ln c$, so a consumer&rsquo;s expected utility is</p>
+      $$\frac13\ln c_1+\frac23\ln c_2,$$
+      <p>where $c_1$ and $c_2$ are consumption in states $s_1$ and $s_2$.</p>
+    </div>
+  </section>
+
+  <section class="frame" id="midterm-2-q4">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 2 Answer Key</h2>
+      <p class="frame-subtitle">Question 4</p>
+    </div>
+    <div class="frame-content">
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 4</div>
+              <div class="flip-body">
+                <p>Assume there are contingent markets, and let $p_k$ be the price of a contract that delivers one unit of consumption in state $s_k$. We normalize prices so that $p_1=1$. Write down the budget constraint equation for Alice. Feel free to add any reasoning or work.</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 4</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span></p>
+                $$c_1+p_2\,c_2=2+6p_2.$$
+                <p>With contingent markets, Alice has a <a href="markets.html#example-2-frame">single budget constraint</a>, written in period zero, before the state is known: the value of her consumption basket at prices $(p_1,p_2)=(1,p_2)$ equals the value of her endowment $e^A=(2,6)$. Writing it with $\le$ is also correct.</p>
+                <p>Common mistakes:</p>
+                <ul>
+                  <li>Probabilities do not enter the budget constraint, and neither does the utility function.</li>
+                  <li>It must be Alice&rsquo;s budget, with her endowment $(2,6)$: neither the generic $e_1+p_2e_2$ nor the total endowment $10+8p_2$.</li>
+                  <li>$2+6p_2$ alone is Alice&rsquo;s income, not her budget constraint: a budget constraint needs an equality or an inequality, cost of the basket $=$ income or cost of the basket $\le$ income.</li>
+                  <li>Market-clearing conditions (supply $=$ demand) are not budget constraints (value of the basket $=$ value of the endowment for one consumer).</li>
+                  <li>There is no $c_0$: consumption takes place only after the state is learned.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="frame" id="midterm-2-q5">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 2 Answer Key</h2>
+      <p class="frame-subtitle">Question 5</p>
+    </div>
+    <div class="frame-content">
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 5</div>
+              <div class="flip-body">
+                <p>Use Recipe #1 and obtain Alice&rsquo;s first-order conditions with respect to $c_1$ and $c_2$.</p>
+                <p><strong>Calculus reminder:</strong> the derivative of $\ln x$ is $\frac1x$.</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 5</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> <a href="constrained-optimization.html#constrained-optimization-with-equality-constraints-2">Recipe #1</a> maximizes the Lagrangian, with the budget constraint of Question 4:</p>
+                $$\mathcal{L}=\tfrac13\ln c_1+\tfrac23\ln c_2-\lambda\paren{c_1+p_2c_2-2-6p_2}.$$
+                <p>The first-order conditions are</p>
+                $$\diff{\mathcal{L}}{c_1}=\frac{1}{3c_1}-\lambda=0,\qquad \diff{\mathcal{L}}{c_2}=\frac{2}{3c_2}-\lambda p_2=0.$$
+                <p>The multiplier $\lambda$ must appear: the first-order conditions of Recipe #1 are those of the Lagrangian, and they set its derivatives equal to zero. Together with the budget constraint, they give $c_2=\dfrac{2c_1}{p_2}$ and $c_1^A=\dfrac{2+6p_2}{3}$, the demand given in Question 8.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="frame" id="midterm-2-q6">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 2 Answer Key</h2>
+      <p class="frame-subtitle">Question 6</p>
+    </div>
+    <div class="frame-content">
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 6</div>
+              <div class="flip-body">
+                <p>The total supply of the consumption good in state $s_1$ is:</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 6</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> $10$. The total supply in state $s_1$ is the sum of Alice&rsquo;s and Ben&rsquo;s endowments in that state: $e_1^A+e_1^B=2+8=10$.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="frame" id="midterm-2-q8">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 2 Answer Key</h2>
+      <p class="frame-subtitle">Question 8</p>
+    </div>
+    <div class="frame-content">
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 8</div>
+              <div class="flip-body">
+                <p>Alice&rsquo;s and Ben&rsquo;s demands for consumption in state $s_1$, as functions of $p_2$, are</p>
+                $$c_1^A(p_2)=\frac{2+6p_2}{3},\qquad c_1^B(p_2)=\frac{8+2p_2}{3}.$$
+                <p>What is the equilibrium price $p_2$ in this model?</p>
+                <p>Choices: 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3.</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 8</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> $p_2=\frac52=2.5$.</p>
+                <p>In equilibrium the <a href="markets.html#complete-markets-equilibrium">market</a> for consumption in state $s_1$ clears: demand equals the total supply of Question 6,</p>
+                $$c_1^A+c_1^B=\frac{2+6p_2}{3}+\frac{8+2p_2}{3}=\frac{10+8p_2}{3}=10\iff p_2=\frac{20}{8}=\frac52.$$
+                <p>Every other choice leaves this market out of balance: demand exceeds $10$ when $p_2\gt\frac52$ and falls short of it when $p_2\lt\frac52$. The market for state $s_2$ then clears by Walras&rsquo; law. At $p_2=\frac52$, Alice consumes $\paren{\frac{17}{3},\frac{68}{15}}$ and Ben consumes $\paren{\frac{13}{3},\frac{52}{15}}$, which add up to the total endowment $(10,8)$.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="frame" id="midterm-2-q10">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 2 Answer Key</h2>
+      <p class="frame-subtitle">Question 10</p>
+    </div>
+    <div class="frame-content">
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 10</div>
+              <div class="flip-body">
+                <p>There are no contingent markets, but there is a financial asset with returns $(r_1,r_2)=(5,-2)$ in states $s_1$ and $s_2$. Let $z$ be the amount invested in the asset. The spot budget constraints for Alice are (select all that apply):</p>
+                <ul>
+                  <li>$c_1+p_2c_2=2+6p_2$</li>
+                  <li>$c_2=6+2z$</li>
+                  <li>$c_1=2+5z$</li>
+                  <li>$5c_1-2c_2=-2$</li>
+                  <li>$c_1=6+5z$</li>
+                  <li>$c_2=2-2z$</li>
+                  <li>$c_1=2-5z$</li>
+                  <li>$c_2=6-2z$</li>
+                  <li>$c_1=8+5z$</li>
+                  <li>$c_1-2c_2=-10$</li>
+                  <li>$c_2=6+5z$</li>
+                  <li>$c_1=2-2z$</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 10</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> $c_1=2+5z$ and $c_2=6-2z$.</p>
+                <p>With <a href="financial-markets.html#contingent-markets-vs-financial-markets">financial markets</a>, there is one spot budget constraint per state: consumption in a state equals Alice&rsquo;s endowment in that state plus the asset&rsquo;s return times the amount invested. Spot prices are normalized to $1$.</p>
+                <ul>
+                  <li><em>$c_1+p_2c_2=2+6p_2$.</em> <strong>Incorrect.</strong> This is the budget constraint with contingent markets, and there are none here.</li>
+                  <li><em>$c_2=6+2z$.</em> <strong>Incorrect.</strong> The return in state $s_2$ is $-2$, not $2$.</li>
+                  <li><em>$c_1=2+5z$.</em> <strong>Correct.</strong> Endowment $2$ plus return $5$ per dollar invested.</li>
+                  <li><em>$5c_1-2c_2=-2$.</em> <strong>Incorrect.</strong> It uses the returns as if they were prices of $c_1$ and $c_2$.</li>
+                  <li><em>$c_1=6+5z$.</em> <strong>Incorrect.</strong> Alice&rsquo;s endowment in state $s_1$ is $2$; $6$ is her endowment in state $s_2$.</li>
+                  <li><em>$c_2=2-2z$.</em> <strong>Incorrect.</strong> Alice&rsquo;s endowment in state $s_2$ is $6$, not $2$.</li>
+                  <li><em>$c_1=2-5z$.</em> <strong>Incorrect.</strong> The sign is flipped: the asset pays $+5$ per dollar in state $s_1$.</li>
+                  <li><em>$c_2=6-2z$.</em> <strong>Correct.</strong> Endowment $6$ plus return $-2$ per dollar invested.</li>
+                  <li><em>$c_1=8+5z$.</em> <strong>Incorrect.</strong> $8$ is Ben&rsquo;s endowment in state $s_1$, not Alice&rsquo;s.</li>
+                  <li><em>$c_1-2c_2=-10$.</em> <strong>Incorrect.</strong> It uses the return $-2$ as if it were the price of $c_2$.</li>
+                  <li><em>$c_2=6+5z$.</em> <strong>Incorrect.</strong> $5$ is the return in state $s_1$, not in state $s_2$.</li>
+                  <li><em>$c_1=2-2z$.</em> <strong>Incorrect.</strong> $-2$ is the return in state $s_2$, not in state $s_1$.</li>
+                </ul>
+                <p>Every choice holds at the endowment, $z=0$, so checking the endowment alone does not single out the spot budget constraints. Eliminating $z$ from the two correct constraints gives $2c_1+5c_2=34$, that is, $c_1+\frac52c_2=2+6\cdot\frac52$: Alice&rsquo;s budget constraint with contingent markets at the equilibrium price $p_2=\frac52$ of Question 8. Giving up $2$ in state $s_2$ buys $5$ in state $s_1$, so this one asset moves income between the two states and markets are <a href="arbitrage.html#complete-markets">complete</a>.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="frame" id="midterm-2-q11">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 2 Answer Key</h2>
+      <p class="frame-subtitle">Question 11</p>
+    </div>
+    <div class="frame-content">
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 11</div>
+              <div class="flip-body">
+                <p>Explain how, using the expected utility and the spot budget constraints, we can obtain Alice&rsquo;s demand/supply for the financial asset, $z$. Please be brief.</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 11</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> Substitute the spot budget constraints of Question 10 into Alice&rsquo;s expected utility, so that it becomes a function of $z$ alone, and maximize it with <a href="unconstrained-optimization.html#solving-unconstrained-optimization-problems">Recipe #0</a>: set $\sddiff{U}{z}=0$ and solve for $z$.</p>
+                <p>Here,</p>
+                $$U(z)=\tfrac13\ln(2+5z)+\tfrac23\ln(6-2z),$$
+                $$\ddiff{U}{z}=\frac{5}{3(2+5z)}-\frac{4}{3(6-2z)}=0\iff 5(6-2z)=4(2+5z)\iff z=\frac{11}{15}.$$
+                <p>Alice buys $\frac{11}{15}$ of the asset and consumes $c_1=\frac{17}{3}$ and $c_2=\frac{68}{15}$, the same basket as in the contingent-markets equilibrium of Question 8.</p>
+                <p>Common mistakes:</p>
+                <ul>
+                  <li>This is Recipe #0, not Recipe #1: once the spot budget constraints are substituted, there is no constraint left, so there is no Lagrangian.</li>
+                  <li>The order matters: first substitute $c_1$ and $c_2$, then take the derivative with respect to $z$.</li>
+                  <li>There is no $p_1$ or $p_2$: those are contingent-market prices, and they appear neither in the spot budget constraints nor in the expected utility.</li>
+                  <li>This is Alice&rsquo;s individual choice, with the returns given. No market has to clear.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="frame" id="midterm-2-q12">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 2 Answer Key</h2>
+      <p class="frame-subtitle">Question 12</p>
+    </div>
+    <div class="frame-content">
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 12</div>
+              <div class="flip-body">
+                <p>Two players choose $x$ and $y$, and their payoffs are $u_1(x,y)$ and $u_2(x,y)$. Select all the correct statements.</p>
+                <ul>
+                  <li>Every Nash equilibrium is inefficient.</li>
+                  <li>$W=10\,u_1+u_2$ is a welfare function.</li>
+                  <li>If some feasible $(x,y)$ makes player 1 better off than $(x_0,y_0)$, then $(x_0,y_0)$ is not efficient.</li>
+                  <li>If the set of feasible utility profiles is convex and $(x_0,y_0)$ is efficient, then $(x_0,y_0)$ maximizes $W=a\,u_1+(1-a)\,u_2$ for some weight $0\lt a\lt 1$.</li>
+                  <li>A Nash equilibrium must be efficient, since each player is maximizing their respective payoff.</li>
+                  <li>At an efficient $(x_0,y_0)$, both players have the same payoff.</li>
+                  <li>$(x_0,y_0)$ is efficient if there is no feasible $(x,y)$ that makes one player better off without making the other player worse off.</li>
+                  <li>$W=10\,u_1-u_2$ is a welfare function.</li>
+                  <li>If $x_0$ maximizes $u_1(x,y_0)$ with respect to $x$ and $y_0$ maximizes $u_2(x_0,y)$ with respect to $y$, then $(x_0,y_0)$ is efficient.</li>
+                  <li>If $(x_0,y_0)$ is efficient, then it maximizes every welfare function.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 12</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> Three statements are correct: $W=10\,u_1+u_2$ is a welfare function, Proposition Efficiency 2, and the definition of efficiency.</p>
+                <ul>
+                  <li><em>Every Nash equilibrium is inefficient.</em> <strong>Incorrect.</strong> Some are efficient. If each player&rsquo;s payoff depends only on their own choice, the Nash equilibrium gives both players their highest possible payoff, so it is efficient.</li>
+                  <li><em>$W=10\,u_1+u_2$ is a welfare function.</em> <strong>Correct.</strong> A <a href="efficiency.html#welfare-functions">welfare function</a> is strictly increasing in every player&rsquo;s payoff, and here $\sdiff{W}{u_1}=10\gt 0$ and $\sdiff{W}{u_2}=1\gt 0$.</li>
+                  <li><em>If some feasible $(x,y)$ makes player 1 better off than $(x_0,y_0)$, then $(x_0,y_0)$ is not efficient.</em> <strong>Incorrect.</strong> It forgets &ldquo;without making the other player worse off&rdquo;: at an efficient point, player 1 can still be made better off, but only by making player 2 worse off.</li>
+                  <li><em>If the set of feasible utility profiles is convex and $(x_0,y_0)$ is efficient, then $(x_0,y_0)$ maximizes $W=a\,u_1+(1-a)\,u_2$ for some weight $0\lt a\lt 1$.</em> <strong>Correct.</strong> This is <a href="efficiency.html#welfare-functions-and-pareto-efficiency">Proposition Efficiency 2</a> with two players: the positive weights $w_1$ and $w_2$ can be rescaled to $a=\frac{w_1}{w_1+w_2}$ and $1-a$.</li>
+                  <li><em>A Nash equilibrium must be efficient, since each player is maximizing their respective payoff.</em> <strong>Incorrect.</strong> Each player maximizes their own payoff, taking the other&rsquo;s choice as given and ignoring the effect on the other player. In the <a href="efficiency.html#pareto-efficiency-2">public good example</a>, both players are better off if each contributes half her wealth than in the Nash equilibrium.</li>
+                  <li><em>At an efficient $(x_0,y_0)$, both players have the same payoff.</em> <strong>Incorrect.</strong> Efficiency is not equality. The maximizer of $W=10\,u_1+u_2$ is efficient (Proposition Efficiency 1), and it favors player 1.</li>
+                  <li><em>$(x_0,y_0)$ is efficient if there is no feasible $(x,y)$ that makes one player better off without making the other player worse off.</em> <strong>Correct.</strong> This is the <a href="efficiency.html#pareto-efficiency-2">definition</a> of (Pareto) efficiency.</li>
+                  <li><em>$W=10\,u_1-u_2$ is a welfare function.</em> <strong>Incorrect.</strong> It decreases with player 2&rsquo;s payoff: $\sdiff{W}{u_2}=-1\lt 0$.</li>
+                  <li><em>If $x_0$ maximizes $u_1(x,y_0)$ with respect to $x$ and $y_0$ maximizes $u_2(x_0,y)$ with respect to $y$, then $(x_0,y_0)$ is efficient.</em> <strong>Incorrect.</strong> This describes a Nash equilibrium, and a Nash equilibrium need not be efficient, as in the public good example.</li>
+                  <li><em>If $(x_0,y_0)$ is efficient, then it maximizes every welfare function.</em> <strong>Incorrect.</strong> $W=10\,u_1+u_2$ and $W=u_1+10\,u_2$ are both welfare functions, and they generally pick different efficient points. An efficient point maximizes some welfare function when the feasible set is convex, not every one.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="frame" id="midterm-2-q13">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 2 Answer Key</h2>
+      <p class="frame-subtitle">Question 13</p>
+    </div>
+    <div class="frame-content">
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 13</div>
+              <div class="flip-body">
+                <p>Now consider a different economy, a financial-markets economy with three states, $s_0$, $s_1$, and $s_2$, and three financial assets, $a$, $b$, and $c$, whose (gross) returns in each state are:</p>
+                <table class="mt-table">
+                  <thead>
+                    <tr><th>Asset</th><th>State $s_0$</th><th>State $s_1$</th><th>State $s_2$</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Asset $a$</td><td>$-1$</td><td>$8$</td><td>$0$</td></tr>
+                    <tr><td>Asset $b$</td><td>$-1$</td><td>$0$</td><td>$8$</td></tr>
+                    <tr><td>Asset $c$</td><td>$-1$</td><td>$3$</td><td>$3$</td></tr>
+                  </tbody>
+                </table>
+                <p>Consider the portfolio $\mathbf{w}=(-2,-2,4)$: you buy 4 units of asset $c$, and you sell 2 dollars&rsquo; worth of asset $b$ and 2 dollars&rsquo; worth of asset $a$.</p>
+                <p>Answer the following questions, labeling your answers 1) to 5) as below. Answers that are not labeled may lose points.</p>
+                <p>1) What is the return of the portfolio in state $s_0$?</p>
+                <p>2) What is the return of the portfolio in state $s_1$?</p>
+                <p>3) What is the return of the portfolio in state $s_2$?</p>
+                <p>4) Is this portfolio an arbitrage opportunity? Why or why not?</p>
+                <p>5) Is there an arbitrage opportunity in this economy? If yes, show a portfolio that implements the arbitrage strategy.</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 13</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> The return of a portfolio in a state is the sum, over the assets, of the amount held times the asset&rsquo;s return in that state.</p>
+                <p>1) $(-2)(-1)+(-2)(-1)+4\cdot(-1)=2+2-4=0$.</p>
+                <p>2) $(-2)\cdot 8+(-2)\cdot 0+4\cdot 3=-16+12=-4$.</p>
+                <p>3) $(-2)\cdot 0+(-2)\cdot 8+4\cdot 3=-16+12=-4$.</p>
+                <p>4) No. The portfolio costs nothing in state $s_0$, but it loses 4 dollars in states $s_1$ and $s_2$: its returns $(0,-4,-4)$ are not all greater than or equal to zero, so it is not an <a href="arbitrage.html#arbitrage-2">arbitrage opportunity</a>.</p>
+                <p>5) Yes. Reverse the portfolio: $-\mathbf{w}=(2,2,-4)$ buys 2 dollars&rsquo; worth of asset $a$ and 2 dollars&rsquo; worth of asset $b$, and sells 4 units of asset $c$. Its returns are $(0,4,4)$: nothing is paid in state $s_0$, and it earns 4 dollars in states $s_1$ and $s_2$. Any positive multiple works too; for example, $\paren{\frac12,\frac12,-1}$ returns $(0,1,1)$. Half a dollar each of assets $a$ and $b$ costs the same as one dollar of asset $c$ but pays $4$ instead of $3$ in both states.</p>
+                <p>A portfolio that costs money in state $s_0$ is not an arbitrage: for example, $(1,1,-1)$ returns $(-1,5,5)$.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="frame" id="midterm-2-q14">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Midterm 2 Answer Key</h2>
+      <p class="frame-subtitle">Question 14</p>
+    </div>
+    <div class="frame-content">
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 14</div>
+              <div class="flip-body">
+                <p>In the lecture notes (<em>The Financial Structure</em>, &ldquo;Complete Markets&rdquo;), we define complete markets as follows:</p>
+                <blockquote>
+                  <p><strong>Definition:</strong> Given the financial structure (assets and returns), if for any two arbitrary states, we can always build a portfolio to transfer income between these two states while keeping the income in the other states constant, we say that markets are complete.</p>
+                  <p>When markets are complete, the equilibrium allocation (equilibrium consumption baskets) in the financial economy and in the contingent goods economy are the same.</p>
+                </blockquote>
+                <p>Read the article excerpt below and answer the following questions, labeling your answers 1) and 2).</p>
+                <p>1) In real life, are there contingent markets?</p>
+                <p>2) What is the relationship of the article quoted below to the financial markets we studied in our course?</p>
+                <blockquote>
+                  <p><strong>Why sports bar owners are hedging against the teams they love</strong></p>
+                  <p>Andrew Rizzo&rsquo;s family has owned the same piece of Chicago property next to Wrigley Field since 1946, when the family immigrated to the U.S. from Italy and opened Cubs Park Service Station. That business turned into parking for Bears and Chicago Cubs games until, in 2017, the family opened Rizzo&rsquo;s Bar &amp; Inn.</p>
+                  <p>Like many bars in Wrigleyville, a significant portion of Rizzo&rsquo;s revenue comes during baseball season, and a deep playoff run can seriously shift margins. Bars are packed, and because playoff tickets are more expensive, the bar often hosts wealthier clientele who spend more money. An early postseason exit, however, can mean unrealized revenue.</p>
+                  <p>So as the Cubs squeaked their way into the postseason, Rizzo traded <span>$</span>7,500 on Kalshi that the Cubs would host two or fewer home playoff games. He hoped, both as a Chicagoan and businessowner, that he would be wrong. But when the Cubs never even made it to October, swept by the San Diego Padres in two away games during the Wild Card series, Rizzo&rsquo;s bet paid out a few thousand dollars, softening the financial blow of a short postseason.</p>
+                  <p>&ldquo;Unfortunately in the past, like if the Cubs just had a short run or something and fell apart, you&rsquo;re obviously really disappointed because you lost out on a ton of revenue,&rdquo; Rizzo said.</p>
+                  <p>This type of event-related risk has always existed in the hospitality industry, especially for sports bars and restaurants near stadiums. But as the use of prediction markets surges, especially in sports, some local businesses that rely on sports-related sales are using it as a form of insurance against potential lost revenue.</p>
+                  <p class="mt-cite">Rebecca Tauber, <em>The New York Times</em>, Oct. 30, 2026</p>
+                </blockquote>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 14</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span></p>
+                <p>1) No. A <a href="markets.html#contingent-goods">contingent market</a> trades contracts, signed today, for the delivery of goods and services in a particular state of the world: for example, an umbrella delivered tomorrow if it rains. We do not see such markets in real life, let alone a market for every good in every state. Prediction markets come close to replicating them, but they trade money, not goods.</p>
+                <p>2) The Kalshi contract is a <a href="financial-markets.html#financial-assets">financial asset</a>: it pays money in one state (the Cubs host two or fewer home playoff games) and nothing in the other. In our notation, its gross returns are $(-1,r,0)$: one dollar paid before the playoffs, $r$ dollars in the &ldquo;short postseason&rdquo; state, and nothing in the &ldquo;deep run&rdquo; state.</p>
+                <p>Rizzo&rsquo;s endowment, his bar&rsquo;s revenue, is high when the Cubs go deep and low when they exit early. By buying the contract, he transfers income from the good state to the bad state: he gives up <span>$</span>7,500 of income in the good state, where the contract pays nothing, in exchange for a payout in the bad state. This is hedging: the consumption smoothing across states that a risk-averse agent does with financial assets in our model. The bet works as insurance against lost revenue.</p>
+                <p>It is not an <a href="arbitrage.html#arbitrage-2">arbitrage</a>: the bet costs money up front, and it loses money in the good state.</p>
+                <p>Each contract like this one adds a way to move income between two states, so prediction markets make markets more <a href="arbitrage.html#complete-markets">complete</a>, and complete financial markets reach the same allocation as contingent markets. Even so, a prediction market is a financial market, not a contingent market: when a state occurs, no good or service is delivered, only money.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Problem Set 06 Answer Key: one frame per question. -->
   <section class="frame" id="ps-06-q1">
     <div class="frame-title-bar">
@@ -352,6 +861,37 @@
     renderMathInElement(document.body, {
       delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}],
       macros: katexMacros, throwOnError: false
+    });
+  </script>
+
+  <script>
+    // Flip cards: toggle .flipped on click (or Enter/Space), and size the card to
+    // the visible face; refresh ScrollTrigger once the height has settled, since
+    // everything below the card moves. Links inside a card navigate without flipping it.
+    document.querySelectorAll('.flip-card').forEach(card => {
+      const inner = card.querySelector('.flip-inner');
+      const front = card.querySelector('.flip-front');
+      const back = card.querySelector('.flip-back');
+      const fit = () => {
+        const face = card.classList.contains('flipped') ? back : front;
+        inner.style.height = face.offsetHeight + 'px';
+      };
+      const flip = () => {
+        const flipped = card.classList.toggle('flipped');
+        front.setAttribute('aria-hidden', flipped ? 'true' : 'false');
+        back.setAttribute('aria-hidden', flipped ? 'false' : 'true');
+        fit();
+      };
+      card.addEventListener('click', e => { if (!e.target.closest('a')) flip(); });
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); }
+      });
+      inner.addEventListener('transitionend', e => {
+        if (e.propertyName === 'height') ScrollTrigger.refresh();
+      });
+      new ResizeObserver(fit).observe(front);
+      new ResizeObserver(fit).observe(back);
+      fit();
     });
   </script>
 
