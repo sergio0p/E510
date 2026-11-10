@@ -71,13 +71,13 @@
     </div>
     <div class="frame-content">
       <ul>
-        <li>At each period $t$, the agent chooses $a_t =$ stop $s$ or continue $c$.</li>
+        <li>At each period $t$, the agent chooses $a_t \in \{\text{stop}, \text{continue}\}$.</li>
         <li>There is a set of states $S$ and the probability of the state in period $t$ being equal to $x_t$ given past state realizations satisfies:
           $$\Pr(s_t = x_t \mid s_{t-1} = x_{t-1}, s_{t-2} = x_{t-2}, \ldots) = \Pr(s_t = x_t \mid s_{t-1} = x_{t-1}) = q(x_t \mid x_{t-1})$$
           <em>Note:</em> "states" here are not the same as "states" in the previous sections.</li>
-        <li>In each period $t$, provided the agent did not stop yet, the agent gets utility $u(s_t, a_t)$—it depends only on the state and the action, not on calendar time. If the agent chooses to stop, $a_t = s$, the agent receives $u(s_t, s)$ at period $t$ and zero in future periods.</li>
+        <li>In each period $t$, provided the agent did not stop yet, the agent gets utility $u(s_t, a_t)$—it depends only on the state and the action, not on calendar time. If the agent chooses to stop, $a_t = \text{stop}$, the agent receives $u(s_t, \text{stop})$ at period $t$ and zero in future periods.</li>
         <li>The agent maximizes discounted expected utility:
-          $$U(s_t, \mathbf{a}(\cdot)) = \mathbb{E}\left[\sum_{t=0}^{\infty} \delta^t \, u(s_t, a_t)\right]$$</li>
+          $$U(s_0, \mathbf{a}(\cdot)) = \mathbb{E}\left[\sum_{t=0}^{\infty} \delta^t \, u(s_t, a_t)\right]$$</li>
       </ul>
     </div>
   </section>
@@ -91,15 +91,15 @@
       <p>Notice that the value function will depend only on the current state but NOT on the calendar time. The value function must satisfy the <span class="alert-text">recursive equation</span>:</p>
       <div id="value-fn-box" class="key-equation">
         <div>
-          $$V(s_t) = \max\left\{ u(s_t, s), \; u(s_t, c) + \delta \sum_{s_{t+1} \in S} V(s_{t+1}) \cdot q(s_{t+1}|s_t) \right\}$$
+          $$V(s_t) = \max\left\{ u(s_t, \text{stop}), \; u(s_t, \text{continue}) + \delta \sum_{s_{t+1} \in S} V(s_{t+1}) \cdot q(s_{t+1}|s_t) \right\}$$
         </div>
         <span class="key-equation-tag">(R)</span>
       </div>
       <div style="margin-bottom: 1.5rem;"></div>
       <div id="econ-meaning-list" style="display: grid; grid-template-columns: auto auto auto 2rem auto auto auto; gap: 0.5em 0; align-items: baseline;">
         <span>$s_t$</span><span class="econ-meaning" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-meaning" style="opacity: 0;">current state</span><span></span><span>$V(s_t)$</span><span class="econ-right-row" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-right-row" style="opacity: 0;">value of state $s_t$</span>
-        <span>$u(s_t, s)$</span><span class="econ-meaning" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-meaning" style="opacity: 0;">instantaneous utility of stopping today</span><span></span><span>$\sum_{s_{t+1}} V(s_{t+1}) q(s_{t+1}|s_t)$</span><span class="econ-right-row2" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-right-row2" style="opacity: 0;">expected future<br style="margin-bottom: 2px;">state value</span>
-        <span>$u(s_t, c)$</span><span class="econ-meaning" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-meaning" style="opacity: 0;">instantaneous utility of continuing today</span><span></span><span></span><span></span><span></span>
+        <span>$u(s_t, \text{stop})$</span><span class="econ-meaning" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-meaning" style="opacity: 0;">instantaneous utility of stopping today</span><span></span><span>$\sum_{s_{t+1}} V(s_{t+1}) q(s_{t+1}|s_t)$</span><span class="econ-right-row2" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-right-row2" style="opacity: 0;">expected future<br style="margin-bottom: 2px;">state value</span>
+        <span>$u(s_t, \text{continue})$</span><span class="econ-meaning" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-meaning" style="opacity: 0;">instantaneous utility of continuing today</span><span></span><span></span><span></span><span></span>
         <span>$s_{t+1}$</span><span class="econ-meaning" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-meaning" style="opacity: 0;">state tomorrow</span><span></span><span></span><span></span><span></span>
         <span>$q(s_{t+1}|s_t)$</span><span class="econ-meaning" style="opacity: 0;">$\quad\boldsymbol{\Rightarrow}\quad$</span><span class="econ-meaning" style="opacity: 0;">probability that $s_{t+1}$ is the state tomorrow<br style="margin-bottom: 2px;">given $s_t$ is the state today</span><span></span><span></span><span></span><span></span>
       </div>
@@ -145,10 +145,10 @@
       <p class="frame-subtitle">Fudenberg &amp; Tirole, <em>Game Theory</em> (1991)</p>
     </div>
     <div class="frame-content">
-      <p>A landowner has a tree whose timber value $v(t)$ grows with age $t$, but at a diminishing rate ($v(0) = 0$, $v' \gt 0$, $v'' \lt 0$). At each period $t$, the owner decides to cut the tree ($s$) or to wait ($w$):</p>
+      <p>A landowner has a tree whose timber value $v(t)$ grows with age $t$, but at a diminishing rate ($v(0) = 0$, $v' \gt 0$, $v'' \lt 0$). At each period $t$, the owner decides to cut the tree (stop) or to wait (continue):</p>
       <ul>
-        <li>If the owner cuts: $u(t, s) = v(t)$</li>
-        <li>If the owner waits: $u(t, w) = 0$</li>
+        <li>If the owner cuts: $u(t, \text{stop}) = v(t)$</li>
+        <li>If the owner waits: $u(t, \text{continue}) = 0$</li>
       </ul>
       <p>The transition is deterministic: state $t$ transitions to $t + 1$ with certainty.</p>
       <p>The value function satisfies:</p>
@@ -182,8 +182,8 @@
     <div class="frame-content">
       <p>A consumer is searching to buy one unit of a good online. Let $p_t$ denote the price at time $t$.</p>
       <ul>
-        <li>If the consumer buys (stops): $u(p_t, s) = v - p_t$</li>
-        <li>If the consumer keeps searching (continues): $u(p_t, c) = 0$</li>
+        <li>If the consumer buys (stops): $u(p_t, \text{stop}) = v - p_t$</li>
+        <li>If the consumer keeps searching (continues): $u(p_t, \text{continue}) = 0$</li>
       </ul>
       <p>The price increases by a factor of $2$ or decreases by a factor of $1/2$, each with equal probability:</p>
       $$q(2 p \mid p) = q(p/2 \mid p) = \tfrac{1}{2}$$
@@ -199,7 +199,7 @@
     </div>
     <div class="frame-content">
       <p>It can be shown that any optimal strategy will be a threshold strategy. There is a reservation price $p_0 2^z$ such that the consumer buys only if the current price is at or below the reservation price $p_t \leq p_0 2^z$. Using the "state" notation:</p>
-      $$a^z(s_t) = \begin{cases} s & \text{if } s_t \leq z \\ c & \text{otherwise} \end{cases}$$
+      $$a^z(s_t) = \begin{cases} \text{stop} & \text{if } s_t \leq z \\ \text{continue} & \text{otherwise} \end{cases}$$
       <p>Our goal is then to find the value of $z$ such that the recursive equation $\textcolor{#c17900}{(\text{R})}$ is satisfied.</p>
       <p>Let $V^z(s_t) = U(s_t, a^z(\cdot))$ be the value of state $s_t$ if the agent follows the strategy $a^z$. Notice that $V^z$ might not be the value function. The function $V^z$ satisfies some recursive equation but it might not satisfy <span class="alert-text">the recursive equation</span> $\textcolor{#c17900}{(\text{R})}$.</p>
       $$V^z(s) = \begin{cases} v - p_0 2^s & \text{if } s \leq z \\ \frac{\delta}{2} \cdot \left( v - p_0 \cdot 2^z + V^z(s+1) \right) & \text{if } s = z+1 \\ \frac{\delta}{2} \cdot \left( V^z(s-1) + V^z(s+1) \right) & \text{if } s \gt z+1 \end{cases} \quad (\text{Z})$$
@@ -214,7 +214,7 @@
     </div>
     <div class="frame-content">
       $$V^z(s) = \begin{cases} v - p_0 2^s & \text{if } s \leq z \\ (v - p_0 2^z) \cdot r^{s-z} & \text{if } s \gt z \end{cases}$$
-      <p>where $0 \lt r = \dfrac{1 - \sqrt{1 - \delta^2}}{\delta} \leq 1$.</p>
+      <p>where $0 \lt r = \dfrac{1 - \sqrt{1 - \delta^2}}{\delta} \lt 1$.</p>
       <p>We can use Mathematica <code>RSolve</code> to solve the recursive equation $(\text{Z})$.</p>
       <p>Let $z^\ast$ be the optimal $z$, then it must satisfy the <span class="alert-text">One-shot Deviation Principle</span> we shall see next.</p>
     </div>
@@ -238,7 +238,7 @@
 
       <div class="block" style="margin-top: 1rem;">
         <div class="block-title">The One-Shot Deviation Principle</div>
-        <div class="block-body">A policy $a^\ast = (a_t^\ast)$ is optimal if and only if there is no alternative policy $\tilde{a}$ that is a profitable one-shot deviation.</div>
+        <div class="block-body">Suppose $0 \lt \delta \lt 1$ and the utility $u$ is bounded. A policy $a^\ast = (a_t^\ast)$ is optimal if and only if there is no alternative policy $\tilde{a}$ that is a profitable one-shot deviation.</div>
       </div>
     </div>
   </section>
@@ -250,9 +250,9 @@
     </div>
     <div class="frame-content">
       <p>In states where the optimal policy prescribes <strong>stopping</strong>, the one-shot deviation principle requires that deviating to continue is not profitable:</p>
-      $$V(s_t) = u(s_t, s) \geq u(s_t, c) + \delta \sum_{s_{t+1} \in S} V(s_{t+1}) \cdot q(s_{t+1}|s_t)$$
+      $$V(s_t) = u(s_t, \text{stop}) \geq u(s_t, \text{continue}) + \delta \sum_{s_{t+1} \in S} V(s_{t+1}) \cdot q(s_{t+1}|s_t)$$
       <p>In states where the optimal policy prescribes <strong>continuing</strong>, the one-shot deviation principle requires that deviating to stop is not profitable:</p>
-      $$V(s_t) = u(s_t, c) + \delta \sum_{s_{t+1} \in S} V(s_{t+1}) \cdot q(s_{t+1}|s_t) \geq u(s_t, s)$$
+      $$V(s_t) = u(s_t, \text{continue}) + \delta \sum_{s_{t+1} \in S} V(s_{t+1}) \cdot q(s_{t+1}|s_t) \geq u(s_t, \text{stop})$$
       <p>Why can we use the value function to obtain the lifetime payoff of a one-shot deviation? Notice that after the deviation, the agent resumes following the optimal path and therefore the agent's future (continuation) utility can be expressed by means of the value function.</p>
     </div>
   </section>
@@ -269,8 +269,9 @@
       $$v - p_02^{z} \geq \frac{\delta}{2}\left(V^{z}(z - 1) + V^{z}(z + 1)\right)$$
       <p><strong>At $s = z + 1$ (agent continues):</strong> deviating to stop should not be profitable:</p>
       $$\frac{\delta}{2}\left(V^{z}(z) + V^{z}(z + 2)\right) \geq v - p_02^{z+1}$$
-      <p>Define $f(z) = v - p_0 2^z$ and $g(z) = \frac{\delta}{2}\left(V^z(z) + V^z(z+2)\right)$, for the optimal $z$:</p>
-      $$f(z) \geq g(z-1) \geq g(z) \geq f(z+1)$$
+      <p>Define $f(z) = v - p_0 2^z$, $h(z) = \frac{\delta}{2}\left(V^z(z-1) + V^z(z+1)\right)$ and $g(z) = \frac{\delta}{2}\left(V^z(z) + V^z(z+2)\right)$. For the optimal $z$:</p>
+      $$f(z) \geq h(z) \geq g(z) \geq f(z+1)$$
+      <p>Here $u(p_t, \text{stop}) = v - p_t$ is not bounded below, but the principle still applies: utility is bounded above by $v$, and every $V^z$ is bounded.</p>
       <iframe src="search-osd.html" style="width:100%; height:620px; border:none; margin-top:1rem;"></iframe>
     </div>
   </section>
@@ -299,8 +300,8 @@
       <p class="frame-subtitle">An Example</p>
     </div>
     <div class="frame-content">
-      <p>Here, $s$ means accepting the job offer and $c$ means rejecting the job offer. There are three states: $N$ (no offers), $L$ (low offer) and $H$ (high offer). Also, choosing $s$ (stop searching) in state $N$ means that the agent decided to quit the workforce. The utility of stopping is then:</p>
-      $$u(N,s)=0 \lt u(L,s)=\frac{10}{1-\delta} \lt u(H,s)=\frac{20}{1-\delta}$$
+      <p>Here, stop means accepting the job offer and continue means rejecting the job offer. There are three states: $N$ (no offers), $L$ (low offer) and $H$ (high offer). Also, choosing stop in state $N$ means that the agent decided to quit the workforce. The utility of stopping is then:</p>
+      $$u(N,\text{stop})=0 \lt u(L,\text{stop})=\frac{10}{1-\delta} \lt u(H,\text{stop})=\frac{20}{1-\delta}$$
       <p>Since we assume that there are no opportunity costs of searching, the optimal strategy is going to be either to accept any job offer, $\sigma_{LH}$, or to accept only the high wage job offer, $\sigma_{H}$.</p>
       <p>Let's analyze the $\sigma_H$ strategy:</p>
       $$\begin{aligned}
@@ -311,7 +312,7 @@
       <p>Solving this linear system of equations we obtain:</p>
       $$V^{\sigma_H}(N) = V^{\sigma_H}(L) = \frac{20\delta}{(1-\delta)(3-2\delta)} \quad\text{and}\quad V^{\sigma_H}(H) = \frac{20}{1-\delta}$$
       <p>We only need to check for one-shot deviations at state $L$ (deviating to stop):</p>
-      $$V^{\sigma_H}(L) \geq u(L,s) \quad\Longleftrightarrow\quad \frac{20\delta}{(1-\delta)(3-2\delta)} \geq \frac{10}{1-\delta} \quad\Longleftrightarrow\quad \delta \geq \tfrac{3}{4}$$
+      $$V^{\sigma_H}(L) \geq u(L,\text{stop}) \quad\Longleftrightarrow\quad \frac{20\delta}{(1-\delta)(3-2\delta)} \geq \frac{10}{1-\delta} \quad\Longleftrightarrow\quad \delta \geq \tfrac{3}{4}$$
       <p>In sum, more patient agents ($\delta \geq \tfrac{3}{4}$) will only accept the high wage job offer, while more impatient agents ($\delta \lt \tfrac{3}{4}$) will accept any job offer. The expected unemployment duration is longer for patient agents ($2$ periods) than for impatient ones ($\tfrac{1}{2}$ period).</p>
     </div>
   </section>

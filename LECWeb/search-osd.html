@@ -119,7 +119,7 @@
   <div class="legend">
     <div class="legend-item"><div class="legend-swatch" style="background:#d33682"></div><span>f(z)</span></div>
     <div class="legend-item"><div class="legend-swatch" style="background:#dc322f"></div><span>f(z+1)</span></div>
-    <div class="legend-item"><div class="legend-swatch" style="background:#268bd2"></div><span>g(z&minus;1)</span></div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#268bd2"></div><span>h(z)</span></div>
     <div class="legend-item"><div class="legend-swatch" style="background:#2aa198"></div><span>g(z)</span></div>
   </div>
 
@@ -166,7 +166,7 @@
       return (P.delta / 2) * (P.v - P.p0 * Math.pow(P.kappa, z)) * (1 + r * r);
     }
 
-    function gzm1(z) {
+    function hz(z) {
       const r = computeR(P.delta);
       return (P.delta / 2) * (
         (P.v - P.p0 * Math.pow(P.kappa, z - 1)) +
@@ -178,7 +178,7 @@
     const curves = [
       { fn: z => fz(z),     color: '#d33682', width: 3.6 },
       { fn: z => fz(z + 1), color: '#dc322f', width: 3.6 },
-      { fn: z => gzm1(z),   color: '#268bd2', width: 3.6 },
+      { fn: z => hz(z),   color: '#268bd2', width: 3.6 },
       { fn: z => gz(z),     color: '#2aa198', width: 3.6 },
     ];
 
@@ -188,7 +188,7 @@
       const lo = Math.floor(zCross) - 5;
       const hi = Math.ceil(zCross) + 5;
       for (let z = hi; z >= lo; z--) {
-        if (fz(z) >= gzm1(z) && fz(z + 1) <= gz(z)) return z;
+        if (fz(z) >= hz(z) && fz(z + 1) <= gz(z)) return z;
       }
       return null;
     }
@@ -392,13 +392,13 @@
         }));
         // Info text
         const fv  = fz(zs).toFixed(2);
-        const gm  = gzm1(zs).toFixed(2);
+        const gm  = hz(zs).toFixed(2);
         const fp1 = fz(zs + 1).toFixed(2);
         const gv  = gz(zs).toFixed(2);
         info.innerHTML =
           `<span style="color:#6c71c4"><em>z</em>* = ${zs}</span>: &ensp;` +
           `<span style="color:#d33682"><em>f</em>(<em>z</em>)</span> = ${fv} &ensp;&ge;&ensp;` +
-          `<span style="color:#268bd2"><em>g</em>(<em>z</em>&minus;1)</span> = ${gm} &ensp;&ge;&ensp;` +
+          `<span style="color:#268bd2"><em>h</em>(<em>z</em>)</span> = ${gm} &ensp;&ge;&ensp;` +
           `<span style="color:#2aa198"><em>g</em>(<em>z</em>)</span> = ${gv} &ensp;&ge;&ensp;` +
           `<span style="color:#dc322f"><em>f</em>(<em>z</em>+1)</span> = ${fp1}`;
       } else {
