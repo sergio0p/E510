@@ -59,13 +59,13 @@
       min-height: 1.5em;
     }
     .axis-label {
-      font-family: 'Times New Roman', serif;
+      font-family: KaTeX_Math, 'Times New Roman', serif;
       font-size: 18px;
       font-style: italic;
       fill: #586e75;
     }
     .tick-label {
-      font-family: 'Times New Roman', serif;
+      font-family: KaTeX_Main, 'Times New Roman', serif;
       font-size: 13px;
       fill: #586e75;
     }
@@ -78,12 +78,12 @@
 
   <div class="controls">
     <div class="ctrl">
-      <label>&beta;</label>
+      <label>$\beta$</label>
       <input type="range" id="sl-beta" min="0.05" max="0.95" step="0.05" value="0.50">
       <span class="val" id="vl-beta">0.50</span>
     </div>
     <div class="ctrl">
-      <label>&delta;</label>
+      <label>$\delta$</label>
       <input type="range" id="sl-delta" min="0.05" max="0.90" step="0.01" value="0.90">
       <span class="val" id="vl-delta">0.90</span>
     </div>
@@ -107,17 +107,22 @@
   </svg>
 
   <div class="legend">
-    <div class="legend-item"><div class="legend-swatch" style="background:#d33682"></div><span>v(t)</span></div>
-    <div class="legend-item"><div class="legend-swatch" style="background:#268bd2"></div><span>&delta;&middot;v(t+1)</span></div>
-    <div class="legend-item"><span>v(t) = t<sup>&beta;</sup></span></div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#d33682"></div><span>$v(t)$</span></div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#268bd2"></div><span>$\delta\cdot v(t+1)$</span></div>
+    <div class="legend-item"><span>$v(t) = t^\beta$</span></div>
   </div>
 
   <div class="info" id="info"></div>
 
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
   <script>
   (function() {
+    const K = s => katex.renderToString(s, { throwOnError: false });
+    renderMathInElement(document.body, {
+      delimiters: [{ left: '$', right: '$', display: false }], throwOnError: false
+    });
+
     const M = { left: 60, right: 20, top: 40, bottom: 50 };
     const VW = 560, VH = 420;
     const PW = VW - M.left - M.right;
@@ -344,12 +349,12 @@
         const dvv = dvt1(ts).toFixed(2);
         const vtm = vt(ts - 1).toFixed(2);
         const dvm = dvt1(ts - 1).toFixed(2);
-        info.innerHTML =
-          `<span style="color:#6c71c4"><em>t</em>* = ${ts}</span>: &ensp;` +
-          `<span style="color:#d33682"><em>v</em>(<em>t</em>*)</span> = ${vtv} &ensp;&ge;&ensp;` +
-          `<span style="color:#268bd2">&delta;&middot;<em>v</em>(<em>t</em>*+1)</span> = ${dvv}`;
+        info.innerHTML = K(
+          `\\textcolor{#6c71c4}{t^* = ${ts}}\\colon\\quad ` +
+          `\\textcolor{#d33682}{v(t^*)} = ${vtv} \\;\\ge\\; ` +
+          `\\textcolor{#268bd2}{\\delta\\cdot v(t^*+1)} = ${dvv}`);
       } else {
-        info.innerHTML = 'No optimal <em>t</em>* found in range.';
+        info.innerHTML = `No optimal ${K('t^*')} found in range.`;
       }
     }
 

@@ -59,13 +59,13 @@
       min-height: 1.5em;
     }
     .axis-label {
-      font-family: 'Times New Roman', serif;
+      font-family: KaTeX_Math, 'Times New Roman', serif;
       font-size: 18px;
       font-style: italic;
       fill: #586e75;
     }
     .tick-label {
-      font-family: 'Times New Roman', serif;
+      font-family: KaTeX_Main, 'Times New Roman', serif;
       font-size: 13px;
       fill: #586e75;
     }
@@ -78,22 +78,22 @@
 
   <div class="controls">
     <div class="ctrl">
-      <label>v</label>
+      <label>$v$</label>
       <input type="range" id="sl-v" min="5" max="25" step="0.5" value="10">
       <span class="val" id="vl-v">10</span>
     </div>
     <div class="ctrl">
-      <label>p&#x2080;</label>
+      <label>$p_0$</label>
       <input type="range" id="sl-p0" min="0.5" max="10" step="0.5" value="4">
       <span class="val" id="vl-p0">4</span>
     </div>
     <div class="ctrl">
-      <label>&delta;</label>
+      <label>$\delta$</label>
       <input type="range" id="sl-delta" min="0" max="1000" step="1" value="332">
       <span class="val" id="vl-delta">0.90</span>
     </div>
     <div class="ctrl">
-      <label>&kappa;</label>
+      <label>$\kappa$</label>
       <input type="range" id="sl-kappa" min="1.1" max="3.0" step="0.1" value="2.0">
       <span class="val" id="vl-kappa">2.0</span>
     </div>
@@ -117,19 +117,25 @@
   </svg>
 
   <div class="legend">
-    <div class="legend-item"><div class="legend-swatch" style="background:#d33682"></div><span>f(z)</span></div>
-    <div class="legend-item"><div class="legend-swatch" style="background:#dc322f"></div><span>f(z+1)</span></div>
-    <div class="legend-item"><div class="legend-swatch" style="background:#268bd2"></div><span>h(z)</span></div>
-    <div class="legend-item"><div class="legend-swatch" style="background:#2aa198"></div><span>g(z)</span></div>
-    <div class="legend-item"><span>p<sub>t</sub> = &kappa;<sup>z</sup>&middot;p&#x2080;</span></div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#d33682"></div><span>$f(z)$</span></div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#dc322f"></div><span>$f(z+1)$</span></div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#268bd2"></div><span>$h(z)$</span></div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#2aa198"></div><span>$g(z)$</span></div>
+    <div class="legend-item"><span>$p_t = \kappa^z\cdot p_0$</span></div>
   </div>
 
   <div class="info" id="info"></div>
 
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
   <script>
   (function() {
+    const K = s => katex.renderToString(s, { throwOnError: false });
+    const minus = v => String(v).replace('-', '−');
+    renderMathInElement(document.body, {
+      delimiters: [{ left: '$', right: '$', display: false }], throwOnError: false
+    });
+
     // Layout
     const M = { left: 60, right: 20, top: 40, bottom: 50 };
     const VW = 560, VH = 380;
@@ -330,7 +336,7 @@
           x: x, y: M.top + PH + 20,
           class: 'tick-label', 'text-anchor': 'middle'
         });
-        t.textContent = z;
+        t.textContent = minus(z);
         gTicks.appendChild(t);
       }
 
@@ -345,7 +351,7 @@
           x: M.left - 8, y: y + 4,
           class: 'tick-label', 'text-anchor': 'end'
         });
-        t.textContent = Math.abs(u) < 1e-10 ? '0' : (Number.isInteger(u) ? u : u.toFixed(1));
+        t.textContent = Math.abs(u) < 1e-10 ? '0' : minus(Number.isInteger(u) ? u : u.toFixed(1));
         gTicks.appendChild(t);
       }
 
@@ -396,14 +402,14 @@
         const gm  = hz(zs).toFixed(2);
         const fp1 = fz(zs + 1).toFixed(2);
         const gv  = gz(zs).toFixed(2);
-        info.innerHTML =
-          `<span style="color:#6c71c4"><em>z</em>* = ${zs}</span>: &ensp;` +
-          `<span style="color:#d33682"><em>f</em>(<em>z</em>)</span> = ${fv} &ensp;&ge;&ensp;` +
-          `<span style="color:#268bd2"><em>h</em>(<em>z</em>)</span> = ${gm} &ensp;&ge;&ensp;` +
-          `<span style="color:#2aa198"><em>g</em>(<em>z</em>)</span> = ${gv} &ensp;&ge;&ensp;` +
-          `<span style="color:#dc322f"><em>f</em>(<em>z</em>+1)</span> = ${fp1}`;
+        info.innerHTML = K(
+          `\\textcolor{#6c71c4}{z^* = ${zs}}\\colon\\quad ` +
+          `\\textcolor{#d33682}{f(z)} = ${fv} \\;\\ge\\; ` +
+          `\\textcolor{#268bd2}{h(z)} = ${gm} \\;\\ge\\; ` +
+          `\\textcolor{#2aa198}{g(z)} = ${gv} \\;\\ge\\; ` +
+          `\\textcolor{#dc322f}{f(z+1)} = ${fp1}`);
       } else {
-        info.innerHTML = 'No optimal integer <em>z</em> found in range.';
+        info.innerHTML = `No optimal integer ${K('z')} found in range.`;
       }
     }
 
