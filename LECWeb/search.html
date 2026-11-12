@@ -33,14 +33,15 @@
       <a href="#a-tree-cutting-problem-2" style="margin-left: 1rem;">5. Tree Cont.</a>
       <a href="#online-shopping" style="margin-left: 1rem;">6. Shopping</a>
       <a href="#online-shopping-2" style="margin-left: 1rem;">7. Shopping Cont.</a>
-      <a href="#online-shopping-3" style="margin-left: 1rem;">8. Shopping Soln</a>
+      <a href="#online-shopping-value" style="margin-left: 1rem;">8. Strategy Value</a>
       <br>
-      <a href="#one-shot-deviation-principle" style="margin-left: 1rem;">9. OSD</a>
-      <a href="#one-shot-deviation-principle-and-the-value-function" style="margin-left: 1rem;">10. OSD & VF</a>
-      <a href="#the-one-shot-deviation-principle-in-action" style="margin-left: 1rem;">11. OSD Action</a>
-      <a href="#job-search" style="margin-left: 1rem;">12. Job Search</a>
+      <a href="#online-shopping-3" style="margin-left: 1rem;">9. Shopping Soln</a>
+      <a href="#one-shot-deviation-principle" style="margin-left: 1rem;">10. OSD</a>
+      <a href="#one-shot-deviation-principle-and-the-value-function" style="margin-left: 1rem;">11. OSD & VF</a>
+      <a href="#the-one-shot-deviation-principle-in-action" style="margin-left: 1rem;">12. OSD Action</a>
       <br>
-      <a href="#job-search-2" style="margin-left: 1rem;">13. Job Cont.</a>
+      <a href="#job-search" style="margin-left: 1rem;">13. Job Search</a>
+      <a href="#job-search-2" style="margin-left: 1rem;">14. Job Cont.</a>
     </nav>
   </section>
 
@@ -203,6 +204,17 @@
       <p>Our goal is then to find the value of $z$ such that the recursive equation $\textcolor{#c17900}{(\text{R})}$ is satisfied.</p>
       <p>Let $V^z(s_t) = U(s_t, a^z(\cdot))$ be the value of state $s_t$ if the agent follows the strategy $a^z$. Notice that $V^z$ might not be the value function. The function $V^z$ satisfies some recursive equation but it might not satisfy <span class="alert-text">the recursive equation</span> $\textcolor{#c17900}{(\text{R})}$.</p>
       $$V^z(s) = \begin{cases} v - p_0 2^s & \text{if } s \leq z \\ \frac{\delta}{2} \cdot \left( v - p_0 \cdot 2^z + V^z(s+1) \right) & \text{if } s = z+1 \\ \frac{\delta}{2} \cdot \left( V^z(s-1) + V^z(s+1) \right) & \text{if } s \gt z+1 \end{cases} \quad (\text{Z})$$
+    </div>
+  </section>
+
+  <!-- Frame 5b: Online Shopping (value of stopping strategies) -->
+  <section class="frame" id="online-shopping-value">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Online Shopping</h2>
+      <p class="frame-subtitle">Value of Stopping Strategies</p>
+    </div>
+    <div class="frame-content">
+      <iframe src="search-sim.html" style="width:100%; height:620px; border:none; margin-top:1rem;"></iframe>
     </div>
   </section>
 
