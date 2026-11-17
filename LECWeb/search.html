@@ -12,6 +12,25 @@
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="css/beamer-theme.css">
+  <style>
+    /* Flip card (as in the Midterm 2 key on answer-keys.html): each question is a
+       block whose back carries its answer. Clicking the card turns it over, and its
+       height follows whichever face is showing (set in the script at the bottom).
+       The body uses .flip-body, not .block-body, so the "?" flip of
+       js/scroll-animations.js leaves these blocks alone. */
+    .flip-card { perspective: 1200px; cursor: pointer; margin: 0.75rem 0 1rem; }
+    .flip-card:focus:not(:focus-visible) { outline: none; }
+    .flip-inner { position: relative; transform-style: preserve-3d; transition: transform 0.6s ease, height 0.4s ease; }
+    .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+    .flip-front, .flip-back { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+    .flip-front { position: relative; }
+    .flip-back { position: absolute; top: 0; left: 0; width: 100%; transform: rotateY(180deg); }
+    .flip-card .block { width: 100%; margin: 0; }
+    .flip-body { background: #fff8e1; color: #000000; padding: 1rem; }
+    .flip-body > :last-child { margin-bottom: 0; }
+    /* Display math set flush left instead of centered. */
+    .flush-left .katex-display > .katex { text-align: left; }
+  </style>
     <!-- Google Analytics -->
     <script async src="/E510/js/ga.js"></script>
 </head>
@@ -42,6 +61,8 @@
       <br>
       <a href="#job-search" style="margin-left: 1rem;">13. Job Search</a>
       <a href="#job-search-2" style="margin-left: 1rem;">14. Job Cont.</a>
+      <a href="#a-queue-problem" style="margin-left: 1rem;">15. Queue</a>
+      <a href="#a-queue-problem-learning" style="margin-left: 1rem;">16. Queue Learning</a>
     </nav>
   </section>
 
@@ -329,6 +350,460 @@
     </div>
   </section>
 
+  <!-- Frame 11: A Queue Problem -->
+  <section class="frame" id="a-queue-problem">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">A Queue Problem</h2>
+      <p class="frame-subtitle">A Learning-by-Doing Example</p>
+    </div>
+    <div class="frame-content">
+      <p><strong>Setup:</strong> You are standing in line to buy a ticket for a game. The ticket is worth $v$ to you and its price is $p$, where $v-p\gt 0$. The length of the line, $\ell$, is the number of people waiting in front of you, a nonnegative integer.</p>
+      <p>Time is discrete, $t=0,1,2,\ldots$, and there is no terminal date: the horizon is infinite. At the beginning of each period, you choose between staying in line until the next period ($\text{continue}$) and leaving the line for good ($\text{stop}$). If you continue, you incur a cost $c\gt 0$, and in the next period the line advances with probability $q$, where $0\lt q\lt 1$, so its length becomes $\ell-1$; with probability $1-q$ it stays the same. When $\ell=0$, it is your turn: you incur no waiting cost and receive $v-p$. You discount future payoffs and costs by the factor $\delta$, where $0\lt\delta\lt 1$.</p>
+      <p>Click on a question to reveal its answer.</p>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 1</div>
+              <div class="flip-body">
+                <p>Which state variable(s) should we use for this problem?</p>
+                <ol type="a">
+                  <li>The time period, $t$.</li>
+                  <li>The length of the line, $\ell$.</li>
+                  <li>Both, $(t,\ell)$.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 1</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> The length of the line, $\ell$. The horizon is infinite, and the payoffs, the waiting cost, the probability that the line advances, and the discount factor do not change over time. A line of length $\ell$ therefore poses the same problem in every period, and the time period $t$ adds nothing.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 2</div>
+              <div class="flip-body">
+                <p>For any strategy you might follow, what is the value function at the state $\ell=0$, $V(0)$?</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 2</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> $V(0)=v-p$. When $\ell=0$ it is your turn: you buy the ticket, incur no waiting cost, and the problem ends. No choice is left to make, so every strategy gives the same value.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 3</div>
+              <div class="flip-body">
+                <p>Suppose you always choose to continue. Write $V(1)$ in terms of $V(0)$, $c$, $\delta$, and $q$.</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 3</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> If you continue, you pay $c$ today. Next period the line advances with probability $q$, which takes you to the state $0$; with probability $1-q$ it stays at length $1$. Discounting next period&rsquo;s value by $\delta$:</p>
+                $$V(1)=-c+\delta\paren{q\,V(0)+(1-q)\,V(1)}.$$
+                <p>Solving for $V(1)$:</p>
+                $$V(1)=\frac{\delta q\,V(0)-c}{1-\delta(1-q)}.$$
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 4</div>
+              <div class="flip-body">
+                <p>Suppose you always choose to continue. For a generic length $\ell\ge 1$, write $V(\ell)$ in terms of $V(\ell-1)$, $c$, $\delta$, and $q$.</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 4</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> If you continue, you pay $c$ today. Next period the line advances with probability $q$, which takes you to the state $\ell-1$; with probability $1-q$ it stays at length $\ell$. Discounting next period&rsquo;s value by $\delta$:</p>
+                $$V(\ell)=-c+\delta\paren{q\,V(\ell-1)+(1-q)\,V(\ell)}.$$
+                <p>Solving for $V(\ell)$:</p>
+                $$V(\ell)=\frac{\delta q\,V(\ell-1)-c}{1-\delta(1-q)}.$$
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 5</div>
+              <div class="flip-body">
+                <p>Suppose that, for any $\ell\ge 1$, $V(\ell)=A\,V(\ell-1)+B$, where $A$ and $B$ are constants. Write $V(\ell)$ as a function of $V(\ell-2)$, $A$, and $B$.</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 5</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> For any $\ell\ge 2$, apply the relation twice, first at $\ell$ and then at $\ell-1$:</p>
+                $$V(\ell)=A\,V(\ell-1)+B=A\paren{A\,V(\ell-2)+B}+B=A^2\,V(\ell-2)+(1+A)\,B.$$
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 6</div>
+              <div class="flip-body">
+                <p>Use the answers to the previous questions to express $V(\ell)$ as a function of $V(\ell-3)$, $A$, and $B$.</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 6</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> For any $\ell\ge 3$, start from Answer 5 and apply the relation once more, at $\ell-2$:</p>
+                <div class="flush-left">
+                $$\begin{align*}
+                V(\ell)&=A^2\,V(\ell-2)+(1+A)\,B=A^2\paren{A\,V(\ell-3)+B}+(1+A)\,B\\
+                &=A^3\,V(\ell-3)+(1+A+A^2)\,B.
+                \end{align*}$$
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 7</div>
+              <div class="flip-body">
+                <p>Guess: how would we write $V(\ell)$ as a function of $V(0)$, $A$, and $B$ only?</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 7</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> Carry the pattern from Answers 5 and 6 all the way down to $V(0)$:</p>
+                $$V(\ell)=A^\ell\,V(0)+\paren{1+A+\cdots+A^{\ell-1}}B.$$
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 8</div>
+              <div class="flip-body">
+                <p>Using the recursive method we first learned in <a href="recursive-methods.html#recursive-intro">the last chapter</a> (for series, not value functions), compute a simpler expression for $1+A+\cdots+A^{\ell-1}$.</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 8</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> Let $S=1+A+A^2+\cdots+A^{\ell-1}$.</p>
+                <ul>
+                  <li>Factor out $A$: $S=1+A\paren{1+A+\cdots+A^{\ell-2}}$.</li>
+                  <li>The expression in parentheses is $S$ without its last term, $A^{\ell-1}$: $S=1+A\paren{S-A^{\ell-1}}$.</li>
+                  <li>This is a recursive equation: $S$ is defined in terms of $S$.</li>
+                  <li>Solve: $S-AS=1-A^\ell$, that is, $(1-A)\,S=1-A^\ell$.</li>
+                  <li>Solution: $S=\dfrac{1-A^\ell}{1-A}$.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 9</div>
+              <div class="flip-body">
+                <p>Suppose the line has length $\ell$. When would you prefer to stop, that is, to leave the line? Answer with an inequality that involves only $\ell$, $V(0)$, $A$, and $B$: &ldquo;I would stop when &hellip;&rdquo;</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 9</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> Stopping gives you $0$: you leave with nothing and pay nothing more. Continuing until your turn is worth $V(\ell)$, from Answers 7 and 8. I would stop when</p>
+                $$A^\ell\,V(0)+\frac{1-A^\ell}{1-A}\,B\lt 0.$$
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 10</div>
+              <div class="flip-body">
+                <p>In terms of the model&rsquo;s exogenous variables&mdash;$v$, $p$, $c$, $\delta$, and $q$&mdash;what are $A$ and $B$ in our setting? What is the sign of $A$? What is the sign of $B$?</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 10</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> The equation in Answer 4 already has the form $V(\ell)=A\,V(\ell-1)+B$, with</p>
+                $$A=\frac{\delta q}{1-\delta(1-q)}\qquad\text{and}\qquad B=-\frac{c}{1-\delta(1-q)}.$$
+                <p>The denominator $1-\delta(1-q)$ is positive, because $\delta\lt 1$ and $1-q\lt 1$. Hence $A\gt 0$ and, since $c\gt 0$, $B\lt 0$. The values $v$ and $p$ appear in neither $A$ nor $B$; they enter only through $V(0)=v-p$.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 11</div>
+              <div class="flip-body">
+                <p>Is $A\gt 1$, $A=1$, or $A\lt 1$? Justify your answer.</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 11</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> $A\lt 1$. The denominator of $A$ is positive, so multiplying both sides by it keeps the inequality:</p>
+                $$A\lt 1\iff\delta q\lt 1-\delta(1-q)\iff\delta q\lt 1-\delta+\delta q\iff\delta\lt 1,$$
+                <p>and $\delta\lt 1$ by assumption.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 12</div>
+              <div class="flip-body">
+                <p>What happens to the expression</p>
+                $$V(\ell)=A^\ell\,V(0)+\frac{1-A^\ell}{1-A}\,B$$
+                <p>as $\ell$ increases? Does it increase, decrease, or stay constant? Justify your answer.</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 12</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> It decreases. Take the two terms one at a time.</p>
+                <ul>
+                  <li><strong>First term, $A^\ell\,V(0)$:</strong> since $0\lt A\lt 1$ (Answers 10 and 11), $A^\ell$ falls as $\ell$ grows. Since $V(0)=v-p\gt 0$, the term falls.</li>
+                  <li><strong>Second term:</strong> by Answer 8, $\dfrac{1-A^\ell}{1-A}=1+A+\cdots+A^{\ell-1}$, which gains the positive term $A^\ell$ each time $\ell$ goes up by one, so it rises. Since $B\lt 0$, the term falls.</li>
+                </ul>
+                <p>Both terms fall, so $V(\ell)$ decreases as $\ell$ increases. A longer line means more periods of waiting costs and a ticket further in the future.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 13</div>
+              <div class="flip-body">
+                <p>Show that $V(\ell)$ becomes negative when $\ell$ is sufficiently large. Hint: what is the limit of $V(\ell)$ as $\ell\to\infty$?</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 13</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> Since $0\lt A\lt 1$, $A^\ell\to 0$ as $\ell\to\infty$, so</p>
+                $$\lim_{\ell\to\infty}V(\ell)=\frac{B}{1-A}.$$
+                <p>By Answer 10, $1-A=\dfrac{1-\delta}{1-\delta(1-q)}$, so</p>
+                $$\frac{B}{1-A}=-\frac{c}{1-\delta}\lt 0.$$
+                <p>Hence $V(\ell)$ gets arbitrarily close to a negative number, so $V(\ell)\lt 0$ once $\ell$ is large enough. Since $V(\ell)$ decreases (Answer 12), it stays negative for every longer line. The limit $-c/(1-\delta)$ is the value of paying $c$ in every period forever: an endless line means waiting costs forever and never a ticket.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 14</div>
+              <div class="flip-body">
+                <p>Remember that $V(\ell)$ is the value of the strategy that never leaves the line. In your own words, describe the <em>optimal</em> strategy for this problem.</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 14</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> Stay only if the line is short enough. By Answers 12 and 13, $V(\ell)$ starts at $V(0)=v-p\gt 0$, decreases as $\ell$ grows, and eventually turns negative. Let $\ell^\ast$ be the largest length with $V(\ell^\ast)\ge 0$. The optimal strategy uses $\ell^\ast$ as a cutoff:</p>
+                <ul>
+                  <li><strong>If $\ell\le\ell^\ast$:</strong> continue, and stay in line until your turn.</li>
+                  <li><strong>If $\ell\gt\ell^\ast$:</strong> stop, and leave the line right away.</li>
+                </ul>
+                <p>Once you decide to stay, the line only gets shorter or stays the same, so its length never rises above $\ell^\ast$. You remain in line until it is your turn.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 15</div>
+              <div class="flip-body">
+                <p>Let $V^\ast(\ell)$ be the value function: your discounted utility when you follow the optimal strategy from a line of length $\ell$. So far, $V(\ell)$ has been the utility of never leaving the line, and we have loosely called it a &ldquo;value&rdquo; as well. What recursive equation must $V^\ast$ satisfy?</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 15</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> At $\ell=0$ there is no choice to make: $V^\ast(0)=v-p$. For $\ell\ge 1$, the <a href="#the-value-function">recursive equation (R)</a> with $u(\ell,\text{stop})=0$ and $u(\ell,\text{continue})=-c$ gives</p>
+                $$V^\ast(\ell)=\max\left\{0,\;-c+\delta\paren{q\,V^\ast(\ell-1)+(1-q)\,V^\ast(\ell)}\right\}.$$
+                <p>The first entry is the value of stopping now. The second is the value of continuing for one period and then following the optimal strategy.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frame 12: A Queue Problem with an unknown speed -->
+  <section class="frame" id="a-queue-problem-learning">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">A Queue Problem</h2>
+      <p class="frame-subtitle">Learning How Fast the Line Moves</p>
+    </div>
+    <div class="frame-content">
+      <p><strong>Setup:</strong> You are standing in line to buy a ticket for a game. The ticket is worth $v$ to you and its price is $p$, where $v-p\gt 0$. The length of the line, $\ell$, is the number of people waiting in front of you, a nonnegative integer.</p>
+      <p>Time is discrete, $t=0,1,2,\ldots$, and there is no terminal date: the horizon is infinite. At the beginning of each period, you choose between staying in line until the next period ($\text{continue}$) and leaving the line for good ($\text{stop}$). If you continue, you incur a cost $c\gt 0$, and in the next period the line advances with probability $q$, so its length becomes $\ell-1$; with probability $1-q$ it stays the same. When $\ell=0$, it is your turn: you incur no waiting cost and receive $v-p$. You discount future payoffs and costs by the factor $\delta$, where $0\lt\delta\lt 1$.</p>
+      <p>Unlike in the previous example, you do not know how fast the line moves: either $q=\tfrac34$ (the line moves fast) or $q=\tfrac14$ (the line moves slowly). At time $t=0$, your belief that the line moves fast is $\beta_0$, that is, $\Pr(q=\tfrac34)=\beta_0$ and $\Pr(q=\tfrac14)=1-\beta_0$. At time $t$, if you are still in line, $\beta_t$ denotes your updated belief that the line moves fast.</p>
+      <p>Click on a question to reveal its answer.</p>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 1</div>
+              <div class="flip-body">
+                <p>Suppose you stay in line in period $t=0$. What is $\beta_1$ if the line moves? What is $\beta_1$ if it does not move?</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 1</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> Use Bayes&rsquo; rule. If the line moves:</p>
+                $$\beta_1=\frac{\tfrac34\beta_0}{\tfrac34\beta_0+\tfrac14(1-\beta_0)}=\frac{3\beta_0}{1+2\beta_0}.$$
+                <p>If it does not move:</p>
+                $$\beta_1=\frac{\tfrac14\beta_0}{\tfrac14\beta_0+\tfrac34(1-\beta_0)}=\frac{\beta_0}{3-2\beta_0}.$$
+                <p>A line that moves makes you more confident that it is fast: $\beta_1\gt\beta_0$ whenever $0\lt\beta_0\lt 1$. A line that stalls makes you less confident.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 2</div>
+              <div class="flip-body">
+                <p>Which state variable(s) should we use for this problem?</p>
+                <ol type="a">
+                  <li>The time period, $t$.</li>
+                  <li>The length of the line, $\ell$.</li>
+                  <li>Your current belief that the line moves fast, $\beta$.</li>
+                  <li>The time period and your belief, $(t,\beta)$.</li>
+                  <li>The length of the line and your belief, $(\ell,\beta)$.</li>
+                  <li>All three, $(t,\ell,\beta)$.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 2</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> The length of the line and your belief, $(\ell,\beta)$. The length matters as before. Now your belief matters too, because it sets the probability that the line moves next period, $\beta\cdot\tfrac34+(1-\beta)\cdot\tfrac14$. Given $\ell$ and $\beta$, the problem looks the same whatever the date, so the time period $t$ adds nothing.</p>
+                <p>The pair $(t,\ell)$ would also work. The initial length $\ell_0$ and the initial belief $\beta_0$ are fixed, and by period $t$ the line has moved $\ell_0-\ell$ times and stalled $t-(\ell_0-\ell)$ times, so $\beta_t$ can be computed from $t$ and $\ell$. The drawback is that a value function of $(t,\ell)$ changes with the date, while a value function of $(\ell,\beta)$ does not.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" role="button" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-front">
+            <div class="block">
+              <div class="block-title">Question 3</div>
+              <div class="flip-body">
+                <p>Let $V^\ast(\ell,\beta)$ be the value function: your discounted utility when you follow the optimal strategy from a line of length $\ell$ with belief $\beta$. What recursive equation must $V^\ast$ satisfy?</p>
+              </div>
+            </div>
+          </div>
+          <div class="flip-back" aria-hidden="true">
+            <div class="block">
+              <div class="block-title">Answer 3</div>
+              <div class="flip-body">
+                <p><span class="structure">Answer.</span> At $\ell=0$ there is no choice to make: $V^\ast(0,\beta)=v-p$. For $\ell\ge 1$, the line moves next period with probability</p>
+                $$\pi(\beta)=\beta\cdot\tfrac34+(1-\beta)\cdot\tfrac14=\frac{1+2\beta}{4},$$
+                <p>and, as in Answer 1, your belief becomes $\beta^+=\dfrac{3\beta}{1+2\beta}$ if it moves and $\beta^-=\dfrac{\beta}{3-2\beta}$ if it does not. The <a href="#the-value-function">recursive equation (R)</a> with $u(\ell,\beta,\text{stop})=0$ and $u(\ell,\beta,\text{continue})=-c$ gives</p>
+                $$V^\ast(\ell,\beta)=\max\left\{0,\;-c+\delta\paren{\pi(\beta)\,V^\ast(\ell-1,\beta^+)+(1-\pi(\beta))\,V^\ast(\ell,\beta^-)}\right\}.$$
+                <p>The first entry is the value of stopping now. The second is the value of continuing for one period and then following the optimal strategy.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p>We will not solve this example. One way to solve it is to guess that the optimal strategy follows a cutoff rule: there is a cutoff length $\ell^\ast(\beta)$ such that you continue when $\ell\le\ell^\ast(\beta)$ and stop when $\ell\gt\ell^\ast(\beta)$, where $\ell^\ast(\beta)$ is increasing in $\beta$. The more confident you are that the line moves fast, the longer the line you are willing to wait in.</p>
+    </div>
+  </section>
+
   <!-- KaTeX -->
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
@@ -338,6 +813,37 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="js/scroll-animations.js"></script>
+
+  <script>
+    // Flip cards: toggle .flipped on click (or Enter/Space), and size the card to
+    // the visible face; refresh ScrollTrigger once the height has settled, since
+    // everything below the card moves. Links inside a card navigate without flipping it.
+    document.querySelectorAll('.flip-card').forEach(card => {
+      const inner = card.querySelector('.flip-inner');
+      const front = card.querySelector('.flip-front');
+      const back = card.querySelector('.flip-back');
+      const fit = () => {
+        const face = card.classList.contains('flipped') ? back : front;
+        inner.style.height = face.offsetHeight + 'px';
+      };
+      const flip = () => {
+        const flipped = card.classList.toggle('flipped');
+        front.setAttribute('aria-hidden', flipped ? 'true' : 'false');
+        back.setAttribute('aria-hidden', flipped ? 'false' : 'true');
+        fit();
+      };
+      card.addEventListener('click', e => { if (!e.target.closest('a')) flip(); });
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); }
+      });
+      inner.addEventListener('transitionend', e => {
+        if (e.propertyName === 'height') ScrollTrigger.refresh();
+      });
+      new ResizeObserver(fit).observe(front);
+      new ResizeObserver(fit).observe(back);
+      fit();
+    });
+  </script>
 
   <!-- Navigation Links -->
   <div style="max-width: var(--frame-max-width); margin: 0.5rem auto; padding: 0 0.5rem; display: flex; justify-content: space-between; font-size: 0.55rem;">
