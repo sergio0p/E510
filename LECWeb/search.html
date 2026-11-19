@@ -30,7 +30,24 @@
     .flip-body > :last-child { margin-bottom: 0; }
     /* Display math set flush left instead of centered. */
     .flush-left .katex-display > .katex { text-align: left; }
+
+    /* Safari/WebKit does not paint `position: relative` content inside
+       <foreignObject>, so KaTeX labels in tikz-svg figures never appear. On WebKit
+       show KaTeX's MathML twin instead. Same fix as recursive-methods.html. */
+    @supports (-webkit-backdrop-filter: blur(1px)) {
+      svg foreignObject .katex .katex-html { display: none; }
+      svg foreignObject .katex .katex-mathml {
+        position: static; clip: auto; clip-path: none; height: auto; width: auto;
+        overflow: visible; padding: 0; border: 0; opacity: 1; font-size: 1em;
+      }
+    }
   </style>
+
+  <!-- tikz-svg: the bundle's bare 'mathjs' import must resolve; the shim
+       degrades to null stubs when window.math is absent (diagrams-only page). -->
+  <script type="importmap">
+  { "imports": { "mathjs": "./tikz-svg/examples-v2/mathjs-shim.js" } }
+  </script>
     <!-- Google Analytics -->
     <script async src="/E510/js/ga.js"></script>
 </head>
@@ -213,6 +230,17 @@
     </div>
   </section>
 
+  <!-- Frame 4b: Online Shopping (price automaton, rendered at the bottom) -->
+  <section class="frame" id="online-shopping-automaton">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Online Shopping</h2>
+      <p class="frame-subtitle">An Example (continuation)</p>
+    </div>
+    <div class="frame-content">
+      <svg id="automaton-prices" style="max-width: 980px; width: 100%; display: block; margin: 1rem auto;"></svg>
+    </div>
+  </section>
+
   <!-- Frame 5: Online Shopping (continuation) -->
   <section class="frame" id="online-shopping-2">
     <div class="frame-title-bar">
@@ -350,6 +378,26 @@
     </div>
   </section>
 
+  <!-- Frame 10b: Job Search — state transitions under σ_LH and σ_H (rendered at the bottom) -->
+  <section class="frame" id="job-search-transitions">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Job Search</h2>
+      <p class="frame-subtitle">An Example (cont.)</p>
+    </div>
+    <div class="frame-content">
+      <div class="columns">
+        <div class="column">
+          <p style="text-align: center;">Under $\sigma_{LH}$</p>
+          <svg id="automaton-job-lh" style="max-width: 420px; width: 100%; display: block; margin: 0 auto;"></svg>
+        </div>
+        <div class="column">
+          <p style="text-align: center;">Under $\sigma_{H}$</p>
+          <svg id="automaton-job-h" style="max-width: 420px; width: 100%; display: block; margin: 0 auto;"></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Frame 11: A Queue Problem -->
   <section class="frame" id="a-queue-problem">
     <div class="frame-title-bar">
@@ -380,6 +428,7 @@
               <div class="block-title">Answer 1</div>
               <div class="flip-body">
                 <p><span class="structure">Answer.</span> The length of the line, $\ell$. The horizon is infinite, and the payoffs, the waiting cost, the probability that the line advances, and the discount factor do not change over time. A line of length $\ell$ therefore poses the same problem in every period, and the time period $t$ adds nothing.</p>
+                <svg id="automaton-queue" style="max-width: 496px; width: 100%; display: block; margin: 0.5rem auto 0;"></svg>
               </div>
             </div>
           </div>
@@ -850,6 +899,141 @@
     <a href="recursive-methods.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Recursive Methods</a>
     <a href="repeated-games.html" style="color: var(--crane-blue); text-decoration: none;">Repeated Games &rarr;</a>
   </div>
+
+  <!-- Frame 4b automaton: prices on a horizontal line, low to high, so the order
+       of the states z ∈ ℤ (and the stop region s ≤ z of the next frame) reads left
+       to right. Each price moves to 2p (arc above) or p/2 (arc below) with
+       probability 1/2. The chain continues past both ends: dash-dotted arcs go out
+       to and come back from the ⋯ nodes. -->
+  <script type="module">
+    import { render } from './tikz-svg/dist/tikz-svg.min.js';
+    const green = '#2e7d32', FS = 20;  // one size for node and edge labels
+    const D = 150;                     // centre-to-centre spacing
+    const order = ['lo', 'q4', 'q2', 'p0', 'p2', 'p4', 'hi'];
+    const at = id => ({ x: order.indexOf(id) * D, y: 0 });
+    const dots = { label: '$\\cdots$', fill: 'none', stroke: 'none', shadow: false, labelColor: '#000', radius: 18, fontSize: 26 };
+    const half = '$\\tfrac{1}{2}$';
+    // The library bends 'left'/'right' of the direction of travel; translate
+    // "arc above" / "arc below" into that for an edge between two nodes on the line.
+    const edge = (from, to, side, dashed) => {
+      const east = order.indexOf(to) > order.indexOf(from);
+      const bend = (side === 'above') === east ? 'left' : 'right';
+      return { from, to, label: half, bend, labelSide: bend, labelDistance: 2, fontSize: FS, shortenEnd: 5,
+               ...(dashed && { dashed: '9 4 2 4' }) };
+    };
+    const above = (from, to, dashed) => edge(from, to, 'above', dashed);
+    const below = (from, to, dashed) => edge(from, to, 'below', dashed);
+    render(document.getElementById('automaton-prices'), {
+      padding: 10,
+      stateStyle: {
+        radius: 34, fill: green, stroke: 'none', labelColor: '#fff',
+        shadow: { dx: 2, dy: 3, blur: 4, color: 'rgba(0,0,0,0.35)' },
+        fontSize: FS, fontFamily: "'Times New Roman', serif",
+      },
+      edgeStyle: { stroke: '#000', strokeWidth: 2, arrow: 'stealth', arrowSize: 11 },
+      states: {
+        lo: { position: at('lo'), ...dots },
+        q4: { position: at('q4'), label: '$p_0/4$' },
+        q2: { position: at('q2'), label: '$p_0/2$' },
+        p0: { position: at('p0'), label: '$p_0$' },
+        p2: { position: at('p2'), label: '$2p_0$' },
+        p4: { position: at('p4'), label: '$4p_0$' },
+        hi: { position: at('hi'), ...dots },
+      },
+      edges: [
+        // price doubles: arcs above
+        above('lo', 'q4', true), above('q4', 'q2'), above('q2', 'p0'),
+        above('p0', 'p2'), above('p2', 'p4'), above('p4', 'hi', true),
+        // price halves: arcs below
+        below('hi', 'p4', true), below('p4', 'p2'), below('p2', 'p0'),
+        below('p0', 'q2'), below('q2', 'q4'), below('q4', 'lo', true),
+      ],
+    });
+  </script>
+
+  <!-- Frame 10b automata: job-search states N, 10, 20 in a triangle (N on top).
+       Each period the offer is N, 10 or 20 with probability 1/3. Accepting an
+       offer stops the problem (u(s, stop) = w/(1−δ) is paid once, no next state),
+       so an accepted state is a double-circled accepting state with no outgoing
+       edges, not a loop: "offered 10" and "employed at 10" are not conflated.
+       The loops that remain are 1/3 redraws (N, and 10 under σ_H). -->
+  <script type="module">
+    import { render } from './tikz-svg/dist/tikz-svg.min.js';
+    const green = '#2e7d32', FS = 20;  // one size for node and edge labels
+    const third = '$\\tfrac{1}{3}$';
+    // Double border: stroke is 'none' by default, so give accepting states a white one.
+    const accept = { accepting: true, acceptingInset: 4, stroke: '#fff', strokeWidth: 1.5 };
+    const e = (from, to, label, extra = {}) =>
+      ({ from, to, label, labelDistance: 2, fontSize: FS, shortenEnd: 5, ...extra });
+    const config = (edges, accepted) => ({
+      padding: 10,
+      stateStyle: {
+        radius: 30, fill: green, stroke: 'none', labelColor: '#fff',
+        shadow: { dx: 2, dy: 3, blur: 4, color: 'rgba(0,0,0,0.35)' },
+        fontSize: FS, fontFamily: "'Times New Roman', serif",
+      },
+      edgeStyle: { stroke: '#000', strokeWidth: 2, arrow: 'stealth', arrowSize: 11 },
+      states: {
+        N:   { position: { x: 0,    y: 0   }, label: '$N$' },
+        w10: { position: { x: -130, y: 170 }, label: '$10$', ...(accepted.includes('w10') && accept) },
+        w20: { position: { x: 130,  y: 170 }, label: '$20$', ...(accepted.includes('w20') && accept) },
+      },
+      edges,
+    });
+
+    // σ_LH: accept any offer, so 10 and 20 both stop.
+    render(document.getElementById('automaton-job-lh'), config([
+      e('N', 'N', third, { loop: 'above' }),
+      e('N', 'w10', third, { labelSide: 'right' }),
+      e('N', 'w20', third, { labelSide: 'left' }),
+    ], ['w10', 'w20']));
+
+    // σ_H: reject 10, so from 10 the next offer is drawn afresh; only 20 stops.
+    render(document.getElementById('automaton-job-h'), config([
+      e('N', 'N', third, { loop: 'above' }),
+      e('N', 'w10', third, { bend: 'right', labelSide: 'right' }),
+      e('w10', 'N', third, { bend: 'right', labelSide: 'right' }),
+      e('N', 'w20', third, { labelSide: 'left' }),
+      e('w10', 'w20', third, { labelSide: 'right' }),
+      e('w10', 'w10', third, { loop: 'below' }),
+    ], ['w20']));
+  </script>
+
+  <!-- Answer 1 automaton (back of the Question 1 flip card): line lengths ℓ and
+       ℓ−1 while you continue. The line advances (ℓ → ℓ−1) with probability q and
+       stays put (loop) with probability 1−q. The chain runs on past both ends,
+       from ℓ+1 and to ℓ−2: dash-dotted edges to the ⋯ nodes. -->
+  <script type="module">
+    import { render } from './tikz-svg/dist/tikz-svg.min.js';
+    const green = '#2e7d32', FS = 20;  // one size for node and edge labels
+    const D = 170;                     // centre-to-centre spacing
+    const dots = { label: '$\\cdots$', fill: 'none', stroke: 'none', shadow: false, labelColor: '#000', radius: 18, fontSize: 26 };
+    const e = (from, to, label, extra = {}) =>
+      ({ from, to, label, labelDistance: 2, fontSize: FS, shortenEnd: 5, ...extra });
+    const dashdot = { dashed: '9 4 2 4' };
+    render(document.getElementById('automaton-queue'), {
+      padding: 10,
+      stateStyle: {
+        radius: 42, fill: green, stroke: 'none', labelColor: '#fff',
+        shadow: { dx: 2, dy: 3, blur: 4, color: 'rgba(0,0,0,0.35)' },
+        fontSize: FS, fontFamily: "'Times New Roman', serif",
+      },
+      edgeStyle: { stroke: '#000', strokeWidth: 2, arrow: 'stealth', arrowSize: 11 },
+      states: {
+        hi: { position: { x: 0,     y: 0 }, ...dots },
+        l:  { position: { x: D,     y: 0 }, label: '$\\ell$' },
+        l1: { position: { x: 2 * D, y: 0 }, label: '$\\ell-1$' },
+        lo: { position: { x: 3 * D, y: 0 }, ...dots },
+      },
+      edges: [
+        e('hi', 'l',  '$q$', { labelSide: 'left', ...dashdot }),
+        e('l',  'l1', '$q$', { labelSide: 'left' }),
+        e('l1', 'lo', '$q$', { labelSide: 'left', ...dashdot }),
+        e('l',  'l',  '$1-q$', { loop: 'above' }),
+        e('l1', 'l1', '$1-q$', { loop: 'above' }),
+      ],
+    });
+  </script>
 
 </body>
 </html>
