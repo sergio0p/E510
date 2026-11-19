@@ -413,6 +413,25 @@
     </div>
   </section>
 
+  <!-- Frame 14c: Green & Porter — one-shot deviation -->
+  <section class="frame overlay-frame" id="collusion-one-shot-deviation">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Collusion—The Green &amp; Porter Model</h2>
+      <p class="frame-subtitle">One-Shot Deviation</p>
+    </div>
+    <div class="frame-content">
+      <p class="overlay" data-overlay="1">Observe that in the punishment phase no player would ever have an incentive to deviate. <span class="alert-text">Why?</span></p>
+      <ul>
+        <li class="overlay" data-overlay="2">The next state does not depend on the price: from $s_j$ play moves to $s_{j+1}$ (and from $s_{k+1}$ back to $s_1$) whatever happens, so a deviation today does not change the continuation value.</li>
+        <li class="overlay" data-overlay="3">Hence only today's payoff matters, and $q=(\tfrac13,\tfrac13)$ is a Nash eq. of the static game: $q_1=\tfrac13$ is a best response to $q_2=\tfrac13$ for every $\theta$, so no one-shot deviation is profitable.</li>
+      </ul>
+      <div class="overlay" data-overlay="4">
+        <p>Deviations at $s_1$ are not profitable if and only if, for every $q_1$,</p>
+        $$V_1(s_1)\ge\E[\theta]\,\big(1-q_1-\tfrac14\big)\,q_1+\delta\Big(\Pr\big[\theta\big(1-q_1-\tfrac14\big)\ge\underline{P}\big]\,V_1(s_1)+\Pr\big[\theta\big(1-q_1-\tfrac14\big)\lt\underline{P}\big]\,V_1(s_2)\Big)$$
+      </div>
+    </div>
+  </section>
+
   <!-- Frame 15: One-Shot Deviation Examples -->
   <!--
   <section class="frame" id="examples-of-one-shot-deviations">
