@@ -26,6 +26,55 @@
   <link rel="stylesheet" href="css/beamer-theme.css">
   <script src="js/katex-macros.js"></script>
   <script src="js/scroll-animations.js"></script>
+  <!-- Stage-game frame (Prisoners' Dilemma): styles copied from the 416 Stag Hunt
+       frame (E416/LECWeb/behavioral-games.html). -->
+  <style>
+    /* Handwriting face for the "Nash eq. = ..." note (Beamer's \augie). */
+    @font-face {
+      font-family: 'Augie';
+      src: url('fonts/augie.woff2') format('woff2'),
+           url('fonts/augie.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+    .gt-fig { width: 100%; display: block; margin: 0.75rem auto; }
+    /* Best-response figure: the Beamer overlays (<2,4-> stars, <3-> circles,
+       <5-> Nash note) as scroll steps. The library rebuilds the SVG's children
+       after fonts load, so visibility is CSS keyed on stable ids plus a class
+       on the persistent <svg> — never state set on the rendered children. */
+    svg.br-fig [id*="-br1-"], svg.br-fig [id*="-br2-"], svg.br-fig [id*="-nash-"] {
+      opacity: 0; transition: opacity 0.4s ease;
+    }
+    svg.br-fig.show-br1 [id*="-br1-"],
+    svg.br-fig.show-br2 [id*="-br2-"],
+    svg.br-fig.show-nash [id*="-nash-"] { opacity: 1; }
+    /* Slide-size frame: one figure holding the best-response graph on the left
+       and the payoff matrix on the right. The frame fills the window and
+       fitSlides gives the figure the largest size that fits. */
+    .slide-fit { min-height: 100vh; display: flex; flex-direction: column; }
+    .slide-fit .frame-content { flex: 1; display: flex; flex-direction: column; }
+    .slide-fit .slide-box { flex: 1; display: flex; align-items: center; justify-content: center; }
+    /* The matrix may rise above the figure's box (brFigure crops the viewBox at
+       the legend's top): let it overflow, over the frame's title bar. */
+    .slide-fit .slide-box > svg { flex: none; margin: 0; position: relative; z-index: 1; overflow: visible; }
+    /* Frames that end in an automaton: its return arc may run down into the
+       frame's bottom padding (the padding pays for the arc's depth). */
+    .frame-content.flush-bottom { padding-bottom: 0.25rem; }
+    /* At the equilibrium (D,D): player 1's payoff in red and player 2's in blue. */
+    #node-pd-c-11 text.node-part-one { fill: #ff0000; }
+    #node-pd-c-11 text.node-part-two { fill: #0000ff; }
+
+    /* Safari/WebKit does not paint `position: relative` content inside
+       <foreignObject>, so KaTeX labels in tikz-svg figures never appear. On
+       WebKit only, show KaTeX's MathML twin and hide the HTML rendering. */
+    @supports (-webkit-backdrop-filter: blur(1px)) {
+      svg foreignObject .katex .katex-html { display: none; }
+      svg foreignObject .katex .katex-mathml {
+        position: static; clip: auto; clip-path: none; height: auto; width: auto;
+        overflow: visible; padding: 0; border: 0; opacity: 1; font-size: 1em;
+      }
+    }
+  </style>
     <!-- Google Analytics -->
     <script async src="/E510/js/ga.js"></script>
 </head>
@@ -41,8 +90,8 @@
     <nav style="margin-top: 2rem; text-align: left; background: #eee; padding: 1rem; border-radius: 8px; font-size: 0.9rem;">
       <a href="#repeated-games-2" style="margin-left: 1rem;">1. Definition</a>
       <a href="#repeated-games-3" style="margin-left: 1rem;">2. Payoff</a>
-      <a href="#repeated-games-4" style="margin-left: 1rem;">3. Strategies</a>
-      <a href="#repeated-games-5" style="margin-left: 1rem;">4. Main Results</a>
+      <a href="#repeated-games-5" style="margin-left: 1rem;">3. Main Results</a>
+      <a href="#stage-game-pd" style="margin-left: 1rem;">4. Prisoners' Dilemma</a>
       <br>
       <a href="#representing-strategies-as-automata" style="margin-left: 1rem;">5. Automata</a>
       <a href="#representing-strategies-as-automata-3" style="margin-left: 1rem;">6. Formal Def.</a>
@@ -58,6 +107,7 @@
       <a href="#collusion-2" style="margin-left: 1rem;">14. Collusion Cont</a>
       <a href="#examples-of-one-shot-deviations" style="margin-left: 1rem;">15. OSD Examples</a>
       <a href="#public-goods-510" style="margin-left: 1rem;">16. Common Resource</a>
+      <br>
       <a href="#conclusion" style="margin-left: 1rem;">17. Real-Life Applications</a>
       <a href="#common-resource-problem" style="margin-left: 1rem;">18. Common Resource Problem</a>
       <a href="#memoryless-strategy" style="margin-left: 1rem;">19. Memoryless Strategy</a>
@@ -71,7 +121,10 @@
       <h2 class="frame-title">Repeated Games</h2>
     </div>
     <div class="frame-content">
-      <p>Consider the (static) game in the strategic (normal) form: $G=(I,A,u)$.</p>
+      <div class="block">
+        <div class="block-title">Definition: Stage Game</div>
+        <div class="block-body">The (static) game in the strategic (normal) form, $G=(I,A,u)$, is the <span class="alert-text">stage game</span>. Put simply, $G$ is the game that will be repeated. At each period, players observe the past play and play the game $G$ again.</div>
+      </div>
       <p>The <span class="alert-text">finitely repeated game</span> $(\Gamma,T)$ is the game where agents play $G$ for $T$ periods; at each period they observe all the past choices; and their final payoff is the sum of period payoffs.</p>
       <p>The <span class="alert-text">infinitely repeated game</span> $(\Gamma,\delta)$: they play $G$ in the first period, at any period if they always played $G$ in the past, they play it again and with probability $\delta$ they move to the next period and with prob. $(1-\delta)$ the game ends.</p>
     </div>
@@ -87,18 +140,6 @@
       <p>In the infinitely repeated game $(\Gamma,\delta)$ the expected payoff is</p>
       $$U_i(a)=\sum_{t=0}^{+\infty}\delta^t\cdot u_i(a^t)$$
       <p>where $a^t$ is the action profile played at period $t$ if players follow the strategy profile $s$ and $\delta\in(0,1)$ is the <span class="alert-text">discount factor</span> (inverse of the interest rate) or, alternatively, $\delta$ is the probability the game will continue in the next period.</p>
-    </div>
-  </section>
-
-  <!-- Frame 3: Strategies -->
-  <section class="frame" id="repeated-games-4">
-    <div class="frame-title-bar">
-      <h2 class="frame-title">Repeated Games</h2>
-      <p class="frame-subtitle">Strategies</p>
-    </div>
-    <div class="frame-content">
-      <p>What is a strategy for a player? A strategy is a mapping from her information sets into her actions available at the info. set. In a repeated game, they are always playing the same (stage) game, so the exact same set of actions, $A_i$, is available at any information set.</p>
-      <p>What are the information sets of player $i$? He or she observes the past play, so each possible history of the game corresponds to an information set for the player. So the set of all information sets (histories) is $\mathcal{H}=\bigcup_{k=1}A^k\cup\left\{\emptyset\right\}$.</p>
     </div>
   </section>
 
@@ -122,6 +163,20 @@
     </div>
   </section>
 
+  <!-- Frame 4b: The Prisoners' Dilemma stage game (figure rendered at the bottom;
+       same template and size as the 416 Stag Hunt frame) -->
+  <section class="frame slide-fit" id="stage-game-pd">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">A Stage Game Example</h2>
+      <p class="frame-subtitle">The Prisoners' Dilemma</p>
+    </div>
+    <div class="frame-content">
+      <div class="slide-box">
+        <svg id="fig-pd" class="gt-fig br-fig" role="img" aria-label="Prisoners' Dilemma. Payoffs: (C, C) 6, 6; (C, D) 0, 9; (D, C) 9, 0; (D, D) 1, 1. Best responses: they cross only at (D,D)"></svg>
+      </div>
+    </div>
+  </section>
+
   <!-- Frame 5: Automata Example (3-period punishment) -->
   <section class="frame" id="representing-strategies-as-automata">
     <div class="frame-title-bar">
@@ -134,8 +189,8 @@
       </div>
       <p>Its automata representation is:</p>
       <!-- PLACEHOLDER: 4-state automaton CC → DD → DD → DD → (back to CC) -->
-      <div style="text-align: center; padding: 1rem;">
-        <svg id="automaton-pd" style="max-width: 500px; width: 100%; display: block; margin: 0 auto;"></svg>
+      <div style="text-align: center;">
+        <svg id="automaton-pd" style="max-width: 680px; width: 100%; display: block; margin: 0 auto;"></svg>
       </div>
     </div>
   </section>
@@ -169,7 +224,7 @@
       <h2 class="frame-title">Representing Strategies as Automata</h2>
       <p class="frame-subtitle">Formal Definition</p>
     </div>
-    <div class="frame-content">
+    <div class="frame-content flush-bottom">
       <p>Formally, an automaton is $(S,\alpha,\tau)$, where:</p>
       <ul>
         <li>$S$ is the set of <span class="alert-text">states</span>.</li>
@@ -190,7 +245,7 @@
     </div>
     <div class="frame-content">
       <p>The value function $V:S\rightarrow \mathbb{R}$ maps states to their value. What are the players' payoff of reaching a state? Instead of computing an infinite series, the recursive approach allows us to decompose the payoff in two components: the current payoff and the discounted payoff of the future state:</p>
-      <div class="key-equation">
+      <div class="key-equation" style="margin-bottom: 1rem;">
         <div>
           $$V(s)= u(\alpha(s))+ \delta \cdot V(\tau(s,\alpha(s)))$$
         </div>
@@ -207,7 +262,7 @@
     </div>
     <div class="frame-content">
       <p>If the transition function is stochastic, the next state is not determined with certainty. Instead, $\tau(s_{t+1}|s_t,a)$ gives the probability of transitioning to state $s_{t+1}$ given the current state $s_t$ and the outcome of the game in stage $t$, $a$. The value function becomes:</p>
-      <div class="key-equation">
+      <div class="key-equation" style="margin-bottom: 1rem;">
         <div>
           $$V(s)= u(\alpha(s))+ \delta \sum_{s' \in S} V(s') \cdot \tau(s'|s,\alpha(s))$$
         </div>
@@ -263,8 +318,8 @@
     <div class="frame-content fs-10pt">
       <p>Payoffs in the stage game are $u_{i}(q)=(1-q_{1}-q_{2})\cdot q_{i}$.</p>
       <!-- PLACEHOLDER: 2-state automaton (1/4,1/4) ↔ (1/3,1/3) grim trigger -->
-      <div style="text-align: center; padding: 0.5rem;">
-        <svg id="automaton-cournot" style="max-width: 450px; width: 100%; display: block; margin: 0 auto;"></svg>
+      <div style="text-align: center;">
+        <svg id="automaton-cournot" style="max-width: 712px; width: 100%; display: block; margin: 0 auto;"></svg>
       </div>
       $$\begin{aligned}
         &s_{1}\quad\text{state in which they play } q=(1/4,1/4)\\
@@ -306,9 +361,55 @@
       </div>
       <p>Its automata representation is:</p>
       <!-- PLACEHOLDER: multi-state automaton (1/4,1/4) → (1/3,1/3) → ... → (1/3,1/3) → back -->
-      <div style="text-align: center; padding: 0.5rem;">
-        <svg id="automaton-gp" style="max-width: 500px; width: 100%; display: block; margin: 0 auto;"></svg>
+      <div style="text-align: center;">
+        <svg id="automaton-gp" style="max-width: 625px; width: 100%; display: block; margin: 0 auto;"></svg>
       </div>
+    </div>
+  </section>
+
+  <!-- Frame 14b: Green & Porter — the value function of the strategy (player 1) -->
+  <section class="frame" id="collusion-value-function">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Collusion—The Green &amp; Porter Model</h2>
+      <p class="frame-subtitle">The Value Function</p>
+    </div>
+    <div class="frame-content">
+      <p>We compute the value for player 1, so player 2's quantity $q_2$ is given by the state. Let $s_1$ be the cooperation state, $s_2,\ldots,s_{k+1}$ the $k$ punishment states, and $F_\theta$ the CDF of $\theta$. In the cooperation state, $(q_1,q_2)=(\tfrac14,\tfrac14)$ and the next state depends on the price:</p>
+      $$\begin{align*}
+        V_1(s_1)&=\E[\theta]\,(1-q_1-q_2)\,q_1+\delta\Big(\Pr\big[\theta(1-q_1-q_2)\ge\underline{P}\big]\,V_1(s_1)+\Pr\big[\theta(1-q_1-q_2)\lt\underline{P}\big]\,V_1(s_2)\Big)\\
+        &=\E[\theta]\,\big(1-\tfrac14-\tfrac14\big)\,\tfrac14+\delta\Big(\Pr\big[\theta\big(1-\tfrac14-\tfrac14\big)\ge\underline{P}\big]\,V_1(s_1)+\Pr\big[\theta\big(1-\tfrac14-\tfrac14\big)\lt\underline{P}\big]\,V_1(s_2)\Big)
+      \end{align*}$$
+      <p>Since $\E[\theta]=1$, $\Pr\big[\theta(1-q_1-q_2)\lt\underline{P}\big]=F_\theta\!\left(\frac{\underline{P}}{1-q_1-q_2}\right)=F_\theta(2\underline{P})$, and $F_\theta(x)=x/2$ for $\theta\sim\mathrm{U}[0,2]$:</p>
+      $$\begin{align*}
+        V_1(s_1)&=\tfrac18+\delta\Big(\big(1-F_\theta(2\underline{P})\big)\,V_1(s_1)+F_\theta(2\underline{P})\,V_1(s_2)\Big)\\
+        &=\tfrac18+\delta\Big(\big(1-\underline{P}\big)\,V_1(s_1)+\underline{P}\,V_1(s_2)\Big)\quad\Leftrightarrow\\
+        V_1(s_1)&=\dfrac{\tfrac18+\delta\,\underline{P}\,V_1(s_2)}{1-\delta\big(1-\underline{P}\big)}
+      \end{align*}$$
+      <p>In the punishment states, $(q_1,q_2)=(\tfrac13,\tfrac13)$ and the next state does not depend on the price:</p>
+      $$\begin{aligned}
+        V_1(s_j)&=\tfrac19+\delta\,V_1(s_{j+1}),\quad j=2,\ldots,k\\
+        V_1(s_{k+1})&=\tfrac19+\delta\,V_1(s_1)
+      \end{aligned}$$
+      <p>Going backward from the last punishment state, $V_1(s_j)$ in terms of $V_1(s_1)$, for $2\le j\le k+1$, is:</p>
+      $$\begin{alignat*}{3}
+        &V_1(s_{k+1}) &&{}=\tfrac19+\delta\,V_1(s_1)\\
+        &V_1(s_k) &&{}=\tfrac19+\delta\,V_1(s_{k+1}) &&{}=\tfrac19+\tfrac19\,\delta+\delta^2\,V_1(s_1)\\
+        &V_1(s_{k-1}) &&{}=\tfrac19+\delta\,V_1(s_k) &&{}=\tfrac19+\tfrac19\,\delta+\tfrac19\,\delta^2+\delta^3\,V_1(s_1)\\
+        & &&\;\;\vdots\\
+        &V_1(s_j) &&{}=\tfrac19\big(1+\delta+\cdots+\delta^{k+1-j}\big)+\delta^{k+2-j}\,V_1(s_1) &&{}=\frac{1-\delta^{k+2-j}}{9(1-\delta)}+\delta^{k+2-j}\,V_1(s_1)
+      \end{alignat*}$$
+      <p>Now, $V_1(s_2)$ in terms of $V_1(s_1)$ is:</p>
+      $$\begin{align*}
+        V_1(s_2)&=\tfrac19+\delta\,V_1(s_3)\\
+        &=\tfrac19+\delta\big(\tfrac19+\delta\,V_1(s_4)\big)\\
+        &=\tfrac19\big(1+\delta+\cdots+\delta^{k-1}\big)+\delta^{k}\,V_1(s_1)\\
+        &=\frac{1-\delta^{k}}{9(1-\delta)}+\delta^{k}\,V_1(s_1)
+      \end{align*}$$
+      <p>Substituting it into the expression for $V_1(s_1)$ above, we get:</p>
+      $$\begin{align*}
+        V_1(s_1)&=\dfrac{\tfrac18+\delta\,\underline{P}\left(\dfrac{1-\delta^{k}}{9(1-\delta)}+\delta^{k}\,V_1(s_1)\right)}{1-\delta\big(1-\underline{P}\big)}\quad\Leftrightarrow\\
+        V_1(s_1)&=\dfrac{\tfrac18+\dfrac{\delta\,\underline{P}\,\big(1-\delta^{k}\big)}{9(1-\delta)}}{1-\delta+\delta\,\underline{P}\,\big(1-\delta^{k}\big)}
+      \end{align*}$$
     </div>
   </section>
 
@@ -393,22 +494,37 @@
 
   <!-- Automata diagrams via tikz-svg -->
   <script type="module">
-    import { render } from './tikz-svg/src-v2/index.js';
+    import { render } from './tikz-svg/dist/tikz-svg.min.js?v=20261111';
+
+    // Fit the viewBox to what is actually drawn. The library sizes it from the
+    // curves' control points, which for these arcs and loops sit well outside the
+    // curves and leave blank bands; getBBox measures the curves themselves. Redone
+    // once fonts load, since the labels' boxes change then.
+    function renderTight(svg, cfg, pad = 4) {
+      const fit = () => {
+        render(svg, cfg);
+        const b = svg.getBBox();
+        if (b.width && b.height) render(svg, { ...cfg, viewBox: [b.x - pad, b.y - pad, b.width + 2 * pad, b.height + 2 * pad] });
+      };
+      fit();
+      if (document.fonts) document.fonts.ready.then(fit);
+    }
 
     const green = '#2e7d32', red = '#dc322f', gray = '#586e75';
 
-    function style(r = 22) {
+    function style(r = 22, fs = 22) {
       return {
         radius: r, fill: green, stroke: 'none', labelColor: '#fff',
         shadow: { dx: 2, dy: 3, blur: 4, color: 'rgba(0,0,0,0.35)' },
-        fontSize: 14, fontFamily: "'Times New Roman', serif",
+        fontSize: fs, fontFamily: "'Times New Roman', serif",
       };
     }
-    const edge = { stroke: gray, strokeWidth: 1.5, arrow: 'stealth' };
+    const edge = { stroke: gray, strokeWidth: 1.5, arrow: 'stealth', labelDistance: 6, fontSize: 22 };  // labels clear of their edges
 
     /* 1 — 3-period punishment (PD) */
-    render(document.getElementById('automaton-pd'), {
-      transformCanvas: { scale: 1.2 }, nodeDistance: 90, stateStyle: style(), edgeStyle: edge,
+    renderTight(document.getElementById('automaton-pd'), {
+      padding: 2,
+      nodeDistance: 135, stateStyle: style(28), edgeStyle: edge,
       states: {
         s1: { initial: true, fill: red, label: '$CC$', position: { x: 0, y: 0 } },
         s2: { position: { right: 's1' }, label: '$DD$' },
@@ -420,15 +536,16 @@
         { from: 's1', to: 's2', label: '$\\neq CC$' },
         { from: 's2', to: 's3' },
         { from: 's3', to: 's4' },
-        { from: 's4', to: 's1', bend: 'left' },
+        { from: 's4', to: 's1', out: -90, in: -90, looseness: 0.7 },  // leaves and arrives straight down, a full arc below
       ],
     });
 
     /* 2–4: Osborne 428.1 (a)(b)(c) — commented out with Frame 6 */
 
     /* 5 — Grim-trigger Cournot */
-    render(document.getElementById('automaton-cournot'), {
-      transformCanvas: { scale: 1.44 }, nodeDistance: 192, stateStyle: style(34), edgeStyle: edge,
+    renderTight(document.getElementById('automaton-cournot'), {
+      padding: 8,
+      nodeDistance: 260, stateStyle: style(40, 28), edgeStyle: edge,
       states: {
         s1: { initial: true, fill: red, label: '$\\tfrac{1}{4},\\tfrac{1}{4}$', position: { x: 0, y: 0 } },
         s2: { position: { right: 's1' }, label: '$\\tfrac{1}{3},\\tfrac{1}{3}$' },
@@ -436,17 +553,18 @@
       edges: [
         { from: 's1', to: 's1', loop: 'above', label: '$q=(\\tfrac{1}{4},\\tfrac{1}{4})$' },
         { from: 's1', to: 's2', label: '$q\\neq(\\tfrac{1}{4},\\tfrac{1}{4})$' },
-        { from: 's2', to: 's2', loop: 'below' },
+        { from: 's2', to: 's2', loop: 'right' },  // right, not below: width is free, height is not
       ],
     });
 
     /* 6 — Green & Porter */
-    render(document.getElementById('automaton-gp'), {
-      transformCanvas: { scale: 1.2 }, nodeDistance: 140, stateStyle: style(28), edgeStyle: edge,
+    renderTight(document.getElementById('automaton-gp'), {
+      padding: 2,
+      nodeDistance: 170, stateStyle: style(38, 28), edgeStyle: edge,
       states: {
         s1: { initial: true, fill: red, label: '$\\tfrac{1}{4},\\tfrac{1}{4}$', position: { x: 0, y: 0 } },
         s2: { position: { right: 's1' }, label: '$\\tfrac{1}{3},\\tfrac{1}{3}$' },
-        dots: { position: { right: 's2' }, label: '$\\cdots$', fill: 'none', stroke: 'none', shadow: false, labelColor: gray, fontSize: 18 },
+        dots: { position: { right: 's2' }, label: '$\\cdots$', fill: 'none', stroke: 'none', shadow: false, labelColor: gray, fontSize: 26 },
         sk: { position: { right: 'dots' }, label: '$\\tfrac{1}{3},\\tfrac{1}{3}$' },
       },
       edges: [
@@ -454,12 +572,13 @@
         { from: 's1', to: 's2', label: '$P\\lt\\underline{P}$' },
         { from: 's2', to: 'dots' },
         { from: 'dots', to: 'sk' },
-        { from: 'sk', to: 's1', bend: 'left' },
+        { from: 'sk', to: 's1', out: -90, in: -90, looseness: 0.6 },  // leaves and arrives straight down, a full arc below
       ],
     });
 
     /* 7 — One-shot deviation (commented out in HTML) */
-    if (document.getElementById('automaton-osd')) render(document.getElementById('automaton-osd'), {
+    if (document.getElementById('automaton-osd')) renderTight(document.getElementById('automaton-osd'), {
+      padding: 8,
       nodeDistance: 80, stateStyle: style(), edgeStyle: edge,
       states: {
         s1: { initial: true, fill: red, label: '$DC$', position: { x: 0, y: 0 } },
@@ -485,7 +604,7 @@
     <div class="frame-title-bar">
       <h2 class="frame-title">Common Resource</h2>
     </div>
-    <div class="frame-content">
+    <div class="frame-content flush-bottom">
       <p>A common resource is simultaneously:</p>
 
       <div class="block-group">
@@ -621,8 +740,8 @@
         <div class="block-body">$$a(s) = \frac{1-\delta}{2-\delta}s$$</div>
       </div>
       <p>Its automata representation is:</p>
-      <div style="text-align: center; padding: 0.5rem;">
-        <svg id="automaton-memoryless" style="max-width: 560px; width: 100%; display: block; margin: 0 auto;"></svg>
+      <div style="text-align: center;">
+        <svg id="automaton-memoryless" style="max-width: 1060px; width: 100%; display: block; margin: 0 auto;"></svg>
       </div>
       <p>The stock grows at rate $\tfrac{2\delta}{2-\delta}$ — it grows without bound if $\delta \gt 2/3$, declines to extinction if $\delta \lt 2/3$.</p>
       <p>The value function is:</p>
@@ -653,8 +772,8 @@
         <div class="block-body">$$a^*(s) = \frac{1-\delta}{2}\,s$$</div>
       </div>
       <p>Its automata representation is:</p>
-      <div style="text-align: center; padding: 0.5rem;">
-        <svg id="automaton-cooperative" style="max-width: 560px; width: 100%; display: block; margin: 0 auto;"></svg>
+      <div style="text-align: center;">
+        <svg id="automaton-cooperative" style="max-width: 890px; width: 100%; display: block; margin: 0 auto;"></svg>
       </div>
       <p>Under the cooperative phase the stock grows at rate $2\delta$, so it grows without bound if $\delta \gt 1/2$.</p>
       <p>The value function in the cooperative phase is:</p>
@@ -676,19 +795,34 @@
   </section>
 
   <script type="module">
-    import { render } from './tikz-svg/src-v2/index.js';
+    import { render } from './tikz-svg/dist/tikz-svg.min.js?v=20261111';
+
+    // Fit the viewBox to what is actually drawn. The library sizes it from the
+    // curves' control points, which for these arcs and loops sit well outside the
+    // curves and leave blank bands; getBBox measures the curves themselves. Redone
+    // once fonts load, since the labels' boxes change then.
+    function renderTight(svg, cfg, pad = 4) {
+      const fit = () => {
+        render(svg, cfg);
+        const b = svg.getBBox();
+        if (b.width && b.height) render(svg, { ...cfg, viewBox: [b.x - pad, b.y - pad, b.width + 2 * pad, b.height + 2 * pad] });
+      };
+      fit();
+      if (document.fonts) document.fonts.ready.then(fit);
+    }
     const green = '#2e7d32', gray = '#586e75';
-    render(document.getElementById('automaton-memoryless'), {
-      transformCanvas: { scale: 1.1 }, nodeDistance: 231,
+    renderTight(document.getElementById('automaton-memoryless'), {
+      padding: 8,
+      nodeDistance: 300,
       stateStyle: {
         radius: 42, fill: green, stroke: 'none', labelColor: '#fff',
         shadow: { dx: 2, dy: 3, blur: 4, color: 'rgba(0,0,0,0.35)' },
         fontSize: 18, fontFamily: "'Times New Roman', serif",
       },
-      edgeStyle: { stroke: gray, strokeWidth: 1.5, arrow: 'stealth' },
+      edgeStyle: { stroke: gray, strokeWidth: 1.5, arrow: 'stealth', labelDistance: 6, fontSize: 22 },
       states: {
         s1: { initial: true, fill: '#dc322f', position: { x: 0, y: 0 }, label: '$\\tfrac{1-\\delta}{2-\\delta}s$', fontSize: 22 },
-        s2: { position: { right: 's1' }, shape: 'ellipse', rx: 75, ry: 50, label: '$\\dfrac{(2-2\\delta)(s-a_1-a_2)}{2-\\delta}$' },
+        s2: { position: { right: 's1' }, shape: 'ellipse', rx: 92, ry: 52, label: '$\\dfrac{(2-2\\delta)(s-a_1-a_2)}{2-\\delta}$' },
         end: { position: { right: 's2' }, label: '', fill: 'none', stroke: 'none', shadow: false },
       },
       edges: [
@@ -697,14 +831,15 @@
       ],
     });
 
-    render(document.getElementById('automaton-cooperative'), {
-      transformCanvas: { scale: 1.1 }, nodeDistance: 231,
+    renderTight(document.getElementById('automaton-cooperative'), {
+      padding: 8,
+      nodeDistance: 380,
       stateStyle: {
         radius: 42, fill: green, stroke: 'none', labelColor: '#fff',
         shadow: { dx: 2, dy: 3, blur: 4, color: 'rgba(0,0,0,0.35)' },
         fontSize: 18, fontFamily: "'Times New Roman', serif",
       },
-      edgeStyle: { stroke: gray, strokeWidth: 1.5, arrow: 'stealth' },
+      edgeStyle: { stroke: gray, strokeWidth: 1.5, arrow: 'stealth', labelDistance: 6, fontSize: 22 },
       states: {
         s1: { initial: true, fill: '#dc322f', position: { x: 0, y: 0 }, label: '$\\tfrac{1-\\delta}{2}s$', fontSize: 22 },
         s2: { position: { right: 's1' }, label: '$\\tfrac{1-\\delta}{2-\\delta}s$', fontSize: 22 },
@@ -712,7 +847,7 @@
       edges: [
         { from: 's1', to: 's1', loop: 'above', label: '$(a_1,a_2)=(a^*,a^*)$' },
         { from: 's1', to: 's2', label: 'otherwise' },
-        { from: 's2', to: 's2', loop: 'below' },
+        { from: 's2', to: 's2', loop: 'right' },  // right, not below: width is free, height is not
       ],
     });
   </script>
@@ -722,6 +857,289 @@
     <a href="search.html" style="color: var(--crane-blue); text-decoration: none;">&larr; Search</a>
     <a href="index.html" style="color: var(--crane-blue); text-decoration: none;">ECON 510 &rarr;</a>
   </div>
+
+  <!-- Frame 4b: the Prisoners' Dilemma stage game, drawn exactly as the 416 Stag
+       Hunt frame (E416/LECWeb/behavioral-games.html #br-nash-example): the
+       payoff-matrix and best-response code below is copied verbatim from that
+       page (a port of the ECON 411 TikZ). Same scale, legend, note and crop, and
+       the matrix boxes sit where the Stag Hunt's do, so the figure (and the
+       frame) come out the same size. The bundle is the 2026-11-11 build; ?v=
+       busts browsers that still cache the older 510 copy (no circle solidus). -->
+  <script type="module">
+    import { render } from './tikz-svg/dist/tikz-svg.min.js?v=20261111';
+
+    const MACROS = (typeof katexMacros !== 'undefined' ? katexMacros : undefined);
+    // TikZ's own colours, as in the source (416/E416_LEC_FA25.tex 1264-1489):
+    // blue, red, green!80!black (Nash arrows), green!60!black (two-stage node).
+    const BLUE = '#0000ff', RED = '#ff0000', NASH_GREEN = '#00cc00', NODE_GREEN = '#009900', INK = '#000';
+    const SANS = "'Computer Modern Sans', 'Helvetica Neue', Arial, sans-serif";
+    const HAND = "'Augie', cursive";
+    const DOTS = '1.5 2.5';   // TikZ "densely dotted"
+    // invisible label box; coordinate (zero-size anchor for arrows)
+    const lbl  = { shape: 'rectangle', innerSep: 3, fontSize: 16, fill: 'none', stroke: 'none' };
+    const pt   = { shape: 'circle', radius: 0.5, innerSep: 0, label: '', fill: 'none', stroke: 'none' };
+
+    // ---- Payoff matrices: a port of the ECON 411 TikZ ---------------------------
+    // The 411 slides draw every 2x2 game the same way (411/E411_LEC_SPR_25.tex
+    // 263-273, 576-588): a `matrix of nodes` whose payoff cells are `circle solidus`
+    // nodes (\pay a,b), a `fit` box around each cell (inner sep=-1mm, outer sep=1mm),
+    // a corner line from (Z-2-2) + `corner`, and rotated "Player 2" / "Player 1"
+    // labels placed from the matrix centre. Units are TeX points, y-down. PGF lays
+    // the matrix out with cells={anchor=base} (each row on one baseline), column 1
+    // yshift=-3mm and row 1 xshift=1mm, spacing cells by their extents without outer
+    // sep. Positions are worked out from the centre of cell (2,2) and handed to
+    // `place.pos` relative to the matrix centre; `place.f` converts pt to the
+    // figure's units. Checked against the 411 PDF's vector data (pages 46, 119,
+    // 124): every box, digit, label and line lands within 0.05pt. Ids carry P-p1 /
+    // P-p2, and the cells' parts carry node-part-one / -two, so CSS can colour
+    // each player's side. Any n x m works: the cells keep the 2x2 pitch, the box
+    // grows, and the corner line and player names keep their place at the top-left
+    // corner (placed from where a 2x2 matrix's centre would be). Optional: g.keys
+    // (row/column ids, default 0..n-1), g.names, g.band ({ row | col, fill }: a
+    // tinted strip drawn behind one row or column).
+    const MM = 72.27 / 25.4, LW = 0.4, OS = LW / 2;
+    const SERIF = "KaTeX_Main, 'Times New Roman', serif";
+    function payoffMatrix(P, g, place) {
+      const { FS, IS, cap, cell, hdr, lab, player, pays, acts, p2Off, p1Off, corner, partAlign } = g;
+      const { f, pos } = place;
+      // circle solidus radius (incl. outer sep), and how far its centre sits below
+      // the text baseline (\centerpoint)
+      const R = Math.SQRT1_2 * (cell.wd + cell.ht) + LW / 2 + Math.hypot(2 * IS, 2 * IS) + OS;
+      const CY = 0.5 * (cell.wd + cell.ht) - cell.ht + 0.3536 * LW + IS;
+      const RV = R - OS, D = 2 * RV;                    // the cells' layout extent; the pitch
+      const hdrHt = Math.max(...hdr.map(b => b.ht)), hdrDp = Math.max(...hdr.map(b => b.dp));
+      const labExt = Math.max(...lab.map(b => b.wd / 2 + IS));
+      // row 1 baseline: its south extent (depth + inner sep) above row 2's north extent
+      const headBase = -CY - (hdrDp + IS) - (RV - CY);
+      // column 1 centres: its east extent plus the cells' west extent to the left
+      const labX = -(labExt + RV);
+      // the matrix centre is the centre of the cells' bounding box
+      const nr = pays.length, nc = pays[0].length;
+      const keys = g.keys ?? [pays.map((_, i) => i), pays[0].map((_, i) => i)];
+      const mx2 = ((labX - labExt) + (D + RV)) / 2;   // a 2x2 matrix's centre
+      const my2 = ((headBase - hdrHt - IS) + (D + RV)) / 2;
+      const mx = ((labX - labExt) + ((nc - 1) * D + RV)) / 2;
+      const my = ((headBase - hdrHt - IS) + ((nr - 1) * D + RV)) / 2;
+      const at = (x, y) => pos(x - mx, y - my);       // from the centre of cell (2,2)
+      const atC = (x, y) => at(x + mx2, y + my2);      // from the 2x2 centre
+      // action labels at labFs when their text is set smaller (\footnotesize SPLIT)
+      const txt = { shape: 'rectangle', innerSep: 0, fill: 'none', stroke: 'none', fontFamily: SERIF, fontSize: (g.labFs ?? FS) * f };
+      const draw = [];
+      if (g.band) {
+        const { row, col, fill } = g.band;
+        const [x0, x1, y0, y1] = row != null
+          ? [labX - labExt - IS, (nc - 1) * D + RV, row * D - RV, row * D + RV]
+          : [col * D - RV, col * D + RV, headBase - hdrHt - IS, (nr - 1) * D + RV];
+        draw.push({ type: 'path', points: [at(x0, y0), at(x1, y0), at(x1, y1), at(x0, y1)],
+          cycle: true, fill, stroke: 'none' });
+      }
+      for (let r = 0; r < nr; r++) for (let c = 0; c < nc; c++) {
+        const id = `${P}-c-${keys[0][r]}${keys[1][c]}`;
+        draw.push(
+          { type: 'node', id, position: at(c * D, r * D), shape: 'circle solidus', label: pays[r][c],
+            partAlign, fontFamily: SERIF, fontSize: FS * f, textWidth: cell.wd * f, textHeight: cell.ht * f,
+            innerSep: IS * f, strokeWidth: LW * f, outerSep: OS * f, stroke: 'none', fill: 'none' },
+          { type: 'node', id: `${P}-box-${keys[0][r]}${keys[1][c]}`, fit: [id], shape: 'rectangle', label: '',
+            innerSep: -MM * f, outerSep: MM * f, strokeWidth: LW * f, stroke: INK, fill: 'none' },
+        );
+      }
+      // Action labels sit on their row's baseline. SVG centres the glyphs (central
+      // baseline), so each label goes half a cap height above that baseline.
+      acts[1].forEach((a, i) => draw.push(
+        { type: 'node', id: `${P}-p2-col-${keys[1][i]}`, position: at(i * D + MM, headBase - cap / 2), label: a, ...txt }));
+      acts[0].forEach((a, i) => draw.push(
+        { type: 'node', id: `${P}-p1-row-${keys[0][i]}`, position: at(labX, i * D - CY - cap / 2 + 3 * MM), label: a, ...txt }));
+      // corner line: from (Z-2-2) + corner, then ++(-1.3cm, 1.3cm)
+      const lx = corner[0] * MM, ly = -corner[1] * MM;
+      draw.push({ type: 'path', points: [at(lx, ly), at(lx - 13 * MM, ly - 13 * MM)], stroke: INK, strokeWidth: LW * f });
+      // "Player 2" [above]: south anchor at p2Off (mm, TikZ y-up) from the matrix
+      // centre; "Player 1" [left]: east anchor at p1Off. TikZ rotate=-45 is library
+      // rotate 45 (clockwise on screen). Each centre is its anchor moved half the
+      // node (plus outer sep) into the rotated frame.
+      const u = Math.SQRT1_2;
+      const halfH = (player.ht + player.dp) / 2 + IS + OS, halfW = player.wd / 2 + IS + OS;
+      const pl = { ...txt, rotate: 45, fontSize: player.fs * f };
+      if (g.namesOnLine) {
+        // names centred on the corner line's midpoint, one on each side of it
+        // (player 2 up-right, player 1 down-left), clear of the line by `gap` pt
+        const cx = lx - 6.5 * MM, cy = ly - 6.5 * MM, off = (player.ht + player.dp) / 2 + (g.namesOnLine.gap ?? 2);
+        draw.push(
+          { type: 'node', id: `${P}-p2-name`, label: g.names?.[1] ?? 'Player 2', ...pl, position: at(cx + off * u, cy - off * u) },
+          { type: 'node', id: `${P}-p1-name`, label: g.names?.[0] ?? 'Player 1', ...pl, position: at(cx - off * u, cy + off * u) },
+        );
+        return draw;
+      }
+      draw.push(
+        { type: 'node', id: `${P}-p2-name`, label: g.names?.[1] ?? 'Player 2', ...pl,
+          position: atC(p2Off[0] * MM + halfH * u, -p2Off[1] * MM - halfH * u) },
+        { type: 'node', id: `${P}-p1-name`, label: g.names?.[0] ?? 'Player 1', ...pl,
+          position: atC(p1Off[0] * MM - halfW * u, -p1Off[1] * MM - halfW * u) },
+      );
+      return draw;
+    }
+
+    // TeX boxes (pt), measured with XeLaTeX in the 411 document's fonts.
+    const tb = (wd, ht, dp = 0) => ({ wd, ht, dp });
+    // Normal-size frames (Stag Hunt, Prisoners' Dilemma): 10.95pt LM Roman 10, em
+    // 10.95, digits 5.475 x 6.895, capitals 0.683em; \footnotesize "Player 1"
+    // (LM Roman 9) 33.30 wide, ht 6.2, dp 1.75.
+    const LM11 = { FS: 10.95, IS: 0.3333 * 10.95, cap: 0.683 * 10.95,
+      player: { wd: 33.298, ht: 6.2, dp: 1.75, fs: 9 },
+      p2Off: [-18, 19], p1Off: [-13, 13], corner: [-9, 9] };
+    // Prisoners' Dilemma (C = cooperate, D = defect), at the Stag Hunt's size:
+    // one-digit payoffs like the Stag Hunt; C and D measured with XeLaTeX in the
+    // 411 preamble (C 7.908 x 7.543, D 8.365 x 7.543; no depth).
+    // The narrower row labels move the matrix centre DX pt right of the boxes
+    // (half the difference in label widths, 22.843 vs 8.365), and headers with no
+    // descender move it DY pt down (half of Stag's 2.129pt depth). The player
+    // names are placed from that centre, so their offsets (mm) take the shift back
+    // out: names, corner line and boxes keep the Stag Hunt's arrangement.
+    const DX = (22.843 - 8.365) / 2, DY = 2.129 / 2;
+    const PD = { ...LM11, cell: tb(5.475, 6.895),
+      p2Off: [-18 - DX / MM, 19 + DY / MM], p1Off: [-13 - DX / MM, 13 + DY / MM],
+      hdr: [tb(7.908, 7.543), tb(8.365, 7.543)], lab: [tb(7.908, 7.543), tb(8.365, 7.543)],
+      acts: [['C', 'D'], ['C', 'D']],
+      pays: [[['6', '6'], ['0', '9']], [['9', '0'], ['1', '1']]] };
+
+    // ---- Best-response plots: Stag Hunt and Prisoners' Dilemma ---------------
+    // Scroll steps follow the Beamer overlays: 1 axes + legend, 2 BR2 stars
+    // (<2,4->), 3 BR1 circles alone (<3->, stars off), 4 both, 5 Nash note (<5->).
+    // The payoff matrix goes in the same figure, at the top right with the Nash
+    // note under it, as on the 411 slides, but spread across the frame and drawn
+    // `matrix.k` times larger than the graph's own scale. `matrix.at` and `note`
+    // are centres in the graph's cm; the arrows' out/in angles are set for the
+    // note's place. The viewBox is cropped at `cropTop` (cm, the legend's top), so
+    // the graph, legend and note size the figure while the top of the matrix (the
+    // "Player" labels) rises above it, over the frame's title bar.
+    const SCALE = 44, PT_CM = 72.27 / 2.54;   // px per cm; pt per cm
+    function brFigure(svgId, frameId, P, { ticks, stars, circles, arrows, matrix, note = [9, 3], cropTop }) {
+      const svg = document.getElementById(svgId);
+      const draw = [];
+      // dotted guides first (TikZ background layer): BR2 verticals, BR1 horizontals
+      stars.forEach(([x, y], i) => draw.push({ type: 'path', id: `${P}-br2-v${i}`,
+        points: [{ x, y: 0 }, { x, y: -y }], dashed: DOTS, stroke: BLUE, strokeWidth: 1.4 }));
+      circles.forEach(([x, y], i) => draw.push({ type: 'path', id: `${P}-br1-h${i}`,
+        points: [{ x: 0, y: -y }, { x, y: -y }], dashed: DOTS, stroke: RED, strokeWidth: 1.4 }));
+      draw.push(
+        // axes and ticks
+        { type: 'path', points: [{ x: -0.3, y: 0 }, { x: 7, y: 0 }], arrow: '->', stroke: INK, strokeWidth: 1.4 },
+        { type: 'path', points: [{ x: 0, y: 0.3 }, { x: 0, y: -4 }], arrow: '->', stroke: INK, strokeWidth: 1.4 },
+        ...[2, 4, 6].map(x => ({ type: 'path', points: [{ x, y: 0.1 }, { x, y: -0.1 }], stroke: INK, strokeWidth: 1 })),
+        ...[1, 3].map(y => ({ type: 'path', points: [{ x: 0, y: -y }, { x: -0.1, y: -y }], stroke: INK, strokeWidth: 1 })),
+        // axis and tick labels
+        { type: 'node', id: `${P}-s1`, position: { x: 7.3, y: 0 }, label: '$S_1$', anchor: 'west', ...lbl },
+        { type: 'node', id: `${P}-s2`, position: { x: -0.3, y: -4.2 }, label: '$S_2$', anchor: 'east', ...lbl },
+        { type: 'node', id: `${P}-x1`, position: { x: 2, y: 0 }, label: `$${ticks[0]}$`, anchor: 'north', ...lbl },
+        { type: 'node', id: `${P}-x2`, position: { x: 6, y: 0 }, label: `$${ticks[1]}$`, anchor: 'north', ...lbl },
+        { type: 'node', id: `${P}-y1`, position: { x: 0, y: -1 }, label: `$${ticks[0]}$`, anchor: 'east', ...lbl },
+        { type: 'node', id: `${P}-y2`, position: { x: 0, y: -3 }, label: `$${ticks[1]}$`, anchor: 'east', ...lbl },
+        // legend: TikZ `ellipse, draw, drop shadow, fit={(q)(w)(e)}`. The fit ellipse
+        // circumscribes the labels' box (radii = √2 × (half-size + inner seps)) and is
+        // centred on the glyphs (0.1 below the label boxes' centre: KaTeX boxes carry
+        // extra depth under BR_2), not on any one label. The node is unfilled, so the
+        // offset grey shadow shows through: grey interior, white sliver top-left.
+        { type: 'node', id: `${P}-legend-sh`, position: { x: 3.08 + 0.07, y: -5.60 + 0.07 }, shape: 'ellipse',
+          rx: 123, ry: 47, label: '', fill: '#bfbfbf', stroke: 'none' },
+        { type: 'node', id: `${P}-legend`, position: { x: 3.08, y: -5.60 }, shape: 'ellipse',
+          rx: 123, ry: 47, label: '', fill: 'none', stroke: INK, strokeWidth: 1.6 },
+        { type: 'node', id: `${P}-leg0`, position: { x: 2, y: -6 }, label: 'Legend:', ...lbl, fontFamily: SERIF },
+        { type: 'node', id: `${P}-leg1`, position: { x: 4, y: -6 }, label: '$BR_1=\\circ$', ...lbl, labelColor: RED },
+        { type: 'node', id: `${P}-leg2`, position: { x: 3, y: -5.4 }, label: '$BR_2=\\star$', ...lbl, labelColor: BLUE },
+      );
+      // marks: BR2 = blue star, BR1 = red ring (ring drawn larger so both read when they coincide)
+      stars.forEach(([x, y], i) => draw.push({ type: 'node', id: `${P}-br2-s${i}`, position: { x, y: -y },
+        shape: 'star', outerRadius: 7, pointRatio: 2.3, innerSep: 0, label: '', fill: BLUE, stroke: 'none' }));
+      circles.forEach(([x, y], i) => draw.push({ type: 'node', id: `${P}-br1-c${i}`, position: { x, y: -y },
+        shape: 'circle', radius: 9, innerSep: 0, label: '', fill: 'none', stroke: RED, strokeWidth: 1.8 }));
+      // Nash note (handwritten) with green arrows to the equilibria
+      draw.push({ type: 'node', id: `${P}-nash-note`, position: { x: note[0], y: -note[1] },
+        label: 'Nash eq. = all players are best responding, best response curves cross.',
+        ...lbl, textWidth: 132, align: 'left', fontFamily: HAND, fontSize: 15 });
+      // [x, y, out, in, { from: [x, y] start on the note's edge, looseness }]
+      arrows.forEach(([x, y, out, inn, o = {}], i) => {
+        let from = `${P}-nash-note`;
+        if (o.from) {
+          from = `${P}-nash-f${i}`;
+          draw.push({ type: 'node', id: from, position: { x: o.from[0], y: -o.from[1] }, ...pt });
+        }
+        draw.push(
+          { type: 'node', id: `${P}-nash-t${i}`, position: { x, y: -y }, ...pt },
+          { type: 'edge', id: `${P}-nash-a${i}`, from, to: `${P}-nash-t${i}`,
+            out, in: inn, looseness: o.looseness, arrow: '->', stroke: NASH_GREEN, strokeWidth: 2.6 });
+      });
+      // the payoff matrix, in pt scaled to the graph's px, magnified k times
+      if (matrix) {
+        const k = matrix.k ?? 1;
+        draw.push(...payoffMatrix(P, matrix.spec, {
+          f: k * SCALE / PT_CM,
+          pos: (x, y) => ({ x: matrix.at[0] + k * x / PT_CM, y: -matrix.at[1] + k * y / PT_CM }),
+        }));
+      }
+
+      const cfg = { scale: SCALE, originX: 60, originY: 300, padding: 8, katexMacros: MACROS, draw };
+      render(svg, cfg);
+      // second pass with the viewBox's top cut at cropTop (the library's post-font
+      // re-render keeps the latest config, so the crop survives it)
+      if (cropTop != null) {
+        const vb = svg.viewBox.baseVal, y0 = cfg.originY - SCALE * cropTop;
+        if (vb && vb.height && y0 > vb.y) render(svg, { ...cfg, viewBox: [vb.x, y0, vb.width, vb.y + vb.height - y0] });
+      }
+
+      const step = s => {
+        svg.classList.toggle('show-br2', s === 2 || s >= 4);
+        svg.classList.toggle('show-br1', s >= 3);
+        svg.classList.toggle('show-nash', s >= 5);
+      };
+      step(1);
+      // Pin the frame at the top and walk the five steps across the pinned scroll.
+      ScrollTrigger.create({
+        trigger: document.getElementById(frameId),
+        start: 'top top',
+        end: () => '+=' + (window.innerHeight * 2.2),
+        pin: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        onUpdate: self => step(1 + Math.min(4, Math.floor(self.progress * 5))),
+      });
+    }
+
+
+    try {
+      // D is dominant: BR2 stars at (C,D) and (D,D), BR1 circles at (D,C) and
+      // (D,D); they cross only at (D,D). The arrow hooks up into (D,D) from below,
+      // as the Stag Hunt's arrow to (H,H) does, from the note in the same place.
+      // Matrix: the Stag Hunt's centre [11.312, 4.339] moved by the centre shift
+      // (DX, DY, scaled by k = 1.5 into cm) so the four boxes land exactly where
+      // the Stag Hunt's do.
+      brFigure('fig-pd', 'stage-game-pd', 'pd', {
+        ticks: ['C', 'D'], stars: [[2, 3], [6, 3]], circles: [[6, 1], [6, 3]],
+        arrows: [[6, 2.7, 165, -90]],
+        matrix: { spec: PD, k: 1.5, at: [11.312 + 1.5 * DX / PT_CM, 4.339 - 1.5 * DY / PT_CM] },
+        note: [11.56, 0.54], cropTop: 6.9,
+      });
+    } catch (err) { console.warn('prisoners dilemma figure failed', err); }
+
+    // Slide-size figures: the largest size whose aspect fits the frame's width and
+    // the window height left under the title bar.
+    function fitSlides() {
+      document.querySelectorAll('.slide-fit').forEach(frame => {
+        const fig = frame.querySelector('.slide-box > svg');
+        const vb = fig && fig.viewBox.baseVal;
+        if (!vb || !vb.width) return;
+        const box = fig.parentElement;
+        const availH = window.innerHeight - (frame.offsetHeight - box.offsetHeight);
+        fig.style.width = (0.97 * Math.min(box.clientWidth, availH * vb.width / vb.height)) + 'px';
+      });
+    }
+    // sort() first: the page's overlay pins further down were created before this
+    // one, and ScrollTrigger must refresh pins in page order.
+    const refit = () => { fitSlides(); ScrollTrigger.sort(); ScrollTrigger.refresh(); };
+    if (document.readyState === 'complete') refit();
+    else window.addEventListener('load', refit);
+    if (document.fonts) document.fonts.ready.then(refit);
+    let fitTimer;
+    window.addEventListener('resize', () => { clearTimeout(fitTimer); fitTimer = setTimeout(refit, 300); });
+  </script>
 
 </body>
 </html>

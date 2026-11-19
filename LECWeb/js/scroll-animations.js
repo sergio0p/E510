@@ -213,6 +213,20 @@ function pulseHighlight(selector) {
   });
 }
 
+// Size the back's circle to the block body's current height, ? to fit inside
+function sizeFlipCircle(body) {
+  const circle = body.querySelector('.block-body-back > .flip-circle');
+  if (!circle) return;
+  const h = body.offsetHeight;
+  const w = body.offsetWidth;
+  const d = Math.min(h * 0.9, h - 12);
+  circle.style.width = d + 'px';
+  circle.style.height = d + 'px';
+  circle.querySelector('.flip-q').style.fontSize = (d * 0.65) + 'px';
+  // Let flexbox center vertically; offset horizontally to 1/3
+  circle.style.marginRight = (w / 3) + 'px';
+}
+
 // Block body flip — Ctrl+click (or right-click) on block title to toggle
 function initBlockFlip() {
   document.querySelectorAll('.block-body').forEach(body => {
@@ -238,28 +252,25 @@ function initBlockFlip() {
     inner.appendChild(back);
     body.appendChild(inner);
 
-    // Size circle to block body height, ? to fit inside
-    const h = body.offsetHeight;
-    const w = body.offsetWidth;
-    const d = Math.min(h * 0.9, h - 12);
-    circle.style.width = d + 'px';
-    circle.style.height = d + 'px';
-    q.style.fontSize = (d * 0.65) + 'px';
-    // Let flexbox center vertically; offset horizontally to 1/3
-    circle.style.marginRight = (w / 3) + 'px';
+    sizeFlipCircle(body);
   });
+
+  // Re-measure on every flip: the body's height at init can be stale (math
+  // not yet typeset by KaTeX, fonts still loading, a different window width),
+  // which left the circle taller than the block and cut it off.
+  const flip = body => { sizeFlipCircle(body); body.classList.toggle('flipped'); };
 
   document.querySelectorAll('.block-title').forEach(title => {
     title.style.cursor = 'pointer';
     title.addEventListener('contextmenu', e => {
       e.preventDefault();
       const body = title.closest('.block').querySelector('.block-body');
-      if (body) body.classList.toggle('flipped');
+      if (body) flip(body);
     });
     title.addEventListener('click', e => {
       e.preventDefault();
       const body = title.closest('.block').querySelector('.block-body');
-      if (body) body.classList.toggle('flipped');
+      if (body) flip(body);
     });
   });
 }
