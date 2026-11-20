@@ -133,3 +133,14 @@ body {
     display: none !important;
   }
 }
+
+.site-footer {
+  margin-top: 1.5rem;
+  color: #6B7280;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+@media print {
+  .site-footer { display: none; }
+}
