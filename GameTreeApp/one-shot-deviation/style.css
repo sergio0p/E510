@@ -1,0 +1,324 @@
+/* Chrome follows tortoise.soparreiras.org (olive palette, Spectral title,
+   left-accent cards). The trees follow the backward-induction app. */
+:root {
+  --olive-dark:   #3D421A;
+  --olive-bright: #6B8E23;
+  --olive-soft:   #F4F5EE;
+  --olive-line:   #e1e3d7;
+  --olive-info:   #f4f4f4;
+  --ok:           #5c7a1f;
+  --ok-bg:        #eef3e3;
+  --bad:          #8b3a3a;
+  --bad-bg:       #f8eded;
+  --ink:          #374151;
+  --red:          #DC2626;
+}
+
+/* Question 1 moves the figure of s between option rows and corrects the
+   scroll position itself: switch off the browser's scroll anchoring and
+   Bootstrap's smooth scrolling, which would both fight that correction. */
+html {
+  overflow-anchor: none;
+  scroll-behavior: auto !important;
+}
+
+body {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+/* ---- brand header (as on Tortoise) ---- */
+.back-link { color: var(--olive-bright); text-decoration: none; }
+.back-link:hover { text-decoration: underline; color: var(--olive-dark); }
+
+.page-head { margin-bottom: 1.25rem; }
+.brand-title {
+  font-family: "Spectral", Georgia, "Times New Roman", serif;
+  font-weight: 600;
+  font-size: 2.6rem;
+  letter-spacing: -0.01em;
+  color: var(--olive-dark);
+  margin-bottom: 0.35rem;
+}
+.paper-sub { margin: 0; line-height: 1.35; }
+.paper-title {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--olive-bright);
+}
+.paper-by {
+  display: block;
+  font-family: "Spectral", Georgia, serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: #6a6a5a;
+  margin-top: 0.15rem;
+}
+
+/* Signature rule: a strategy drawn as forks, one of them deviating. */
+.fork-rule { display: block; width: 100%; height: auto; margin-top: 0.9rem; }
+.fork-rule .fr-spine { stroke: var(--olive-dark); stroke-width: 1.5; }
+.fork-rule .fr-ink   { stroke: var(--olive-dark); stroke-width: 1.2; }
+.fork-rule .fr-red   { stroke: var(--red); stroke-width: 2.2; stroke-linecap: round; }
+.fork-rule .fr-ghost { stroke: var(--red); stroke-width: 1.4; stroke-dasharray: 2.5 2.5; opacity: 0.7; }
+.fork-rule .fr-node  { fill: var(--olive-dark); }
+
+@media (max-width: 575px) {
+  .brand-title { font-size: 2rem; }
+  .paper-title { font-size: 0.66rem; letter-spacing: 0.1em; }
+}
+
+.instructor-info {
+  background-color: var(--olive-info);
+  border-radius: 0.5rem;
+}
+
+/* ---- buttons ---- */
+.btn-olive {
+  background-color: var(--olive-bright);
+  color: #fff;
+  border: none;
+}
+.btn-olive:hover, .btn-olive:focus-visible {
+  background-color: var(--olive-dark);
+  color: #fff;
+}
+.btn-outline-olive {
+  color: var(--olive-dark);
+  background-color: #fff;
+  border: 1px solid #c9d39a;
+}
+.btn-outline-olive:hover {
+  background-color: var(--olive-soft);
+  color: var(--olive-dark);
+  border-color: var(--olive-bright);
+}
+.btn-outline-olive.active,
+.btn-outline-olive:disabled.active {
+  background-color: var(--olive-bright);
+  border-color: var(--olive-bright);
+  color: #fff;
+  opacity: 1;
+}
+.btn:focus-visible,
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.25rem rgba(107, 142, 35, 0.3);
+  border-color: var(--olive-bright);
+  outline: none;
+}
+.form-check-input:checked {
+  background-color: var(--olive-bright);
+  border-color: var(--olive-bright);
+}
+
+/* ---- stepper ---- */
+.stepper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.75rem;
+}
+.step {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 0.2rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--olive-line);
+  background: #fff;
+  color: #6a6a5a;
+  font-size: 0.85rem;
+}
+.step-num { font-weight: 700; font-variant-numeric: tabular-nums; }
+.step-current { background: var(--olive-bright); border-color: var(--olive-bright); color: #fff; }
+.step-done { background: var(--olive-soft); color: var(--olive-dark); }
+.step-skipped { color: #b0b0a0; text-decoration: line-through; }
+
+/* ---- question card ---- */
+.q-card {
+  background: #fff;
+  border: 1px solid var(--olive-line);
+  border-left: 4px solid var(--olive-bright);
+  border-radius: 0.5rem;
+  padding: 1.25rem 1.5rem;
+  margin: 0 0 1.5rem;
+}
+.q-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.4rem;
+}
+.q-num {
+  font-family: "Spectral", Georgia, serif;
+  font-weight: 600;
+  font-size: 1.35rem;
+  color: var(--olive-dark);
+  margin: 0;
+}
+.q-stem { font-size: 1.05rem; color: #222; margin-bottom: 0.9rem; max-width: 72ch; }
+
+.tree-host {
+  margin: 0 0 1rem;
+  background: #fff;
+  border: 1px solid var(--olive-line);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+.tree-caption {
+  font-size: 0.88rem;
+  color: #5d5d4e;
+  padding: 0.35rem 0.5rem 0.1rem;
+  margin: 0;
+}
+#main-tree { width: 100%; height: auto; max-height: 72vh; display: block; }
+
+/* The figure of s while it sits between option rows (question 1). */
+.opt-grid > .tree-host.in-grid {
+  grid-column: 1 / -1;
+  margin: 0.25rem 0;
+  border-left: 4px solid var(--olive-dark);
+}
+.fig-tag { display: none; }
+.tree-host.in-grid .fig-tag {
+  display: block;
+  font-family: "Spectral", Georgia, serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--olive-dark);
+  padding: 0.1rem 0.4rem 0;
+}
+.tree-host.just-moved { animation: figure-in 0.3s ease-out; }
+@keyframes figure-in { from { opacity: 0.2; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .tree-host.just-moved { animation: none; }
+}
+
+.q-actions { margin-top: 1rem; }
+.q-actions .btn { min-width: 10rem; }
+.yes-no { display: flex; gap: 0.75rem; }
+.yes-no .btn { min-width: 6rem; }
+.tools { display: flex; gap: 0.5rem; }
+.hint { color: #4a4a3c; margin: 0; }
+kbd {
+  background: var(--olive-soft);
+  color: var(--olive-dark);
+  border: 1px solid #c9d39a;
+  border-bottom-width: 2px;
+  border-radius: 0.3rem;
+  padding: 0.05rem 0.4rem;
+  font-size: 0.85em;
+  font-family: inherit;
+  font-weight: 600;
+}
+.choice-list .form-check { margin-bottom: 0.35rem; }
+.choice-list .form-check-label { cursor: pointer; }
+
+/* ---- feedback ---- */
+.feedback {
+  margin-top: 1rem;
+  padding: 0.65rem 0.9rem;
+  border-radius: 0.4rem;
+  border-left: 4px solid var(--olive-bright);
+  background: var(--olive-soft);
+  color: var(--olive-dark);
+  max-width: 80ch;
+}
+.feedback.fb-ok  { border-left-color: var(--ok);  background: var(--ok-bg);  color: #33461a; }
+.feedback.fb-bad { border-left-color: var(--bad); background: var(--bad-bg); color: #5e2626; }
+
+/* ---- question 1 options ---- */
+.opt-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+.opt-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--olive-line);
+  border-left: 4px solid var(--olive-line);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.6rem;
+  cursor: pointer;
+  margin: 0;
+}
+.opt-card:hover { background: #fafbf6; }
+.opt-card.picked { border-left-color: var(--olive-bright); background: var(--olive-soft); }
+.opt-card:has(input:focus-visible) { outline: 3px solid var(--olive-bright); outline-offset: 2px; }
+.opt-card.is-right { border-left-color: var(--ok); cursor: default; }
+.opt-card.is-wrong { border-left-color: var(--bad); cursor: default; }
+.opt-head { display: flex; align-items: center; gap: 0.5rem; }
+.opt-head .form-check-input { margin: 0; }
+.opt-letter {
+  font-family: "Spectral", Georgia, serif;
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--olive-dark);
+}
+.opt-card svg { width: 100%; height: auto; max-height: 300px; display: block; }
+.opt-note { font-size: 0.86rem; margin: 0.25rem 0 0; }
+.opt-card.is-right .opt-note { color: #33461a; }
+.opt-card.is-wrong .opt-note { color: #5e2626; }
+
+@media (max-width: 640px) {
+  .opt-grid { grid-template-columns: minmax(0, 1fr); }
+  .q-card { padding: 1rem; }
+}
+
+/* ---- trees ---- */
+.tree-svg { font-family: "STIX Two Text", Georgia, serif; }
+.tree-svg .edge-hit { fill: none; stroke: transparent; stroke-width: 26; pointer-events: none; }
+/* Stroke widths are in layout units (NODE_R = 34); a full-width tree renders at
+   about 0.6x, an option tree at about 0.3x. */
+.tree-svg .edge-line { fill: none; stroke: var(--ink); stroke-width: 3.2; pointer-events: none; }
+.tree-svg .edge-label { fill: var(--ink); font-style: italic; pointer-events: none; user-select: none; }
+.tree-svg .edge-g.chosen .edge-line { stroke: var(--red); stroke-width: 6; }
+.tree-svg .edge-g.ghost .edge-line { stroke: var(--red); stroke-width: 3.2; stroke-dasharray: 11 8; opacity: 0.8; }
+.tree-svg .node-digit { fill: #fff; font-weight: 700; pointer-events: none; }
+.tree-svg .payoff { fill: var(--ink); font-weight: 700; }
+
+.tree-thumb .edge-line { stroke-width: 6.5; }
+.tree-thumb .edge-g.chosen .edge-line { stroke-width: 13; }
+
+/* Clickable edges (questions 3 and 4) */
+.edges-live .edge-hit { pointer-events: stroke; cursor: pointer; }
+.edges-live .edge-g:hover .edge-line { stroke-width: 8; }
+.edges-live .edge-g.chosen:hover .edge-line { stroke-width: 9; }
+
+/* Clickable decision nodes (question 3.2) */
+.nodes-live .node-g.decision { cursor: pointer; }
+.nodes-live .node-g.decision:hover circle,
+.tree-svg .node-g.selected circle { stroke: var(--olive-dark); stroke-width: 4.5; }
+
+/* Rings marking where an option departs from s, and the subgame outline:
+   both drawn densely dash-dotted. */
+.tree-svg .node-ring {
+  fill: none;
+  stroke: var(--olive-dark);
+  stroke-width: 3.6;
+  stroke-dasharray: 13 5 3 5;
+}
+.tree-thumb .node-ring { stroke-width: 6; stroke-dasharray: 18 7 4.5 7; }
+.tree-svg .subgame-outline {
+  fill: rgba(107, 142, 35, 0.08);
+  stroke: var(--olive-dark);
+  stroke-width: 3.8;
+  stroke-dasharray: 14 6 3.5 6;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.site-footer {
+  margin-top: 1.5rem;
+  color: #666;
+  font-size: 0.9rem;
+  text-align: center;
+}
