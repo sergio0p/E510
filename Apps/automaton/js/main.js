@@ -1,6 +1,6 @@
 import {
   MAX_ACTIONS, MAX_STATES, PLAYER_COLORS, actionSetTex, defaultNames, deviationProfile,
-  fromKey, keyOf, missingPayoff, nameProblem, newGame, nextState, parseProfile,
+  fromKey, keyOf, missingPayoff, nameProblem, newGame, nextState, parseProfile, payoff, payoffTex,
   profileArgTex, profileTex, profileText, profiles, shuffle, stateTex, tauComplete,
 } from './model.js';
 import { renderMatrix } from './matrix.js';
@@ -659,12 +659,28 @@ function valueQuestion(qa) {
 
 function buildSolve() {
   setTitle('Solve for V');
-  setStem(`Copy the code into a Mathematica notebook and evaluate it. It solves the system of
-    value-function equations, one per player and state, for the values as functions of
-    ${m('\\delta')}. In the code, <code>V[i, s]</code> denotes the value of player ${m('i')} at
-    state ${m('s')}.`);
-  setBody(codeBlock(valueCode(S.g, S.alpha, S.tau)));
+  setStem(`The value function satisfies one equation per state, written below first in symbols
+    and then with the payoffs of your stage game, one entry per player.`);
+  setBody(
+    h('div', { class: 'value-system', html: tex(valueSystemTex(), true) }),
+    h('p', { class: 'code-intro', html: `Copy the code into a Mathematica notebook and evaluate it.
+      It solves this system for the values as functions of ${m('\\delta')}. In the code,
+      <code>V[i, s]</code> denotes the value of player ${m('i')} at state ${m('s')}.` }),
+    codeBlock(valueCode(S.g, S.alpha, S.tau)));
   primary('Continue', () => goto('osd'));
+}
+
+// V(s_k) = u(α(s_k)) + δ V(τ(s_k, α(s_k))) = (u_1, u_2) + δ V(τ(s_k, α(s_k)))
+function valueSystemTex() {
+  const g = S.g;
+  const rows = S.alpha.map((key, k) => {
+    const p = fromKey(key);
+    const next = `\\delta\\, V(${stateTex(nextState(S.tau, k, p))})`;
+    const us = Array.from({ length: g.n }, (_, i) => payoffTex(payoff(g, p, i)));
+    const vec = g.n === 1 ? us[0] : `(${us.join(', ')})`;
+    return `V(${stateTex(k)}) &= u(${profileArgTex(g, p)}) + ${next} &&= ${vec} + ${next}`;
+  });
+  return `\\begin{aligned} ${rows.join(' \\\\[0.3em] ')} \\end{aligned}`;
 }
 
 // ---------- step 9: one-shot deviations (multiple choice) ----------
