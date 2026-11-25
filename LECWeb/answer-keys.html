@@ -87,6 +87,12 @@
       <a href="#ps-06-q5" style="margin-left: 1rem;">28. PS06 Q5</a>
       <br>
       <a href="#ps-06-q6" style="margin-left: 1rem;">29. PS06 Q6</a>
+      <a href="#ps-07-setup" style="margin-left: 1rem;">30. PS07 Setup</a>
+      <a href="#ps-07-case-1" style="margin-left: 1rem;">31. PS07 Case 1</a>
+      <a href="#ps-07-case-2" style="margin-left: 1rem;">32. PS07 Case 2</a>
+      <br>
+      <a href="#ps-07-case-3" style="margin-left: 1rem;">33. PS07 Case 3</a>
+      <a href="#ps-07-case-4" style="margin-left: 1rem;">34. PS07 Case 4</a>
     </nav>
   </section>
 
@@ -100,6 +106,7 @@
         <li><a href="https://uncch.instructure.com/courses/125271/files/16764635">Problem Set 02</a>&mdash;Mark Watney on Mars, solved with the Lagrangian</li>
         <li><a href="https://uncch.instructure.com/courses/125271/files/16764636">Problem Set 03</a>&mdash;the same problem, solved by backward induction</li>
         <li><a href="#ps-06-q1">Problem Set 06</a>&mdash;contests and tournaments: golf and football</li>
+        <li><a href="#ps-07-setup">Problem Set 07</a>&mdash;contingent markets equilibrium: Adam and Eve</li>
       </ol>
     </div>
   </section>
@@ -838,6 +845,92 @@
     <div class="frame-content">
       <p>Do you think this is a good measure of effort? Why or why not?</p>
       <p><span class="structure">Answer.</span> There is no single correct answer, but any answer must acknowledge that red cards are a problematic measure of effort: a red card leaves the team with one player fewer, which most likely lowers its probability of winning.</p>
+    </div>
+  </section>
+
+  <!-- Problem Set 07 Answer Key: a setup frame, then one frame per case.
+       Values computed in Mathematica from the problem as stated. -->
+  <section class="frame" id="ps-07-setup">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Problem Set 07 Answer Key</h2>
+      <p class="frame-subtitle">Setup</p>
+    </div>
+    <div class="frame-content">
+      <p>Three contingent goods $(c_0,c_1,c_2)$, each state with probability $\tfrac12$, and prices $(1,p_1,p_2)$. Each consumer maximizes</p>
+      $$U=u(c_0)+\delta\left[\tfrac12\,u(c_1)+\tfrac12\,u(c_2)\right]\quad\text{s.t.}\quad c_0+p_1c_1+p_2c_2=e_0+p_1e_1+p_2e_2=I.$$
+      <p>With $u(c)=\ln c$ the demands are</p>
+      $$c_0=\frac{I}{1+\delta},\qquad c_s=\frac{\delta\,I}{2(1+\delta)\,p_s},\quad s=1,2.$$
+      <p>With $u(c)=\sqrt{c}$ (Adam in Case 4) they are</p>
+      $$c_0=\frac{I}{1+\tfrac{\delta^2}{4}\left(\tfrac{1}{p_1}+\tfrac{1}{p_2}\right)},\qquad c_s=\frac{\delta^2}{4}\,\frac{c_0}{p_s^2},\quad s=1,2.$$
+      <p>The equilibrium prices clear markets 0 and 1; market 2 then clears by Walras&rsquo; law.</p>
+    </div>
+  </section>
+
+  <section class="frame" id="ps-07-case-1">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Problem Set 07 Answer Key</h2>
+      <p class="frame-subtitle">Case 1: Negatively Correlated Endowments</p>
+    </div>
+    <div class="frame-content">
+      <p>Endowments $e^A=(12,20,4)$ and $e^E=(12,4,20)$, discount factor $\delta=0.8$, and $u(c)=\ln c$ for both.</p>
+      <p><span class="structure">Answer.</span></p>
+      <ul>
+        <li>(1a) $p_1=p_2=\tfrac25=0.4$</li>
+        <li>(1b) Adam: $(c_0^A,c_1^A,c_2^A)=(12,12,12)$</li>
+        <li>(1c) Eve: $(c_0^E,c_1^E,c_2^E)=(12,12,12)$</li>
+      </ul>
+      <p>The aggregate endowment is 24 in every state, so Adam and Eve fully insure each other: each consumes 12 in every period and state, and each price equals probability times discount factor, $\tfrac12\cdot 0.8=0.4$.</p>
+    </div>
+  </section>
+
+  <section class="frame" id="ps-07-case-2">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Problem Set 07 Answer Key</h2>
+      <p class="frame-subtitle">Case 2: Perfectly Correlated Endowments</p>
+    </div>
+    <div class="frame-content">
+      <p>Endowments $e^A=e^E=(12,20,4)$, discount factor $\delta=0.8$, and $u(c)=\ln c$ for both.</p>
+      <p><span class="structure">Answer.</span></p>
+      <ul>
+        <li>(2a) $p_1=\tfrac{6}{25}=0.24$ and $p_2=\tfrac65=1.2$</li>
+        <li>(2b) Adam: $(c_0^A,c_1^A,c_2^A)=(12,20,4)$</li>
+        <li>(2c) Eve: $(c_0^E,c_1^E,c_2^E)=(12,20,4)$</li>
+      </ul>
+      <p>Adam and Eve are identical, so neither trades: each consumes the endowment, and the prices are the ones that make this optimal, $p_s=\tfrac12\,\delta\,c_0/c_s$. Thus $p_1=0.4\cdot\tfrac{12}{20}=0.24$ and $p_2=0.4\cdot\tfrac{12}{4}=1.2$.</p>
+    </div>
+  </section>
+
+  <section class="frame" id="ps-07-case-3">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Problem Set 07 Answer Key</h2>
+      <p class="frame-subtitle">Case 3: Different Discount Factors</p>
+    </div>
+    <div class="frame-content">
+      <p>Endowments $e^A=e^E=(10,20,4)$, discount factors $\delta_A=0.7$ and $\delta_E=0.9$, and $u(c)=\ln c$ for both.</p>
+      <p><span class="structure">Answer.</span></p>
+      <ul>
+        <li>(3a) $p_1=\tfrac{143}{720}\approx 0.1986$ and $p_2=\tfrac{143}{144}\approx 0.9931$</li>
+        <li>(3b) Adam: $(c_0^A,c_1^A,c_2^A)=\left(\tfrac{95}{9},\tfrac{2660}{143},\tfrac{532}{143}\right)\approx(10.56,\,18.60,\,3.72)$</li>
+        <li>(3c) Eve: $(c_0^E,c_1^E,c_2^E)=\left(\tfrac{85}{9},\tfrac{3060}{143},\tfrac{612}{143}\right)\approx(9.44,\,21.40,\,4.28)$</li>
+      </ul>
+      <p>Eve is more patient, so she buys future consumption from Adam: she consumes less than her endowment at $t=0$ and more in both states at $t=1$.</p>
+    </div>
+  </section>
+
+  <section class="frame" id="ps-07-case-4">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Problem Set 07 Answer Key</h2>
+      <p class="frame-subtitle">Case 4: Different Risk Aversion</p>
+    </div>
+    <div class="frame-content">
+      <p>Endowments $e^A=e^E=(12,20,4)$, discount factor $\delta=0.8$, $u_A(c)=\sqrt{c}$ and $u_E(c)=\ln c$.</p>
+      <p><span class="structure">Answer.</span></p>
+      <ul>
+        <li>(4a) $p_1\approx 0.2877$ and $p_2\approx 0.8703$</li>
+        <li>(4b) Adam: $(c_0^A,c_1^A,c_2^A)\approx(12.20,\,23.60,\,2.58)$</li>
+        <li>(4c) Eve: $(c_0^E,c_1^E,c_2^E)\approx(11.80,\,16.40,\,5.42)$</li>
+      </ul>
+      <p>Adam is less risk averse, so he takes on risk: he sells consumption in state 2, where the endowment is low, and buys more in state 1. Eve does the opposite and insures herself against state 2. The prices solve a quartic equation, so they are reported numerically.</p>
     </div>
   </section>
 
