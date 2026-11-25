@@ -93,6 +93,10 @@
       <br>
       <a href="#ps-07-case-3" style="margin-left: 1rem;">33. PS07 Case 3</a>
       <a href="#ps-07-case-4" style="margin-left: 1rem;">34. PS07 Case 4</a>
+      <a href="#ps-08-setup" style="margin-left: 1rem;">35. PS08 Setup</a>
+      <a href="#ps-08-q1" style="margin-left: 1rem;">36. PS08 Q1</a>
+      <br>
+      <a href="#ps-08-q2" style="margin-left: 1rem;">37. PS08 Q2</a>
     </nav>
   </section>
 
@@ -107,6 +111,7 @@
         <li><a href="https://uncch.instructure.com/courses/125271/files/16764636">Problem Set 03</a>&mdash;the same problem, solved by backward induction</li>
         <li><a href="#ps-06-q1">Problem Set 06</a>&mdash;contests and tournaments: golf and football</li>
         <li><a href="#ps-07-setup">Problem Set 07</a>&mdash;contingent markets equilibrium: Adam and Eve</li>
+        <li><a href="#ps-08-setup">Problem Set 08</a>&mdash;value function iteration: Chuck Noland&rsquo;s rations</li>
       </ol>
     </div>
   </section>
@@ -931,6 +936,54 @@
         <li>(4c) Eve: $(c_0^E,c_1^E,c_2^E)\approx(11.80,\,16.40,\,5.42)$</li>
       </ul>
       <p>Adam is less risk averse, so he takes on risk: he sells consumption in state 2, where the endowment is low, and buys more in state 1. Eve does the opposite and insures herself against state 2. The prices solve a quartic equation, so they are reported numerically.</p>
+    </div>
+  </section>
+
+  <!-- Problem Set 08 Answer Key: the iterations, then one frame per question.
+       Verified by re-running the key notebook in a fresh kernel. -->
+  <section class="frame" id="ps-08-setup">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Problem Set 08 Answer Key</h2>
+      <p class="frame-subtitle">Setup: Value Function Iteration</p>
+    </div>
+    <div class="frame-content">
+      <p>Chuck Noland eats $c$ rations out of his stock $K$, with $u(c)=\ln c$ and discount factor $\delta$. His value function solves</p>
+      $$V(K)=\max_{0\le c\le K}\;\ln c+\delta\,V(K-c).$$
+      <p>Starting from $V_0(K)=\ln K$, the policy step solves $u'(c)=\delta\,V_n'(K-c)$ and the value step substitutes the solution back. The first three policies are</p>
+      $$g_0(K)=\frac{K}{1+\delta},\qquad g_1(K)=\frac{K}{1+\delta+\delta^2},\qquad g_2(K)=\frac{K}{1+\delta+\delta^2+\delta^3}.$$
+      <p>The denominators approach $\tfrac{1}{1-\delta}$, which suggests the candidate policy $g(K)=(1-\delta)K$.</p>
+    </div>
+  </section>
+
+  <section class="frame" id="ps-08-q1">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Problem Set 08 Answer Key</h2>
+      <p class="frame-subtitle">Question 1: The Value of Following $g$ Forever</p>
+    </div>
+    <div class="frame-content">
+      <p><span class="structure">Answer.</span></p>
+      <ul>
+        <li>(1a) Chuck eats the fraction $1-\delta$ of his stock and keeps the fraction $\delta$, so $K(t,K_0)=\delta^t K_0$ and $c(t,K_0)=(1-\delta)\,\delta^t K_0$.</li>
+        <li>(1b) $V(K_0)=\sum_{t=0}^{\infty}\delta^t\ln\!\big[(1-\delta)\,\delta^t K_0\big]$, which Mathematica returns unevaluated.</li>
+        <li>(1c) PowerExpand splits the logarithm into $\ln(1-\delta)+t\ln\delta+\ln K_0$, and the sum evaluates to
+        $$V(K_0)=\frac{\ln\big[(1-\delta)K_0\big]}{1-\delta}+\frac{\delta\ln\delta}{(1-\delta)^2}.$$</li>
+      </ul>
+      <p>The two geometric sums are $\sum_t\delta^t=\tfrac{1}{1-\delta}$ and $\sum_t t\,\delta^t=\tfrac{\delta}{(1-\delta)^2}$.</p>
+    </div>
+  </section>
+
+  <section class="frame" id="ps-08-q2">
+    <div class="frame-title-bar">
+      <h2 class="frame-title">Problem Set 08 Answer Key</h2>
+      <p class="frame-subtitle">Question 2: Is $g$ the Policy Function?</p>
+    </div>
+    <div class="frame-content">
+      <p><span class="structure">Answer.</span></p>
+      <ul>
+        <li>(2a) The first order condition is $\dfrac{1}{c}=\dfrac{\delta}{(1-\delta)(K-c)}$, so gtest $=\{c\to(1-\delta)K\}$, which is $g(K)$.</li>
+        <li>(2b) Substituting gtest gives $\ln\big[(1-\delta)K\big]+\delta\,V(\delta K)=V(K)$, so Vcheck returns True.</li>
+      </ul>
+      <p>The policy step applied to $V$ returns $g$, and the value step returns $V$. So $V$ solves the recursive equation: $g$ is Chuck&rsquo;s policy function and $V$ is his value function.</p>
     </div>
   </section>
 
