@@ -792,9 +792,9 @@ function buildTest() {
   setStem(`The code below writes the one-shot deviation condition of each player at each state:
     for every action ${m('a_i \\neq \\alpha_i(s)')},
     ${m('V_i(s) \\ge u_i(a_i, \\alpha_{-i}(s)) + \\delta\\, V_i(\\tau(s, (a_i, \\alpha_{-i}(s))))')}.
-    Paste it below the value-function code, in the same notebook, and evaluate it. Each
-    <code>Reduce</code> line gives the discount factors ${m('0 < \\delta < 1')} for which that
-    condition holds.`);
+    Paste it below the value-function code, in the same notebook, and evaluate it. The output
+    has one line per deviation: it says which player, state and action it tests, then gives the
+    discount factors ${m('0 < \\delta < 1')} for which the deviation is not profitable.`);
   setBody(codeBlock(osdCode(S.g, S.alpha, S.tau)));
   primary('Continue', () => goto('all'));
 }

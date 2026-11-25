@@ -56,6 +56,7 @@ export function osdLines(g, alpha, tau) {
         const q = deviationProfile(p, i, a);
         const t = nextState(tau, k, q);
         devs.push({
+          action: g.names[i][a],
           code: `V[${i + 1}, ${st(k)}] >= ${rhs(g, i, q, t)}`,
           note: `(* plays ${g.names[i][a]}: outcome ${profileText(g, q)}, next state ${st(t)} *)`,
         });
@@ -82,10 +83,12 @@ export function osdCode(g, alpha, tau) {
   const w = Math.max(...all.map(r => r.code.length)) + 2;
   all.forEach(r => lines.push(pad(r.code, w) + r.note));
   lines.push('');
-  lines.push('(* Test each condition for 0 < delta < 1; N gives the cutoffs as decimals *)');
-  conds.forEach(({ i, k }) => {
-    lines.push(`N[Reduce[{osd[${i + 1}, ${st(k)}] /. sol, 0 < ${D} < 1}, ${D}]]`);
-  });
+  lines.push('(* Test each deviation for 0 < delta < 1. Each line prints what it tests, then the');
+  lines.push('   discount factors for which it holds; N gives the cutoffs as decimals. *)');
+  conds.forEach(({ i, k, devs }) => devs.forEach(d => {
+    lines.push(`Print["Player ${i + 1} at state ${st(k)}, value of following the strategy \\[GreaterEqual] value of deviating to ${d.action}:   ",`);
+    lines.push(`  N[Reduce[{${d.code} /. sol, 0 < ${D} < 1}, ${D}]]]`);
+  }));
   return lines.join('\n');
 }
 
